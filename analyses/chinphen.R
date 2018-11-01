@@ -8,6 +8,7 @@ options(stringsAsFactors = FALSE)
 # Set working directory: 
 setwd("~/Documents/GitHub/fishphen/analyses")
 
+
 # Load libraries
 library(mgcv)
 #Read in the WDFW recreational fishing data
@@ -19,6 +20,7 @@ dat$doy<-strftime(strptime(paste(dat$Month, dat$Day, dat$Year, sep="."),format= 
 dat$week<-strftime(strptime(paste(dat$Month, dat$Day, dat$Year, sep="."),format= "%m.%d.%Y"), format = "%V")#new weeks start on mondays
 length(unique(dat$CRCarea))#there are 30 different numbers by ole says there should be only 15 or so, i think...(e.g. 8 has been subdivided into 8.1, 8.2, etc)
 sort(unique(dat$CRCarea))
+
 #puget sound is areas 5:13 (including 81, 82). I'm curious what the other area numbers are...
 #for now, restrict to puget sound
 dat<-dat[dat$CRCarea %in% c("05","06","07","09","10","11","12","13","81","82"),]
@@ -29,7 +31,6 @@ clipped.p<-aggregate(dat$propclip,list(dat$Year,dat$CRCarea), mean, NA.rm=TRUE)
 colnames(clipped.p)<-c("Year","CRCarea","pclip.avg")
 boxplot(dat$propclip~dat$CRCarea)#areas vary in the proportion of clipped fish- this is due to regulations that vary by area.
 boxplot(dat$propclip~dat$Year)#looks like a definite trend toward higher propr clipped...ole says this is partly due changes in fishing regulations (in some areas, you are only allowed to keep clipped fish)
-
 
 #Eric's code splits out the records into boat data and fish data
 chin= dat[which(is.na(dat$Anglers)==FALSE),]
@@ -330,6 +331,17 @@ pairs(chinphen.yrs.cpue[,2:10])
 #For now, we can just fit some GAMs to each of the years independently. We have data from 2001-2013, so we
 #can make separate plots for each. Each of the plots includes a clear weekly signal, with peaks on weekends
 #(when effort is higher).
+#Across all years:
+anglers = aggregate(Anglers ~ doy, data = chin,sum)
+# Sum up Chinook for each calendar day across areas
+chinook = aggregate(Chinook ~ doy, data = chin,sum)
+# Fit the gam, using log(effort) as offset
+x = as.numeric(chinook$doy)
+effort = anglers$Anglers
+quartz()
+g = gam(log(chinook$Chinook+1) ~ s(x) + offset(log(effort)))
+plot(x,exp(g$fitted.values), type="l",lwd=3,xlab = "Day of Year",
+     ylab = "Expected recreational catch")
 
 # Loop over years
 for(y in 2001:2013) {
