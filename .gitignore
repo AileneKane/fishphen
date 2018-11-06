@@ -2,3 +2,5 @@
 .DS_Store
 orca/.Rhistory
 orca/data/2017DataOnly.csv
+data/AppendixII.csv
+data/2017DataOnly.csv
