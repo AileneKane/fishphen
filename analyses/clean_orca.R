@@ -47,6 +47,7 @@ d$Pod.cl[d$Pod.cl=="Ts"|d$Pod.cl=="Ts?"|d$Pod.cl=="Ts "]<-"T"
 d$Pod.cl[d$Pod.cl=="Orca"|d$Pod.cl=="orca"|d$Pod.cl=="orcas"]<-"Orcas"
 d$Pod.cl[d$Pod.cl=="SR"|d$Pod.cl=="sRs"|d$Pod.cl=="SRs?"]<-"SRs"
 
+sort(unique(d$Pod.cl))
 
 #3. Add a column for presences (1/0) for each pod
 
