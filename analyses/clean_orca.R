@@ -7,49 +7,52 @@ options(stringsAsFactors = FALSE)
 setwd("~/Documents/GitHub/fishphen")
 
 # Load libraries
+library(mgcv)
 
 # 1. Get the data
 d <- read.csv("data/AppendixII.csv")
 
 # 2. Clean the Pod column
-#Create a new column that combines Pod and Likely Pod columna and removes spaces
-d$Pod.cl<-d$Pod
 
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"
+d$Pod[d$Pod=="Jp "|d$Pod=="Jp  "|d$Pod=="Js"]<-"Jp"
+d$Pod[d$Pod=="J1 "]<-"J1"
+d$Pod[d$Pod=="K "|d$Pod=="K  "]<-"K"
 
-#Not sure if I should always preferentialy use Likely Pod column? For now I'm only doing this in particular cases...
-#d$Pod.cl[d$Pod.cl=="Orcas"|d$Pod.cl=="orcas"|d$Pod.cl=="Orca"|d$Pod.cl=="orca"]<-d$LikelyPod[d$Pod.cl=="Orcas"|d$Pod.cl=="orcas"|d$Pod.cl=="Orca"|d$Pod.cl=="orca"]
-#d$Pod.cl[d$LikelyPod=="K"|d$LikelyPod=="K"|d$LikelyPod=="K?"|d$LikelyPod=="Ks?"]<-"K"
-#d$Pod.cl[d$LikelyPod=="L"|d$LikelyPod=="L?"|d$LikelyPod=="L "|d$LikelyPod=="Lp"|d$LikelyPod=="L+"]<-"L"
-#d$Pod.cl[d$LikelyPod=="J"|d$LikelyPod=="j"|d$LikelyPod=="J "|d$LikelyPod=="J  "| d$LikelyPod=="J  "|d$LikelyPod=="J?"|d$LikelyPod=="Jp"|d$LikelyPod=="Jp "|d$LikelyPod=="Jp?"|d$LikelyPod=="Jp+"|d$LikelyPod=="J+"]<-"J"
-#d$Pod.cl[d$LikelyPod=="JK"|d$LikelyPod=="JKp"|d$LikelyPod=="JpK"]<-"JK"
-#d$Pod.cl[d$LikelyPod=="KL"|d$LikelyPod=="KLp"|d$LikelyPod=="KpLp"]<-"KL"
-#d$Pod.cl[d$LikelyPod=="T"|d$LikelyPod=="Ts"|d$LikelyPod=="Ts "|d$LikelyPod=="Ts?"]<-"T"
-#d$Pod.cl[d$LikelyPod=="K"|d$LikelyPod=="K"|d$LikelyPod=="K?"|d$LikelyPod=="Ks?"]<-"K"
-#d$Pod.cl[d$LikelyPod=="L"|d$LikelyPod=="L?"|d$LikelyPod=="L "|d$LikelyPod=="Lp"|d$LikelyPod=="L+"]<-"L"
-#d$Pod.cl[d$LikelyPod=="J"|d$LikelyPod=="j"|d$LikelyPod=="J "|d$LikelyPod=="J  "| d$LikelyPod=="J  "|d$LikelyPod=="J?"|d$LikelyPod=="Jp"|d$LikelyPod=="Jp "|d$LikelyPod=="Jp?"|d$LikelyPod=="Jp+"|d$LikelyPod=="J+"]<-"J"
-#d$Pod.cl[d$LikelyPod=="JK"|d$LikelyPod=="JKp"|d$LikelyPod=="JpK"]<-"JK"
-#d$Pod.cl[d$LikelyPod=="KL"|d$LikelyPod=="KLp"|d$LikelyPod=="KpLp"]<-"KL"
-#d$Pod.cl[d$LikelyPod=="T"|d$LikelyPod=="Ts"|d$LikelyPod=="Ts "|d$LikelyPod=="Ts?"]<-"T"
+d$Pod[d$Pod=="Kp"|d$Pod=="KP"|d$Pod=="Kp  "|d$Pod=="Kp  "]<-"Kp"
+d$Pod[d$Pod=="L "|d$Pod=="L  "|d$Pod=="Ls"]<-"L"
+d$Pod[d$Pod=="LP"|d$Pod=="Lp  "|d$Pod=="Lp "|d$Pod=="Lp?"]<-"Lp"
+d$Pod[d$Pod=="JK "|d$Pod=="JK  "|d$Pod=="JK   "]<-"JK"
 
-#Always use Likely Pod column, when it is not blank:
-d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" "]<-d$LikelyPod[d$LikelyPod!="" & d$LikelyPod!=" "]
+d$Pod[d$Pod=="JL "|d$Pod=="JL  "|d$Pod=="JL   "]<-"JL"
+d$Pod[d$Pod=="KL "|d$Pod=="KL  "|d$Pod=="LK"]<-"KL"
+d$Pod[d$Pod=="KpL "|d$Pod=="KpL  "]<-"KpL"
+d$Pod[d$Pod=="JL "|d$Pod=="JL  "|d$Pod=="JL   "]<-"JL"
+d$Pod[d$Pod=="JKl"|d$Pod=="JKL  "]<-"JKL"
 
-d$Pod.cl[d$Pod.cl=="j"|d$Pod.cl==" J"|d$Pod.cl=="J "|d$Pod.cl=="J  "|d$Pod.cl=="J   "|d$Pod.cl=="J?"|d$Pod.cl=="J "|d$Pod.cl=="J  "|d$Pod.cl=="J+"|d$Pod.cl=="Jp"|d$Pod.cl=="Jp "|d$Pod.cl=="Jp  "|d$Pod.cl=="Jp?"| d$Pod.cl=="Js"]<-"J"
-d$Pod.cl[d$Pod.cl=="J1 "]<-"J1"
-d$Pod.cl[d$Pod.cl=="K "|d$Pod.cl=="K  "|d$Pod.cl=="K?"|d$Pod.cl=="K+"|d$Pod.cl=="Kp"|d$Pod.cl=="KP"|d$Pod.cl=="Kp  "|d$Pod.cl=="Kp  "]<-"K"
-d$Pod.cl[d$Pod.cl=="L "|d$Pod.cl=="L  "|d$Pod.cl=="L?"|d$Pod.cl=="L+"|d$Pod.cl=="L+?"|d$Pod.cl=="LP"|d$Pod.cl=="Lp  "|d$Pod.cl=="Lp "|d$Pod.cl=="Lp?"|d$Pod.cl=="Ls"|d$Pod.cl=="Ls?"]<-"L"
-d$Pod.cl[d$Pod.cl=="JK "|d$Pod.cl=="JK  "|d$Pod.cl=="JK   "|d$Pod.cl=="J?K?"|d$Pod.cl=="KJ?"|d$Pod.cl=="JK+"|d$Pod.cl=="JKp+"|d$LikelyPod=="Jp+K?"]<-"JK"
-d$Pod.cl[d$Pod.cl=="JL "|d$Pod.cl=="JL  "|d$Pod.cl=="JL   "|d$Pod.cl=="JLp? "|d$Pod.cl=="JpLp?"|d$Pod.cl=="JLp"]<-"JL"
-d$Pod.cl[d$Pod.cl=="KL "|d$Pod.cl=="KL  "|d$Pod.cl=="KL?"|d$Pod.cl=="KL+? "|d$Pod.cl=="KpLp"|d$Pod.cl=="KpL"|d$Pod.cl=="KpL "|d$Pod.cl=="KpL  "|d$Pod.cl=="KpLp?"|d$Pod.cl=="LK"|d$Pod.cl=="LK?"]<-"KL"
-d$Pod.cl[d$Pod.cl=="JL "|d$Pod.cl=="JL  "|d$Pod.cl=="JL   "|d$Pod.cl=="JLp? "|d$Pod.cl=="JpLp?"|d$Pod.cl=="JLp"]<-"JL"
-d$Pod.cl[d$Pod.cl=="JKLp"|d$Pod.cl=="JKLm"|d$Pod.cl=="JKl"|d$Pod.cl=="JKL  "|d$Pod.cl=="JKL?"|d$Pod.cl=="JKLm"|d$Pod.cl=="JpKL"|d$Pod.cl=="JKLp"]<-"JKL"
-d$Pod.cl[d$Pod.cl=="Ts"|d$Pod.cl=="Ts?"|d$Pod.cl=="Ts "]<-"T"
-d$Pod.cl[d$Pod.cl=="Orca"|d$Pod.cl=="orca"|d$Pod.cl=="orcas"]<-"Orcas"
-d$Pod.cl[d$Pod.cl=="SR"|d$Pod.cl=="sRs"|d$Pod.cl=="SRs?"]<-"SRs"
+d$Pod[d$Pod=="T"|d$Pod=="Ts "]<-"Ts"
+d$Pod[d$Pod=="Orca"|d$Pod=="orca"|d$Pod=="orcas"]<-"Orcas"
+d$Pod[d$Pod=="SR"|d$Pod=="sRs"|d$Pod=="S"|d$Pod=="SWKW"]<-"SRs"
 
-sort(unique(d$Pod.cl))
+# 3. Clean the Likely Pod column
 
-#3. Add a column for presences (1/0) for each pod
+d$LikelyPod[d$LikelyPod==" J"|d$LikelyPod=="J "|d$LikelyPod=="J  "|d$LikelyPod=="J   "]<-"J"
+d$LikelyPod[d$LikelyPod=="J1 "]<-"J1"
+d$LikelyPod[d$LikelyPod=="L "|d$LikelyPod=="L  "]<-"L"
+d$LikelyPod[d$LikelyPod=="JK "|d$LikelyPod=="JK  "]<-"JK"
+d$LikelyPod[d$LikelyPod=="JL "]<-"JL"
+d$LikelyPod[d$LikelyPod=="JLP"]<-"JLp"
+d$LikelyPod[d$LikelyPod=="JKLp "|d$LikelyPod=="JKLp  "]<-"JKLp"
+d$LikelyPod[d$LikelyPod=="JKp  "|d$LikelyPod=="JKp "]<-"JKp"
+d$LikelyPod[d$LikelyPod=="Jp  "|d$LikelyPod=="Jp "]<-"Jp"
+d$LikelyPod[d$LikelyPod=="KL "|d$LikelyPod=="KL  "]<-"KL"
 
-unique(d$Source)
+d$LikelyPod[d$LikelyPod=="SR"|d$LikelyPod=="sRs"|d$LikelyPod=="S"]<-"SRs"
+d$LikelyPod[d$LikelyPod=="T"|d$LikelyPod=="Ts "]<-"Ts"
 
+#4. Clean Year column
+d$Year[d$Year==0]<-2001
+
+#5. Create a new cleaned datafile
+write.csv(d,"analyses/output/AppendixII_cleaned.csv")
+getwd()
