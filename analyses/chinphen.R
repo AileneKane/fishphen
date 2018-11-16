@@ -22,8 +22,8 @@ length(unique(dat$CRCarea))#there are 30 different numbers by ole says there sho
 sort(unique(dat$CRCarea))
 
 #puget sound is areas 5:13 (including 81, 82). I'm curious what the other area numbers are...
-#for now, restrict to puget sound
-dat<-dat[dat$CRCarea %in% c("05","06","07","09","10","11","12","13","81","82"),]
+#for now, include outer coast and puget sound/salish sea
+dat<-dat[dat$CRCarea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82"),]
 dim(dat)# now 62132 rows
 #proportion ChinAdClipped- does this indicate hatchery fish?
 dat$propclip= as.numeric(dat$ChinAdClipped)/as.numeric(dat$ChinookCaught)
@@ -213,7 +213,6 @@ for(i in 1:length(areas)){# Loop over areas
 chinphen.area
 pairs(chinphen.area[,2:10])
 #Now try making a separate plot for each CRC area AND year
-
 for(i in 1:length(areas)){
 crcdat = chin[chin$CRCarea==areas[i],]
   # Loop over years
@@ -341,7 +340,7 @@ effort = anglers$Anglers
 quartz()
 g = gam(log(chinook$Chinook+1) ~ s(x) + offset(log(effort)))
 plot(x,exp(g$fitted.values), type="l",lwd=3,xlab = "Day of Year",
-     ylab = "Expected recreational catch")
+     ylab = "Expected recreational catch", col="salmon")
 
 # Loop over years
 for(y in 2001:2013) {
