@@ -1,4 +1,4 @@
-#Code for Cleaning OrcaMaster Database
+#Exploring the orcamaster data frmo 2017
 #housekeeping
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
@@ -8,51 +8,210 @@ setwd("~/Documents/GitHub/fishphen")
 
 # Load libraries
 library(mgcv)
-
+library(dplyr)
 # 1. Get the data
 d <- read.csv("data/AppendixII.csv")
 
-# 2. Clean the Pod column
+# 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
+source("analyses/clean_orca.R")
 
-d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"
-d$Pod[d$Pod=="Jp "|d$Pod=="Jp  "|d$Pod=="Js"]<-"Jp"
-d$Pod[d$Pod=="J1 "]<-"J1"
-d$Pod[d$Pod=="K "|d$Pod=="K  "]<-"K"
+  #Create a new column that combines Pod and Likely Pod columna and removes spaces
+  d$Pod.cl<-d$Pod
 
-d$Pod[d$Pod=="Kp"|d$Pod=="KP"|d$Pod=="Kp  "|d$Pod=="Kp  "]<-"Kp"
-d$Pod[d$Pod=="L "|d$Pod=="L  "|d$Pod=="Ls"]<-"L"
-d$Pod[d$Pod=="LP"|d$Pod=="Lp  "|d$Pod=="Lp "|d$Pod=="Lp?"]<-"Lp"
-d$Pod[d$Pod=="JK "|d$Pod=="JK  "|d$Pod=="JK   "]<-"JK"
 
-d$Pod[d$Pod=="JL "|d$Pod=="JL  "|d$Pod=="JL   "]<-"JL"
-d$Pod[d$Pod=="KL "|d$Pod=="KL  "|d$Pod=="LK"]<-"KL"
-d$Pod[d$Pod=="KpL "|d$Pod=="KpL  "]<-"KpL"
-d$Pod[d$Pod=="JL "|d$Pod=="JL  "|d$Pod=="JL   "]<-"JL"
-d$Pod[d$Pod=="JKl"|d$Pod=="JKL  "]<-"JKL"
+#Always use Likely Pod column, when it is not blank:
+d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" "]<-d$LikelyPod[d$LikelyPod!="" & d$LikelyPod!=" "]
+#perhaps also stick with Pod when LikelyPod has a "?" grep("?",d$LikelyPod,)
 
-d$Pod[d$Pod=="T"|d$Pod=="Ts "]<-"Ts"
-d$Pod[d$Pod=="Orca"|d$Pod=="orca"|d$Pod=="orcas"]<-"Orcas"
-d$Pod[d$Pod=="SR"|d$Pod=="sRs"|d$Pod=="S"|d$Pod=="SWKW"]<-"SRs"
+d$Pod.cl[d$Pod.cl=="j"|d$Pod.cl==" J"|d$Pod.cl=="J "|d$Pod.cl=="J  "|d$Pod.cl=="J   "|d$Pod.cl=="J?"|d$Pod.cl=="J "|d$Pod.cl=="J  "|d$Pod.cl=="J+"|d$Pod.cl=="Jp"|d$Pod.cl=="Jp "|d$Pod.cl=="Jp  "|d$Pod.cl=="Jp?"| d$Pod.cl=="Js"]<-"J"
+d$Pod.cl[d$Pod.cl=="J1 "]<-"J1"
+d$Pod.cl[d$Pod.cl=="K "|d$Pod.cl=="K  "|d$Pod.cl=="K?"|d$Pod.cl=="K+"|d$Pod.cl=="Kp"|d$Pod.cl=="KP"|d$Pod.cl=="Kp  "|d$Pod.cl=="Kp  "]<-"K"
+d$Pod.cl[d$Pod.cl=="L "|d$Pod.cl=="L  "|d$Pod.cl=="L?"|d$Pod.cl=="L+"|d$Pod.cl=="L+?"|d$Pod.cl=="LP"|d$Pod.cl=="Lp  "|d$Pod.cl=="Lp "|d$Pod.cl=="Lp?"|d$Pod.cl=="Ls"|d$Pod.cl=="Ls?"]<-"L"
+d$Pod.cl[d$Pod.cl=="JK "|d$Pod.cl=="JK  "|d$Pod.cl=="JK   "|d$Pod.cl=="J?K?"|d$Pod.cl=="KJ?"|d$Pod.cl=="JK+"|d$Pod.cl=="JKp+"|d$LikelyPod=="Jp+K?"]<-"JK"
+d$Pod.cl[d$Pod.cl=="JL "|d$Pod.cl=="JL  "|d$Pod.cl=="JL   "|d$Pod.cl=="JLp? "|d$Pod.cl=="JpLp?"|d$Pod.cl=="JLp"]<-"JL"
+d$Pod.cl[d$Pod.cl=="KL "|d$Pod.cl=="KL  "|d$Pod.cl=="KL?"|d$Pod.cl=="KL+? "|d$Pod.cl=="KpLp"|d$Pod.cl=="KpL"|d$Pod.cl=="KpL "|d$Pod.cl=="KpL  "|d$Pod.cl=="KpLp?"|d$Pod.cl=="LK"|d$Pod.cl=="LK?"]<-"KL"
+d$Pod.cl[d$Pod.cl=="JL "|d$Pod.cl=="JL  "|d$Pod.cl=="JL   "|d$Pod.cl=="JLp? "|d$Pod.cl=="JpLp?"|d$Pod.cl=="JLp"]<-"JL"
+d$Pod.cl[d$Pod.cl=="JKLp"|d$Pod.cl=="JKLm"|d$Pod.cl=="JKl"|d$Pod.cl=="JKL  "|d$Pod.cl=="JKL?"|d$Pod.cl=="JKLm"|d$Pod.cl=="JpKL"|d$Pod.cl=="JKLp"]<-"JKL"
 
-# 3. Clean the Likely Pod column
+d$Pod.cl[d$Pod.cl=="O?"|d$Pod.cl=="Ts?"]<-"Ts"
 
-d$LikelyPod[d$LikelyPod==" J"|d$LikelyPod=="J "|d$LikelyPod=="J  "|d$LikelyPod=="J   "]<-"J"
-d$LikelyPod[d$LikelyPod=="J1 "]<-"J1"
-d$LikelyPod[d$LikelyPod=="L "|d$LikelyPod=="L  "]<-"L"
-d$LikelyPod[d$LikelyPod=="JK "|d$LikelyPod=="JK  "]<-"JK"
-d$LikelyPod[d$LikelyPod=="JL "]<-"JL"
-d$LikelyPod[d$LikelyPod=="JLP"]<-"JLp"
-d$LikelyPod[d$LikelyPod=="JKLp "|d$LikelyPod=="JKLp  "]<-"JKLp"
-d$LikelyPod[d$LikelyPod=="JKp  "|d$LikelyPod=="JKp "]<-"JKp"
-d$LikelyPod[d$LikelyPod=="Jp  "|d$LikelyPod=="Jp "]<-"Jp"
-d$LikelyPod[d$LikelyPod=="KL "|d$LikelyPod=="KL  "]<-"KL"
 
-d$LikelyPod[d$LikelyPod=="SR"|d$LikelyPod=="sRs"|d$LikelyPod=="S"]<-"SRs"
-d$LikelyPod[d$LikelyPod=="T"|d$LikelyPod=="Ts "]<-"Ts"
 
-#4. Clean Year column
-d$Year[d$Year==0]<-2001
+sort(unique(d$Pod.cl))
 
-#5. Create a new cleaned datafile
-write.csv(d,"analyses/output/AppendixII_cleaned.csv")
-getwd()
+#remove non-orca data
+d<-d[d$Pod.cl!="HB?"|d$Pod.cl!="Not Orcas",]
+
+
+#4. Add week and day of year (doy)
+d$doy<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"),format= "%j")
+d$week<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"), format = "%V")#new weeks start on mondays
+
+#5. Add a column for presences (1/0) for each pod, for Ts, and for SRKWs
+
+d$J<-0
+d$J[grep("J",d$Pod.cl)]<- 1
+d$K<-0
+d$K[grep("K",d$Pod.cl)]<- 1
+d$L<-0
+d$L[grep("L",d$Pod.cl)]<- 1
+d$SRKW<-0
+d$SRKW[grep("SR",d$Pod.cl)]<- 1
+d$SRKW[d$J==1|d$K==1|d$L==1]<- 1   
+d$Orcas<-1
+
+
+#6. Add a column for total number of observations during the year to standardize
+obs = aggregate(Orcas ~Year, data = d,sum)
+colnames(obs)[2]<-"totobsyr"
+d2<-left_join(d,obs,b="Year")
+# Sum up Chinook for each calendar day across areas
+SRs = aggregate(SRKW ~ week, data = d2,sum)
+# Fit the gam, using log(effort) as offset
+w = as.numeric(SRs$week)
+effort = as.numeric(d2$totob)
+
+quartz()
+g = gam(log(SRs$SRKW) ~ s(as.numeric(SRs$week)))
+<<<<<<< HEAD
+
+=======
+>>>>>>> 187bfe06e1556cd273204d571ee2cea45c2d71de
+plot(w,exp(g$fitted.values), type="l",lwd=3,xlab = "Week of Year",
+     ylab = "whale obs")
+points(SRs$week,SRs$SRKW)
+
+# Loop over years and look at peak activity date
+orcaphen.yrs<-data.frame(year=numeric(length(1976:2017)), 
+                         peak=numeric(length(1976:2017)), 
+                         stringsAsFactors=FALSE)
+
+quartz(height=8, width=10)
+par(mfrow=c(6,7))
+for(y in 1976:2017) {
+  orcaYear = aggregate(SRKW ~ week, data = d2[which(d2$Year==y),],sum)
+  w = as.numeric(orcaYear$week)
+  c= as.numeric(orcaYear$SRKW)
+  #plot the data
+  plot(w,c, pch=21,bg="gray",xlab = "Week", ylab = "Orca observations", main = paste("Year: ",y), bty="l")
+  #fit a gam to weekly data
+  g = gam(log(c+1) ~ s(w))
+  lines(w,exp(g$fitted.values),lwd=3)
+  #add line for peak activity week
+  pk<-max(g$fitted.values)
+  pkdoy<-w[which.max(g$fitted.values)]
+  abline(v=pkdoy, col="red", lwd=2)
+  orcaphen.yrs$year[y-1975]<-y
+  orcaphen.yrs$peak[y-1975]<-pkdoy
+}
+<<<<<<< HEAD
+#Make plots of fishing areas by year with chinook and orcas present
+#Read in the chinook data (WDFW recreational fishing data)
+dat<-read.csv("data/2001-2013PSChinookLandings.csv", header=TRUE)
+#get dates in day-of-year (doy) and week of year
+dat$doy<-strftime(strptime(paste(dat$Month, dat$Day, dat$Year, sep="."),format= "%m.%d.%Y"),format= "%j")
+dat$week<-strftime(strptime(paste(dat$Month, dat$Day, dat$Year, sep="."),format= "%m.%d.%Y"), format = "%V")#new weeks start on mondays
+
+#puget sound is areas 5:13 (including 81, 82). I'm curious what the other area numbers are...
+#for now, include outer coast and puget sound/salish sea
+dat<-dat[dat$CRCarea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82"),]
+
+#Eric's code splits out the records into boat data and fish data
+chin= dat[which(is.na(dat$Anglers)==FALSE),]
+fish = dat[which(is.na(dat$Anglers)==TRUE),]
+# Put the fish caught into the effort database
+chin$Chinook = 0
+indx = match(paste(fish$SampleDate,fish$LoCode,fish$CRCarea),
+             paste(chin$SampleDate,chin$LoCode,chin$CRCarea))
+fishCaught = fish$ChinookCaught[-which(is.na(indx))]
+chin$Chinook[indx[-which(is.na(indx))]] = fishCaught
+
+
+#The below code keeps the daily patterns in place and accounts for effort
+#use one peak for chinook and one peak for orcas for now
+
+areas<-unique(dat$CRCarea)
+#Now try making a separate plot for each CRC area AND year
+phen.yr.all<-c()
+for(i in 1:length(areas)){
+  crcdat = chin[chin$CRCarea==areas[i],]
+  orcdat = d2[d2$FishArea==areas[i],]
+  crcdat=Chinook
+  orcdat=d2
+  # Loop over years
+  quartz(width=8, height=8)
+  par(mfrow=c(4,4), mai=c(1,0.7,0.2,0.4))
+  for(y in 2001:2013) {
+    # Sum up numbers of chinook by week for each year, across areas
+    if(dim(crcdat[which(crcdat$Year==y),])[1]>9){
+    chinookYear = aggregate(Chinook ~ week, data = crcdat[which(crcdat$Year==y),],sum)
+    w = as.numeric(chinookYear$week)
+    c= as.numeric(chinookYear$Chinook)
+    #plot the data
+    if(dim(chinookYear)[1]>9){
+    plot(w,c, pch=21,bg="salmon", xlab= "week",ylab = "Chinook caught", main = paste("Year: ",y,"Area",areas[i]))
+    #fit a gam to weekly data
+    g = gam(log(c+1) ~ s(w))
+    lines(w,exp(g$fitted.values),lwd=3, col="salmon")
+    pkc<-max(g$fitted.values)
+    pkcdoy<-w[which.max(g$fitted.values)]}
+    }
+    #add orca data
+    if(dim(orcdat[which(orcdat$Year==y),])[1]>9){
+    orcaYear = aggregate(SRKW ~ week, data = orcdat[which(orcdat$Year==y),],sum)
+    wo = as.numeric(orcaYear$week)
+    o= as.numeric(orcaYear$SRKW)
+    #plot the data
+    par(new = T)
+    plot(wo,o, pch=21,bg="gray", xaxt='n', yaxt='n',ann=FALSE)
+    axis(side = 4)
+    mtext(side = 4, line = 2, 'Orca obs', cex=0.7)
+    #fit a gam to weekly data, if there are enough data
+    if(length(o)>10){go = gam(log(o+1) ~ s(wo))
+          lines(wo,exp(go$fitted.values),lwd=3)}
+    pko<-max(go$fitted.values)
+    pkodoy<-w[which.max(go$fitted.values)]}
+    #save phenophase weeks into dataframe
+    phen.yr<-c(y,areas[i],pkc,pkcdoy,pko,pkodoy)
+  }  
+  phen.yr.all<-rbind(phen.yr.all,phen.yr)
+}
+
+
+#ACross all areas, by year:
+crcdat=chin
+orcdat=d2
+# Loop over years
+quartz(width=8, height=8)
+par(mfrow=c(4,4), mai=c(1,0.7,0.2,0.4))
+for(y in 2001:2013) {
+  # Sum up numbers of chinook by week for each year, across areas
+    chinookYear = aggregate(Chinook ~ week, data = crcdat[which(crcdat$Year==y),],sum)
+    w = as.numeric(chinookYear$week)
+    c= as.numeric(chinookYear$Chinook)
+    #plot the data
+      plot(w,c, pch=21,bg="salmon", xlab= "week",ylab = "Chinook caught", main = paste("Year: ",y))
+      #fit a gam to weekly data
+      g = gam(log(c+1) ~ s(w))
+      lines(w,exp(g$fitted.values),lwd=3, col="salmon")
+      pkc<-max(g$fitted.values)
+      pkcdoy<-w[which.max(g$fitted.values)]
+  
+  #add orca data
+ 
+    orcaYear = aggregate(SRKW ~ week, data = orcdat[which(orcdat$Year==y),],sum)
+    wo = as.numeric(orcaYear$week)
+    o= as.numeric(orcaYear$SRKW)
+    #plot the data
+    par(new = T)
+    plot(wo,o, pch=21,bg="gray", xaxt='n', yaxt='n',ann=FALSE)
+    axis(side = 4)
+    mtext(side = 4, line = 2, 'Orca obs', cex=0.7)
+    #fit a gam to weekly data, if there are enough data
+    go = gam(log(o+1) ~ s(wo))
+    lines(wo,exp(go$fitted.values),lwd=3)
+    pko<-max(go$fitted.values)
+    pkodoy<-w[which.max(go$fitted.values)]
+  #save phenophase weeks into dataframe
+  phen.yr<-c(y,areas[i],pkc,pkcdoy,pko,pkodoy)
+}  
