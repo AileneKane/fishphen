@@ -73,6 +73,7 @@ effort = as.numeric(d2$totob)
 
 quartz()
 g = gam(log(SRs$SRKW) ~ s(as.numeric(SRs$week)))
+de
 plot(w,exp(g$fitted.values), type="l",lwd=3,xlab = "Week of Year",
      ylab = "whale obs")
 points(SRs$week,SRs$SRKW)
@@ -100,3 +101,134 @@ for(y in 1976:2017) {
   orcaphen.yrs$year[y-1975]<-y
   orcaphen.yrs$peak[y-1975]<-pkdoy
 }
+
+#Make plots of fishing areas by year with chinook and orcas present
+#Read in the chinook data (WDFW recreational fishing data)
+dat<-read.csv("data/2001-2013PSChinookLandings.csv", header=TRUE)
+#get dates in day-of-year (doy) and week of year
+dat$doy<-strftime(strptime(paste(dat$Month, dat$Day, dat$Year, sep="."),format= "%m.%d.%Y"),format= "%j")
+dat$week<-strftime(strptime(paste(dat$Month, dat$Day, dat$Year, sep="."),format= "%m.%d.%Y"), format = "%V")#new weeks start on mondays
+
+#puget sound is areas 5:13 (including 81, 82). I'm curious what the other area numbers are...
+#for now, include outer coast and puget sound/salish sea
+dat<-dat[dat$CRCarea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82"),]
+
+#Eric's code splits out the records into boat data and fish data
+chin= dat[which(is.na(dat$Anglers)==FALSE),]
+fish = dat[which(is.na(dat$Anglers)==TRUE),]
+# Put the fish caught into the effort database
+chin$Chinook = 0
+indx = match(paste(fish$SampleDate,fish$LoCode,fish$CRCarea),
+             paste(chin$SampleDate,chin$LoCode,chin$CRCarea))
+fishCaught = fish$ChinookCaught[-which(is.na(indx))]
+chin$Chinook[indx[-which(is.na(indx))]] = fishCaught
+
+
+#The below code keeps the daily patterns in place and accounts for effort
+#use one peak for chinook and one peak for orcas for now
+
+areas<-unique(dat$CRCarea)
+#Now try making a separate plot for each CRC area AND year
+phen.yr.all<-c()
+for(i in 1:length(areas)){
+  crcdat = chin[chin$CRCarea==areas[i],]
+  orcdat = d2[d2$FishArea==areas[i],]
+  crcdat=Chinook
+  orcdat=d2
+  # Loop over years
+  quartz(width=8, height=8)
+  par(mfrow=c(4,4), mai=c(1,0.7,0.2,0.4))
+  for(y in 2001:2013) {
+    # Sum up numbers of chinook by week for each year, across areas
+    if(dim(crcdat[which(crcdat$Year==y),])[1]>9){
+    chinookYear = aggregate(Chinook ~ week, data = crcdat[which(crcdat$Year==y),],sum)
+    w = as.numeric(chinookYear$week)
+    c= as.numeric(chinookYear$Chinook)
+    #plot the data
+    if(dim(chinookYear)[1]>9){
+    plot(w,c, pch=21,bg="salmon", xlab= "week",ylab = "Chinook caught", main = paste("Year: ",y,"Area",areas[i]))
+    #fit a gam to weekly data
+    g = gam(log(c+1) ~ s(w))
+    lines(w,exp(g$fitted.values),lwd=3, col="salmon")
+    pkc<-max(g$fitted.values)
+    pkcdoy<-w[which.max(g$fitted.values)]}
+    }
+    #add orca data
+    if(dim(orcdat[which(orcdat$Year==y),])[1]>9){
+    orcaYear = aggregate(SRKW ~ week, data = orcdat[which(orcdat$Year==y),],sum)
+    wo = as.numeric(orcaYear$week)
+    o= as.numeric(orcaYear$SRKW)
+    #plot the data
+    par(new = T)
+    plot(wo,o, pch=21,bg="gray", xaxt='n', yaxt='n',ann=FALSE)
+    axis(side = 4)
+    mtext(side = 4, line = 2, 'Orca obs', cex=0.7)
+    #fit a gam to weekly data, if there are enough data
+    if(length(o)>10){go = gam(log(o+1) ~ s(wo))
+          lines(wo,exp(go$fitted.values),lwd=3)}
+    pko<-max(go$fitted.values)
+    pkodoy<-w[which.max(go$fitted.values)]}
+    #save phenophase weeks into dataframe
+    phen.yr<-c(y,areas[i],pkc,pkcdoy,pko,pkodoy)
+  }  
+  phen.yr.all<-rbind(phen.yr.all,phen.yr)
+}
+
+
+#ACross all areas, by year:
+crcdat=chin
+orcdat=d2
+# Loop over years
+quartz(width=8, height=8)
+par(mfrow=c(4,4), mai=c(1,0.7,0.2,0.4))
+for(y in 2001:2013) {
+  # Sum up numbers of chinook by week for each year, across areas
+    chinookYear = aggregate(Chinook ~ week, data = crcdat[which(crcdat$Year==y),],sum)
+    w = as.numeric(chinookYear$week)
+    c= as.numeric(chinookYear$Chinook)
+    #plot the data
+      plot(w,c, pch=21,bg="salmon", xlab= "week",ylab = "Chinook caught", main = paste("Year: ",y))
+      #fit a gam to weekly data
+      g = gam(log(c+1) ~ s(w))
+      lines(w,exp(g$fitted.values),lwd=3, col="salmon")
+      pkc<-max(g$fitted.values)
+      pkcdoy<-w[which.max(g$fitted.values)]
+  
+  #add orca data
+ 
+    orcaYear = aggregate(SRKW ~ week, data = orcdat[which(orcdat$Year==y),],sum)
+    wo = as.numeric(orcaYear$week)
+    o= as.numeric(orcaYear$SRKW)
+    #plot the data
+    par(new = T)
+    plot(wo,o, pch=21,bg="gray", xaxt='n', yaxt='n',ann=FALSE)
+    axis(side = 4)
+    mtext(side = 4, line = 2, 'Orca obs', cex=0.7)
+    #fit a gam to weekly data, if there are enough data
+    go = gam(log(o+1) ~ s(wo))
+    lines(wo,exp(go$fitted.values),lwd=3)
+    pko<-max(go$fitted.values)
+    pkodoy<-w[which.max(go$fitted.values)]
+  #save phenophase weeks into dataframe
+  phen.yr<-c(y,areas[i],pkc,pkcdoy,pko,pkodoy)
+}  
+
+
+
+
+
+
+
+
+chinphen.yrs.cpue
+pairs(chinphen.yrs.cpue[,2:10])
+#ACross all years
+par(new = T)
+g = gam(log(SRs$SRKW) ~ s(as.numeric(SRs$week)))
+
+plot(w,exp(g$fitted.values), type="l",lwd=3,xaxt='n', yaxt='n',ann=FALSE)
+
+points(SRs$week,SRs$SRKW)
+axis(side = 4)
+mtext(side = 4, line = 2, 'Orca obs', cex=0.7)
+
