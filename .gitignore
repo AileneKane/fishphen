@@ -4,3 +4,5 @@ orca/.Rhistory
 orca/data/2017DataOnly.csv
 data/AppendixII.csv
 data/2017DataOnly.csv
+analyses/output/AppendixII_cleaned.csv
+analyses/clean_orca.R
