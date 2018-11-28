@@ -9,6 +9,8 @@ options(stringsAsFactors = FALSE)
 # Set working directory: 
 setwd("~/Documents/GitHub/fishphen")
 
+# Load libraries
+
 # 1. Get the data
 d <- read.csv("data/AppendixII.csv")
 

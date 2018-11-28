@@ -6,19 +6,6 @@ d$Pod[d$Pod=="Jp "|d$Pod=="Jp  "|d$Pod=="Js"]<-"Jp"
 d$Pod[d$Pod=="J1 "]<-"J1"
 d$Pod[d$Pod=="K "|d$Pod=="K  "]<-"K"
 
-#housekeeping
-rm(list=ls()) 
-options(stringsAsFactors = FALSE)
-
-# Set working directory: 
-setwd("~/Documents/GitHub/fishphen")
-
-# Load libraries
-library(mgcv)
-
-# 1. Get the data
-d <- read.csv("data/AppendixII.csv")
-
 # 2. Clean the Pod column
 
 d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"
