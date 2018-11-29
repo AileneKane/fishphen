@@ -29,8 +29,8 @@ d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" "]<-d$LikelyPod[d$LikelyPod!="" & d$Li
 d<-d[d$Pod.cl!="HB?"|d$Pod.cl!="Not Orcas",]
 
 
-#Add week and day of year (doy)
-d$doy<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"),format= "%j")
+#Add week and day of year (day)
+d$day<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"),format= "%j")
 d$week<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"), format = "%V")#new weeks start on mondays
 
 #Add a column for presences (1/0) for each pod, for Ts, and for SRKWs
@@ -59,34 +59,46 @@ d<-d[d$Year>1978,]
 #of all SRKWs during each week of each year year to estimate detection
 #d$wkyrfa<-paste(d$Year, d$week,d$FishArea,sep="_")#if we decide to add FishArea to detection estimates for model
 #d$wkyr<-paste(d$Year, d$week,sep="_")
-d$yrdoyfa<-paste(d$Year, d$doy,d$FishArea,sep="_")
+d$yrdayfa<-paste(d$Year, d$day,d$FishArea,sep="_")
 #Raw detection ratios:
-obs = aggregate(Orcas ~yrdoyfa, data = d,sum)
+obs = aggregate(Orcas ~yrdayfa, data = d,sum)
 
 # presence of each pod
-js = aggregate(J ~yrdoyfa, data = d,sum)
-ks = aggregate(K~yrdoyfa, data = d,sum)
-ls = aggregate(L~yrdoyfa, data = d,sum)
+js = aggregate(J ~yrdayfa, data = d,sum)
+ks = aggregate(K~yrdayfa, data = d,sum)
+ls = aggregate(L~yrdayfa, data = d,sum)
 det<-cbind(js,ks[,2],ls[,2],obs[2])
 colnames(det)[2:5]<-c("Jobs","Kobs","Lobs","nrep")
 
-det$year<-substr(det$yrdoyfa,1,4)
-det$doy<-substr(det$yrdoyfa,6,8)
-det$site<-substr(det$yrdoyfa,10,nchar(det$yrdoyfa))
-det$site<-as.factor(as.numeric(det$site))
-jdet<-subset(det,select=c(nrep,Jobs,site,doy,year))
-jdet <- jdet[apply(jdet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
+det$year<-substr(det$yrdayfa,1,4)
+det$day<-substr(det$yrdayfa,6,8)
+det$site<-substr(det$yrdayfa,10,nchar(det$yrdayfa))
+det$site<-as.numeric(as.factor(det$site))
+det$day<-as.numeric(det$day)
+det$year<-as.numeric(det$year)
 
-kdet<-subset(det,select=c(nrep,Kobs,site,doy,year))
+jdet<-subset(det,select=c(nrep,Jobs,site,day,year))
+#remove any rows with 0s in them
+#i.e. use only sites that have atleast 1 observation in all years
+
+jdet <- jdet[apply(jdet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
+#jdet<- jdet[apply(jdet,1,function(row) all(row!=0)),]
+kdet<-subset(det,select=c(nrep,Kobs,site,day,year))
 kdet <- kdet[apply(kdet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 
-ldet<-subset(det,select=c(nrep,Lobs,site,doy,year))
+ldet<-subset(det,select=c(nrep,Lobs,site,day,year))
 ldet <- ldet[apply(ldet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
+colnames(jdet)[2]<-colnames(kdet)[2]<-colnames(ldet)[2]<-"ndet"
+#i coudn't run model code, perhaps because some years have no observations?
+#rowSums(table(jdet$site,jdet$year))#There are data in all years and all sites
+#or maybe because there are 366 days in the year?
+#jdet$day[jdet$day==366]<-365
 
-write.csv(ldet,"analyses/output/l_dat.csv")
-write.csv(kdet,"analyses/output/k_dat.csv")
-write.csv(jdet,"analyses/output/j_dat.csv")
+write.csv(ldet,"analyses/output/l_dat.csv",row.names = FALSE)
+write.csv(kdet,"analyses/output/k_dat.csv",row.names = FALSE)
+write.csv(jdet,"analyses/output/j_dat.csv",row.names = FALSE)
 
+##The below code does not work anymore
 # Make Figure 1 (detectability index bar plot) for J, K, and L pod in 2017
 # We will have to decide if we want detectability to vary by fishing area as well
 #convert to proportion
@@ -94,7 +106,7 @@ write.csv(jdet,"analyses/output/j_dat.csv")
 #det$Kprop<-det$Kobs/det$totob
 #det$Lprop<-det$Lobs/det$totob
 
-years<-unique(det$year)
+#years<-unique(det$year)
 for(i in 1:length(years)){
   quartz(width=9,height=4)
   par(mfrow=c(1,3))

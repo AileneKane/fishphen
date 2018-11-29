@@ -1,20 +1,22 @@
 ##################################################################
 # Orca phenology occupancy model, based on the
 # Worked example to run the model presented in Strebel et al., 2014
-#   (Study of phenology by flexible estimation and modeling of seasonal detectability peaks)
+# (Study of phenology by flexible estimation and modeling of seasonal detectability peaks)
 # Author: Ailene Ettinger, ailene.ettinger@noaa.gov
-# (Original Author of worked example:  Nicolas Strebel, nicolas_strebel@gmx.ch
-# Date:	Novrmber 27, 2018
-# Title:	orca_run_models4
+# (modifed from code of  Nicolas Strebel, nicolas_strebel@gmx.ch
+# Date:	November 27, 2018
+# Title:	orca_run_occ_model
 ##################################################################
 #-----------------------------------------------------------------
-# Codes prepare data and run the analysis
+# Codes prepare data for jags and run the analysis
 #-----------------------------------------------------------------
-### Set working directory
-setwd("~/Documents/GitHub/fishphen/analyses")
+# Set working directory
+setwd("~/Documents/GitHub/fishphen")
 
+# Load libraries
+library(R2jags)
 # Specify model in BUGS language
-sink("splinesSiteOcc S4.txt")
+sink("analyses/splinesSiteOcc S4.txt")
 cat("
     model { 
     ### Define seasonal and annual patterns in detectability
@@ -67,7 +69,9 @@ cat("
     sink()
 
 ### Read observation data from Acrocephalus arundinaceus
-dat<-read.table(file="dat S4.txt",header=T)
+dat<-read.csv("analyses/output/j_dat.csv",header=T)
+#for starters, run on most recent 7 years only:
+dat<-dat[dat$year>2010,]
 
 ### The following procedure is based on the models presented in Crainiceanu et al. 2005 and in Gimenez et al. 2006 
 # Degree of splines
@@ -98,6 +102,9 @@ sqrt.OMEGA_all<-t(svd.OMEGA_all$v %*% (t(svd.OMEGA_all$u)*sqrt(svd.OMEGA_all$d))
 Z<-t(solve(sqrt.OMEGA_all,t(Z_K)))
 
 # Input data
+dat$site <- factor(dat$site)#move this to the dataprep file
+dat$site <- droplevels(dat$site)#move this to the dataprep file
+dat$site <- as.integer(dat$site)#move this to the dataprep file
 site <- dat$site
 survey <- dat$day-min(dat$day)+1
 nobs <- length(unique(paste(dat$site,dat$day,dat$year)))
@@ -121,8 +128,11 @@ f.inits <- function(){list(a=rep(0,nyear), b=rep(0,nyear), c=rep(0,nyear), z=zst
 parameters <- c("a","b","c","b.k","lp","psi","taub")
 
 ### Run MCMC Analysis using jags
-library(R2jags)
+
 jags.out<-jags.parallel(jags.data,f.inits,parameters,"splinesSiteOcc S4.txt",nc,ni,nb,nt)
+#not working for orca data- maybe need to limit to sites observed in all years
+
+
 out<-jags.out$BUGSoutput
 
 # Save model output
@@ -177,7 +187,7 @@ intercept<-mean(r[,1],na.rm=T)
 slope<-mean(r[,2],na.rm=T)
 
 ### Write results (in console if argument file is not specified in function cat)
-cat(paste("summary results","Acrocephalus arundinaceus"),"\n",
+cat(paste("summary results","k pod"),"\n",
     paste("annual change of activity peak:", round(mean(slopevec,na.rm=T),digits=2),"days"),
     paste("confidence interval from", round(quantile(slopevec,0.025,na.rm=T),digits=2),
           "to",round(quantile(slopevec,0.975,na.rm=T),digits=2)),
@@ -193,12 +203,13 @@ cat(paste("summary results","Acrocephalus arundinaceus"),"\n",
 pdf(file=paste("Graphical summary S4.pdf"),width=6,height=4)
 
 ### plot estimates of peak detectability over all years
+quartz()
 par(mfrow=c(1,1))
 par(mai=c(1,1,1,0.5))
 x=rownames(ann.res)
 y=ann.res[,"mean"]
 plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n","Acrocephalus arundinaceus"),
-     ylim=c(min(ann.res),max(ann.res)),pch=16,type="p", col="black")
+     ylim=c(min(ann.res, na.rm = TRUE),max(ann.res, na.rm = TRUE)),pch=16,type="p", col="black")
 lines(x,ann.res[,"2.5%"],col="grey",lwd=2)
 lines(x,ann.res[,"97.5%"],col="grey",lwd=2)  
 axis(side=1,at=x)
