@@ -107,7 +107,7 @@ zst <- array(1, dim=c(nsite,nyear))
 y <- dat$ndet
 
 # Simulation parameters
-ni=10000; nc=2; nb=25000; nt=50
+ni=5000; nc=2; nb=2500; nt=50
 
 # List input data
 jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots","n","X","Z","nc", "nb", "ni", "nt","zst","y")

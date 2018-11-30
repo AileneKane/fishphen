@@ -1,0 +1,361 @@
+3+9
+library(rjags)#
+library(jagsUI)#
+library(lattice)#
+library(coda)#
+library(boot)
+library(rjags)
+library(tidy)
+library(tidyr)
+library(rjags)
+library(maps)
+library(geosphere)
+daylength(45,92)
+daylength(45,62)
+12.77598-11.20136
+daylength(45.5,92)
+12.7883- 12.77598
+0.01232*60
+daylength(45,91)-daylength(45,61)
+daylength(45,91)-daylength(45.5,91)
+daylength(45,81)-daylength(45.5,81)
+daylength(45,81)-daylength(45,81)
+daylength(45,81)-daylength(45.5,81)
+daylength(45,81)-daylength(45,51)
+install.packages("R2jags")
+library(R2jags)
+library(R2Jags)
+library(R2jags)
+library(rjags)
+devtools::install_url.
+devtools::install_url("http://sourceforge.net/projects/mcmc-jags/files/rjags/3/rjags_3-2.tar.gz",#
+                      args="--configure-args='--with-jags-include=/Users/casallas/homebrew/opt/jags/include/JAGS        #
+                                              --with-jags-lib=/Users/casallas/homebrew/opt/jags/lib'#
+                            "#
+                      )
+devtools::install_url("http://sourceforge.net/projects/mcmc-jags/files/rjags/4/rjags_4-4.tar.gz",#
+args="--configure-args='--with-jags-include=/Users/casallas/homebrew/opt/jags/include/JAGS#
+--with-jags-lib=/Users/casallas/homebrew/opt/jags/lib'#
+"#
+)
+library(jagsUI)
+library(R2jags)
+library(rjags)
+library(r2jags)
+library(R2jags)
+setwd("~/Documents/GitHub/fishphen")
+d <- read.csv("data/AppendixII.csv")
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"
+#d = Appendix II#
+#1. Clean the Pod Column#
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"#
+d$Pod[d$Pod=="Jp "|d$Pod=="Jp  "|d$Pod=="Js"]<-"Jp"#
+d$Pod[d$Pod=="J1 "]<-"J1"#
+d$Pod[d$Pod=="K "|d$Pod=="K  "]<-"K"#
+#
+# 2. Clean the Pod column#
+#
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"#
+d$Pod[d$Pod=="Jp "|d$Pod=="Jp  "|d$Pod=="Js"]<-"Jp"#
+d$Pod[d$Pod=="J1 "]<-"J1"#
+d$Pod[d$Pod=="K "|d$Pod=="K  "]<-"K"#
+#
+d$Pod[d$Pod=="Kp"|d$Pod=="KP"|d$Pod=="Kp  "|d$Pod=="Kp  "]<-"Kp"#
+d$Pod[d$Pod=="L "|d$Pod=="L  "|d$Pod=="Ls"]<-"L"#
+d$Pod[d$Pod=="LP"|d$Pod=="Lp  "|d$Pod=="Lp "|d$Pod=="Lp?"]<-"Lp"#
+d$Pod[d$Pod=="JK "|d$Pod=="JK  "|d$Pod=="JK   "]<-"JK"#
+#
+d$Pod[d$Pod=="JL "|d$Pod=="JL  "|d$Pod=="JL   "]<-"JL"#
+d$Pod[d$Pod=="KL "|d$Pod=="KL  "|d$Pod=="LK"]<-"KL"#
+d$Pod[d$Pod=="KpL "|d$Pod=="KpL  "]<-"KpL"#
+d$Pod[d$Pod=="JL "|d$Pod=="JL  "|d$Pod=="JL   "]<-"JL"#
+d$Pod[d$Pod=="JKl"|d$Pod=="JKL  "]<-"JKL"#
+#
+d$Pod[d$Pod=="T"|d$Pod=="Ts "]<-"Ts"#
+d$Pod[d$Pod=="Orca"|d$Pod=="orca"|d$Pod=="orcas"]<-"Orcas"#
+d$Pod[d$Pod=="SR"|d$Pod=="sRs"|d$Pod=="S"|d$Pod=="SWKW"|d$Pod=="SRS"]<-"SRs"#
+# 3. Clean the Likely Pod column#
+#
+d$LikelyPod[d$LikelyPod==" J"|d$LikelyPod=="J "|d$LikelyPod=="J  "|d$LikelyPod=="J   "]<-"J"#
+d$LikelyPod[d$LikelyPod=="J1 "]<-"J1"#
+d$LikelyPod[d$LikelyPod=="L "|d$LikelyPod=="L  "]<-"L"#
+d$LikelyPod[d$LikelyPod=="JK "|d$LikelyPod=="JK  "]<-"JK"#
+d$LikelyPod[d$LikelyPod=="JL "]<-"JL"#
+d$LikelyPod[d$LikelyPod=="JLP"]<-"JLp"#
+d$LikelyPod[d$LikelyPod=="JKLp "|d$LikelyPod=="JKLp  "]<-"JKLp"#
+d$LikelyPod[d$LikelyPod=="JKp  "|d$LikelyPod=="JKp "]<-"JKp"#
+d$LikelyPod[d$LikelyPod=="Jp  "|d$LikelyPod=="Jp "]<-"Jp"#
+d$LikelyPod[d$LikelyPod=="KL "|d$LikelyPod=="KL  "]<-"KL"#
+#
+d$LikelyPod[d$LikelyPod=="SR"|d$LikelyPod=="sRs"|d$LikelyPod=="S"]<-"SRs"#
+d$LikelyPod[d$LikelyPod=="T"|d$LikelyPod=="Ts "]<-"Ts"#
+#4. Clean Year column#
+d$Year[d$Year==0]<-2001#
+#
+#5. Clean the FishArea column and format them to match the WDFW rec data formatting#
+d$FishArea[d$FishArea=="1"]<-"01"#
+d$FishArea[d$FishArea=="2"]<-"02"#
+d$FishArea[d$FishArea=="3"]<-"03"#
+d$FishArea[d$FishArea=="4"]<-"04"#
+d$FishArea[d$FishArea=="5"]<-"05"#
+d$FishArea[d$FishArea=="6"]<-"06"#
+d$FishArea[d$FishArea=="7"]<-"07"#
+d$FishArea[d$FishArea=="8"]<-"08"#
+d$FishArea[d$FishArea=="9"]<-"09"#
+d$FishArea[d$FishArea=="8-1"|d$FishArea=="8.1"]<-"81"#
+d$FishArea[d$FishArea=="8-2"|d$FishArea=="8.2"]<-"82"#
+#
+#6. #Remove non-orca data#
+d<-d[d$LikelyPod!="HB?"|d$LikelyPod!="Not Orcas",]
+d <- read.csv("data/AppendixII.csv")
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"#
+d$Pod[d$Pod=="Jp "|d$Pod=="Jp  "|d$Pod=="Js"]<-"Jp"#
+d$Pod[d$Pod=="J1 "]<-"J1"#
+d$Pod[d$Pod=="K "|d$Pod=="K  "]<-"K"#
+#
+# 2. Clean the Pod column
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"#
+d$Pod[d$Pod=="Jp "|d$Pod=="Jp  "|d$Pod=="Js"]<-"Jp"#
+d$Pod[d$Pod=="J1 "]<-"J1"#
+d$Pod[d$Pod=="K "|d$Pod=="K  "]<-"K"#
+#
+d$Pod[d$Pod=="Kp"|d$Pod=="KP"|d$Pod=="Kp  "|d$Pod=="Kp  "]<-"Kp"#
+d$Pod[d$Pod=="L "|d$Pod=="L  "|d$Pod=="Ls"]<-"L"#
+d$Pod[d$Pod=="LP"|d$Pod=="Lp  "|d$Pod=="Lp "|d$Pod=="Lp?"]<-"Lp"#
+d$Pod[d$Pod=="JK "|d$Pod=="JK  "|d$Pod=="JK   "]<-"JK"#
+#
+d$Pod[d$Pod=="JL "|d$Pod=="JL  "|d$Pod=="JL   "]<-"JL"#
+d$Pod[d$Pod=="KL "|d$Pod=="KL  "|d$Pod=="LK"]<-"KL"#
+d$Pod[d$Pod=="KpL "|d$Pod=="KpL  "]<-"KpL"#
+d$Pod[d$Pod=="JL "|d$Pod=="JL  "|d$Pod=="JL   "]<-"JL"#
+d$Pod[d$Pod=="JKl"|d$Pod=="JKL  "]<-"JKL"#
+#
+d$Pod[d$Pod=="T"|d$Pod=="Ts "]<-"Ts"#
+d$Pod[d$Pod=="Orca"|d$Pod=="orca"|d$Pod=="orcas"]<-"Orcas"#
+d$Pod[d$Pod=="SR"|d$Pod=="sRs"|d$Pod=="S"|d$Pod=="SWKW"|d$Pod=="SRS"]<-"SRs"
+d$LikelyPod[d$LikelyPod==" J"|d$LikelyPod=="J "|d$LikelyPod=="J  "|d$LikelyPod=="J   "]<-"J"#
+d$LikelyPod[d$LikelyPod=="J1 "]<-"J1"#
+d$LikelyPod[d$LikelyPod=="L "|d$LikelyPod=="L  "]<-"L"#
+d$LikelyPod[d$LikelyPod=="JK "|d$LikelyPod=="JK  "]<-"JK"#
+d$LikelyPod[d$LikelyPod=="JL "]<-"JL"#
+d$LikelyPod[d$LikelyPod=="JLP"]<-"JLp"#
+d$LikelyPod[d$LikelyPod=="JKLp "|d$LikelyPod=="JKLp  "]<-"JKLp"#
+d$LikelyPod[d$LikelyPod=="JKp  "|d$LikelyPod=="JKp "]<-"JKp"#
+d$LikelyPod[d$LikelyPod=="Jp  "|d$LikelyPod=="Jp "]<-"Jp"#
+d$LikelyPod[d$LikelyPod=="KL "|d$LikelyPod=="KL  "]<-"KL"#
+#
+d$LikelyPod[d$LikelyPod=="SR"|d$LikelyPod=="sRs"|d$LikelyPod=="S"]<-"SRs"#
+d$LikelyPod[d$LikelyPod=="T"|d$LikelyPod=="Ts "]<-"Ts"#
+#4. Clean Year column#
+d$Year[d$Year==0]<-2001#
+#
+#5. Clean the FishArea column and format them to match the WDFW rec data formatting#
+d$FishArea[d$FishArea=="1"]<-"01"#
+d$FishArea[d$FishArea=="2"]<-"02"#
+d$FishArea[d$FishArea=="3"]<-"03"#
+d$FishArea[d$FishArea=="4"]<-"04"#
+d$FishArea[d$FishArea=="5"]<-"05"#
+d$FishArea[d$FishArea=="6"]<-"06"#
+d$FishArea[d$FishArea=="7"]<-"07"#
+d$FishArea[d$FishArea=="8"]<-"08"#
+d$FishArea[d$FishArea=="9"]<-"09"#
+d$FishArea[d$FishArea=="8-1"|d$FishArea=="8.1"]<-"81"#
+d$FishArea[d$FishArea=="8-2"|d$FishArea=="8.2"]<-"82"#
+#
+#6. #Remove non-orca data#
+d<-d[d$LikelyPod!="HB?"|d$LikelyPod!="Not Orcas",]
+d$Year[d$Year==0]<-2001
+d$FishArea[d$FishArea=="1"]<-"01"
+d$FishArea[d$FishArea=="1"]
+head(ID)
+head(d)
+d$FishArea[d$FishArea=="1"]
+#Code for Cleaning OrcaMaster Database#
+setwd("~/Documents/GitHub/fishphen")#
+#
+#d <- read.csv("data/AppendixII.csv")#
+#
+#d = Appendix II#
+#1. Clean the Pod Column#
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"#
+d$Pod[d$Pod=="Jp "|d$Pod=="Jp  "|d$Pod=="Js"]<-"Jp"#
+d$Pod[d$Pod=="J1 "]<-"J1"#
+d$Pod[d$Pod=="K "|d$Pod=="K  "]<-"K"#
+#
+# 2. Clean the Pod column#
+#
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"#
+d$Pod[d$Pod=="Jp "|d$Pod=="Jp  "|d$Pod=="Js"]<-"Jp"#
+d$Pod[d$Pod=="J1 "]<-"J1"#
+d$Pod[d$Pod=="K "|d$Pod=="K  "]<-"K"#
+#
+d$Pod[d$Pod=="Kp"|d$Pod=="KP"|d$Pod=="Kp  "|d$Pod=="Kp  "]<-"Kp"#
+d$Pod[d$Pod=="L "|d$Pod=="L  "|d$Pod=="Ls"]<-"L"#
+d$Pod[d$Pod=="LP"|d$Pod=="Lp  "|d$Pod=="Lp "|d$Pod=="Lp?"]<-"Lp"#
+d$Pod[d$Pod=="JK "|d$Pod=="JK  "|d$Pod=="JK   "]<-"JK"#
+#
+d$Pod[d$Pod=="JL "|d$Pod=="JL  "|d$Pod=="JL   "]<-"JL"#
+d$Pod[d$Pod=="KL "|d$Pod=="KL  "|d$Pod=="LK"]<-"KL"#
+d$Pod[d$Pod=="KpL "|d$Pod=="KpL  "]<-"KpL"#
+d$Pod[d$Pod=="JL "|d$Pod=="JL  "|d$Pod=="JL   "]<-"JL"#
+d$Pod[d$Pod=="JKl"|d$Pod=="JKL  "]<-"JKL"#
+#
+d$Pod[d$Pod=="T"|d$Pod=="Ts "]<-"Ts"#
+d$Pod[d$Pod=="Orca"|d$Pod=="orca"|d$Pod=="orcas"]<-"Orcas"#
+d$Pod[d$Pod=="SR"|d$Pod=="sRs"|d$Pod=="S"|d$Pod=="SWKW"|d$Pod=="SRS"]<-"SRs"#
+# 3. Clean the Likely Pod column#
+#
+d$LikelyPod[d$LikelyPod==" J"|d$LikelyPod=="J "|d$LikelyPod=="J  "|d$LikelyPod=="J   "]<-"J"#
+d$LikelyPod[d$LikelyPod=="J1 "]<-"J1"#
+d$LikelyPod[d$LikelyPod=="L "|d$LikelyPod=="L  "]<-"L"#
+d$LikelyPod[d$LikelyPod=="JK "|d$LikelyPod=="JK  "]<-"JK"#
+d$LikelyPod[d$LikelyPod=="JL "]<-"JL"#
+d$LikelyPod[d$LikelyPod=="JLP"]<-"JLp"#
+d$LikelyPod[d$LikelyPod=="JKLp "|d$LikelyPod=="JKLp  "]<-"JKLp"#
+d$LikelyPod[d$LikelyPod=="JKp  "|d$LikelyPod=="JKp "]<-"JKp"#
+d$LikelyPod[d$LikelyPod=="Jp  "|d$LikelyPod=="Jp "]<-"Jp"#
+d$LikelyPod[d$LikelyPod=="KL "|d$LikelyPod=="KL  "]<-"KL"#
+#
+d$LikelyPod[d$LikelyPod=="SR"|d$LikelyPod=="sRs"|d$LikelyPod=="S"]<-"SRs"#
+d$LikelyPod[d$LikelyPod=="T"|d$LikelyPod=="Ts "]<-"Ts"#
+#4. Clean Year column#
+d$Year[d$Year==0]<-2001
+setwd("~/Documents/GitHub/fishphen")#
+rm(list=ls()) #
+options(stringsAsFactors = FALSE)
+d <- read.csv("data/AppendixII.csv")
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"#
+d$Pod[d$Pod=="Jp "|d$Pod=="Jp  "|d$Pod=="Js"]<-"Jp"#
+d$Pod[d$Pod=="J1 "]<-"J1"#
+d$Pod[d$Pod=="K "|d$Pod=="K  "]<-"K"#
+#
+# 2. Clean the Pod column#
+#
+d$Pod[d$Pod=="j"|d$Pod==" J"|d$Pod=="J "|d$Pod=="J  "|d$Pod=="J   "|d$Pod=="J "|d$Pod=="J  "]<-"J"#
+d$Pod[d$Pod=="Jp "|d$Pod=="Jp  "|d$Pod=="Js"]<-"Jp"#
+d$Pod[d$Pod=="J1 "]<-"J1"#
+d$Pod[d$Pod=="K "|d$Pod=="K  "]<-"K"#
+#
+d$Pod[d$Pod=="Kp"|d$Pod=="KP"|d$Pod=="Kp  "|d$Pod=="Kp  "]<-"Kp"#
+d$Pod[d$Pod=="L "|d$Pod=="L  "|d$Pod=="Ls"]<-"L"#
+d$Pod[d$Pod=="LP"|d$Pod=="Lp  "|d$Pod=="Lp "|d$Pod=="Lp?"]<-"Lp"#
+d$Pod[d$Pod=="JK "|d$Pod=="JK  "|d$Pod=="JK   "]<-"JK"#
+#
+d$Pod[d$Pod=="JL "|d$Pod=="JL  "|d$Pod=="JL   "]<-"JL"#
+d$Pod[d$Pod=="KL "|d$Pod=="KL  "|d$Pod=="LK"]<-"KL"#
+d$Pod[d$Pod=="KpL "|d$Pod=="KpL  "]<-"KpL"#
+d$Pod[d$Pod=="JL "|d$Pod=="JL  "|d$Pod=="JL   "]<-"JL"#
+d$Pod[d$Pod=="JKl"|d$Pod=="JKL  "]<-"JKL"#
+#
+d$Pod[d$Pod=="T"|d$Pod=="Ts "]<-"Ts"#
+d$Pod[d$Pod=="Orca"|d$Pod=="orca"|d$Pod=="orcas"]<-"Orcas"#
+d$Pod[d$Pod=="SR"|d$Pod=="sRs"|d$Pod=="S"|d$Pod=="SWKW"|d$Pod=="SRS"]<-"SRs"#
+# 3. Clean the Likely Pod column#
+#
+d$LikelyPod[d$LikelyPod==" J"|d$LikelyPod=="J "|d$LikelyPod=="J  "|d$LikelyPod=="J   "]<-"J"#
+d$LikelyPod[d$LikelyPod=="J1 "]<-"J1"#
+d$LikelyPod[d$LikelyPod=="L "|d$LikelyPod=="L  "]<-"L"#
+d$LikelyPod[d$LikelyPod=="JK "|d$LikelyPod=="JK  "]<-"JK"#
+d$LikelyPod[d$LikelyPod=="JL "]<-"JL"#
+d$LikelyPod[d$LikelyPod=="JLP"]<-"JLp"#
+d$LikelyPod[d$LikelyPod=="JKLp "|d$LikelyPod=="JKLp  "]<-"JKLp"#
+d$LikelyPod[d$LikelyPod=="JKp  "|d$LikelyPod=="JKp "]<-"JKp"#
+d$LikelyPod[d$LikelyPod=="Jp  "|d$LikelyPod=="Jp "]<-"Jp"#
+d$LikelyPod[d$LikelyPod=="KL "|d$LikelyPod=="KL  "]<-"KL"#
+#
+d$LikelyPod[d$LikelyPod=="SR"|d$LikelyPod=="sRs"|d$LikelyPod=="S"]<-"SRs"#
+d$LikelyPod[d$LikelyPod=="T"|d$LikelyPod=="Ts "]<-"Ts"#
+#4. Clean Year column#
+d$Year[d$Year==0]<-2001
+d$FishArea[d$FishArea=="1"]<-"01"
+d$FishArea[d$FishArea=="2"]<-"02"#
+d$FishArea[d$FishArea=="3"]<-"03"#
+d$FishArea[d$FishArea=="4"]<-"04"#
+d$FishArea[d$FishArea=="5"]<-"05"#
+d$FishArea[d$FishArea=="6"]<-"06"#
+d$FishArea[d$FishArea=="7"]<-"07"#
+d$FishArea[d$FishArea=="8"]<-"08"#
+d$FishArea[d$FishArea=="9"]<-"09"#
+d$FishArea[d$FishArea=="8-1"|d$FishArea=="8.1"]<-"81"#
+d$FishArea[d$FishArea=="8-2"|d$FishArea=="8.2"]<-"82"
+#6. #Remove non-orca data#
+d<-d[d$LikelyPod!="HB?"|d$LikelyPod!="Not Orcas",]
+dlat<-d[d$FishArea=="" & d$SRKW==1,]
+dlat<-dlat[as.numeric(dlat$ActLat)>45,]
+dlat<-dlat[order(as.numeric(dlat$ActLat)),]
+write.csv(dlat,"analyses/output/needfisharea.csv", row.names=FALSE)
+d$Year[d$Year==0]
+head(dlat)
+dlat<-d[d$FishArea=="" & d$SRKW==1,]
+head(dlat)
+unique(d$LikelyPod)
+rm(list=ls()) #
+options(stringsAsFactors = FALSE)#
+#
+# Set working directory: #
+setwd("~/Documents/GitHub/fishphen")
+d <- read.csv("data/AppendixII.csv")
+source("analyses/clean_orca.R")
+#Create a new column that combines Pod and Likely Pod columna and removes spaces#
+  d$Pod.cl<-d$Pod#
+#Always use Likely Pod column, when it is not blank:#
+d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" "]<-d$LikelyPod[d$LikelyPod!="" & d$LikelyPod!=" "]#
+#perhaps also stick with Pod when LikelyPod has a "?" grep("?",d$LikelyPod,)#
+#
+d$Pod.cl[d$Pod.cl=="j"|d$Pod.cl==" J"|d$Pod.cl=="J "|d$Pod.cl=="J  "|d$Pod.cl=="J   "|d$Pod.cl=="J?"|d$Pod.cl=="J "|d$Pod.cl=="J  "|d$Pod.cl=="J+"|d$Pod.cl=="Jp"|d$Pod.cl=="Jp "|d$Pod.cl=="Jp  "|d$Pod.cl=="Jp?"| d$Pod.cl=="Js"]<-"J"#
+d$Pod.cl[d$Pod.cl=="J1 "]<-"J1"#
+d$Pod.cl[d$Pod.cl=="K "|d$Pod.cl=="K  "|d$Pod.cl=="K?"|d$Pod.cl=="K+"|d$Pod.cl=="Kp"|d$Pod.cl=="KP"|d$Pod.cl=="Kp  "|d$Pod.cl=="Kp  "]<-"K"#
+d$Pod.cl[d$Pod.cl=="L "|d$Pod.cl=="L  "|d$Pod.cl=="L?"|d$Pod.cl=="L+"|d$Pod.cl=="L+?"|d$Pod.cl=="LP"|d$Pod.cl=="Lp  "|d$Pod.cl=="Lp "|d$Pod.cl=="Lp?"|d$Pod.cl=="Ls"|d$Pod.cl=="Ls?"]<-"L"#
+d$Pod.cl[d$Pod.cl=="JK "|d$Pod.cl=="JK  "|d$Pod.cl=="JK   "|d$Pod.cl=="J?K?"|d$Pod.cl=="KJ?"|d$Pod.cl=="JK+"|d$Pod.cl=="JKp+"|d$LikelyPod=="Jp+K?"]<-"JK"#
+d$Pod.cl[d$Pod.cl=="JL "|d$Pod.cl=="JL  "|d$Pod.cl=="JL   "|d$Pod.cl=="JLp? "|d$Pod.cl=="JpLp?"|d$Pod.cl=="JLp"]<-"JL"#
+d$Pod.cl[d$Pod.cl=="KL "|d$Pod.cl=="KL  "|d$Pod.cl=="KL?"|d$Pod.cl=="KL+? "|d$Pod.cl=="KpLp"|d$Pod.cl=="KpL"|d$Pod.cl=="KpL "|d$Pod.cl=="KpL  "|d$Pod.cl=="KpLp?"|d$Pod.cl=="LK"|d$Pod.cl=="LK?"]<-"KL"#
+d$Pod.cl[d$Pod.cl=="JL "|d$Pod.cl=="JL  "|d$Pod.cl=="JL   "|d$Pod.cl=="JLp? "|d$Pod.cl=="JpLp?"|d$Pod.cl=="JLp"]<-"JL"#
+d$Pod.cl[d$Pod.cl=="JKLp"|d$Pod.cl=="JKLm"|d$Pod.cl=="JKl"|d$Pod.cl=="JKL  "|d$Pod.cl=="JKL?"|d$Pod.cl=="JKLm"|d$Pod.cl=="JpKL"|d$Pod.cl=="JKLp"]<-"JKL"#
+#
+d$Pod.cl[d$Pod.cl=="O?"|d$Pod.cl=="Ts?"]<-"Ts"#
+sort(unique(d$Pod.cl))
+d<-d[d$Pod.cl!="HB?"|d$Pod.cl!="Not Orcas",]
+d$J<-0
+d$J<-0
+d$J<-0#
+d$J[grep("J",d$Pod.cl)]<- 1#
+d$K<-0#
+d$K[grep("K",d$Pod.cl)]<- 1#
+d$L<-0#
+d$L[grep("L",d$Pod.cl)]<- 1#
+d$SRKW<-0#
+d$SRKW[grep("SR",d$Pod.cl)]<- 1#
+d$SRKW[d$J==1|d$K==1|d$L==1]<- 1
+dlat<-d[d$FishArea=="" & d$SRKW==1,]#
+dlat<-dlat[as.numeric(dlat$ActLat)>45,]#
+#717 rows have no Fishing area, even though they may have a lat/long#
+#sort by Pod or Likely Pod#
+dlat<-dlat[order(as.numeric(dlat$ActLat)),]
+head(dlat)
+dlat<-dlat[as.numeric(dlat$ActLat)<49,]
+dim(dlat)
+dlat<-d[d$FishArea=="" & d$SRKW==1,]#
+dlat<-dlat[as.numeric(dlat$ActLat)>45,]#
+dlat<-dlat[as.numeric(dlat$ActLat)<49,]
+dlat<-dlat[as.numeric(dlat$ActLong)>125,]
+dim(dlat)
+dlat<-d[d$FishArea=="" & d$SRKW==1,]#
+dlat<-dlat[as.numeric(dlat$ActLat)>45,]#
+dlat<-dlat[as.numeric(dlat$ActLat)<49,]#
+dlat<-dlat[as.numeric(dlat$ActLong)<125,]
+dim(dlat)
+dlat<-d[d$FishArea=="" & d$SRKW==1,]#
+dlat<-dlat[as.numeric(dlat$ActLat)>46,]#
+dlat<-dlat[as.numeric(dlat$ActLat)<49,]#
+dlat<-dlat[as.numeric(dlat$ActLong)<125,]
+dim(dlat)
+dlat<-dlat[order(as.numeric(dlat$ActLat)),]
+dlat<-subset(dlat, select=c(ActLat,ActLong))
+head(dlat)
+write.csv(dlat,"analyses/output/needfisharea.csv", row.names=FALSE)

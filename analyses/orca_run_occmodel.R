@@ -71,7 +71,7 @@ cat("
 ### Read observation data from Acrocephalus arundinaceus
 dat<-read.csv("analyses/output/j_dat.csv",header=T)
 #for starters, run on most recent 7 years only:
-dat<-dat[dat$year>2010,]
+#dat<-dat[dat$year>2010,]
 
 ### The following procedure is based on the models presented in Crainiceanu et al. 2005 and in Gimenez et al. 2006 
 # Degree of splines
@@ -116,8 +116,7 @@ zst <- array(1, dim=c(nsite,nyear))
 y <- dat$ndet
 
 # Simulation parameters
-ni=1000; nc=2; nb=10; nt=50
-
+ni=5000; nc=2; nb=2500; nt=50
 # List input data
 jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots","n","X","Z","nc", "nb", "ni", "nt","zst","y")
 
@@ -130,7 +129,6 @@ parameters <- c("a","b","c","b.k","lp","psi","taub")
 ### Run MCMC Analysis using jags
 
 jags.out<-jags.parallel(jags.data,f.inits,parameters,"splinesSiteOcc S4.txt",nc,ni,nb,nt)
-#not working for orca data- maybe need to limit to sites observed in all years
 
 
 out<-jags.out$BUGSoutput
@@ -187,7 +185,7 @@ intercept<-mean(r[,1],na.rm=T)
 slope<-mean(r[,2],na.rm=T)
 
 ### Write results (in console if argument file is not specified in function cat)
-cat(paste("summary results","k pod"),"\n",
+cat(paste("summary results","j pod"),"\n",
     paste("annual change of activity peak:", round(mean(slopevec,na.rm=T),digits=2),"days"),
     paste("confidence interval from", round(quantile(slopevec,0.025,na.rm=T),digits=2),
           "to",round(quantile(slopevec,0.975,na.rm=T),digits=2)),
