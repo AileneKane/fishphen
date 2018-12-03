@@ -219,7 +219,7 @@ abline(a=intercept,b=slope,lty=2,col=colors()[200])
 ### Plot annual detectability pattern
 # loop over all years
 years<-sort(unique(as.numeric((dat$year))))
-for (xj in 1:10) {
+for (xj in 1:length(years)) {
   j<-years[xj]
   
   # Get BUGS estimates
