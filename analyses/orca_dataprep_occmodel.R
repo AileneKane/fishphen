@@ -28,6 +28,9 @@ d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" "]<-d$LikelyPod[d$LikelyPod!="" & d$Li
 #remove non-orca data
 d<-d[d$Pod.cl!="HB?"|d$Pod.cl!="Not Orcas",]
 
+#only using fishing areas in Washington's Salish Sea
+d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
+
 
 #Add week and day of year (day)
 d$day<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"),format= "%j")
@@ -59,7 +62,10 @@ d<-d[d$Year>1978,]
 #of all SRKWs during each week of each year year to estimate detection
 #d$wkyrfa<-paste(d$Year, d$week,d$FishArea,sep="_")#if we decide to add FishArea to detection estimates for model
 #d$wkyr<-paste(d$Year, d$week,sep="_")
+unique(d$FishArea)
 d$yrdayfa<-paste(d$Year, d$day,d$FishArea,sep="_")
+
+
 #Raw detection ratios:
 obs = aggregate(Orcas ~yrdayfa, data = d,sum)
 
@@ -107,19 +113,19 @@ write.csv(jdet,"analyses/output/j_dat.csv",row.names = FALSE)
 #det$Lprop<-det$Lobs/det$totob
 
 #years<-unique(det$year)
-for(i in 1:length(years)){
-  quartz(width=9,height=4)
-  par(mfrow=c(1,3))
-  yrdet=det[det$year==years[i],]
-  barplot(yrdet$Jprop,names.arg=yrdet$wk, main="J")
-  mtext("Detectability index", side=2, line=2, cex=0.9)
-  mtext("Week", side=1, line=2, cex=0.9)
-  barplot(yrdet$Kprop,names.arg=yrdet$wk, main="K")
-  mtext("Week", side=1, line=2, cex=0.9)
-  mtext(paste(years[i]), side=1, line=3)
-  barplot(yrdet$Lprop,names.arg=yrdet$wk, main="L")
-  mtext("Week", side=1, line=2, cex=0.9)
-}
+#for(i in 1:length(years)){
+#  quartz(width=9,height=4)
+#  par(mfrow=c(1,3))
+#  yrdet=det[det$year==years[i],]
+#  barplot(yrdet$Jprop,names.arg=yrdet$wk, main="J")
+#  mtext("Detectability index", side=2, line=2, cex=0.9)
+#  mtext("Week", side=1, line=2, cex=0.9)
+#  barplot(yrdet$Kprop,names.arg=yrdet$wk, main="K")
+#  mtext("Week", side=1, line=2, cex=0.9)
+#  mtext(paste(years[i]), side=1, line=3)
+#  barplot(yrdet$Lprop,names.arg=yrdet$wk, main="L")
+#  mtext("Week", side=1, line=2, cex=0.9)
+#}
 # Questions about full model: what to use for J (number of days in a season)
 # I think season length can vary from one year to the next
 # Fit the model separately for each pod (min day in the year- max day in the year- may be 365 in some years)

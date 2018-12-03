@@ -105,6 +105,7 @@ Z<-t(solve(sqrt.OMEGA_all,t(Z_K)))
 dat$site <- factor(dat$site)#move this to the dataprep file
 dat$site <- droplevels(dat$site)#move this to the dataprep file
 dat$site <- as.integer(dat$site)#move this to the dataprep file
+
 site <- dat$site
 survey <- dat$day-min(dat$day)+1
 nobs <- length(unique(paste(dat$site,dat$day,dat$year)))
@@ -176,9 +177,9 @@ do.lm<-function(x) {
 }
 r<-matrix(NA,dim(lpmax)[1],2)
 for (o in 1:(dim(lpmax)[1])) {
-  if(!is.na(sum(lpmax[o,]))) {
+ # if(!is.na(sum(lpmax[o,]))) {
     lm(lpmax[o,]~as.numeric(colnames(lpmax)))$coefficients->r[o,]
-  }    
+  #}    
 }
 slopevec<-as.vector(r[,2])
 intercept<-mean(r[,1],na.rm=T)
@@ -206,19 +207,19 @@ par(mfrow=c(1,1))
 par(mai=c(1,1,1,0.5))
 x=rownames(ann.res)
 y=ann.res[,"mean"]
-plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n","Acrocephalus arundinaceus"),
+plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n","J Pod"),
      ylim=c(min(ann.res, na.rm = TRUE),max(ann.res, na.rm = TRUE)),pch=16,type="p", col="black")
 lines(x,ann.res[,"2.5%"],col="grey",lwd=2)
 lines(x,ann.res[,"97.5%"],col="grey",lwd=2)  
 axis(side=1,at=x)
-axis(side=2,at=c(121,135,152,166),
-     labels=c("1May","15May","1Jun","15Jun"))
+axis(side=2,at=c(60,121,182,244,305),
+     labels=c("1Mar","1May","1Jul","1Sep","1Nov"))
 abline(a=intercept,b=slope,lty=2,col=colors()[200])
 
 ### Plot annual detectability pattern
 # loop over all years
 years<-sort(unique(as.numeric((dat$year))))
-for (xj in 1:nyear) {
+for (xj in 1:10) {
   j<-years[xj]
   
   # Get BUGS estimates
@@ -242,9 +243,10 @@ for (xj in 1:nyear) {
   barheight[as.numeric(names(res.height))*7-3+min(dat$day)]<-res.height
   
   # plot bars
+  quartz()
   barplot(as.numeric(barheight[min(dat$day):max(dat$day)]),
           width=1,space=0,ylim=c(0,max(res[3,])),xlab="", ylab="Detection Probability", 
-          main=paste("Acrocephalus arundinaceus",j),border=NA,axes=F)
+          main=paste("J pod",j),border=NA,axes=F)
   
   ### Plot model estimates  
   # plot seasonal estimates of detectability p
@@ -252,8 +254,9 @@ for (xj in 1:nyear) {
   lines(res[2,],lty=1,col=1,lwd=2) # median
   lines(res[1,],lty=3,col=1,lwd=2.5) # upper bound of the 95% CI
   axis(2)
-  axis(side=1,at=1-min(dat$day)+c(105,121,135,152,166,182),
-       labels=c("15Apr","1May","15May","1Jun","15Jun","1Jul"))     
+  axis(side=1,at=c(1,60,121,182,244,305,365),
+       labels=c("1Jan","1Mar","1May","1Jul","1Sep","1Nov","31Dec"))
+  
 }
 
 dev.off()
