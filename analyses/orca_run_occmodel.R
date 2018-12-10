@@ -68,8 +68,8 @@ cat("
     ",fill = TRUE)
     sink()
 
-### Read observation data from Acrocephalus arundinaceus
-dat<-read.csv("analyses/output/j_dat.csv",header=T)
+### Read observation data from focal pod (created in orca_dataprep_occmodel.R)
+dat<-read.csv("analyses/output/k_dat.csv",header=T)
 #for starters, run on most recent 7 years only:
 #dat<-dat[dat$year>2010,]
 
@@ -117,7 +117,8 @@ zst <- array(1, dim=c(nsite,nyear))
 y <- dat$ndet
 
 # Simulation parameters
-ni=5000; nc=2; nb=2500; nt=50
+ni=15000; nc=4; nb=0; nt=10
+
 # List input data
 jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots","n","X","Z","nc", "nb", "ni", "nt","zst","y")
 
@@ -135,7 +136,7 @@ jags.out<-jags.parallel(jags.data,f.inits,parameters,"splinesSiteOcc S4.txt",nc,
 out<-jags.out$BUGSoutput
 
 # Save model output
-#save(out,file="out S4")
+#save(out,file="kpod out S4")
 
 #I usually run two chains over 50'000 iterations, this takes several hours on my PC (3.4GHz, 4GB RAM)
 #Usually convergence is reached within the first 10'000; I set burnin to 25'000
@@ -186,7 +187,7 @@ intercept<-mean(r[,1],na.rm=T)
 slope<-mean(r[,2],na.rm=T)
 
 ### Write results (in console if argument file is not specified in function cat)
-cat(paste("summary results","j pod"),"\n",
+cat(paste("summary results","k pod"),"\n",
     paste("annual change of activity peak:", round(mean(slopevec,na.rm=T),digits=2),"days"),
     paste("confidence interval from", round(quantile(slopevec,0.025,na.rm=T),digits=2),
           "to",round(quantile(slopevec,0.975,na.rm=T),digits=2)),
@@ -207,7 +208,7 @@ par(mfrow=c(1,1))
 par(mai=c(1,1,1,0.5))
 x=rownames(ann.res)
 y=ann.res[,"mean"]
-plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n","J Pod"),
+plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n","K Pod"),
      ylim=c(min(ann.res, na.rm = TRUE),max(ann.res, na.rm = TRUE)),pch=16,type="p", col="black")
 lines(x,ann.res[,"2.5%"],col="grey",lwd=2)
 lines(x,ann.res[,"97.5%"],col="grey",lwd=2)  
@@ -246,7 +247,7 @@ for (xj in 1:length(years)) {
   quartz()
   barplot(as.numeric(barheight[min(dat$day):max(dat$day)]),
           width=1,space=0,ylim=c(0,max(res[3,])),xlab="", ylab="Detection Probability", 
-          main=paste("J pod",j),border=NA,axes=F)
+          main=paste("K pod",j),border=NA,axes=F)
   
   ### Plot model estimates  
   # plot seasonal estimates of detectability p
