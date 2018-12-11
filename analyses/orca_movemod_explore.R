@@ -39,7 +39,7 @@ x.k <- k2017$Lat.cl
 y.k <- k2017$Long.cl
 
 quartz()
-plot(x, y, type = "b", col = "red", pch = 16, main = "Start is at black plus sign", ylab = "Latitude", xlab = "Longitude",ylim = rev(range(y)),xlim = rev(range(x)))
+plot(x, y, type = "b", col = "red", pch = 16, main = "Start is at black letter", ylab = "Latitude", xlab = "Longitude",ylim = rev(range(y)),xlim = rev(range(x)))
 n <- length(x)
 points(x.k,y.k, type = "b",col="blue",pch = 16,)
 points(x[1], y[1], col = "black", pch = "J", cex = 2)
