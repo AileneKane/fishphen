@@ -232,3 +232,13 @@ points(SRs$week,SRs$SRKW)
 axis(side = 4)
 mtext(side = 4, line = 2, 'Orca obs', cex=0.7)
 
+##Make plots of effort over time, for orcas and chinook
+quartz(height=7, width=20)
+par(mfrow=c(1,3))
+
+plot(obs$Year,obs$totobsyr,type="b",pch=16,col="black",xlab="Year",ylab="Number of observations", main="Orcas")
+chinboats = aggregate(Boats ~Year, data = dat,sum)
+chinanglers = aggregate(Anglers ~Year, data = dat,sum)
+
+plot(chinboats$Year,chinboats$Boats,type="b",pch=16,col="black",xlab="Year",ylab="Number of boats", main="Chinook-Boats")
+plot(chinanglers$Year,chinanglers$Anglers,type="b",pch=16,col="black",xlab="Year",ylab="Number of Anglers", main="Chinook-Anglers")

@@ -2,9 +2,9 @@
 # Orca phenology occupancy model, based on the
 # Worked example to run the model presented in Strebel et al., 2014
 # (Study of phenology by flexible estimation and modeling of seasonal detectability peaks)
-# Author: Ailene Ettinger, ailene.ettinger@noaa.gov
-# (modifed from code of  Nicolas Strebel, nicolas_strebel@gmx.ch
-# Date:	November 27, 2018
+# Ailene Ettinger, ailene.ettinger@noaa.gov
+# (modifed from code of  Nicolas Strebel, nicolas_strebel@gmx.ch)
+# Start Date:	November 27, 2018
 # Title:	orca_run_occ_model
 ##################################################################
 #-----------------------------------------------------------------
@@ -15,6 +15,7 @@ setwd("~/Documents/GitHub/fishphen")
 
 # Load libraries
 library(R2jags)
+
 # Specify model in BUGS language
 sink("analyses/splinesSiteOcc S4.txt")
 cat("
