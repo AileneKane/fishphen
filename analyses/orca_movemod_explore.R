@@ -41,9 +41,20 @@ y.k <- k2017$Long.cl
 quartz()
 plot(x, y, type = "b", col = "red", pch = 16, main = "Start is at black letter", ylab = "Latitude", xlab = "Longitude",ylim = rev(range(y)),xlim = rev(range(x)))
 n <- length(x)
-points(x.k,y.k, type = "b",col="blue",pch = 16,)
+points(x.k,y.k, type = "b",col="blue",pch = 16)
 points(x[1], y[1], col = "black", pch = "J", cex = 2)
 points(x.k[1], y.k[1], col = "black", pch = "K", cex = 2)
+
+#Add map behind it- the below needs work!
+mapDevice() #create world map shaped window
+map("world", fill=TRUE
+    ,col="grey65"
+    ,boundary=F,interior=F
+    ,ylim=c(-124, -122), xlim=c(47,50)
+    ,projection='albers',par=c(0,0),wrap=T
+    ,resolution=1,border="lightgrey",myborder=0)
+
+
 
 # Dynamic plot (browse through)
 range.x <- range(x)
