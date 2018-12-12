@@ -31,6 +31,11 @@ d<-d[d$Pod.cl!="HB?"|d$Pod.cl!="Not Orcas",]
 #only using fishing areas in Washington's Salish Sea
 d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
 
+#Only use fishing areas that have atleast 4 years with >20 observations:
+tab.fa.yr<-table(d$FishArea,d$Year)
+tab.fa.yr[tab.fa.yr < 20] <- 0
+tab.fa.yr[tab.fa.yr >= 20] <- 1
+###Need to then select only the fishing areas that are 1 in tab.fa.yr
 
 #Add week and day of year (day)
 d$day<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"),format= "%j")
