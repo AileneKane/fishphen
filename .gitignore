@@ -9,3 +9,6 @@ analyses/clean_orca.R
 .DS_Store
 analyses/.DS_Store
 analyses/figures/.DS_Store
+.RDataTmp
+.RData
+.Rhistory
