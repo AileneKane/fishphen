@@ -1,4 +1,7 @@
-#Exploring the orcamaster data frmo 2017
+#Plot orcamaster data with chinook data, by area
+#Goal is to evaluate area of overlap between two species in particular years
+#Plan: Divide into seasons (Week0-20, Wekk 21-40, and Week 41-53). this seems to fit with different chinook runs (and possibly with other species runs)
+#Start with JPod only
 #housekeeping
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
@@ -11,6 +14,8 @@ library(mgcv)
 library(dplyr)
 # 1. Get the data
 d <- read.csv("data/AppendixII.csv")
+# or just jpod?
+dat<-read.csv("analyses/output/j_dat.csv",header=T)
 
 # 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
 source("analyses/clean_orca.R")
