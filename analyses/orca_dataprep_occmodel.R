@@ -35,6 +35,9 @@ d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","1
 tab.fa.yr<-table(d$FishArea,d$Year)
 tab.fa.yr[tab.fa.yr < 20] <- 0
 tab.fa.yr[tab.fa.yr >= 20] <- 1
+sites.touse<-rownames(tab.fa.yr)[rowSums(tab.fa.yr)>4]
+d<-d[d$FishArea %in% c(sites.touse),]
+
 ###Need to then select only the fishing areas that are 1 in tab.fa.yr
 
 #Add week and day of year (day)
@@ -53,9 +56,6 @@ d$SRKW<-0
 d$SRKW[grep("SR",d$Pod.cl)]<- 1
 d$SRKW[d$J==1|d$K==1|d$L==1]<- 1   
 d$Orcas<-1
-
-# Restrict analysis to only SRKWs (pods J,K,L)
-#d<-d[d$SRKW==1,]#do not do this for now- perhaps this will  reduce the number of "perfect detections"?
 
 #only data after 1978
 d<-d[d$Year>1978,]
@@ -88,22 +88,29 @@ det$site<-as.numeric(as.factor(det$site))
 det$day<-as.numeric(det$day)
 det$year<-as.numeric(det$year)
 
-jdet<-subset(det,select=c(nrep,Jobs,site,day,year))
+#Add a column for "season" and divide up by season.
+#Add a column for "season" and divide up by season.
+det$season<-1#winter
+det$season[det$day>90]<-2#spring
+det$season[det$day>181]<-3#summer
+det$season[det$day>274]<-4#fall
+
+
+
+jdet<-subset(det,select=c(nrep,Jobs,site,day,year,season))
 #remove any rows with 0s in them
 #i.e. use only sites that have atleast 1 observation in all years
 
 jdet <- jdet[apply(jdet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 #jdet<- jdet[apply(jdet,1,function(row) all(row!=0)),]
-kdet<-subset(det,select=c(nrep,Kobs,site,day,year))
+kdet<-subset(det,select=c(nrep,Kobs,site,day,year,season))
 kdet <- kdet[apply(kdet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 
-ldet<-subset(det,select=c(nrep,Lobs,site,day,year))
+ldet<-subset(det,select=c(nrep,Lobs,site,day,year,season))
 ldet <- ldet[apply(ldet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 colnames(jdet)[2]<-colnames(kdet)[2]<-colnames(ldet)[2]<-"ndet"
-#i coudn't run model code, perhaps because some years have no observations?
-#rowSums(table(jdet$site,jdet$year))#There are data in all years and all sites
-#or maybe because there are 366 days in the year?
-#jdet$day[jdet$day==366]<-365
+
+
 
 write.csv(ldet,"analyses/output/l_dat.csv",row.names = FALSE)
 write.csv(kdet,"analyses/output/k_dat.csv",row.names = FALSE)
