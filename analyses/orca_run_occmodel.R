@@ -48,14 +48,16 @@ cat("
     taub~dgamma(1.0E-6,1.0E-6)      
     
     # Specify priors
-    for (k in 1:nyear) {
-    psi[k] ~ dunif(0, 1)
+  for (i in 1:nsite){    
+  for (k in 1:nyear) {
+    psi[i,k] ~ dunif(0, 1)
     }
-    
+    } 
+
     # Ecological submodel: Define state conditional on parameters
     for (i in 1:nsite){
     for (k in 1:nyear){
-    z[i,k] ~ dbern(psi[k])
+    z[i,k] ~ dbern(psi[i,k])
     }
     }
     
@@ -73,7 +75,7 @@ cat("
 dat<-read.csv("analyses/output/j_dat.csv",header=T)
 
 #choose 1 season to run on (should be only 1 peak in each of these seasons...)
-dat<-dat[dat$season==2,]
+#dat<-dat[dat$season==2,]
 
 ### The following procedure is based on the models presented in Crainiceanu et al. 2005 and in Gimenez et al. 2006 
 # Degree of splines
@@ -89,9 +91,10 @@ n <- length(covariate)
 nk<-round((max(dat$day)-min(dat$day)+1)/4)
 nknots<-ifelse(nk<35,nk,35)
 knots<-quantile(unique(covariate),seq(0,1,length=(nknots+2))[-c(1,(nknots+2))])
-
+#Note: the maximum number of nots is 35. thus, the annual model (for which nk=92 in many cases, but it is restricted to 35 by default) differs in flexibility than the seasonal model
+#perhaps better to extract the seasonal peaks after fitting the whole year of data
 # fixed effects matrix
-X<-NULL
+ X<-NULL
 for (l in 0:degree) {
   X<-cbind(X,covariate^l)  
 }
@@ -133,11 +136,12 @@ parameters <- c("a","b","c","b.k","lp","psi","taub")
 ### Run MCMC Analysis using jags
 
 jags.out<-jags.parallel(jags.data,f.inits,parameters,"splinesSiteOcc S4.txt",nc,ni,nb,nt)
+names(jags.out$BUGSoutput)
 
 print(jags.out, dig=3)
-#Look at 
+#Look at psi
 out<-jags.out$BUGSoutput
-
+jags.out$BUGSoutput$mean$psi
 # Save model output
 save(out,file="jpod out season2")
 
@@ -164,6 +168,9 @@ for (xj in sort(unique(as.numeric(factor(dat$year))))) {
 lpmax<-lpmax+min(dat$day)-1
 lpmax[lpmax==max(dat$day)]<-NA
 lpmax[lpmax==min(dat$day)]<-NA
+#Extract psi (probability of presence by day for each area- plot!)
+dim(out$sims.list$psi)
+
 
 # summarize estimates
 ann.res<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","2.5%","97.5%")))
@@ -247,6 +254,9 @@ for (xj in 1:length(years)) {
   barheight[as.numeric(names(res.height))*7-3+min(dat$day)]<-res.height
   
   # plot bars
+
+  
+#for seasonal values...    
   quartz()
   barplot(as.numeric(barheight[min(dat$day):max(dat$day)]),
           width=1,space=0,ylim=c(0,max(res[3,])),xlab="", ylab="Detection Probability", 
