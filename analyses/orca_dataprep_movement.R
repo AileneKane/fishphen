@@ -1,6 +1,8 @@
 # Orca data prep for movement
 # Started December 11, 2018
 # by Ailene Ettinger ailene.ettinger@noo.gov
+library(geosphere)
+library(dplyr)
 
 # 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
 source("analyses/clean_orca.R")
@@ -50,19 +52,34 @@ d$Orcas<-1
 
 #only data after 1978
 d<-d[d$Year>1978,]
+#make a column that has year, month, date and minute all in one column
+d$date.time<-as.POSIXct(strptime(paste(d$SightDate, d$Time1), "%m/%d/%y %H:%M"))
+d$date<-as.POSIXct(strptime(d$SightDate, "%m/%d/%y"))
 
-
-j<-subset(d,select=c(FishArea,J,Month,day,Year,Lat.cl,Long.cl))
+j<-subset(d,select=c(FishArea,J,Month,day,Year,date,date.time,Lat.cl,Long.cl))
 j<-subset(j,J==1)#only when j is present!
 j$Lat.cl<-as.numeric(j$Lat.cl)
 j$Long.cl<-as.numeric(j$Long.cl)
 j<- j[apply(j, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
-k<-subset(d,select=c(FishArea,K,Month,day,Year,Lat.cl,Long.cl))
+#remove duplicates- not sure if we want to do this ultimately- may be frmo different sources nad useful somehow?
+j<- j[!duplicated(j), ]
+
+j<-mutate(j, 
+          distance = distHaversine(cbind(Long.cl, Lat.cl),
+                                   cbind(lag(Long.cl), lag(Lat.cl))))
+
+#add column for date time of the next observation
+j$nextobs.date.time<-c(j$date.time[-1],NA)
+j$timediff<-abs(as.numeric(difftime(j$date.time,j$nextobs.date.time)))
+j$rate<-as.numeric(j$distance/j$timedif)
+
+aggregate(j$rate,)
+k<-subset(d,select=c(FishArea,K,Month,day,Year,date.time,Lat.cl,Long.cl))
 k<-subset(k,K==1)#only when k is present!
 k$Lat.cl<-as.numeric(k$Lat.cl)
 k$Long.cl<-as.numeric(k$Long.cl)
 k<- k[apply(k, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
-l<-subset(d,select=c(FishArea,L,Month,day,Year,Lat.cl,Long.cl))
+l<-subset(d,select=c(FishArea,L,Month,day,Year,date.time,Lat.cl,Long.cl))
 l<-subset(l,L==1)#only when L is present!
 l$Lat.cl<-as.numeric(l$Lat.cl)
 l$Long.cl<-as.numeric(l$Long.cl)
