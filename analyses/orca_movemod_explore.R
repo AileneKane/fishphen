@@ -27,6 +27,7 @@ source("analyses/orca_dataprep_movement.R")
 #for starters, run on most recent 7 years only:
 j2017<-j[j$Year==2017,]
 k2017<-k[k$Year==2017,]
+
 #str(j)
 #head(j)  
 #Make plot of movement of j pod in one year

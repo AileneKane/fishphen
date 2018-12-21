@@ -72,8 +72,8 @@ j<-mutate(j,
 j$nextobs.date.time<-c(j$date.time[-1],NA)
 j$timediff<-abs(as.numeric(difftime(j$date.time,j$nextobs.date.time)))
 j$rate<-as.numeric(j$distance/j$timedif)
-
-aggregate(j$rate,)
+j2<-j[j$rate<40000,]
+plot(j2$rate~j2$Month)
 k<-subset(d,select=c(FishArea,K,Month,day,Year,date.time,Lat.cl,Long.cl))
 k<-subset(k,K==1)#only when k is present!
 k$Lat.cl<-as.numeric(k$Lat.cl)
