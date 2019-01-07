@@ -28,16 +28,14 @@
     taub~dgamma(1.0E-6,1.0E-6)      
     
     # Specify priors
-  for (i in 1:nsite){    
   for (k in 1:nyear) {
-    psi[i,k] ~ dunif(0, 1)
-    }
+    psi[k] ~ dunif(0, 1)
     }
 
     # Ecological submodel: Define state conditional on parameters
     for (i in 1:nsite){
     for (k in 1:nyear){
-    z[i,k] ~ dbern(psi[i,k])
+    z[i,k] ~ dbern(psi[k])
     }
     }
     

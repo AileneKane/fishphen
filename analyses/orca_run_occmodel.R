@@ -7,14 +7,22 @@
 # Start Date:	November 27, 2018
 # Title:	orca_run_occ_model
 ##################################################################
-#-----------------------------------------------------------------
-# Codes prepare data for jags and run the analysis
-#-----------------------------------------------------------------
 # Set working directory
 setwd("~/Documents/GitHub/fishphen")
 
 # Load libraries
 library(R2jags)
+
+# Choose the data you want:
+pod="J"#options= J,K,L
+season="1"#options= 1(winter) or 2(summer)
+region="ps"#options=upper salish sea (uss) or puget sound (ps)
+
+
+
+#-----------------------------------------------------------------
+# Codes prepare data for jags and run the analysis
+#-----------------------------------------------------------------
 
 # Specify model in BUGS language
 sink("analyses/splinesSiteOcc S4.txt")
@@ -48,16 +56,14 @@ cat("
     taub~dgamma(1.0E-6,1.0E-6)      
     
     # Specify priors
-  for (i in 1:nsite){    
   for (k in 1:nyear) {
-    psi[i,k] ~ dunif(0, 1)
+    psi[k] ~ dunif(0, 1)
     }
-    } 
 
     # Ecological submodel: Define state conditional on parameters
     for (i in 1:nsite){
     for (k in 1:nyear){
-    z[i,k] ~ dbern(psi[i,k])
+    z[i,k] ~ dbern(psi[k])
     }
     }
     
@@ -71,11 +77,18 @@ cat("
     ",fill = TRUE)
     sink()
 
-### Read observation data from focal pod (created in orca_dataprep_occmodel.R)
-dat<-read.csv("analyses/output/j_dat.csv",header=T)
+# Read observation data from focal pod (created in orca_dataprep_occmodel.R)
 
-#choose 1 season to run on (should be only 1 peak in each of these seasons...)
-#dat<-dat[dat$season==2,]
+if(pod=="J"){dat<-read.csv("analyses/output/j_dat.csv",header=T)}
+if(pod=="K"){dat<-read.csv("analyses/output/k_dat.csv",header=T)}
+if(pod=="L"){dat<-read.csv("analyses/output/l_dat.csv",header=T)}
+
+#restrict to season
+dat<-dat[dat$season==season,]
+#choose region
+dat<-dat[dat$region==region,]
+
+dim(dat)
 
 ### The following procedure is based on the models presented in Crainiceanu et al. 2005 and in Gimenez et al. 2006 
 # Degree of splines
@@ -107,9 +120,9 @@ sqrt.OMEGA_all<-t(svd.OMEGA_all$v %*% (t(svd.OMEGA_all$u)*sqrt(svd.OMEGA_all$d))
 Z<-t(solve(sqrt.OMEGA_all,t(Z_K)))
 
 # Input data
-dat$site <- factor(dat$site)#move this to the dataprep file
-dat$site <- droplevels(dat$site)#move this to the dataprep file
-dat$site <- as.integer(dat$site)#move this to the dataprep file
+dat$site <- factor(dat$site)#
+dat$site <- droplevels(dat$site)
+dat$site <- as.integer(dat$site)
 
 site <- dat$site
 survey <- dat$day-min(dat$day)+1
@@ -131,14 +144,19 @@ jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots",
 f.inits <- function(){list(a=rep(0,nyear), b=rep(0,nyear), c=rep(0,nyear), z=zst)}
 
 # specify the parameters to be monitored
-parameters <- c("a","b","c","b.k","lp","psi","taub")
+parameters <- c("a","b","c","lp","psi","taub")
 
 ### Run MCMC Analysis using jags
 
 jags.out<-jags.parallel(jags.data,f.inits,parameters,"splinesSiteOcc S4.txt",nc,ni,nb,nt)
 names(jags.out$BUGSoutput)
+plot(jags.out)
+traceplot(jags.out, dig=3)#most of these chains do not look good. b.k.[14,3], b.k.[14,4]...everything in year 14  look good. These are all year 1992
+#Questions: why?
 
-print(jags.out, dig=3)
+
+
+
 #Look at psi
 out<-jags.out$BUGSoutput
 jags.out$BUGSoutput$mean$psi
@@ -197,7 +215,7 @@ intercept<-mean(r[,1],na.rm=T)
 slope<-mean(r[,2],na.rm=T)
 
 ### Write results (in console if argument file is not specified in function cat)
-cat(paste("summary results","j pod"),"\n",
+cat(paste("summary results",pod,region,season),"\n",
     paste("annual change of activity peak:", round(mean(slopevec,na.rm=T),digits=2),"days"),
     paste("confidence interval from", round(quantile(slopevec,0.025,na.rm=T),digits=2),
           "to",round(quantile(slopevec,0.975,na.rm=T),digits=2)),
@@ -210,7 +228,12 @@ cat(paste("summary results","j pod"),"\n",
 # Plot output
 #-----------------------------------------------------------------
 # save plotted results as pdf
-pdf(file=paste("Graphical summary S4.pdf"),width=6,height=4)
+if(pod=="J" & season=="1" & region=="ps"){pdf(file=paste("orcaphen_1976_2017_PS_winter_J"),width=7,height=6)}
+if(pod=="J" & season=="2" & region=="uss"){pdf(file=paste("orcaphen_1976_2017_USS_summer_J"),width=7,height=6)}
+if(pod=="K" & season=="1" & region=="ps"){pdf(file=paste("orcaphen_1976_2017_PS_winter_K"),width=7,height=6)}
+if(pod=="K" & season=="2" & region=="uss"){pdf(file=paste("orcaphen_1976_2017_USS_summer_K"),width=7,height=6)}
+if(pod=="L" & season=="1" & region=="ps"){pdf(file=paste("orcaphen_1976_2017_PS_winter_L"),width=7,height=6)}
+if(pod=="L" & season=="2" & region=="uss"){pdf(file=paste("orcaphen_1976_2017_USS_summer_L"),width=7,height=6)}
 
 ### plot estimates of peak detectability over all years
 quartz()
@@ -223,8 +246,8 @@ plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n","J 
 lines(x,ann.res[,"2.5%"],col="grey",lwd=2)
 lines(x,ann.res[,"97.5%"],col="grey",lwd=2)  
 axis(side=1,at=x)
-axis(side=2,at=c(91,122,152,183),
-     labels=c("1Apr","1May","1Jun","1Jul"))
+axis(side=2,at=c(122,152,183,214,244,274),
+     labels=c("1May","1Jun","1Jul","1Aug","1Sept","1Oct"))
 abline(a=intercept,b=slope,lty=2,col=colors()[200])
 
 ### Plot annual detectability pattern
@@ -250,17 +273,19 @@ for (xj in 1:length(years)) {
   
   # height of the bars equals to a seven day successful obs to all obs ratio
   n<-(max(dat$day)-min(dat$day)+1)
-  res.height<-tapply(dat$ndet[dat$year==j],dat$barpos[dat$year==j],mean)
+  res.height<-tapply(dat$ndet[dat$year==j],dat$barpos[dat$year==j],sum)/tapply(dat$nrep[dat$year==j],dat$barpos[dat$year==j],sum)
+  
   barheight[as.numeric(names(res.height))*7-3+min(dat$day)]<-res.height
   
   # plot bars
 
   
 #for seasonal values...    
-  quartz()
-  barplot(as.numeric(barheight[min(dat$day):max(dat$day)]),
-          width=1,space=0,ylim=c(0,max(res[3,])),xlab="", ylab="Detection Probability", 
-          main=paste("J pod",j),border=NA,axes=F)
+
+quartz()
+  x<-barplot(as.numeric(barheight[min(dat$day):max(dat$day)]),
+          width=1,space=0,ylim=c(0,1),xlab="", ylab="Detection Probability", 
+          main=paste("J pod",j),border=NA,axes=F)#ylim:max(res[3,])
   
   ### Plot model estimates  
   # plot seasonal estimates of detectability p
@@ -268,8 +293,8 @@ for (xj in 1:length(years)) {
   lines(res[2,],lty=1,col=1,lwd=2) # median
   lines(res[1,],lty=3,col=1,lwd=2.5) # upper bound of the 95% CI
   axis(2)
-  axis(side=1,at=c(91,122,152),
-       labels=c("1Apr","1May","1Jun"))
+  axis(side=1,at=c(122-121,152-121,183-121,214-121,244-121,274-121),
+       labels=c("1May","1Jun","1Jul","1Aug","1Sept","1Oct"))
   
 }
 

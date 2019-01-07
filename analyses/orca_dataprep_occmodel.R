@@ -26,12 +26,15 @@ d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" "]<-d$LikelyPod[d$LikelyPod!="" & d$Li
 #perhaps also stick with Pod when LikelyPod has a "?" grep("?",d$LikelyPod,)
 
 #remove non-orca data
-d<-d[d$Pod.cl!="HB?"|d$Pod.cl!="Not Orcas",]
+#d<-d[d$Pod.cl=="HB?"|d$Pod.cl=="Not Orcas",]
 
 #only using fishing areas in Washington's Salish Sea
 d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
 
 #Only use fishing areas that have atleast 4 years with >20 observations:
+#11 fishing areas with >5
+# 8 fishing areas with >10
+# 8 fishing areas with >20
 tab.fa.yr<-table(d$FishArea,d$Year)
 tab.fa.yr[tab.fa.yr < 20] <- 0
 tab.fa.yr[tab.fa.yr >= 20] <- 1
@@ -67,9 +70,10 @@ d<-d[d$Year>1978,]
 #of all SRKWs during each week of each year year to estimate detection
 #d$wkyrfa<-paste(d$Year, d$week,d$FishArea,sep="_")#if we decide to add FishArea to detection estimates for model
 #d$wkyr<-paste(d$Year, d$week,sep="_")
-unique(d$FishArea)
+#unique(d$FishArea)
 d$yrdayfa<-paste(d$Year, d$day,d$FishArea,sep="_")
-
+d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
+#add  
 
 #Raw detection ratios:
 obs = aggregate(Orcas ~yrdayfa, data = d,sum)
@@ -83,32 +87,36 @@ colnames(det)[2:5]<-c("Jobs","Kobs","Lobs","nrep")
 
 det$year<-substr(det$yrdayfa,1,4)
 det$day<-substr(det$yrdayfa,6,8)
-det$site<-substr(det$yrdayfa,10,nchar(det$yrdayfa))
-det$site<-as.numeric(as.factor(det$site))
+det$fa<-substr(det$yrdayfa,10,nchar(det$yrdayfa))
+#assign to ps (puget sound) or uss (upper salish sea) using fishing area
+det$region<-"ps"
+det$region[det$fa=="07"|det$fa=="06"|det$fa=="02"|det$fa=="04"]<-"uss"
+
+det$site<-as.numeric(as.factor(det$fa))
 det$day<-as.numeric(det$day)
 det$year<-as.numeric(det$year)
 
-#Add a column for "season" and divide up by season.
-#Add a column for "season" and divide up by season.
-det$season<-1#winter
-det$season[det$day>90]<-2#spring
-det$season[det$day>181]<-3#summer
-det$season[det$day>274]<-4#fall
+#Add a column for "season" and divide up by season.Not sure if these are best...
+#start with winter vs summer
+det$season<-1#winter=Oct-April
+det$season[det$day>121 & det$day<274]<-2#spring
+#add an "orca year" which runs Oct 1-Sept 31
+det$orcayear<-det$year
+det$orcayear[which(det$day>273)]<-det$year[which(det$day>273)]+1
 
-
-
-jdet<-subset(det,select=c(nrep,Jobs,site,day,year,season))
+jdet<-subset(det,select=c(nrep,Jobs,site,day,orcayear,season,region))
 #remove any rows with 0s in them
 #i.e. use only sites that have atleast 1 observation in all years
 
 jdet <- jdet[apply(jdet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 #jdet<- jdet[apply(jdet,1,function(row) all(row!=0)),]
-kdet<-subset(det,select=c(nrep,Kobs,site,day,year,season))
+kdet<-subset(det,select=c(nrep,Kobs,site,day,orcayear,season,region))
 kdet <- kdet[apply(kdet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 
-ldet<-subset(det,select=c(nrep,Lobs,site,day,year,season))
+ldet<-subset(det,select=c(nrep,Lobs,site,day,orcayear,season,region))
 ldet <- ldet[apply(ldet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 colnames(jdet)[2]<-colnames(kdet)[2]<-colnames(ldet)[2]<-"ndet"
+colnames(jdet)[5]<-colnames(kdet)[5]<-colnames(ldet)[5]<-"year"
 
 
 
