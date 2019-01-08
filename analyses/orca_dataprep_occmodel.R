@@ -103,17 +103,19 @@ det$season[det$day>121 & det$day<274]<-2#spring
 #add an "orca year" which runs Oct 1-Sept 31
 det$orcayear<-det$year
 det$orcayear[which(det$day>273)]<-det$year[which(det$day>273)]+1
+det$daysaftsept30<-NA
+det$daysaftsept30[which(det$day>273 & det$day<367)]<-det$day[which(det$day>273 & det$day<367)]-273
+det$daysaftsept30[which(det$day<274)]<-det$day[which(det$day<274)]+93#this should actually vary depending on whether or not it is a leap year
 
-jdet<-subset(det,select=c(nrep,Jobs,site,day,orcayear,season,region))
-#remove any rows with 0s in them
+jdet<-subset(det,select=c(nrep,Jobs,site,day,orcayear,daysaftsept30,season,region))
 #i.e. use only sites that have atleast 1 observation in all years
 
 jdet <- jdet[apply(jdet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 #jdet<- jdet[apply(jdet,1,function(row) all(row!=0)),]
-kdet<-subset(det,select=c(nrep,Kobs,site,day,orcayear,season,region))
+kdet<-subset(det,select=c(nrep,Kobs,site,day,orcayear,daysaftsept30,season,region))
 kdet <- kdet[apply(kdet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 
-ldet<-subset(det,select=c(nrep,Lobs,site,day,orcayear,season,region))
+ldet<-subset(det,select=c(nrep,Lobs,site,day,orcayear,daysaftsept30,season,region))
 ldet <- ldet[apply(ldet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 colnames(jdet)[2]<-colnames(kdet)[2]<-colnames(ldet)[2]<-"ndet"
 colnames(jdet)[5]<-colnames(kdet)[5]<-colnames(ldet)[5]<-"year"

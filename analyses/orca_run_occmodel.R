@@ -18,6 +18,25 @@ pod="J"#options= J,K,L
 season="1"#options= 1(winter) or 2(summer)
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
+# Read observation data from focal pod (created in orca_dataprep_occmodel.R)
+
+if(pod=="J"){dat<-read.csv("analyses/output/j_dat.csv",header=T)}
+if(pod=="K"){dat<-read.csv("analyses/output/k_dat.csv",header=T)}
+if(pod=="L"){dat<-read.csv("analyses/output/l_dat.csv",header=T)}
+
+#restrict to season
+dat<-dat[dat$season==season,]
+#if winter  (season 1), then days= days ater sept 30
+if(season=="1"){
+  dat<-subset(dat,select=c(nrep,ndet,site, daysaftsept30,year,season,region))
+colnames(dat)[4]<-"day"
+  }
+
+#choose region
+dat<-dat[dat$region==region,]
+
+dim(dat)
+
 
 
 #-----------------------------------------------------------------
@@ -76,19 +95,6 @@ cat("
     }
     ",fill = TRUE)
     sink()
-
-# Read observation data from focal pod (created in orca_dataprep_occmodel.R)
-
-if(pod=="J"){dat<-read.csv("analyses/output/j_dat.csv",header=T)}
-if(pod=="K"){dat<-read.csv("analyses/output/k_dat.csv",header=T)}
-if(pod=="L"){dat<-read.csv("analyses/output/l_dat.csv",header=T)}
-
-#restrict to season
-dat<-dat[dat$season==season,]
-#choose region
-dat<-dat[dat$region==region,]
-
-dim(dat)
 
 ### The following procedure is based on the models presented in Crainiceanu et al. 2005 and in Gimenez et al. 2006 
 # Degree of splines
@@ -151,7 +157,14 @@ parameters <- c("a","b","c","lp","psi","taub")
 jags.out<-jags.parallel(jags.data,f.inits,parameters,"splinesSiteOcc S4.txt",nc,ni,nb,nt)
 names(jags.out$BUGSoutput)
 plot(jags.out)
-traceplot(jags.out, dig=3)#most of these chains do not look good. b.k.[14,3], b.k.[14,4]...everything in year 14  look good. These are all year 1992
+traceplot(jags.out, dig=3)#
+#For Jpod season 2: most of these chains do not look good. b.k.[14,3], b.k.[14,4]...everything in year 14  look good. These are all year 1992
+#For Jpod season 1: the following chains look good:
+#a[1-4,7,8,13,14,19]
+#b[1-4,7,8,9,10,11,13,14,19]
+#c[1-4,7,8,9,11,13,16,19]
+#lp[1-4,6,7,8,9,11,12,13,14,18,19,23,25,27,30,31,35]
+
 #Questions: why?
 
 
@@ -159,9 +172,10 @@ traceplot(jags.out, dig=3)#most of these chains do not look good. b.k.[14,3], b.
 
 #Look at psi
 out<-jags.out$BUGSoutput
-jags.out$BUGSoutput$mean$psi
+jags.out$BUGSoutput$mean$psi#probability of presence (annual)
 # Save model output
-save(out,file="jpod out season2")
+if(pod=="J" & season=="1"){save(out,file="jpod out season1")}
+if(pod=="J" & season=="2"){save(out,file="jpod out season2")}
 
 #I usually run two chains over 50'000 iterations, this takes several hours on my PC (3.4GHz, 4GB RAM)
 #Usually convergence is reached within the first 10'000; I set burnin to 25'000
@@ -246,10 +260,16 @@ plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n","J 
 lines(x,ann.res[,"2.5%"],col="grey",lwd=2)
 lines(x,ann.res[,"97.5%"],col="grey",lwd=2)  
 axis(side=1,at=x)
-axis(side=2,at=c(122,152,183,214,244,274),
-     labels=c("1May","1Jun","1Jul","1Aug","1Sept","1Oct"))
-abline(a=intercept,b=slope,lty=2,col=colors()[200])
-
+if(season==2){
+  axis(side=2,at=c(122,152,183,214,244,274),
+    labels=c("1May","1Jun","1Jul","1Aug","1Sept","1Oct"))
+  abline(a=intercept,b=slope,lty=2,col=colors()[200])
+  }
+if(season==1){
+  axis(side=2,at=c(1,32,62,93,124,153,184,214),
+       labels=c("1Oct","1Nov","1Dec","1Jan","1Feb","1Mar","1Apr","1May"))
+  abline(a=intercept,b=slope,lty=2,col=colors()[200])
+}
 ### Plot annual detectability pattern
 # loop over all years
 years<-sort(unique(as.numeric((dat$year))))
@@ -293,9 +313,16 @@ quartz()
   lines(res[2,],lty=1,col=1,lwd=2) # median
   lines(res[1,],lty=3,col=1,lwd=2.5) # upper bound of the 95% CI
   axis(2)
+  if(season==2){
   axis(side=1,at=c(122-121,152-121,183-121,214-121,244-121,274-121),
        labels=c("1May","1Jun","1Jul","1Aug","1Sept","1Oct"))
-  
-}
+  }
+  if(season==1){
+    axis(side=1,at=c(1,32,62,93,124,153,184,214),
+         labels=c("1Oct","1Nov","1Dec","1Jan","1Feb","1Mar","1Apr","1May"))
+    abline(a=intercept,b=slope,lty=2,col=colors()[200])
+  }
+
+  }
 
 dev.off()
