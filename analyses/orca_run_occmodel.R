@@ -15,8 +15,8 @@ library(R2jags)
 
 # Choose the data you want:
 pod="J"#options= J,K,L
-season="1"#options= 1(winter) or 2(summer)
-region="ps"#options=upper salish sea (uss) or puget sound (ps)
+season="2"#options= 1(winter) or 2(summer)
+region="uss"#options=upper salish sea (uss) or puget sound (ps)
 
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
 
@@ -176,7 +176,11 @@ jags.out$BUGSoutput$mean$psi#probability of presence (annual)
 # Save model output
 if(pod=="J" & season=="1"){save(out,file="jpod out season1")}
 if(pod=="J" & season=="2"){save(out,file="jpod out season2")}
+if(pod=="K" & season=="1"){save(out,file="kpod out season1")}
+if(pod=="K" & season=="2"){save(out,file="kpod out season2")}
 
+#If you don't want to run the model:
+#if(pod=="J" & season=="1"){load("jpod out season1")}
 #I usually run two chains over 50'000 iterations, this takes several hours on my PC (3.4GHz, 4GB RAM)
 #Usually convergence is reached within the first 10'000; I set burnin to 25'000
 #To plot model output run the following codes:
@@ -242,17 +246,16 @@ cat(paste("summary results",pod,region,season),"\n",
 # Plot output
 #-----------------------------------------------------------------
 # save plotted results as pdf
-if(pod=="J" & season=="1" & region=="ps"){pdf(file=paste("orcaphen_1976_2017_PS_winter_J"),width=7,height=6)}
-if(pod=="J" & season=="2" & region=="uss"){pdf(file=paste("orcaphen_1976_2017_USS_summer_J"),width=7,height=6)}
-if(pod=="K" & season=="1" & region=="ps"){pdf(file=paste("orcaphen_1976_2017_PS_winter_K"),width=7,height=6)}
-if(pod=="K" & season=="2" & region=="uss"){pdf(file=paste("orcaphen_1976_2017_USS_summer_K"),width=7,height=6)}
-if(pod=="L" & season=="1" & region=="ps"){pdf(file=paste("orcaphen_1976_2017_PS_winter_L"),width=7,height=6)}
-if(pod=="L" & season=="2" & region=="uss"){pdf(file=paste("orcaphen_1976_2017_USS_summer_L"),width=7,height=6)}
+if(pod=="J" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/orcaphen_1976_2017_PS_winter_J.pdf"),width=7,height=6)}
+if(pod=="J" & season=="2" & region=="uss"){pdf(file=paste("analyses/orcaphen_1976_2017_USS_summer_J.pdf"),width=7,height=6)}
+if(pod=="K" & season=="1" & region=="ps"){pdf(file=paste("analyses/orcaphen_1976_2017_PS_winter_K.pdf"),width=7,height=6)}
+if(pod=="K" & season=="2" & region=="uss"){pdf(file=paste("analyses/orcaphen_1976_2017_USS_summer_K.pdf"),width=7,height=6)}
+if(pod=="L" & season=="1" & region=="ps"){pdf(file=paste("analyses/orcaphen_1976_2017_PS_winter_L.pdf"),width=7,height=6)}
+if(pod=="L" & season=="2" & region=="uss"){pdf(file=paste("analyses/orcaphen_1976_2017_USS_summer_L.pdf"),width=7,height=6)}
 
 ### plot estimates of peak detectability over all years
-quartz()
-par(mfrow=c(1,1))
-par(mai=c(1,1,1,0.5))
+#quartz()
+par(mfrow=c(1,1),mai=c(1,1,1,0.5))
 x=rownames(ann.res)
 y=ann.res[,"mean"]
 plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n","J Pod"),
@@ -270,9 +273,13 @@ if(season==1){
        labels=c("1Oct","1Nov","1Dec","1Jan","1Feb","1Mar","1Apr","1May"))
   abline(a=intercept,b=slope,lty=2,col=colors()[200])
 }
+
+dev.off()
+
 ### Plot annual detectability pattern
 # loop over all years
 years<-sort(unique(as.numeric((dat$year))))
+seasonname<-c("winter","summer")
 for (xj in 1:length(years)) {
   j<-years[xj]
   
@@ -298,11 +305,14 @@ for (xj in 1:length(years)) {
   barheight[as.numeric(names(res.height))*7-3+min(dat$day)]<-res.height
   
   # plot bars
-
+  #for seasonal values...    
+  figpath<- paste("analyses/figures/",pod,sep="")
+  figname<-paste("orcaphen",j,region,seasonname[as.numeric(season)],pod,".pdf",sep="_")
+  pdf(file.path(figpath, figname), width = 9, height = 6)
   
-#for seasonal values...    
-
-quartz()
+  #quartz()
+  
+  
   x<-barplot(as.numeric(barheight[min(dat$day):max(dat$day)]),
           width=1,space=0,ylim=c(0,1),xlab="", ylab="Detection Probability", 
           main=paste("J pod",j),border=NA,axes=F)#ylim:max(res[3,])
@@ -322,7 +332,7 @@ quartz()
          labels=c("1Oct","1Nov","1Dec","1Jan","1Feb","1Mar","1Apr","1May"))
     abline(a=intercept,b=slope,lty=2,col=colors()[200])
   }
-
+  dev.off()
   }
 
-dev.off()
+

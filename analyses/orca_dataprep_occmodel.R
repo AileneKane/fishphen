@@ -28,7 +28,7 @@ d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" "]<-d$LikelyPod[d$LikelyPod!="" & d$Li
 #remove non-orca data
 #d<-d[d$Pod.cl=="HB?"|d$Pod.cl=="Not Orcas",]
 
-#only using fishing areas in Washington's Salish Sea
+#only using fishing areas in Washington's Salish Sea 
 d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
 
 #Only use fishing areas that have atleast 4 years with >20 observations:
@@ -98,8 +98,9 @@ det$year<-as.numeric(det$year)
 
 #Add a column for "season" and divide up by season.Not sure if these are best...
 #start with winter vs summer
-det$season<-1#winter=Oct-April
-det$season[det$day>121 & det$day<274]<-2#spring
+det$season<-NA
+det$season[det$day>274|det$day<60]<-1#winter (Oct 1-March)
+det$season[det$day>121 & det$day<274]<-2#summer (May-Oct 1)
 #add an "orca year" which runs Oct 1-Sept 31
 det$orcayear<-det$year
 det$orcayear[which(det$day>273)]<-det$year[which(det$day>273)]+1
