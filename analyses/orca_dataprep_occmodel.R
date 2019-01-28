@@ -122,7 +122,7 @@ ldet<-subset(det,select=c(nrep,Lobs,site,day,orcayear,daysaftsept30,season,regio
 ldet <- ldet[apply(ldet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 
 srdet<-subset(det,select=c(nrep,AllSRobs,site,day,orcayear,daysaftsept30,season,region))
-srdet <- ldet[apply(ldet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
+srdet <- srdet[apply(srdet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 
 colnames(srdet)[2]<-colnames(jdet)[2]<-colnames(kdet)[2]<-colnames(ldet)[2]<-"ndet"
 colnames(srdet)[5]<-colnames(jdet)[5]<-colnames(kdet)[5]<-colnames(ldet)[5]<-"year"
