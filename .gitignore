@@ -16,3 +16,17 @@ jpod out season1
 jpod out season2
 analyses/.DS_Store
 analyses/figures/.DS_Store
+jags.output/allsrpods out season1
+jags.output/allsrpods out season2
+jags.output/kpod out S4
+jags.output/kpod out season1
+jags.output/kpod out season2
+jags.output/lpod out season1
+jags.output/lpod out season2
+kpod out S4
+kpod out S4
+kpod out S4
+.DS_Store
+.Rhistory
+analyses/.DS_Store
+analyses/figures/.DS_Store
