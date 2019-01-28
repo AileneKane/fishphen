@@ -10,7 +10,7 @@ options(stringsAsFactors = FALSE)
 setwd("~/Documents/GitHub/fishphen")
 
 # Load libraries
-
+library(dplyr)
 # 1. Get the data
 d <- read.csv("data/AppendixII.csv")
 
@@ -82,8 +82,10 @@ obs = aggregate(Orcas ~yrdayfa, data = d,sum)
 js = aggregate(J ~yrdayfa, data = d,sum)
 ks = aggregate(K~yrdayfa, data = d,sum)
 ls = aggregate(L~yrdayfa, data = d,sum)
-det<-cbind(js,ks[,2],ls[,2],obs[2])
-colnames(det)[2:5]<-c("Jobs","Kobs","Lobs","nrep")
+srs = aggregate(SRKW~yrdayfa, data = d,sum)
+
+det<-cbind(js,ks[,2],ls[,2],srs[,2],obs[2])
+colnames(det)[2:6]<-c("Jobs","Kobs","Lobs","AllSRobs","nrep")
 
 det$year<-substr(det$yrdayfa,1,4)
 det$day<-substr(det$yrdayfa,6,8)
@@ -118,16 +120,150 @@ kdet <- kdet[apply(kdet, 1, function(x) all(!is.na(x))),] # only keep rows of al
 
 ldet<-subset(det,select=c(nrep,Lobs,site,day,orcayear,daysaftsept30,season,region))
 ldet <- ldet[apply(ldet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
-colnames(jdet)[2]<-colnames(kdet)[2]<-colnames(ldet)[2]<-"ndet"
-colnames(jdet)[5]<-colnames(kdet)[5]<-colnames(ldet)[5]<-"year"
+
+srdet<-subset(det,select=c(nrep,AllSRobs,site,day,orcayear,daysaftsept30,season,region))
+srdet <- ldet[apply(ldet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
+
+colnames(srdet)[2]<-colnames(jdet)[2]<-colnames(kdet)[2]<-colnames(ldet)[2]<-"ndet"
+colnames(srdet)[5]<-colnames(jdet)[5]<-colnames(kdet)[5]<-colnames(ldet)[5]<-"year"
 
 
-
+write.csv(srdet,"analyses/output/allsr_dat.csv",row.names = FALSE)
 write.csv(ldet,"analyses/output/l_dat.csv",row.names = FALSE)
 write.csv(kdet,"analyses/output/k_dat.csv",row.names = FALSE)
 write.csv(jdet,"analyses/output/j_dat.csv",row.names = FALSE)
 
-##The below code does not work anymore
+#Make some plots to look at the data
+#summarize by sitings per day of each season and pod over time
+# Choose the data you want to look at:
+pods<-c("J","K","L","SR")
+seasons<-c(1,2)
+for(i in 1:length(pods)){
+  for(j in 1:length(seasons)){
+    
+  pod=pods[i]#options= J,K,L, SR (all 3 pods)
+  season=seasons[j]#options= 1(winter) or 2(summer)
+  if(season==1){region="ps"}#options=upper salish sea (uss) or puget sound (ps)
+  if(season==2){region="uss"}
+
+  if(pod=="J"){dat<-jdet}
+  if(pod=="K"){dat<-kdet}
+  if(pod=="L"){dat<-ldet}
+  if(pod=="SR"){dat<-srdet}
+
+  #restrict to season
+  dat<-dat[dat$season==season,]
+
+  #if winter  (season 1), then days= days ater sept 30
+  if(season=="1"){
+  dat<-subset(dat,select=c(nrep,ndet,site, daysaftsept30,year,season,region))
+  colnames(dat)[4]<-"day"
+  }
+
+  #choose region
+  dat<-dat[dat$region==region,]
+
+  dim(dat)
+  #find doy with max number of obs for each year
+
+  dayobs<-aggregate(dat$ndet,list(dat$year,dat$day),sum)
+  colnames(dayobs)<-c("year","day","obs")
+
+  dayeffort<-aggregate(dat$nrep,list(dat$year,dat$day),sum)
+  colnames(dayeffort)<-c("year","day","effort")
+
+  propobs<-left_join(dayobs,dayeffort)
+  propobs$propobs<-propobs$obs/propobs$effort
+
+  #find which day this occurs on
+  maxobs<-aggregate(dayobs$obs,list(dayobs$year),max)
+  colnames(maxobs)<-c("year","obs")
+  peakobs<-dplyr::inner_join(maxobs, dayobs)
+
+  maxprop<-aggregate(propobs$propobs,list(propobs$year),max)
+  colnames(maxprop)<-c("year","propobs")
+  peakpropdoy<-dplyr::inner_join(maxprop,propobs)
+
+  #plot peak obs by year
+  pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017",region,season,pod,"rawdat.pdf", sep="_"),width=7,height=6)
+
+  ### plot peak number of obs over all years
+  #quartz()
+  par(mfrow=c(1,1),mai=c(1,1,1,0.5))
+  x=peakobs$year
+  y=peakobs$day
+  plot(x,y,xlab="Year",ylab="DOY of peak # sightings",main=paste("Peak Number of Sightings","\n",pod[i]," Pod",season[j]),
+     ylim=c(min(peakobs$day),max(peakobs$day)),pch=21,type="p", bg="gray")
+  dev.off()
+  print(pods[i]);  print(seasons[j]);
+  print(summary(lm(y~x)))
+  print(summary(lmer(y~x+(1|as.factor(x)))))
+
+  # plot peak proportion of obs over all years
+  #quartz()
+  pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017",region,season,pod,"prop.pdf", sep="_"),width=7,height=6)
+  
+  par(mfrow=c(1,1),mai=c(1,1,1,0.5))
+  x=peakpropdoy$year
+  y=peakpropdoy$day
+  plot(x,y,xlab="Year",ylab="DOY of peak proportion sightings",main=paste("Peak Proportion of Sightings","\n",pod[i]," Pod",season[j]),
+     ylim=c(min(peakpropdoy$day),max(peakpropdoy$day)),pch=21,type="p", bg="gray")
+  dev.off()
+  print(pods[i]);print(seasons[j])
+  print(summary(lm(y~x)))
+  print(summary(lmer(y~x+(1|as.factor(x)))))
+  
+  years<-unique(dat$year)
+  for(yr in min(years):max(years)){
+    pdf(file=paste("analyses/figures/", pod,"/rawdat",yr,"_",season,"_",region,".pdf", sep=""),width=8,height=6)
+    yrdat<-dat[dat$year==yr,]
+    x=yrdat$day
+    y=yrdat$ndet
+    plot(x,y,main=paste("Number sightings","\n",pod," Pod",yr),
+         ylim=c(min(yrdat$nrep, na.rm = TRUE),max(yrdat$nrep, na.rm = TRUE)),pch=16,type="p", col="black")
+    dev.off()
+  }
+  
+  
+}
+}
+
+#Now make figures for whole year
+# Choose the data you want to look at:
+pods<-c("J","K","L","SR")
+for(i in 1:length(pods)){
+    pod=pods[i]
+    if(pod=="J"){dat<-jdet}
+    if(pod=="K"){dat<-kdet}
+    if(pod=="L"){dat<-ldet}
+    if(pod=="SR"){dat<-srdet}
+    
+    #find doy with max number of obs for each year
+    
+    dayobs<-aggregate(dat$ndet,list(dat$year,dat$day),sum)
+    colnames(dayobs)<-c("year","day","obs")
+  
+    years<-unique(dayobs$year)
+    for(yr in min(years):max(years)){
+      pdf(file=paste("analyses/figures/", pod,"/rawdat",yr,"_yearroundallsites_",".pdf", sep=""),width=8,height=6)
+      yrdat<-dayobs[dayobs$year==yr,]
+      x=yrdat$day
+      y=yrdat$obs
+      plot(x,y,main=paste("Number sightings","\n",pod," Pod",yr),
+           ylim=c(min(yrdat$nrep, na.rm = TRUE),max(yrdat$nrep, na.rm = TRUE)),xlab="doy",ylab="# sightings",pch=16,type="p", col="black")
+      dev.off()
+    }
+    
+    
+  }
+}
+
+
+
+
+
+
+#The below code does not work anymore
 # Make Figure 1 (detectability index bar plot) for J, K, and L pod in 2017
 # We will have to decide if we want detectability to vary by fishing area as well
 #convert to proportion

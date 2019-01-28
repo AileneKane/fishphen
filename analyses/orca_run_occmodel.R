@@ -14,15 +14,16 @@ setwd("~/Documents/GitHub/fishphen")
 library(R2jags)
 
 # Choose the data you want:
-pod="J"#options= J,K,L
-season="2"#options= 1(winter) or 2(summer)
-region="uss"#options=upper salish sea (uss) or puget sound (ps)
+pod="SR"#options= J,K,L
+season="1"#options= 1(winter) or 2(summer)
+region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
 
 if(pod=="J"){dat<-read.csv("analyses/output/j_dat.csv",header=T)}
 if(pod=="K"){dat<-read.csv("analyses/output/k_dat.csv",header=T)}
 if(pod=="L"){dat<-read.csv("analyses/output/l_dat.csv",header=T)}
+if(pod=="SR"){dat<-read.csv("analyses/output/allsr_dat.csv",header=T)}
 
 #restrict to season
 dat<-dat[dat$season==season,]
@@ -156,8 +157,9 @@ parameters <- c("a","b","c","lp","psi","taub")
 
 jags.out<-jags.parallel(jags.data,f.inits,parameters,"splinesSiteOcc S4.txt",nc,ni,nb,nt)
 names(jags.out$BUGSoutput)
+quartz()
 plot(jags.out)
-traceplot(jags.out, dig=3)#
+#traceplot(jags.out, dig=3)#
 #For Jpod season 2: most of these chains do not look good. b.k.[14,3], b.k.[14,4]...everything in year 14  look good. These are all year 1992
 #For Jpod season 1: the following chains look good:
 #a[1-4,7,8,13,14,19]
@@ -174,10 +176,14 @@ traceplot(jags.out, dig=3)#
 out<-jags.out$BUGSoutput
 jags.out$BUGSoutput$mean$psi#probability of presence (annual)
 # Save model output
-if(pod=="J" & season=="1"){save(out,file="jpod out season1")}
-if(pod=="J" & season=="2"){save(out,file="jpod out season2")}
-if(pod=="K" & season=="1"){save(out,file="kpod out season1")}
-if(pod=="K" & season=="2"){save(out,file="kpod out season2")}
+if(pod=="J" & season=="1"){save(out,file="jags.output/jpod out season1")}
+if(pod=="J" & season=="2"){save(out,file="jags.output/jpod out season2")}
+if(pod=="K" & season=="1"){save(out,file="jags.output/kpod out season1")}
+if(pod=="K" & season=="2"){save(out,file="jags.output/kpod out season2")}
+if(pod=="L" & season=="1"){save(out,file="jags.output/lpod out season1")}
+if(pod=="L" & season=="2"){save(out,file="jags.output/lpod out season2")}
+if(pod=="SR" & season=="1"){save(out,file="jags.output/allsrpods out season1")}
+if(pod=="SR" & season=="2"){save(out,file="jags.output/allsrpods out season2")}
 
 #If you don't want to run the model:
 #if(pod=="J" & season=="1"){load("jpod out season1")}
@@ -204,7 +210,7 @@ for (xj in sort(unique(as.numeric(factor(dat$year))))) {
 lpmax<-lpmax+min(dat$day)-1
 lpmax[lpmax==max(dat$day)]<-NA
 lpmax[lpmax==min(dat$day)]<-NA
-#Extract psi (probability of presence by day for each area- plot!)
+#would like to Extract psi (probability of presence by day...)
 dim(out$sims.list$psi)
 
 
@@ -233,32 +239,45 @@ intercept<-mean(r[,1],na.rm=T)
 slope<-mean(r[,2],na.rm=T)
 
 ### Write results (in console if argument file is not specified in function cat)
+if(season=="1"){
 cat(paste("summary results",pod,region,season),"\n",
     paste("annual change of activity peak:", round(mean(slopevec,na.rm=T),digits=2),"days"),
     paste("confidence interval from", round(quantile(slopevec,0.025,na.rm=T),digits=2),
           "to",round(quantile(slopevec,0.975,na.rm=T),digits=2)),
     "\n","mean estimate of activity peak","as date",
-    as.character(as.Date(x=c(ann.res[,colnames(ann.res)=="mean"]),origin=c(paste(row.names(ann.res),"-01-01",sep="")))),"\n",
-    sep="\n","as day of the year",
+    as.character(as.Date(x=c(ann.res[,colnames(ann.res)=="mean"]),origin=c(paste(row.names(ann.res),"-09-30",sep="")))),"\n",
+    sep="\n","as days after sept 30",
     paste(rownames(ann.res),round(ann.res[,"mean"])))   
-
+}
+if(season=="2"){
+  cat(paste("summary results",pod,region,season),"\n",
+      paste("annual change of activity peak:", round(mean(slopevec,na.rm=T),digits=2),"days"),
+      paste("confidence interval from", round(quantile(slopevec,0.025,na.rm=T),digits=2),
+            "to",round(quantile(slopevec,0.975,na.rm=T),digits=2)),
+      "\n","mean estimate of activity peak","as date",
+      as.character(as.Date(x=c(ann.res[,colnames(ann.res)=="mean"]),origin=c(paste(row.names(ann.res),"-01-01",sep="")))),"\n",
+      sep="\n","as day of year",
+      paste(rownames(ann.res),round(ann.res[,"mean"])))   
+}
 #-----------------------------------------------------------------
 # Plot output
 #-----------------------------------------------------------------
 # save plotted results as pdf
-if(pod=="J" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/orcaphen_1976_2017_PS_winter_J.pdf"),width=7,height=6)}
-if(pod=="J" & season=="2" & region=="uss"){pdf(file=paste("analyses/orcaphen_1976_2017_USS_summer_J.pdf"),width=7,height=6)}
-if(pod=="K" & season=="1" & region=="ps"){pdf(file=paste("analyses/orcaphen_1976_2017_PS_winter_K.pdf"),width=7,height=6)}
-if(pod=="K" & season=="2" & region=="uss"){pdf(file=paste("analyses/orcaphen_1976_2017_USS_summer_K.pdf"),width=7,height=6)}
-if(pod=="L" & season=="1" & region=="ps"){pdf(file=paste("analyses/orcaphen_1976_2017_PS_winter_L.pdf"),width=7,height=6)}
-if(pod=="L" & season=="2" & region=="uss"){pdf(file=paste("analyses/orcaphen_1976_2017_USS_summer_L.pdf"),width=7,height=6)}
+if(pod=="J" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_PS_winter_J.pdf"),width=7,height=6)}
+if(pod=="J" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_summer_J.pdf"),width=7,height=6)}
+if(pod=="K" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_PS_winter_K.pdf"),width=7,height=6)}
+if(pod=="K" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_USS_summer_K.pdf"),width=7,height=6)}
+if(pod=="L" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/L/orcaphen_1976_2017_PS_winter_L.pdf"),width=7,height=6)}
+if(pod=="L" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/L/orcaphen_1976_2017_USS_summer_L.pdf"),width=7,height=6)}
+if(pod=="SR" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017_PS_winter_SR.pdf"),width=7,height=6)}
+if(pod=="SR" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017_USS_summer_SR.pdf"),width=7,height=6)}
 
 ### plot estimates of peak detectability over all years
 #quartz()
 par(mfrow=c(1,1),mai=c(1,1,1,0.5))
 x=rownames(ann.res)
 y=ann.res[,"mean"]
-plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n","J Pod"),
+plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n",pod," Pod"),
      ylim=c(min(ann.res, na.rm = TRUE),max(ann.res, na.rm = TRUE)),pch=16,type="p", col="black")
 lines(x,ann.res[,"2.5%"],col="grey",lwd=2)
 lines(x,ann.res[,"97.5%"],col="grey",lwd=2)  
@@ -315,7 +334,7 @@ for (xj in 1:length(years)) {
   
   x<-barplot(as.numeric(barheight[min(dat$day):max(dat$day)]),
           width=1,space=0,ylim=c(0,1),xlab="", ylab="Detection Probability", 
-          main=paste("J pod",j),border=NA,axes=F)#ylim:max(res[3,])
+          main=paste(pod," pod",j),border=NA,axes=F)#ylim:max(res[3,])
   
   ### Plot model estimates  
   # plot seasonal estimates of detectability p
@@ -334,5 +353,4 @@ for (xj in 1:length(years)) {
   }
   dev.off()
   }
-
 
