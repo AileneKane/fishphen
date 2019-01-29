@@ -171,7 +171,7 @@ rownames(phen.yr.all.doy)<-NULL
 phen.yr.all.doy<-as.data.frame(phen.yr.all.doy)
 phen.yr.all.doy<-phen.yr.all.doy[phen.yr.all.doy$year<2017,]
 #phen.yr.all.doy<-phen.yr.all.doy[phen.yr.all.doy$pk.doy>10,]#remove weird outlier with january 1 as peak doy!
-
+cbind(phen.yr.all.doy$year,phen.yr.all.doy$pk.doy)
 phen.yr.all.doy$yeartype<-"odd"
 phen.yr.all.doy$yeartype[(phen.yr.all.doy$year %% 2)==0]<-"even"
 #fit a gam to weekly data
@@ -182,7 +182,7 @@ odd<-phen.yr.all.doy[phen.yr.all.doy$yeartype=="odd",]
 even<-phen.yr.all.doy[phen.yr.all.doy$yeartype=="even",]
 t.test(odd$pk.doy,even$pk.doy[1:length(odd$pk.doy)], paired=TRUE)
 #No difference in odd versus even years
-
+boxplot(pk.doy~as.factor(yeartype), data=phen.yr.all.doy)
 
 
 #Is there a trend in pk.doy over time?

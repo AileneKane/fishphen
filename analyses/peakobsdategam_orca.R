@@ -149,16 +149,17 @@ for (i in 1:length(region)){
       #pod.doy<-left_join(pod.doy,obs.doy)
       pod.doy<-pod.doy[order(pod.doy$doy),]
       #pod.doy$pod.obs[which(is.na(pod.doy$pod.obs))]<-0
+      doy = as.numeric(pod.doy$doy)
       c= as.numeric(pod.doy$pod.obs)
       #plot the data
       plot(doy,c, pch=21,bg="gray",xlab = "Days after Sept 30", ylab = "Orca observations", main = paste("Year: ",y), bty="l")
       #fit a gam to daily data
       g = gam(log(c+1) ~ s(doy))
-      lines(d,exp(g$fitted.values),lwd=3)
+      lines(doy,exp(g$fitted.values),lwd=3)
       #add line for peak activity week
-      doy = as.numeric(pod.doy$doy)
+      
       pk<-max(g$fitted.values)
-      pkdoy<-d[which.max(g$fitted.values)]
+      pkdoy<-doy[which.max(g$fitted.values)]
       abline(v=pkdoy, col="red", lwd=2)
       
       }
@@ -178,11 +179,12 @@ for (i in 1:length(region)){
       plot(doy,c, pch=21,bg="gray",xlab = "Days after Sept 30", ylab = "Orca observations", main = paste("Year: ",y), bty="l")
       #fit a gam to daily data
       g = gam(log(c+1) ~ s(doy))
-      lines(d,exp(g$fitted.values),lwd=3)
+      lines(doy,exp(g$fitted.values),lwd=3)
       #add line for peak activity week
       pk<-max(g$fitted.values)
-      pkdoy<-d[which.max(g$fitted.values)]
-      abline(v=pkdoy, col="red", lwd=2)
+      pkdoy<-doy[which.max(g$fitted.values)]
+      abline(v= pkdoy, col="red", lwd=2)
+      
        }
    
       #try binomial gam

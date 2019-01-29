@@ -12,11 +12,12 @@ setwd("~/Documents/GitHub/fishphen")
 
 # Load libraries
 library(R2jags)
+library(scales)
 
 # Choose the data you want:
-pod="SR"#options= J,K,L
-season="1"#options= 1(winter) or 2(summer)
-region="ps"#options=upper salish sea (uss) or puget sound (ps)
+pod="K"#options= J,K,L,SR
+season="2"#options= 1(winter) or 2(summer)
+region="uss"#options=upper salish sea (uss) or puget sound (ps)
 
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
 
@@ -208,20 +209,20 @@ for (xj in sort(unique(as.numeric(factor(dat$year))))) {
   lpmax[,xj]<-apply(out$sims.array[,,paste("lp[",xj[1],",",1:(max(dat$day)-min(dat$day)+1),"]",sep="")],MARGIN=c(if(out$n.chains>1) 1:2 else 1),findmax.fn)
 }
 lpmax<-lpmax+min(dat$day)-1
-lpmax[lpmax==max(dat$day)]<-NA
-lpmax[lpmax==min(dat$day)]<-NA
+#lpmax[lpmax==max(dat$day)]<-NA
+#lpmax[lpmax==min(dat$day)]<-NA
 #would like to Extract psi (probability of presence by day...)
 dim(out$sims.list$psi)
 
 
 # summarize estimates
-ann.res<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","2.5%","97.5%")))
+ann.res<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","25%","75%")))
 res<-apply(lpmax,c(2),mean,na.rm=T)
 ann.res[names(res),"mean"]<-res
-res<-apply(lpmax,c(2),quantile,probs=0.025,na.rm=T)
-ann.res[names(res),"2.5%"]<-res
-res<-apply(lpmax,c(2),quantile,probs=0.975,na.rm=T)
-ann.res[names(res),"97.5%"]<-res
+res<-apply(lpmax,c(2),quantile,probs=0.25,na.rm=T)
+ann.res[names(res),"25%"]<-res
+res<-apply(lpmax,c(2),quantile,probs=0.75,na.rm=T)
+ann.res[names(res),"75%"]<-res
 
 # get estimate of trend in date of peak detectability over years
 do.lm<-function(x) {
@@ -237,13 +238,18 @@ for (o in 1:(dim(lpmax)[1])) {
 slopevec<-as.vector(r[,2])
 intercept<-mean(r[,1],na.rm=T)
 slope<-mean(r[,2],na.rm=T)
+intercept.25<-quantile(r[,1],c(0.25),na.rm=T)
+intercept.75<-quantile(r[,1],c(0.75),na.rm=T)
+
+slope.25<-quantile(r[,2],c(0.25),na.rm=T)
+slope.75<-quantile(r[,2],c(0.75),na.rm=T)
 
 ### Write results (in console if argument file is not specified in function cat)
 if(season=="1"){
 cat(paste("summary results",pod,region,season),"\n",
     paste("annual change of activity peak:", round(mean(slopevec,na.rm=T),digits=2),"days"),
-    paste("confidence interval from", round(quantile(slopevec,0.025,na.rm=T),digits=2),
-          "to",round(quantile(slopevec,0.975,na.rm=T),digits=2)),
+    paste("confidence interval from", round(quantile(slopevec,0.25,na.rm=T),digits=2),
+          "to",round(quantile(slopevec,0.75,na.rm=T),digits=2)),
     "\n","mean estimate of activity peak","as date",
     as.character(as.Date(x=c(ann.res[,colnames(ann.res)=="mean"]),origin=c(paste(row.names(ann.res),"-09-30",sep="")))),"\n",
     sep="\n","as days after sept 30",
@@ -252,8 +258,8 @@ cat(paste("summary results",pod,region,season),"\n",
 if(season=="2"){
   cat(paste("summary results",pod,region,season),"\n",
       paste("annual change of activity peak:", round(mean(slopevec,na.rm=T),digits=2),"days"),
-      paste("confidence interval from", round(quantile(slopevec,0.025,na.rm=T),digits=2),
-            "to",round(quantile(slopevec,0.975,na.rm=T),digits=2)),
+      paste("confidence interval from", round(quantile(slopevec,0.10,na.rm=T),digits=2),
+            "to",round(quantile(slopevec,0.90,na.rm=T),digits=2)),
       "\n","mean estimate of activity peak","as date",
       as.character(as.Date(x=c(ann.res[,colnames(ann.res)=="mean"]),origin=c(paste(row.names(ann.res),"-01-01",sep="")))),"\n",
       sep="\n","as day of year",
@@ -273,25 +279,33 @@ if(pod=="SR" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/SR/o
 if(pod=="SR" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017_USS_summer_SR.pdf"),width=7,height=6)}
 
 ### plot estimates of peak detectability over all years
-#quartz()
+#quartz(width=7, height=6)
 par(mfrow=c(1,1),mai=c(1,1,1,0.5))
 x=rownames(ann.res)
 y=ann.res[,"mean"]
-plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n",pod," Pod"),
-     ylim=c(min(ann.res, na.rm = TRUE),max(ann.res, na.rm = TRUE)),pch=16,type="p", col="black")
-lines(x,ann.res[,"2.5%"],col="grey",lwd=2)
-lines(x,ann.res[,"97.5%"],col="grey",lwd=2)  
+seasname<-c("winter","summer")
+plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n",pod," Pod",seasname[as.numeric(season)]),
+     ylim=c(min(ann.res, na.rm = TRUE),max(ann.res, na.rm = TRUE)),pch=16,type="l", lwd=2,col="black")
+#polygon(c(rev(x),x),c(rev(ann.res[,"75%"]),ann.res[,"25%"]),col=alpha("grey",0.2),lwd=0.1)
+
 axis(side=1,at=x)
 if(season==2){
   axis(side=2,at=c(122,152,183,214,244,274),
     labels=c("1May","1Jun","1Jul","1Aug","1Sept","1Oct"))
-  abline(a=intercept,b=slope,lty=2,col=colors()[200])
   }
 if(season==1){
   axis(side=2,at=c(1,32,62,93,124,153,184,214),
        labels=c("1Oct","1Nov","1Dec","1Jan","1Feb","1Mar","1Apr","1May"))
-  abline(a=intercept,b=slope,lty=2,col=colors()[200])
 }
+
+for (o in 1:500) {
+   #if(!is.na(sum(lpmax[o,]))) {
+  mod<-lm(lpmax[o,]~as.numeric(colnames(lpmax)))$coefficients->r[o,]
+  abline(mod,col=alpha("grey",0.2),lwd=2)
+  
+  #}    
+}
+abline(a=intercept,b=slope,col="darkred",lwd=2)
 
 dev.off()
 
