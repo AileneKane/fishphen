@@ -110,6 +110,8 @@ region<-unique(d$region)
 pod<-c("J","K","L","SRKW")
 figpath <- "analyses/figures/gams_year"
 
+
+#The below code yields weird models...
 #for each year, region and pod, estimate peak day of observed activity
 allpeakest<-c()
 for (i in 1:length(region)){
@@ -147,7 +149,18 @@ for (i in 1:length(region)){
       #pod.doy<-left_join(pod.doy,obs.doy)
       pod.doy<-pod.doy[order(pod.doy$doy),]
       #pod.doy$pod.obs[which(is.na(pod.doy$pod.obs))]<-0
+      c= as.numeric(pod.doy$pod.obs)
+      #plot the data
+      plot(doy,c, pch=21,bg="gray",xlab = "Days after Sept 30", ylab = "Orca observations", main = paste("Year: ",y), bty="l")
+      #fit a gam to daily data
+      g = gam(log(c+1) ~ s(doy))
+      lines(d,exp(g$fitted.values),lwd=3)
+      #add line for peak activity week
       doy = as.numeric(pod.doy$doy)
+      pk<-max(g$fitted.values)
+      pkdoy<-d[which.max(g$fitted.values)]
+      abline(v=pkdoy, col="red", lwd=2)
+      
       }
      
       if(region[i]=="ps"){
@@ -160,46 +173,56 @@ for (i in 1:length(region)){
       pod.doy<-pod.doy[order(pod.doy$daysaftsept30),]
       #pod.doy$pod.obs[which(is.na(pod.doy$pod.obs))]<-0
       doy = as.numeric(pod.doy$daysaftsept30)
-      }
-      
+      c= as.numeric(pod.doy$pod.obs)
+      #plot the data
+      plot(doy,c, pch=21,bg="gray",xlab = "Days after Sept 30", ylab = "Orca observations", main = paste("Year: ",y), bty="l")
+      #fit a gam to daily data
+      g = gam(log(c+1) ~ s(doy))
+      lines(d,exp(g$fitted.values),lwd=3)
+      #add line for peak activity week
+      pk<-max(g$fitted.values)
+      pkdoy<-d[which.max(g$fitted.values)]
+      abline(v=pkdoy, col="red", lwd=2)
+       }
+   
       #try binomial gam
-      if(dim(dat)[1]>10){
-      #g = gam(log(podobs+1) ~ s(doy) + offset(log(pod.doy$observations)))} else(next)
-      #g = gam(podobs ~ s(doy))
-        gbin<-gam(SRKW~s(daysaftsept30), data=dat, family="binomial")
-        #pod.wk$pod.obs[which(is.na(pod.wk$pod.obs))]<-0
-        podobs<-pod.doy$pod.obs
-        
-        mod = glm(SRKW~as.factor(daysaftsept30), data=dat, family="binomial")
-      } else(next)
-      #g.notlog = gam(podobs ~ s(week,bs="cc") + offset(pod.wk$observations))#nonsensical
-      
+      # if(dim(dat)[1]>10){
+      # #g = gam(log(podobs+1) ~ s(doy) + offset(log(pod.doy$observations)))} else(next)
+      # #g = gam(podobs ~ s(doy))
+      #   gbin<-gam(SRKW~s(daysaftsept30), data=dat, family="binomial")
+      #   #pod.wk$pod.obs[which(is.na(pod.wk$pod.obs))]<-0
+      #   podobs<-pod.doy$pod.obs
+      #   
+      #   mod = glm(SRKW~as.factor(daysaftsept30), data=dat, family="binomial")
+      # } else(next)
+      # #g.notlog = gam(podobs ~ s(week,bs="cc") + offset(pod.wk$observations))#nonsensical
+      # 
       #pdf(file.path(figpath, paste(pod[p],y,region[i],"tempforecast.pdf", sep="_")), width = 9, height = 6)
-      quartz()
-      plot(dat$daysaftsept30,plogis(gbin$fitted.values), type="l", xaxt="n",ylab = "Probability of observing orcas", xlab="Month", main=paste(pod[p],region[i],y,sep=" "), ylim=c(0,1))
-      lines(dat$daysaftsept30,mod$fitted.values, col="blue")
-      #points(dat$daysaftsept30,mod$fitted.values, col="blue")
+      #quartz()
+      # plot(dat$daysaftsept30,plogis(gbin$fitted.values), type="l", xaxt="n",ylab = "Probability of observing orcas", xlab="Month", main=paste(pod[p],region[i],y,sep=" "), ylim=c(0,1))
+      # lines(dat$daysaftsept30,mod$fitted.values, col="blue")
+      # #points(dat$daysaftsept30,mod$fitted.values, col="blue")
       
       #plot(week,exp(g.no.off$fitted.values), type="l", xaxt="n",ylab = "Orca observations", xlab="Month", main=paste(pod[p],region[i],y,sep=" "))
       #plot(week,exp(g.notlog$fitted.values), type="l", xaxt="n",ylab = "Orca observations", xlab="Month", main=paste(pod[p],region[i],y,sep=" "))
-      points(dat$daysaftsept30,dat$SRKW, pch=21,bg="gray" )
-      if(region[i]=="uss"){axis(1,labels=c("Jan","Mar","May","Jul","Sep","Nov"), at=c(1,9,18,27,35,44))}
-      if(region[i]=="ps"){axis(1,labels=c("1Sep","1Nov","1Jan"), at=c(1,62,123))}
-      
-      pk<-max(gbin$fitted.values)
-      pktim<-as.numeric(doy[which.max(gbin$fitted.values)])
-      pk.glm<-max(mod$fitted.values)
-      pktim.glm<-as.numeric(doy[which.max(mod$fitted.values)])
-      
-      abline(v=pktim,col="red")
-      abline(v=pktim.glm,col="blue")
+      # points(dat$daysaftsept30,dat$SRKW, pch=21,bg="gray" )
+      # if(region[i]=="uss"){axis(1,labels=c("Jan","Mar","May","Jul","Sep","Nov"), at=c(1,9,18,27,35,44))}
+      # if(region[i]=="ps"){axis(1,labels=c("1Sep","1Nov","1Jan"), at=c(1,62,123))}
+      # 
+      # pk<-max(gbin$fitted.values)
+      # pktim<-as.numeric(doy[which.max(gbin$fitted.values)])
+      # pk.glm<-max(mod$fitted.values)
+      # pktim.glm<-as.numeric(doy[which.max(mod$fitted.values)])
+      # 
+      # abline(v=pktim,col="red")
+      # abline(v=pktim.glm,col="blue")
       
       #pk.wk<-max(g$fitted.values)
       #pkweek<-as.numeric(week[which.max(g$fitted.values)])
       #abline(v=pkweek,col="red")
-      peakest<-c(y,pktim,pktim.glm,pod[p],region[i])
+      peakest<-c(y,pk,pkdoy,pod[p],region[i])
       allpeakest<-rbind(peakest,allpeakest)
-      #dev.off()
+      dev.off()
     }
   }
 }

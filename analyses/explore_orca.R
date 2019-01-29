@@ -87,7 +87,7 @@ points(SRs$week,SRs$SRKW)
 orcaphen.yrs<-data.frame(year=numeric(length(1976:2017)), 
                          peak=numeric(length(1976:2017)), 
                          stringsAsFactors=FALSE)
-
+phen.yr.all<-c()
 quartz(height=8, width=10)
 par(mfrow=c(6,7))
 for(y in 1976:2017) {
@@ -103,9 +103,110 @@ for(y in 1976:2017) {
   pk<-max(g$fitted.values)
   pkdoy<-w[which.max(g$fitted.values)]
   abline(v=pkdoy, col="red", lwd=2)
-  orcaphen.yrs$year[y-1975]<-y
-  orcaphen.yrs$peak[y-1975]<-pkdoy
+  
+  #save phenophase weeks into dataframe
+  phen.yr<-c(y,exp(pk),pkdoy)
+  phen.yr.all<-rbind(phen.yr.all,phen.yr)
 }
+
+colnames(phen.yr.all)<-c("year","pk.obs","pk.doy")
+rownames(phen.yr.all)<-NULL
+phen.yr.all<-as.data.frame(phen.yr.all)
+phen.yr.all<-phen.yr.all[phen.yr.all$year<2017,]
+phen.yr.all$yeartype<-"odd"
+phen.yr.all$yeartype[(phen.yr.all$year %% 2)==0]<-"even"
+
+
+  #Is there a trend in pk.doy over time?
+  trend.mod<-lm(pk.doy~year, data=phen.yr.all)
+  summary(trend.mod)#no!
+quartz()
+plot(phen.yr.all$year,phen.yr.all$pk.doy, pch=21,bg="gray",xlab = "Peak Week", ylab = "Peak DOY of observations")
+abline(trend.mod, col="red")
+
+quartz()
+plot(phen.yr.all$year,phen.yr.all$pk.doy,xlab = "Peak Week", ylab = "Peak DOY of observations", type="l")
+
+
+
+
+
+#fit a gam to weekly data
+  #Is there a difference bewteen odd and even years?
+oddeven.mod<-lm(pk.doy~as.factor(yeartype), data=phen.yr.all)
+summary(oddeven.mod)#no!
+odd<-phen.yr.all[phen.yr.all$yeartype=="odd",]
+even<-phen.yr.all[phen.yr.all$yeartype=="even",]
+t.test(odd$pk.doy,even$pk.doy[1:length(odd$pk.doy)], paired=TRUE)
+#No difference in odd versus even years
+
+
+
+#The below is much messier
+#by doy
+phen.yr.all.doy<-c()
+quartz(height=8, width=10)
+par(mfrow=c(6,7))
+for(y in 1978:2017) {
+  orcaYear = aggregate(SRKW ~ doy, data = d2[which(d2$Year==y),],sum)
+  d = as.numeric(orcaYear$doy)
+  c= as.numeric(orcaYear$SRKW)
+  #plot the data
+  plot(d,c, pch=21,bg="gray",xlab = "Doy", ylab = "Orca observations", main = paste("Year: ",y), bty="l")
+  #fit a gam to weekly data
+  g = gam(log(c+1) ~ s(d))
+  lines(d,exp(g$fitted.values),lwd=3)
+  #add line for peak activity week
+  pk<-max(g$fitted.values)
+  pkdoy<-d[which.max(g$fitted.values)]
+  abline(v=pkdoy, col="red", lwd=2)
+  #save phenophase weeks into dataframe
+  phen.yr<-c(y,exp(pk),pkdoy)
+  phen.yr.all.doy<-rbind(phen.yr.all.doy,phen.yr)
+}
+
+
+colnames(phen.yr.all.doy)<-c("year","pk.obs","pk.doy")
+rownames(phen.yr.all.doy)<-NULL
+phen.yr.all.doy<-as.data.frame(phen.yr.all.doy)
+phen.yr.all.doy<-phen.yr.all.doy[phen.yr.all.doy$year<2017,]
+#phen.yr.all.doy<-phen.yr.all.doy[phen.yr.all.doy$pk.doy>10,]#remove weird outlier with january 1 as peak doy!
+
+phen.yr.all.doy$yeartype<-"odd"
+phen.yr.all.doy$yeartype[(phen.yr.all.doy$year %% 2)==0]<-"even"
+#fit a gam to weekly data
+#Is there a difference bewteen odd and even years?
+oddeven.mod<-lm(pk.doy~as.factor(yeartype), data=phen.yr.all.doy)
+summary(oddeven.mod)#no!
+odd<-phen.yr.all.doy[phen.yr.all.doy$yeartype=="odd",]
+even<-phen.yr.all.doy[phen.yr.all.doy$yeartype=="even",]
+t.test(odd$pk.doy,even$pk.doy[1:length(odd$pk.doy)], paired=TRUE)
+#No difference in odd versus even years
+
+
+
+#Is there a trend in pk.doy over time?
+trend.mod.doy<-lm(pk.doy~year, data=phen.yr.all.doy)
+summary(trend.mod.doy)#no!
+quartz()
+plot(phen.yr.all.doy$year,phen.yr.all.doy$pk.doy, pch=21,bg="gray",xlab = "Year", ylab = "Peak DOY of observations")
+abline(trend.mod.doy, col="red")
+
+quartz()
+plot(phen.yr.all.doy$year,phen.yr.all.doy$pk.doy,xlab = "Year", ylab = "Peak DOY of observations", type="l")
+
+
+
+
+
+#fit a gam to weekly data
+#Is there a difference bewteen odd and even years?
+oddeven.mod<-lm(pk.doy~as.factor(yeartype), data=phen.yr.all)
+summary(oddeven.mod)#no!
+odd<-phen.yr.all[phen.yr.all$yeartype=="odd",]
+even<-phen.yr.all[phen.yr.all$yeartype=="even",]
+t.test(odd$pk.doy,even$pk.doy[1:length(odd$pk.doy)], paired=TRUE)
+#No difference in odd versus even years
 
 #Make plots of fishing areas by year with chinook and orcas present
 #Read in the chinook data (WDFW recreational fishing data)
