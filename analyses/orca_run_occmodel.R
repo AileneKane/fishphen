@@ -216,13 +216,13 @@ dim(out$sims.list$psi)
 
 
 # summarize estimates
-ann.res<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","25%","75%")))
+ann.res<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","10%","90%")))
 res<-apply(lpmax,c(2),mean,na.rm=T)
 ann.res[names(res),"mean"]<-res
-res<-apply(lpmax,c(2),quantile,probs=0.25,na.rm=T)
-ann.res[names(res),"25%"]<-res
-res<-apply(lpmax,c(2),quantile,probs=0.75,na.rm=T)
-ann.res[names(res),"75%"]<-res
+res<-apply(lpmax,c(2),quantile,probs=0.10,na.rm=T)
+ann.res[names(res),"10%"]<-res
+res<-apply(lpmax,c(2),quantile,probs=0.90,na.rm=T)
+ann.res[names(res),"90%"]<-res
 
 # get estimate of trend in date of peak detectability over years
 do.lm<-function(x) {
@@ -238,18 +238,18 @@ for (o in 1:(dim(lpmax)[1])) {
 slopevec<-as.vector(r[,2])
 intercept<-mean(r[,1],na.rm=T)
 slope<-mean(r[,2],na.rm=T)
-intercept.25<-quantile(r[,1],c(0.25),na.rm=T)
-intercept.75<-quantile(r[,1],c(0.75),na.rm=T)
+intercept.25<-quantile(r[,1],c(0.10),na.rm=T)
+intercept.75<-quantile(r[,1],c(0.90),na.rm=T)
 
-slope.25<-quantile(r[,2],c(0.25),na.rm=T)
-slope.75<-quantile(r[,2],c(0.75),na.rm=T)
+slope.25<-quantile(r[,2],c(0.10),na.rm=T)
+slope.75<-quantile(r[,2],c(0.90),na.rm=T)
 
 ### Write results (in console if argument file is not specified in function cat)
 if(season=="1"){
 cat(paste("summary results",pod,region,season),"\n",
     paste("annual change of activity peak:", round(mean(slopevec,na.rm=T),digits=2),"days"),
-    paste("confidence interval from", round(quantile(slopevec,0.25,na.rm=T),digits=2),
-          "to",round(quantile(slopevec,0.75,na.rm=T),digits=2)),
+    paste("confidence interval from", round(quantile(slopevec,0.10,na.rm=T),digits=2),
+          "to",round(quantile(slopevec,0.90,na.rm=T),digits=2)),
     "\n","mean estimate of activity peak","as date",
     as.character(as.Date(x=c(ann.res[,colnames(ann.res)=="mean"]),origin=c(paste(row.names(ann.res),"-09-30",sep="")))),"\n",
     sep="\n","as days after sept 30",
@@ -286,7 +286,7 @@ y=ann.res[,"mean"]
 seasname<-c("winter","summer")
 plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n",pod," Pod",seasname[as.numeric(season)]),
      ylim=c(min(ann.res, na.rm = TRUE),max(ann.res, na.rm = TRUE)),pch=16,type="l", lwd=2,col="black")
-#polygon(c(rev(x),x),c(rev(ann.res[,"75%"]),ann.res[,"25%"]),col=alpha("grey",0.2),lwd=0.1)
+#polygon(c(rev(x),x),c(rev(ann.res[,"90%"]),ann.res[,"10%"]),col=alpha("grey",0.2),lwd=0.1)
 
 axis(side=1,at=x)
 if(season==2){
@@ -318,7 +318,7 @@ for (xj in 1:length(years)) {
   
   # Get BUGS estimates
   res.chains<-out$sims.array[,,paste("lp[",xj[1],",",1:(max(dat$day)-min(dat$day)+1),"]",sep="")]
-  res=plogis(apply(res.chains,MARGIN=c(length(dim(res.chains))),quantile,probs=c(.025,.5,.975)))
+  res=plogis(apply(res.chains,MARGIN=c(length(dim(res.chains))),quantile,probs=c(.10,.5,.90)))
   
   ### Plot "naive" estimate of detectability
   # prepare bars to compare barplot of observation data (bars) with estimates (line); barheight represents weekly proportion of detection events divided by all surveys
@@ -352,9 +352,9 @@ for (xj in 1:length(years)) {
   
   ### Plot model estimates  
   # plot seasonal estimates of detectability p
-  lines(res[3,],lty=3,col=1,lwd=2.5) # lower bound of the 95% CI
+  lines(res[3,],lty=3,col=1,lwd=2.5) # lower bound of the 90% CI
   lines(res[2,],lty=1,col=1,lwd=2) # median
-  lines(res[1,],lty=3,col=1,lwd=2.5) # upper bound of the 95% CI
+  lines(res[1,],lty=3,col=1,lwd=2.5) # upper bound of the 90% CI
   axis(2)
   if(season==2){
   axis(side=1,at=c(122-121,152-121,183-121,214-121,244-121,274-121),
