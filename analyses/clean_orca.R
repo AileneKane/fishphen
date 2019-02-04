@@ -61,6 +61,11 @@ d$FishArea[d$FishArea=="8"]<-"08"
 d$FishArea[d$FishArea=="9"]<-"09"
 d$FishArea[d$FishArea=="8-1"|d$FishArea=="8.1"]<-"81"
 d$FishArea[d$FishArea=="8-2"|d$FishArea=="8.2"]<-"82"
+d$FishArea[d$FishArea=="17"]<-"17C"
+d$FishArea[d$FishArea=="18"]<-"18C"
+d$FishArea[d$FishArea=="20"]<-"20C"
+d$FishArea[d$FishArea=="28"]<-"28C"
+d$FishArea[d$FishArea=="29"]<-"29C"
 
 #6. #Remove non-orca data
 d<-d[d$LikelyPod!="HB?"|d$LikelyPod!="Not Orcas",]

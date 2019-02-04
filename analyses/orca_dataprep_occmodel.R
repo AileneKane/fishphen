@@ -72,8 +72,6 @@ d<-d[d$Year>1978,]
 #d$wkyr<-paste(d$Year, d$week,sep="_")
 #unique(d$FishArea)
 d$yrdayfa<-paste(d$Year, d$day,d$FishArea,sep="_")
-d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
-#add  
 
 #Raw detection ratios:
 obs = aggregate(Orcas ~yrdayfa, data = d,sum)
@@ -92,7 +90,8 @@ det$day<-substr(det$yrdayfa,6,8)
 det$fa<-substr(det$yrdayfa,10,nchar(det$yrdayfa))
 #assign to ps (puget sound) or uss (upper salish sea) using fishing area
 det$region<-"ps"
-det$region[det$fa=="07"|det$fa=="06"|det$fa=="02"|det$fa=="04"]<-"uss"
+det$region[det$fa=="07"|det$fa=="06"|det$fa=="05"|det$fa=="04"]<-"uss"
+det$region[det$fa=="01"|det$fa=="02"|det$fa=="03"]<-"oc"#outer coast
 
 det$site<-as.numeric(as.factor(det$fa))
 det$day<-as.numeric(det$day)
