@@ -213,20 +213,6 @@ lpmax[lpmax==min(dat$day)]<-NA
 #would like to Extract psi (probability of presence by day...)
 dim(out$sims.list$psi)
 
-#get first date when detectability is greater than 0.5
-findfirst.fn<-function(x) {
-  min(which(plogis(x)>0.10))
-}
-firstlp<-array(data=NA,dim=c(out$n.sims,nyear))
-dimnames(firstlp)<-list(c(1:out$n.sims),c(sort(unique(dat$year))))
-for (xj in sort(unique(as.numeric(factor(dat$year))))) { 
-  firstlp[,xj]<-apply(out$sims.array[,,paste("lp[",xj[1],",",1:(max(dat$day)-min(dat$day)+1),"]",sep="")],MARGIN=c(if(out$n.chains>1) 1:2 else 1),findfirst.fn)
-}
-firstlp<-firstlp+min(dat$day)-1
-firstlp[firstlp==max(dat$day)]<-NA
-firstlp[firstlp==min(dat$day)]<-NA
-
-
 # summarize estimates
 ann.res<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","10%","90%")))
 res<-apply(lpmax,c(2),mean,na.rm=T)
@@ -243,8 +229,8 @@ do.lm<-function(x) {
 }
 r<-matrix(NA,dim(lpmax)[1],2)
 for (o in 1:(dim(lpmax)[1])) {
- # if(!is.na(sum(lpmax[o,]))) {
-    lm(lpmax[o,]~as.numeric(colnames(lpmax)))$coefficients->r[o,]
+  # if(!is.na(sum(lpmax[o,]))) {
+  lm(lpmax[o,]~as.numeric(colnames(lpmax)))$coefficients->r[o,]
   #}    
 }
 slopevec<-as.vector(r[,2])
@@ -256,6 +242,62 @@ intercept.90<-quantile(r[,1],c(0.90),na.rm=T)
 slope.10<-quantile(r[,2],c(0.10),na.rm=T)
 slope.90<-quantile(r[,2],c(0.90),na.rm=T)
 
+
+
+#get first date when detectability is greater than 0.5
+findfirst.fn<-function(x) {
+  min(which(plogis(x)>0.50), na.rm=TRUE)
+}
+#check:
+#count.fn<-function(x) {
+#  length(which(plogis(x)<0.10))
+#}
+firstlp<-array(data=NA,dim=c(out$n.sims,nyear))
+dimnames(firstlp)<-list(c(1:out$n.sims),c(sort(unique(dat$year))))
+for (xj in sort(unique(as.numeric(factor(dat$year))))) { 
+  firstlp[,xj]<-apply(out$sims.array[,,paste("lp[",xj[1],",",1:(max(dat$day)-min(dat$day)+1),"]",sep="")],MARGIN=c(if(out$n.chains>1) 1:2 else 1),findfirst.fn)
+}
+firstlp<-firstlp+min(dat$day)-1
+firstlp[firstlp==max(dat$day)]<-NA
+firstlp[firstlp==min(dat$day)]<-NA
+firstlp[firstlp=="Inf"]<-NA
+#firstlp<-as.numeric(firstlp)
+#countlp<-array(data=NA,dim=c(out$n.sims,nyear))
+#dimnames(countlp)<-list(c(1:out$n.sims),c(sort(unique(dat$year))))
+#for (xj in sort(unique(as.numeric(factor(dat$year))))) { 
+#  countlp[,xj]<-apply(out$sims.array[,,paste("lp[",xj[1],",",1:(max(dat$day)-min(dat$day)+1),"]",sep="")],MARGIN=c(if(out$n.chains>1) 1:2 else 1),count.fn)
+#}
+#returns "inf" when no estimates are >0.50
+
+# summarize estimates
+ann.first<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","10%","90%")))
+
+first<-apply(firstlp,c(2),mean,na.rm=T)
+ann.first[names(first),"mean"]<-first
+first<-apply(firstlp,c(2),quantile,probs=0.10,na.rm=T)
+ann.first[names(first),"10%"]<-first
+first<-apply(firstlp,c(2),quantile,probs=0.90,na.rm=T)
+ann.first[names(first),"90%"]<-first
+
+# get estimate of trend in date of peak detectability over years
+#firstlp<-as.numeric()
+r.first<-matrix(NA,dim(firstlp)[1],2)
+for (o in 1:(dim(firstlp)[1])) {
+ # if(!is.na(sum(lpmax[o,]))) {
+  y<-firstlp[o,]
+  y[y=="Inf"]<-NA
+    lm(y~as.numeric(colnames(firstlp)))$coefficients->r.first[o,]
+  #}    
+}
+slopevec.first<-as.vector(r.first[,2])
+intercept.first<-mean(r.first[,1],na.rm=T)
+slope.first<-mean(r[,2],na.rm=T)
+intercept.first.10<-quantile(r.first[,1],c(0.10),na.rm=T)
+intercept.first.90<-quantile(r.first[,1],c(0.90),na.rm=T)
+
+slope.first.10<-quantile(r.first[,2],c(0.10),na.rm=T)
+slope.first.90<-quantile(r.first[,2],c(0.90),na.rm=T)
+
 ### Write results (in console if argument file is not specified in function cat)
 if(season=="1"){
 cat(paste("summary results",pod,region,season),"\n",
@@ -266,6 +308,15 @@ cat(paste("summary results",pod,region,season),"\n",
     as.character(as.Date(x=c(ann.res[,colnames(ann.res)=="mean"]),origin=c(paste(row.names(ann.res),"-09-30",sep="")))),"\n",
     sep="\n","as days after sept 30",
     paste(rownames(ann.res),round(ann.res[,"mean"])))   
+  
+  cat(paste("summary results",pod,region,season),"\n",
+      paste("annual change of first activity doy:", round(mean(slopevec.first,na.rm=T),digits=2),"days"),
+      paste("confidence interval from", round(quantile(slopevec.first,0.10,na.rm=T),digits=2),
+            "to",round(quantile(slopevec.first,0.90,na.rm=T),digits=2)),
+      "\n","mean estimate of first activity doy","as date",
+      as.character(as.Date(x=c(ann.first[,colnames(ann.first)=="mean"]),origin=c(paste(row.names(ann.first),"-09-30",sep="")))),"\n",
+      sep="\n","as days after sept 30",
+      paste(rownames(ann.first),round(ann.first[,"mean"])))
 }
 if(season=="2"){
   cat(paste("summary results",pod,region,season),"\n",
