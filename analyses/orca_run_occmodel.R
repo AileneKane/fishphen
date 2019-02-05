@@ -16,8 +16,8 @@ library(scales)
 
 # Choose the data you want:
 pod="L"#options= J,K,L,SR
-season="2"#options= 1(winter) or 2(summer)
-region="uss"#options=upper salish sea (uss) or puget sound (ps)
+season="1"#options= 1(winter) or 2(summer)
+region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
 
@@ -172,7 +172,6 @@ plot(jags.out)
 
 
 
-
 #Look at psi
 out<-jags.out$BUGSoutput
 jags.out$BUGSoutput$mean$psi#probability of presence (annual)
@@ -209,10 +208,23 @@ for (xj in sort(unique(as.numeric(factor(dat$year))))) {
   lpmax[,xj]<-apply(out$sims.array[,,paste("lp[",xj[1],",",1:(max(dat$day)-min(dat$day)+1),"]",sep="")],MARGIN=c(if(out$n.chains>1) 1:2 else 1),findmax.fn)
 }
 lpmax<-lpmax+min(dat$day)-1
-#lpmax[lpmax==max(dat$day)]<-NA
-#lpmax[lpmax==min(dat$day)]<-NA
+lpmax[lpmax==max(dat$day)]<-NA
+lpmax[lpmax==min(dat$day)]<-NA
 #would like to Extract psi (probability of presence by day...)
 dim(out$sims.list$psi)
+
+#get first date when detectability is greater than 0.5
+findfirst.fn<-function(x) {
+  min(which(plogis(x)>0.10))
+}
+firstlp<-array(data=NA,dim=c(out$n.sims,nyear))
+dimnames(firstlp)<-list(c(1:out$n.sims),c(sort(unique(dat$year))))
+for (xj in sort(unique(as.numeric(factor(dat$year))))) { 
+  firstlp[,xj]<-apply(out$sims.array[,,paste("lp[",xj[1],",",1:(max(dat$day)-min(dat$day)+1),"]",sep="")],MARGIN=c(if(out$n.chains>1) 1:2 else 1),findfirst.fn)
+}
+firstlp<-firstlp+min(dat$day)-1
+firstlp[firstlp==max(dat$day)]<-NA
+firstlp[firstlp==min(dat$day)]<-NA
 
 
 # summarize estimates
@@ -238,11 +250,11 @@ for (o in 1:(dim(lpmax)[1])) {
 slopevec<-as.vector(r[,2])
 intercept<-mean(r[,1],na.rm=T)
 slope<-mean(r[,2],na.rm=T)
-intercept.25<-quantile(r[,1],c(0.10),na.rm=T)
-intercept.75<-quantile(r[,1],c(0.90),na.rm=T)
+intercept.10<-quantile(r[,1],c(0.10),na.rm=T)
+intercept.90<-quantile(r[,1],c(0.90),na.rm=T)
 
-slope.25<-quantile(r[,2],c(0.10),na.rm=T)
-slope.75<-quantile(r[,2],c(0.90),na.rm=T)
+slope.10<-quantile(r[,2],c(0.10),na.rm=T)
+slope.90<-quantile(r[,2],c(0.90),na.rm=T)
 
 ### Write results (in console if argument file is not specified in function cat)
 if(season=="1"){
@@ -269,6 +281,7 @@ if(season=="2"){
 # Plot output
 #-----------------------------------------------------------------
 # save plotted results as pdf
+if(pod=="J" & season=="1" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_winter_J.pdf"),width=7,height=6)}
 if(pod=="J" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_PS_winter_J.pdf"),width=7,height=6)}
 if(pod=="J" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_summer_J.pdf"),width=7,height=6)}
 if(pod=="K" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_PS_winter_K.pdf"),width=7,height=6)}
@@ -284,7 +297,7 @@ par(mfrow=c(1,1),mai=c(1,1,1,0.5))
 x=rownames(ann.res)
 y=ann.res[,"mean"]
 seasname<-c("winter","summer")
-plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n",pod," Pod",seasname[as.numeric(season)]),
+plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n",pod," Pod",seasname[as.numeric(season)],region),
      ylim=c(min(ann.res, na.rm = TRUE),max(ann.res, na.rm = TRUE)),pch=16,type="l", lwd=2,col="black")
 #polygon(c(rev(x),x),c(rev(ann.res[,"90%"]),ann.res[,"10%"]),col=alpha("grey",0.2),lwd=0.1)
 
