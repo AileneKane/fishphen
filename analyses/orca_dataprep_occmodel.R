@@ -29,7 +29,12 @@ d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" "]<-d$LikelyPod[d$LikelyPod!="" & d$Li
 #d<-d[d$Pod.cl=="HB?"|d$Pod.cl=="Not Orcas",]
 
 #only using fishing areas in Washington's Salish Sea 
-d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
+#d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
+#keep canadian sites in upper salish sea
+d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82","19C","18C","29C","20C"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
+#remove sites with no fishing area:
+d<-d[!d$FishArea %in% c(""),]
+
 
 #Only use fishing areas that have atleast 4 years with >20 observations:
 #11 fishing areas with >5
@@ -90,7 +95,7 @@ det$day<-substr(det$yrdayfa,6,8)
 det$fa<-substr(det$yrdayfa,10,nchar(det$yrdayfa))
 #assign to ps (puget sound) or uss (upper salish sea) using fishing area
 det$region<-"ps"
-det$region[det$fa=="07"|det$fa=="06"|det$fa=="05"|det$fa=="04"]<-"uss"
+det$region[det$fa=="07"|det$fa=="06"|det$fa=="02"|det$fa=="04"|det$fa=="19C"|det$fa== "18C"|det$fa=="20C"]<-"uss"
 det$region[det$fa=="01"|det$fa=="02"|det$fa=="03"]<-"oc"#outer coast
 
 det$site<-as.numeric(as.factor(det$fa))
