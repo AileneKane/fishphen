@@ -40,7 +40,7 @@ d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","1
 
 #Assign region, based on fishing area:
 d$region<-"ps"
-d$region[d$FishArea=="07"|d$FishArea=="06"|d$FishArea=="05"|d$FishArea=="04"]<-"uss"
+d$region[d$FishArea=="07"|d$FishArea=="06"|d$FishArea=="05"|d$FishArea=="04"|d$FishArea=="19C"|d$FishArea== "18C"|d$FishArea=="20C"]<-"uss"
 d$region[d$FishArea=="01"|d$FishArea=="02"|d$FishArea=="03"]<-"oc"#outer coast
 
 #Add week and day of year (day)
@@ -58,6 +58,8 @@ d$SRKW<-0
 d$SRKW[grep("SR",d$Pod.cl)]<- 1
 d$SRKW[d$J==1|d$K==1|d$L==1]<- 1   
 d$Orcas<-1
+d$Trans<-0
+d$Trans[grep("T",d$Pod.cl)]<- 1
 
 #only data after 1978
 d<-d[d$Year>1977,]
@@ -106,6 +108,7 @@ lines(orcasum$year[orcasum$region=="ps"],orcasum$Lobs[orcasum$region=="ps"], lwd
 lines(orcasum$year[orcasum$region=="oc"],orcasum$Lobs[orcasum$region=="oc"], lwd=2,lty=3, col="darkred")
 
 legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast","Js","Ks","Ls"), lty=c(1,2,3,1,1,1),col=c("black","black","black","blue","purple","darkred"), bty="n")
+#legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast"), lty=c(1,2,3),col=c("black"), bty="n")
 
 
 quartz()
@@ -180,11 +183,31 @@ lines(rownames(wdays.L),wdays.L$ps, lwd=2,lty=2, col="darkred")
 lines(rownames(wdays.L),wdays.L$oc, lwd=2,lty=3, col="darkred")
 
 
-
-
-
-
-
+#Plotas observed or not by doy and year
+#yaxis is year
+#xaxis is doy
+#do for 3 regions
+podcols<-c("Jpres", "Kpres", "Lpres", "AllSRpres")
+pods<-c("J","K","L","SRs")
+for(p in 1:length(podcols)){
+  quartz(width=15,height=6)
+  par(mfrow=c(1,3))
+  colnum<-which(colnames(orcasum.days)==podcols[p])
+  regions=unique(orcasum.days$region)
+    for(r in regions){
+    regdat<-orcasum.days[orcasum.days$region==r,]
+    years = unique(orcasum.days$year)
+    plot(0, type = 'n', las=1, xlim=c(1,366),ylim=c(min(as.numeric(years)),max(as.numeric(years))),ylab="",xlab="DOY", main=paste(r))
+      for(y in years){
+        yrdat = regdat[regdat$year==y,]
+        days = yrdat$day[yrdat[,colnum]==1]
+      points(x=days,y=rep(y,length=length(days)))
+      #lines(x=days,y=rep(y,length=length(days)), lwd=2)
+      }  
+    if(r=="uss"){mtext(paste(pods[p]), side=3,line=2, adj=0.5)}
+    
+    }
+}
 #Below doesn't work well....
 #par(mfrow)
 #start with uss, all SRKWs
