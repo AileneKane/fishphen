@@ -15,7 +15,7 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="L"#options= J,K,L,SR
+pod="K"#options= J,K,L,SR
 season="1"#options= 1(winter) or 2(summer)
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
@@ -260,7 +260,7 @@ for (xj in sort(unique(as.numeric(factor(dat$year))))) {
 firstlp<-firstlp+min(dat$day)-1
 firstlp[firstlp==max(dat$day)]<-NA
 firstlp[firstlp==min(dat$day)]<-NA
-firstlp[firstlp=="Inf"]<-NA
+firstlp[which(firstlp=="Inf")]<-NA
 #firstlp<-as.numeric(firstlp)
 #countlp<-array(data=NA,dim=c(out$n.sims,nyear))
 #dimnames(countlp)<-list(c(1:out$n.sims),c(sort(unique(dat$year))))
@@ -372,6 +372,52 @@ for (o in 1:500) {
 abline(a=intercept,b=slope,col="darkred",lwd=2)
 
 dev.off()
+#
+#-----------------------------------------------------------------
+# Plot first date detectability >0.5 
+#-----------------------------------------------------------------
+# save plotted results as pdf
+if(pod=="J" & season=="1" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_winter_Jfirst.pdf"),width=7,height=6)}
+if(pod=="J" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_PS_winter_Jfirst.pdf"),width=7,height=6)}
+if(pod=="J" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_summer_Jfirst.pdf"),width=7,height=6)}
+if(pod=="K" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_PS_winter_Kfirst.pdf"),width=7,height=6)}
+if(pod=="K" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_USS_summer_Kfirst.pdf"),width=7,height=6)}
+if(pod=="L" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/L/orcaphen_1976_2017_PS_winter_Lfirst.pdf"),width=7,height=6)}
+if(pod=="L" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/L/orcaphen_1976_2017_USS_summer_Lfirst.pdf"),width=7,height=6)}
+if(pod=="SR" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017_PS_winter_SRfirst.pdf"),width=7,height=6)}
+if(pod=="SR" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017_USS_summer_SRfirst.pdf"),width=7,height=6)}
+
+### plot estimates of peak detectability over all years
+#quartz(width=7, height=6)
+par(mfrow=c(1,1),mai=c(1,1,1,0.5))
+x=rownames(ann.first)
+y=ann.first[,"mean"]
+seasname<-c("winter","summer")
+plot(x,y,xlab="",ylab="",axes=F,main=paste("First Detection Probability >0.5","\n",pod," Pod",seasname[as.numeric(season)],region),
+     ylim=c(min(ann.first, na.rm = TRUE),max(ann.first, na.rm = TRUE)),pch=16,type="l", lwd=2,col="black")
+#polygon(c(rev(x),x),c(rev(ann.res[,"90%"]),ann.res[,"10%"]),col=alpha("grey",0.2),lwd=0.1)
+
+axis(side=1,at=x)
+if(season==2){
+  axis(side=2,at=c(122,152,183,214,244,274),
+       labels=c("1May","1Jun","1Jul","1Aug","1Sept","1Oct"))
+}
+if(season==1){
+  axis(side=2,at=c(1,32,62,93,124,153,184,214),
+       labels=c("1Oct","1Nov","1Dec","1Jan","1Feb","1Mar","1Apr","1May"))
+}
+
+for (o in 1:500) {
+  #if(!is.na(sum(lpmax[o,]))) {
+  mod.first<-lm(firstlp[o,]~as.numeric(colnames(firstlp)))$coefficients->r[o,]
+  abline(mod.first,col=alpha("grey",0.2),lwd=2)
+  
+  #}    
+}
+abline(a=intercept.first,b=slope.first,col="darkred",lwd=2)
+
+dev.off()
+
 
 ### Plot annual detectability pattern
 # loop over all years
