@@ -202,12 +202,37 @@ for(p in 1:length(podcols)){
         yrdat = regdat[regdat$year==y,]
         days = yrdat$day[yrdat[,colnum]==1]
       points(x=days,y=rep(y,length=length(days)))
+      
       #lines(x=days,y=rep(y,length=length(days)), lwd=2)
       }  
     if(r=="uss"){mtext(paste(pods[p]), side=3,line=2, adj=0.5)}
     
     }
 }
+
+
+#Make box plots to see central tendencies:
+podcols<-c("Jpres", "Kpres", "Lpres", "AllSRpres")
+pods<-c("J","K","L","SRs")
+for(p in 1:length(podcols)){
+  quartz(width=15,height=6)
+  par(mfrow=c(1,3))
+  colnum<-which(colnames(orcasum.days)==podcols[p])
+  regions=unique(orcasum.days$region)
+  for(r in regions){
+    regdat<-orcasum.days[orcasum.days$region==r,]
+    if (r=="ps"){
+      regdat<-regdat[as.numeric(regdat$day)>273,]#look at data only after Sept 30 for PS
+    }
+        boxplot(as.numeric(regdat$day)~as.factor(regdat$year),
+            horizontal=TRUE,las=1,
+            ylab="year",xlab="DOY",main=paste(r))
+    
+    if(r=="uss"){mtext(paste(pods[p]), side=3,line=2, adj=0.5)}
+    
+  }
+}
+
 #Below doesn't work well....
 #par(mfrow)
 #start with uss, all SRKWs
