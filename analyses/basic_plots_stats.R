@@ -210,7 +210,21 @@ for(p in 1:length(podcols)){
     }
 }
 
-
+#summary of the number of days whales were observed in each region, by year:
+ pres<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$year),sum)
+ #summary of the number of days whales with rows of data (observed or not) in each region, by year:
+ totobs<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$year),length)
+ prob<-pres/totobs
+ #summary of the number of days whales were observed in each region, by year:
+ pres.doy<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$day),sum)
+ #summary of the number of days whales with rows of data (observed or not) in each region, by year:
+ totobs.doy<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$day),length)
+ prob.doy<-pres.doy/totobs.doy
+ quartz()
+ par(mfrow=c(2,1))
+ plot(colnames(prob.doy),prob.doy[3,], type="l", ylab="Probability of obs.",xlab="DOY", main="USS")
+ plot(colnames(prob.doy),prob.doy[2,], type="l", ylab="Probability of obs.",xlab="DOY", main="PS")
+ 
 #Make box plots to see central tendencies:
 podcols<-c("Jpres", "Kpres", "Lpres", "AllSRpres")
 pods<-c("J","K","L","SRs")
@@ -222,7 +236,7 @@ for(p in 1:length(podcols)){
   for(r in regions){
     regdat<-orcasum.days[orcasum.days$region==r,]
     if (r=="ps"){
-      regdat<-regdat[as.numeric(regdat$day)>273,]#look at data only after Sept 30 for PS
+     regdat<-regdat[as.numeric(regdat$day)>273,]#look at data only after Sept 30 for PS
     }
         boxplot(as.numeric(regdat$day)~as.factor(regdat$year),
             horizontal=TRUE,las=1,
