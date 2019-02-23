@@ -215,9 +215,9 @@ for(p in 1:length(podcols)){
  #summary of the number of days whales with rows of data (observed or not) in each region, by year:
  totobs<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$year),length)
  prob<-pres/totobs
- #summary of the number of days whales were observed in each region, by year:
+ #summary of the number of days whales were observed in each region, across all years:
  pres.doy<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$day),sum)
- #summary of the number of days whales with rows of data (observed or not) in each region, by year:
+ #summary of the number of days whales with rows of data (observed or not) in each region, across all tears:
  totobs.doy<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$day),length)
  prob.doy<-pres.doy/totobs.doy
  quartz()
@@ -246,6 +246,170 @@ for(p in 1:length(podcols)){
     
   }
 }
+
+
+#Add days after sept 30:
+orcasum.days$daysaftsept30<-NA
+orcasum.days$day<-as.numeric(orcasum.days$day)
+orcasum.days$year<-as.numeric(orcasum.days$year)
+
+orcasum.days$daysaftsept30[which(orcasum.days$day>273 & orcasum.days$day<367)]<-orcasum.days$day[which(orcasum.days$day>273 & orcasum.days$day<367)]-273
+orcasum.days$daysaftsept30[which(orcasum.days$day<274)]<-orcasum.days$day[which(orcasum.days$day<274)]+93#
+#add an "orca year" which runs Oct 1-Sept 31
+orcasum.days$orcayear<-orcasum.days$year
+orcasum.days$orcayear[which(orcasum.days$day>273)]<-orcasum.days$year[which(orcasum.days$day>273)]+1
+
+
+#See if there is a shift in first, last, mean over by decade
+regions=unique(orcasum.days$region)
+podcols<-c("Jpres", "Kpres", "Lpres", "AllSRpres")
+pods<-c("J","K","L","SRs")
+years<-unique(orcasum.days$year)
+pods.all<-c()
+regions.all<-c()
+years.all<-c()
+nobs.all<-c()
+firstest.all<-c()
+lastest.all<-c()
+meanest.all<-c()
+firstest.sept30.all<-c()
+lastest.sept30.all<-c()
+meanest.sept30.all<-c()
+for(p in 1:length(podcols)){
+  colnum<-which(colnames(orcasum.days)==podcols[p])
+  for(r in 1:length(regions)){
+    regdat<-orcasum.days[orcasum.days$region==regions[r],]
+    if (regions[r]=="ps"){
+      regdat<-regdat[as.numeric(regdat$day)>273,]#look at data only after Sept 30 for PS
+    }
+    if (regions[r]=="uss"){
+      regdat<-regdat[as.numeric(regdat$day)<273,]#look at data before Sept 30 for USS
+      regdat<-regdat[as.numeric(regdat$day)>121,]#look at data after MAy 1 for USS
+      
+    }
+    
+    for(y in 1:length(years)){
+      yrdat<-regdat[regdat$year==years[y],]
+      pods.all<-c(pods.all,pods[p])
+      regions.all<-c(regions.all,regions[r])
+      years.all<-c(years.all,years[y])
+      nobs.all<-c(nobs.all,length(yrdat$day[yrdat[,colnum]==1]))
+      firstest.all<-c(firstest.all,min(yrdat$day[yrdat[,colnum]==1], na.rm=TRUE))
+      lastest.all<-c(lastest.all,max(yrdat$day[yrdat[,colnum]==1], na.rm=TRUE))
+      meanest.all<-c(meanest.all,mean(as.numeric(yrdat$day[yrdat[,colnum]==1]), na.rm=TRUE))
+      orcayrdat<-regdat[regdat$orcayear==years[y],]
+      firstest.sept30.all<-c(firstest.sept30.all,min(orcayrdat$daysaftsept30[orcayrdat[,colnum]==1], na.rm=TRUE))
+      lastest.sept30.all<-c(lastest.sept30.all,max(orcayrdat$daysaftsept30[orcayrdat[,colnum]==1], na.rm=TRUE))
+      meanest.sept30.all<-c(meanest.sept30.all,mean(as.numeric(orcayrdat$daysaftsept30[orcayrdat[,colnum]==1]), na.rm=TRUE))
+    }
+  }
+}
+df <- as.data.frame(cbind(pods.all,regions.all,years.all,nobs.all,firstest.all,lastest.all,meanest.all,firstest.sept30.all,lastest.sept30.all,meanest.sept30.all))
+colnames(df)<-c("pod","region","year","nobs","firstest","lastest","meanest","firstest.sept30","lastest.sept30","meanest.sept30") 
+
+#Now fit some linear models and plots
+
+quartz()
+par(mfrow=c(3,4))
+pod.df=df[df$pod=="SRs",]
+pod.df$firstest[which(pod.df$firstest=="Inf")]<-NA
+pod.df$lastest[which(pod.df$lastest=="-Inf")]<-NA
+pod.df$firstest<-as.numeric(pod.df$firstest)
+pod.df$lastest<-as.numeric(pod.df$lastest)
+pod.df$meanest=as.numeric(pod.df$meanest)
+
+pod.df$firstest.sept30[which(pod.df$firstest.sept30=="Inf")]<-NA
+pod.df$lastest.sept30[which(pod.df$lastest.sept30=="-Inf")]<-NA
+pod.df$duration<-pod.df$lastest-pod.df$firstest
+for(i in 1:length(regions)){
+  reg.df=pod.df[pod.df$region==regions[i],]
+  reg.df$year=as.numeric(reg.df$year)
+ 
+  #if(regions[i]=="ps" & unique(reg.df$pod)=="SRs"){reg.df<-reg.df[1:40,]}
+  #if(regions[i]=="uss"& unique(reg.df$pod)=="SRs"){reg.df[81:120,]}
+  #first obs
+  plot(reg.df$year,reg.df$firstest,xlab="year",ylab="first obs doy", main=paste(unique(reg.df$pod)), bty="l", pch=21, bg="gray")
+  mod<-lm(reg.df$firstest~reg.df$year)
+  abline(mod)
+  mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+  mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+  
+  #last obs
+  plot(reg.df$year,reg.df$lastest,xlab="year",ylab="last obs doy", main=paste(regions[i]), bty="l", pch=21, bg="gray")
+  mod<-lm(reg.df$lastest~reg.df$year)
+  mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+  abline(mod)
+  mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+  
+  #mean obs
+  plot(reg.df$year,reg.df$meanest,xlab="year",ylab="mean obs doy", main="", bty="l", pch=21, bg="gray")
+  mod<-lm(reg.df$meanest~reg.df$year)
+  mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+  abline(mod)
+  mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+  
+  #duration
+  plot(reg.df$year,reg.df$duration,xlab="year",ylab="duration (days)", main="", bty="l", pch=21, bg="gray")
+  mod<-lm(reg.df$duration~reg.df$year)
+  mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+  mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+  
+  abline(mod)
+  
+ #usin days since sept 30 does not change much!
+  #first obs after sept 30
+  #plot(reg.df$year,reg.df$firstest.sept30,xlab="year",ylab="first obs day after sept 30", main="all srs", bty="l", pch=21, bg="gray")
+  #mod<-lm(reg.df$firstest.sept30~reg.df$year)
+  #abline(mod)
+  #mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+  #last obs days after sept 30
+  #plot(reg.df$year,reg.df$lastest.sept30,xlab="year",ylab="last obs day after sept 30", main=paste(regions[i]), bty="l", pch=21, bg="gray")
+  #mod<-lm(reg.df$lastest.sept30~reg.df$year)
+  #mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+  #abline(mod)
+  #mean obs
+  #plot(reg.df$year,reg.df$meanest.sept30,xlab="year",ylab="mean obs day after sept 30", main="", bty="l", pch=21, bg="gray")
+  #mod<-lm(reg.df$meanest.sept30~reg.df$year)
+  #mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+  #abline(mod)
+
+}
+
+#Make boxplots similar to the way that i made them for test data
+cbind(df$nobs[df$pod=="SRs"],df$year[df$pod=="SRs"])
+pod.df=df[df$pod=="SRs",]
+pod.df$firstest[which(pod.df$firstest=="Inf")]<-NA
+pod.df$lastest[which(pod.df$lastest=="-Inf")]<-NA
+pod.df$firstest<-as.numeric(pod.df$firstest)
+pod.df$lastest<-as.numeric(pod.df$lastest)
+pod.df$meanest=as.numeric(pod.df$meanest)
+
+pod.df$decade<-"1978-1987"
+pod.df$decade[pod.df$year>1987]<-"1988-1997"
+pod.df$decade[pod.df$year>1997]<-"1998-2007"
+pod.df$decade[pod.df$year>2007]<-"2008-2017"
+pod.df$period<-"1978-1997"
+pod.df$period[pod.df$year>1997]<-"1998-2017"
+
+quartz()
+par(mfrow=c(1,2))
+#First obs
+boxplot(as.numeric(pod.df$firstest[pod.df$region=="ps"])~as.factor(pod.df$decade[pod.df$region=="ps"]), xlab="Decade", ylab="Estimate of first obs (doy) in PS", main="First obs")
+#Last obs
+boxplot(as.numeric(pod.df$lastest[pod.df$region=="ps"])~as.factor(pod.df$decade[pod.df$region=="ps"]), xlab="Decade", ylab="Estimate of last obs (doy) in PS", main="Last obs")
+
+quartz()
+par(mfrow=c(1,2))
+#First obs
+boxplot(as.numeric(pod.df$firstest[pod.df$region=="ps"])~as.factor(pod.df$period[pod.df$region=="ps"]), xlab="Period", ylab="Estimate of first obs (doy) in PS", main="First obs")
+t<-t.test(as.numeric(pod.df$firstest[pod.df$region=="ps"])~pod.df$period[pod.df$region=="ps"], paired = FALSE, var.equal = FALSE,conf.level=0.95)
+mtext(paste("Change=",round(t$estimate[1]-t$estimate[2], digits=2),"(",round(t$conf.int[1],digits=2),",",round(t$conf.int[2],digits=2),")", sep=""),side=3,line=-3, adj=1)
+
+#Last obs
+boxplot(as.numeric(pod.df$lastest[pod.df$region=="ps"])~as.factor(pod.df$period[pod.df$region=="ps"]), xlab="Period", ylab="Estimate of last obs (doy) in PS", main="Last obs")
+t<-t.test(as.numeric(pod.df$lastest[pod.df$region=="ps"])~as.factor(pod.df$period[pod.df$region=="ps"]), conf.level=0.95)
+mtext(paste("Change=",round(t$estimate[1]-t$estimate[2], digits=2),"(",round(t$conf.int[1],digits=2),",",round(t$conf.int[2],digits=2),")", sep=""),side=3,line=-3, adj=1)
+
 
 #Below doesn't work well....
 #par(mfrow)
