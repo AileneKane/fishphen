@@ -70,15 +70,3 @@ boxplot(df$meanest~as.factor(df$nobs), xlab="Number of days observed", ylab="Est
 t<-t.test(df$meanest~as.factor(df$nobs), conf.level=0.95)
 mtext(paste("Change=",round(t$estimate[1]-t$estimate[2], digits=2),"(",round(t$conf.int[1],digits=2),",",round(t$conf.int[2],digits=2),")", sep=""),side=3,line=-3, adj=1)
 
-
-
-
-
-
-#Create a dataset with a peak number of observations around doy 200
-nobs = 500#1970s-80s annual obs=~500, 200s = ~5000
-days = 160#number of days that whales are in some location (~160 for USS)
-mndoy = 200 #mean/peak doy that the whales are present in some location
-visits = rpois(days,mndoy)# "true" distribution of whale visits to some location
-#Plot
-hist(visits)
