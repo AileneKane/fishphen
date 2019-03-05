@@ -15,7 +15,7 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="K"#options= J,K,L,SR
+pod="SR"#options= J,K,L,SR
 season="1"#options= 1(winter) or 2(summer)
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
@@ -377,9 +377,9 @@ cat(paste("summary results",pod,region,season),"\n",
       paste(rownames(ann.first),round(ann.first[,"mean"])))
   
   cat(paste("summary results",pod,region,season),"\n",
-      paste("annual change of last activity doy:", round(mean(slopevec.first,na.rm=T),digits=2),"days"),
-      paste("confidence interval from", round(quantile(slopevec.first,0.10,na.rm=T),digits=2),
-            "to",round(quantile(slopevec.first,0.90,na.rm=T),digits=2)),
+      paste("annual change of last activity doy:", round(mean(slopevec.last,na.rm=T),digits=2),"days"),
+      paste("confidence interval from", round(quantile(slopevec.last,0.10,na.rm=T),digits=2),
+            "to",round(quantile(slopevec.last,0.90,na.rm=T),digits=2)),
       "\n","mean estimate of last activity doy","as date",
       as.character(as.Date(x=c(ann.last[,colnames(ann.last)=="mean"]),origin=c(paste(row.names(ann.last),"-09-30",sep="")))),"\n",
       sep="\n","as days after sept 30",
