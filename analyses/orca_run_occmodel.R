@@ -29,10 +29,10 @@ if(pod=="SR"){dat<-read.csv("analyses/output/allsr_dat.csv",header=T)}
 #restrict to season
 dat<-dat[dat$season==season,]
 #if winter  (season 1), then days= days ater sept 30
-if(season=="1"){
-  dat<-subset(dat,select=c(nrep,ndet,site, daysaftsept30,year,season,region))
-colnames(dat)[4]<-"day"
-  }
+#if(season=="1"){
+#  dat<-subset(dat,select=c(nrep,ndet,site, daysaftsept30,year,season,region))
+#colnames(dat)[4]<-"day"
+#  }
 
 #choose region
 dat<-dat[dat$region==region,]

@@ -5,6 +5,7 @@
 #4 February 2019
 
 #housekeeping
+
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
 
@@ -128,7 +129,7 @@ plot(orcasum$year[orcasum$region=="uss"],orcasum$Lobs[orcasum$region=="uss"],typ
 lines(orcasum$year[orcasum$region=="ps"],orcasum$Lobs[orcasum$region=="ps"], lwd=2,lty=2, col="darkred")
 lines(orcasum$year[orcasum$region=="oc"],orcasum$Lobs[orcasum$region=="oc"], lwd=2,lty=3, col="darkred")
 
-#2. Plot the number of "whale days" (days that whales were observed in each region)
+#2. Plot the number of "whale days" (days on which whales were observed in each region)
   #a. All pods together
   #b .Each pod separately
 obs.days = aggregate(Orcas ~yrdayregion, data = d,sum)
@@ -152,13 +153,23 @@ orcasum.days$AllSRpres[orcasum.days$AllSRobs>0]<-1
 #summarize whale days per year by region
 wdays<-as.data.frame(tapply(orcasum.days$AllSRpres,list(orcasum.days$year,orcasum.days$region),sum))
 quartz()
-#par(mfrow)
+par(mai=c(1,1,1,1.5))
 #start with uss, all SRKWs
 plot(rownames(wdays),wdays$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="All SRKW sightings, 1978-2017", ylim=c(0,200))
 lines(rownames(wdays),wdays$ps, lwd=2,lty=2)
 lines(rownames(wdays),wdays$oc, lwd=2,lty=3)
 legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast"), lty=c(1,2,3),col="black", bty="n")
-
+#Is there a treand in number of days on which whales observed since 1978?
+#
+m.uss<-lm(wdays$uss~as.numeric(rownames(wdays)))
+m.ps<-lm(wdays$ps~as.numeric(rownames(wdays)))
+m.oc<-lm(wdays$oc~as.numeric(rownames(wdays)))
+abline(m.uss, col="darkred", lwd=2)
+abline(m.ps, col="darkred", lwd=2, lty=2)
+abline(m.oc, col="darkred", lwd=2, lty=3)
+mtext(paste((round(m.uss$coef[2], digits=2)*10),"days/dec"), line=-5.5, adj=1.3,cex=0.9)
+mtext(paste((round(m.ps$coef[2], digits=2)*10),"days/dec"), line=-20.5, adj=1.3,cex=0.9)
+mtext(paste((round(m.oc$coef[2], digits=2)*10),"days/dec"), line=-23.5, adj=1.3,cex=0.9)
 
 wdays.J<-as.data.frame(tapply(orcasum.days$Jpres,list(orcasum.days$year,orcasum.days$region),sum))
 wdays.K<-as.data.frame(tapply(orcasum.days$Kpres,list(orcasum.days$year,orcasum.days$region),sum))
@@ -183,7 +194,7 @@ lines(rownames(wdays.L),wdays.L$ps, lwd=2,lty=2, col="darkred")
 lines(rownames(wdays.L),wdays.L$oc, lwd=2,lty=3, col="darkred")
 
 
-#Plotas observed or not by doy and year
+#Plots observed or not, by doy and year
 #yaxis is year
 #xaxis is doy
 #do for 3 regions
@@ -260,7 +271,7 @@ orcasum.days$orcayear<-orcasum.days$year
 orcasum.days$orcayear[which(orcasum.days$day>273)]<-orcasum.days$year[which(orcasum.days$day>273)]+1
 
 
-#See if there is a shift in first, last, mean over by decade
+#See if there is a shift in first, last, mean  by decade
 regions=unique(orcasum.days$region)
 podcols<-c("Jpres", "Kpres", "Lpres", "AllSRpres")
 pods<-c("J","K","L","SRs")
@@ -356,7 +367,7 @@ for(i in 1:length(regions)){
   
   abline(mod)
   
- #usin days since sept 30 does not change much!
+ #using days since sept 30 does not change much!
   #first obs after sept 30
   #plot(reg.df$year,reg.df$firstest.sept30,xlab="year",ylab="first obs day after sept 30", main="all srs", bty="l", pch=21, bg="gray")
   #mod<-lm(reg.df$firstest.sept30~reg.df$year)
@@ -411,56 +422,70 @@ t<-t.test(as.numeric(pod.df$lastest[pod.df$region=="ps"])~as.factor(pod.df$perio
 mtext(paste("Change=",round(t$estimate[1]-t$estimate[2], digits=2),"(",round(t$conf.int[1],digits=2),",",round(t$conf.int[2],digits=2),")", sep=""),side=3,line=-3, adj=1)
 
 
-#Below doesn't work well....
-#par(mfrow)
-#start with uss, all SRKWs
-years<-unique(orcasum.days$year)
-pal <- colorRampPalette(c("black", "white"))
-colors<-pal(40)
-quartz()
-par(mfrow=c(5,8))
-#yrdat<-orcasum.days[orcasum.days$year==years[1],]
-#uss<-yrdat[yrdat$region=="uss",]
-#plot(yrdat$day[yrdat$region=="uss"],yrdat$AllSRpres[yrdat$region=="uss"],type="p",xlab="Year",ylab="Presence", pch=21,bg=alpha(colors[1], 0.4),bty="l", main="All SRKW, USS sightings, 1978-2017")
-#g = gam(AllSRpres~s(as.numeric(day)),family=binomial,data=uss)
-#lines(as.numeric(uss$day),g$fitted.values, col=alpha(colors[1], 0.4), lwd=2)
-maxprobobs<-rep(NA, times=length(years))
-doymaxprobobs<-rep(NA, times=length(years))
-for (i in 1:length(years)){
-  quartz()
-  yrdat<-orcasum.days[orcasum.days$year==years[i],]
-
-uss<-yrdat[yrdat$region=="uss",]
-plot(yrdat$day[yrdat$region=="uss"],yrdat$AllSRpres[yrdat$region=="uss"],type="p",xlab="Year",ylab="Presence", pch=21,bg=alpha(colors[i], 0.4),bty="l", main="All SRKW, USS sightings, 1978-2017")
-
-g = gam(AllSRpres~s(as.numeric(day)),family=binomial,data=uss)
-lines(as.numeric(uss$day),g$fitted.values,bg=alpha(colors[i], 0.4), lwd=2)
-print(years[i]);print(summary(g))
-maxprobobs[i]<-max(g$fitted.values)
-doymaxprobobs[i]<-as.numeric(uss$day)[which(g$fitted.values==max(g$fitted.values))]
+##Number of consecutive days
+doy<- strptime(paste(orcasum.days$day,orcasum.days$year, sep="-"),format = "%j")
+orcasum.days$date<-paste(orcasum.days$year,substr(doy,6,10), sep="-")
+runchecker <- function(data, days){
+  data %>% arrange(date) %>%
+    group_by(AllSRpres) %>%
+    mutate(diff = c(0, diff(date)),
+           periodID = 1 + cumsum(diff > days)) %>%
+    group_by(ID, periodID) %>%
+    summarise(days = last(date) - first(date))
 }
-quartz()
-plot(years,doymaxprobobs,type="p",pch=21,bg="gray", ylab="DOY",xlab="Year")
+#p=4 for "ALLSRpres"
+for(p in 1:length(podcols)){
+  quartz(width=15,height=6)
+  par(mfrow=c(1,3))
+  colnum<-which(colnames(orcasum.days)==podcols[p])
+  regions=unique(orcasum.days$region)
+  for(r in regions){
+    regdat<-orcasum.days[orcasum.days$region==r,]
+    orcaobs<-subset(regdat, select=c(AllSRpres,date))]
+    orcaobs$date<-as.Date(orcaobs$date)
+    runchecker(orcaobs,1)
+    runchecker(orcaobs$AllSRpres,)
+  }
+  }
 
-summary(lm(doymaxprobobs~as.numeric(years)))
 
-
-maxprobobs<-rep(NA, times=length(years))
-doymaxprobobs<-rep(NA, times=length(years))
-for (i in 1:length(years)){
-  quartz()
-  yrdat<-orcasum.days[orcasum.days$year==years[i],]
-  ps<-yrdat[yrdat$region=="ps",]
-  if(dim(ps)[1]<9){next}
-  plot(yrdat$day[yrdat$region=="ps"],yrdat$AllSRpres[yrdat$region=="ps"],type="p",xlab="Year",ylab="Presence", pch=21,bg=alpha(colors[i], 0.4),bty="l", main="All SRKW, PS sightings")
-  
-  g = gam(AllSRpres~s(as.numeric(day)),family=binomial,data=ps)
-  lines(as.numeric(ps$day),g$fitted.values,bg=alpha(colors[i], 0.4), lwd=2)
-  print(years[i]);print(summary(g))
-  maxprobobs[i]<-max(g$fitted.values)
-  doymaxprobobs[i]<-as.numeric(uss$day)[which(g$fitted.values==max(g$fitted.values))]
+df <- orcasum.days[order(orcasum.days$region,orcasum.days$date),] 
+df <- df[!duplicated(df[,c("region","date")]),]
+df$last_Date <- as.Date(c("1979-08-16 ",df[1:nrow(df)-1,]$date))
+df$Date <- as.Date(df$date)
+df$diff <- df$Date - df$last_Date 
+df$last_region <- c(0,df[1:nrow(df)-1,]$region)
+df$diff_region <- ifelse(df$region == df$last_region,0,1)
+df$flag <- ifelse(df$diff==1 & df$diff_region==0,0,1)
+consecutive_count <- function(x)  {
+  x <- !x
+  rl <- rle(x)
+  len <- rl$lengths
+  v <- rl$values
+  cumLen <- cumsum(len)
+  z <- x
+  # replace the 0 at the end of each zero-block in z by the 
+  # negative of the length of the preceding 1-block....
+  iDrops <- c(0, diff(v)) < 0
+  z[ cumLen[ iDrops ] ] <- -len[ c(iDrops[-1],FALSE) ]
+  # ... to ensure that the cumsum below does the right thing.
+  # We zap the cumsum with x so only the cumsums for the 1-blocks survive:
+  x*cumsum(z)
 }
-quartz()
-plot(years,doymaxprobobs,type="p",pch=21,bg="gray", ylab="DOY",xlab="Year")
+df$Consecutive <- consecutive_count(df$flag)
 
-summary(lm(doymaxprobobs~as.numeric(years)))
+podcols<-c("Jpres", "Kpres", "Lpres", "AllSRpres")
+pods<-c("J","K","L","SRs")
+
+    if (r=="ps"){
+      regdat<-regdat[as.numeric(regdat$day)>273,]#look at data only after Sept 30 for PS
+    }
+    boxplot(as.numeric(regdat$day)~as.factor(regdat$year),
+            horizontal=TRUE,las=1,
+            ylab="year",xlab="DOY",main=paste(r))
+    
+    if(r=="uss"){mtext(paste(pods[p]), side=3,line=2, adj=0.5)}
+    
+  }
+}
+

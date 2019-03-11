@@ -1,7 +1,8 @@
 # Orca analysis: occupancy models
 # Started November 1327, 2018
 # by Ailene Ettinger ailene.ettinger@noo.gov
-
+#NEed to fix this
+!
 #housekeeping
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
@@ -105,27 +106,31 @@ det$year<-as.numeric(det$year)
 #Add a column for "season" and divide up by season.Not sure if these are best...
 #start with winter vs summer
 det$season<-NA
-det$season[det$day>274|det$day<60]<-1#winter (Oct 1-March)
+#det$season[det$day>274|det$day<60]<-1#winter (Oct 1-March)
+det$season[det$day>274]<-1#winter (Oct 1-Dec 31)
+
 det$season[det$day>121 & det$day<274]<-2#summer (May-Oct 1)
 #add an "orca year" which runs Oct 1-Sept 31
-det$orcayear<-det$year
-det$orcayear[which(det$day>273)]<-det$year[which(det$day>273)]+1
-det$daysaftsept30<-NA
-det$daysaftsept30[which(det$day>273 & det$day<367)]<-det$day[which(det$day>273 & det$day<367)]-273
-det$daysaftsept30[which(det$day<274)]<-det$day[which(det$day<274)]+93#this should actually vary depending on whether or not it is a leap year
-
-jdet<-subset(det,select=c(nrep,Jobs,site,day,orcayear,daysaftsept30,season,region))
+#det$orcayear<-det$year
+#det$orcayear[which(det$day>273)]<-det$year[which(det$day>273)]+1
+#det$daysaftsept30<-NA
+#det$daysaftsept30[which(det$day>273 & det$day<367)]<-det$day[which(det$day>273 & det$day<367)]-273
+#det$daysaftsept30[which(det$day<274)]<-det$day[which(det$day<274)]+93#this should actually vary depending on whether or not it is a leap year
+#jdet<-subset(det,select=c(nrep,Jobs,site,day,orcayear,daysaftsept30,season,region))
+jdet<-subset(det,select=c(nrep,Jobs,site,day,year,day,season,region))
 #i.e. use only sites that have atleast 1 observation in all years
 
 jdet <- jdet[apply(jdet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 #jdet<- jdet[apply(jdet,1,function(row) all(row!=0)),]
-kdet<-subset(det,select=c(nrep,Kobs,site,day,orcayear,daysaftsept30,season,region))
+#kdet<-subset(det,select=c(nrep,Kobs,site,day,orcayear,daysaftsept30,season,region))
+kdet<-subset(det,select=c(nrep,Kobs,site,day,year,day,season,region))
+
 kdet <- kdet[apply(kdet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
-
-ldet<-subset(det,select=c(nrep,Lobs,site,day,orcayear,daysaftsept30,season,region))
+#ldet<-subset(det,select=c(nrep,Lobs,site,day,orcayear,daysaftsept30,season,region))
+ldet<-subset(det,select=c(nrep,Lobs,site,day,year,day,season,region))
 ldet <- ldet[apply(ldet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
-
-srdet<-subset(det,select=c(nrep,AllSRobs,site,day,orcayear,daysaftsept30,season,region))
+#srdet<-subset(det,select=c(nrep,AllSRobs,site,day,orcayear,daysaftsept30,season,region))
+srdet<-subset(det,select=c(nrep,AllSRobs,site,day,year,day,season,region))
 srdet <- srdet[apply(srdet, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 
 colnames(srdet)[2]<-colnames(jdet)[2]<-colnames(kdet)[2]<-colnames(ldet)[2]<-"ndet"
