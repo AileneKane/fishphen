@@ -37,7 +37,9 @@ d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" "]<-d$LikelyPod[d$LikelyPod!="" & d$Li
 #d<-d[d$Pod.cl=="HB?"|d$Pod.cl=="Not Orcas",]
 
 #only using fishing areas in Washington's Salish Sea 
-d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
+d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82","19C","18C","29C","20C"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
+#remove sites with no fishing area:
+d<-d[!d$FishArea %in% c(""),]
 
 #Assign region, based on fishing area:
 d$region<-"ps"
@@ -152,6 +154,9 @@ orcasum.days$AllSRpres<-orcasum.days$AllSRobs
 orcasum.days$AllSRpres[orcasum.days$AllSRobs>0]<-1
 #summarize whale days per year by region
 wdays<-as.data.frame(tapply(orcasum.days$AllSRpres,list(orcasum.days$year,orcasum.days$region),sum))
+dim(wdays)#40 years
+colMeans(wdays[1:20,], na.rm=TRUE)
+
 quartz()
 par(mai=c(1,1,1,1.5))
 #start with uss, all SRKWs
@@ -159,7 +164,15 @@ plot(rownames(wdays),wdays$uss,type="l",xlab="Year",ylab="Number of whale days",
 lines(rownames(wdays),wdays$ps, lwd=2,lty=2)
 lines(rownames(wdays),wdays$oc, lwd=2,lty=3)
 legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast"), lty=c(1,2,3),col="black", bty="n")
-#Is there a treand in number of days on which whales observed since 1978?
+#Add dates of some significant events to the plot
+#"Dyes inlet event" 1997
+#abline(v=1997, col="blue")
+#text("Dyes inlet event",x=2000,y=200, col="blue",cex=0.8 )
+#Internet sightsing 
+abline(v=2001, col="purple")
+text("Internet sightings added",x=2008,y=190, col="purple",cex=0.8 )
+
+#Is there a trend in number of days on which whales observed since 1978?
 #
 m.uss<-lm(wdays$uss~as.numeric(rownames(wdays)))
 m.ps<-lm(wdays$ps~as.numeric(rownames(wdays)))
@@ -201,26 +214,27 @@ lines(rownames(wdays.L),wdays.L$oc, lwd=2,lty=3, col="darkred")
 podcols<-c("Jpres", "Kpres", "Lpres", "AllSRpres")
 pods<-c("J","K","L","SRs")
 for(p in 1:length(podcols)){
-  quartz(width=15,height=6)
-  par(mfrow=c(1,3))
+  quartz(width=16,height=6)
+  par(omi=c(.5,2,.5,.5), mfrow=c(1,3))
   colnum<-which(colnames(orcasum.days)==podcols[p])
   regions=unique(orcasum.days$region)
     for(r in regions){
     regdat<-orcasum.days[orcasum.days$region==r,]
     years = unique(orcasum.days$year)
-    plot(0, type = 'n', las=1, xlim=c(1,366),ylim=c(min(as.numeric(years)),max(as.numeric(years))),ylab="",xlab="DOY", main=paste(r))
+    plot(0, type = 'n', las=1, xlim=c(1,366),ylim=c(min(as.numeric(years)),max(as.numeric(years))),ylab="",xlab="Day of year", main=paste(r), cex.axis=1.1, cex.lab=1.3)
       for(y in years){
         yrdat = regdat[regdat$year==y,]
         days = yrdat$day[yrdat[,colnum]==1]
-      points(x=days,y=rep(y,length=length(days)))
+      points(x=days,y=rep(y,length=length(days)), pch=21,bg="gray", cex=1.3)
       
       #lines(x=days,y=rep(y,length=length(days)), lwd=2)
       }  
-    if(r=="uss"){mtext(paste(pods[p]), side=3,line=2, adj=0.5)}
+    if(r=="uss"){mtext(paste(pods[p]), side=3,line=3, adj=0.5)}
+    if(r=="ps"){mtext("Year", side=2,line=4, adj=0.5)}
     
     }
 }
-
+unique()
 #summary of the number of days whales were observed in each region, by year:
  pres<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$year),sum)
  #summary of the number of days whales with rows of data (observed or not) in each region, by year:
@@ -414,12 +428,12 @@ par(mfrow=c(1,2))
 #First obs
 boxplot(as.numeric(pod.df$firstest[pod.df$region=="ps"])~as.factor(pod.df$period[pod.df$region=="ps"]), xlab="Period", ylab="Estimate of first obs (doy) in PS", main="First obs")
 t<-t.test(as.numeric(pod.df$firstest[pod.df$region=="ps"])~pod.df$period[pod.df$region=="ps"], paired = FALSE, var.equal = FALSE,conf.level=0.95)
-mtext(paste("Change=",round(t$estimate[1]-t$estimate[2], digits=2),"(",round(t$conf.int[1],digits=2),",",round(t$conf.int[2],digits=2),")", sep=""),side=3,line=-3, adj=1)
+mtext(paste("Change=",-1*round(t$estimate[1]-t$estimate[2], digits=1),"(",-1*round(t$conf.int[1],digits=1),",",-1*round(t$conf.int[2],digits=1),")", sep=""),side=3,line=-3, adj=1)
 
 #Last obs
 boxplot(as.numeric(pod.df$lastest[pod.df$region=="ps"])~as.factor(pod.df$period[pod.df$region=="ps"]), xlab="Period", ylab="Estimate of last obs (doy) in PS", main="Last obs")
 t<-t.test(as.numeric(pod.df$lastest[pod.df$region=="ps"])~as.factor(pod.df$period[pod.df$region=="ps"]), conf.level=0.95)
-mtext(paste("Change=",round(t$estimate[1]-t$estimate[2], digits=2),"(",round(t$conf.int[1],digits=2),",",round(t$conf.int[2],digits=2),")", sep=""),side=3,line=-3, adj=1)
+mtext(paste("Change=",-1*round(t$estimate[1]-t$estimate[2], digits=1),"(",-1*round(t$conf.int[1],digits=1),",",-1*round(t$conf.int[2],digits=1),")", sep=""),side=1,line=-3, adj=1)
 
 
 ##Number of consecutive days

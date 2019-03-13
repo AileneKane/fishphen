@@ -47,8 +47,6 @@ tab.fa.yr[tab.fa.yr >= 20] <- 1
 sites.touse<-rownames(tab.fa.yr)[rowSums(tab.fa.yr)>4]
 d<-d[d$FishArea %in% c(sites.touse),]
 
-###Need to then select only the fishing areas that are 1 in tab.fa.yr
-
 #Add week and day of year (day)
 d$day<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"),format= "%j")
 d$week<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"), format = "%V")#new weeks start on mondays

@@ -1,1 +1,1 @@
-"SightDate","Time1","Time2","Month","Day","Year","Pod","LikelyPod","Direction","FishArea","Quadrant","Lat","Long","UTMx","UTMy","Source","ActLat","ActLong"
+"SightDate","Time1","Time2","Month","Day","Year","Pod","LikelyPod","Direction","FishArea","Quadrant","Lat","Long","UTMx","UTMy","Source","ActLat","ActLong","Pod.cl","region","day","week","J","K","L","SRKW","Orcas","Trans","yrdayregion","yrwkregion","yrdayfa","yrwkfa","yrregion","yrfa"
