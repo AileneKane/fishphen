@@ -15,7 +15,7 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="SR"#options= J,K,L,SR
+pod="J"#options= J,K,L,SR
 season="1"#options= 1(winter) or 2(summer)
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
@@ -248,7 +248,7 @@ slope.90<-quantile(r[,2],c(0.90),na.rm=T)
 
 #get first date when detectability is greater than 0.5
 findfirst.fn<-function(x) {
-  min(which(plogis(x)>0.50), na.rm=TRUE)
+  min(which(plogis(x)>0.10), na.rm=TRUE)
 }
 #check:
 #count.fn<-function(x) {
@@ -302,7 +302,7 @@ slope.first.90<-quantile(r.first[,2],c(0.90),na.rm=T)
 
 #get last date when detectability is greater than 0.5
 findlast.fn<-function(x) {
-  max(which(plogis(x)>0.50), na.rm=TRUE)
+  max(which(plogis(x)>0.10), na.rm=TRUE)
 }
 #check:
 #count.fn<-function(x) {
@@ -442,11 +442,11 @@ abline(a=intercept,b=slope,col="darkred",lwd=2)
 dev.off()
 #
 #-----------------------------------------------------------------
-# Plot first date detectability >0.5 
+# Plot first date detectability >0.5  or .0.10
 #-----------------------------------------------------------------
 # save plotted results as pdf
 if(pod=="J" & season=="1" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_winter_Jfirst.pdf"),width=7,height=6)}
-if(pod=="J" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_PS_winter_Jfirst.pdf"),width=7,height=6)}
+if(pod=="J" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_PS_winter_Jfirst_0.1.pdf"),width=7,height=6)}
 if(pod=="J" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_summer_Jfirst.pdf"),width=7,height=6)}
 if(pod=="K" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_PS_winter_Kfirst.pdf"),width=7,height=6)}
 if(pod=="K" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_USS_summer_Kfirst.pdf"),width=7,height=6)}
@@ -461,7 +461,7 @@ par(mfrow=c(1,1),mai=c(1,1,1,0.5))
 x=rownames(ann.first)
 y=ann.first[,"mean"]
 seasname<-c("winter","summer")
-plot(x,y,xlab="",ylab="",axes=F,main=paste("First Detection Probability >0.5","\n",pod," Pod",seasname[as.numeric(season)],region),
+plot(x,y,xlab="",ylab="",axes=F,main=paste("First Detection Probability >0.1","\n",pod," Pod",seasname[as.numeric(season)],region),
      ylim=c(min(ann.first, na.rm = TRUE),max(ann.first, na.rm = TRUE)),pch=16,type="l", lwd=2,col="black")
 #polygon(c(rev(x),x),c(rev(ann.res[,"90%"]),ann.res[,"10%"]),col=alpha("grey",0.2),lwd=0.1)
 
@@ -471,8 +471,8 @@ if(season==2){
        labels=c("1May","1Jun","1Jul","1Aug","1Sept","1Oct"))
 }
 if(season==1){
-  axis(side=2,at=c(1,32,62,93,124,153,184,214),
-       labels=c("1Oct","1Nov","1Dec","1Jan","1Feb","1Mar","1Apr","1May"))
+  axis(side=2,at=c(274,305,335,366),
+       labels=c("1Oct","1Nov","1Dec","1Jan"))
 }
 
 for (o in 1:500) {
@@ -487,7 +487,7 @@ abline(a=intercept.first,b=slope.first,col="darkred",lwd=2)
 dev.off()
 
 # save plotted results as pdf
-if(pod=="J" & season=="1" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_winter_Jlast.pdf"),width=7,height=6)}
+if(pod=="J" & season=="1" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_winter_Jlast0.1.pdf"),width=7,height=6)}
 if(pod=="J" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_PS_winter_Jlast.pdf"),width=7,height=6)}
 if(pod=="J" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_summer_Jlast.pdf"),width=7,height=6)}
 if(pod=="K" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_PS_winter_Klast.pdf"),width=7,height=6)}
@@ -503,7 +503,7 @@ par(mfrow=c(1,1),mai=c(1,1,1,0.5))
 x=rownames(ann.last)
 y=ann.last[,"mean"]
 seasname<-c("winter","summer")
-plot(x,y,xlab="",ylab="",axes=F,main=paste("Last Detection Probability >0.5","\n",pod," Pod",seasname[as.numeric(season)],region),
+plot(x,y,xlab="",ylab="",axes=F,main=paste("Last Detection Probability >0.1","\n",pod," Pod",seasname[as.numeric(season)],region),
      ylim=c(min(ann.first, na.rm = TRUE),max(ann.last, na.rm = TRUE)),pch=16,type="l", lwd=2,col="black")
 #polygon(c(rev(x),x),c(rev(ann.res[,"90%"]),ann.res[,"10%"]),col=alpha("grey",0.2),lwd=0.1)
 
@@ -513,8 +513,8 @@ if(season==2){
        labels=c("1May","1Jun","1Jul","1Aug","1Sept","1Oct"))
 }
 if(season==1){
-  axis(side=2,at=c(1,32,62,93,124,153,184,214),
-       labels=c("1Oct","1Nov","1Dec","1Jan","1Feb","1Mar","1Apr","1May"))
+  axis(side=2,at=c(274,305,335,366),
+       labels=c("1Oct","1Nov","1Dec","1Jan"))
 }
 
 for (o in 1:500) {
