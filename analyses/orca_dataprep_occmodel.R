@@ -107,7 +107,7 @@ det$season<-NA
 #det$season[det$day>274|det$day<60]<-1#winter (Oct 1-March)
 det$season[det$day>274]<-1#winter (Oct 1-Dec 31)
 
-det$season[det$day>121 & det$day<274]<-2#summer (May-Oct 1)
+det$season[det$day>121 & det$day<274]<-2#summer (May-Sept 31)
 #add an "orca year" which runs Oct 1-Sept 31
 #det$orcayear<-det$year
 #det$orcayear[which(det$day>273)]<-det$year[which(det$day>273)]+1

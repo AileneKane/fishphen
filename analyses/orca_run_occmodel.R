@@ -15,7 +15,7 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="J"#options= J,K,L,SR
+pod="L"#options= J,K,L,SR
 season="1"#options= 1(winter) or 2(summer)
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
