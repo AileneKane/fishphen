@@ -93,4 +93,4 @@ for(i in 1:length(sites)){
 #minter: first getting earlier, mid getting later
 #soos: first getting earlier, mid getting earlier
 #hoodsport: first getting later
-i=4
+
