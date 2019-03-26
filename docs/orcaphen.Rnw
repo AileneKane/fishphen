@@ -1,0 +1,90 @@
+\documentclass{article}
+%Required: You must have these
+\usepackage{Sweave}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{pdflscape}
+\usepackage{array}
+\usepackage{gensymb}
+%\usepackage[backend=bibtex]{biblatex}
+%Strongly recommended
+  %put your figures in one place
+%\SweaveOpts{prefix.string=figures/, eps=FALSE} 
+%you'll want these for pretty captioning
+\usepackage[small]{caption}
+
+\setkeys{Gin}{width=0.8\textwidth}  %make the figs 50 perc textwidth
+\setlength{\captionmargin}{30pt}
+\setlength{\abovecaptionskip}{10pt}
+\setlength{\belowcaptionskip}{10pt}
+%Optional: I like to muck with my margins and spacing in ways that LaTeX frowns on
+%Here's how to do that
+ \topmargin -1.5cm        
+ \oddsidemargin -0.04cm   
+ \evensidemargin -0.04cm  % same as oddsidemargin but for left-hand pages
+ \textwidth 16.59cm
+ \textheight 21.94cm 
+
+\begin{document}
+\bibliographystyle{/Users/ailene.ettinger/Documents/GitHub/fishphen/refs/bibstyles/amnat.bst}% i moved a style file into the ospree git repo. feel free to add whatever style you like and update, lizzie! I don't have besjournals
+
+\SweaveOpts{concordance=TRUE}
+
+\title{Shifts in Orca Phenology and their Prey in the Salish Sea}
+\date{\today}
+\maketitle
+
+\section* {Background}
+\begin{enumerate}
+\item Southern resident killer whales (SRKWs) are a threatened population, recieved much scientific and public attention.
+\item  SRKWs use of the Salish Sea varies seasonally across two broad areas: the upper Salish Sea 
+(north of Admiralty Inlet, reference Map).
+\item Efforts are underway to alter hatchery production to benefit orca whales, because one of the threats facing SRKWs is thought to be lack of prey. We know that SRKWs forage on chinook salmon as a primary food source (cite hanson papers), but there are lots of questions about what other species they use and how their prey varies seasonally. 
+\item SRKW activity is generally thought to be related to finding prey. In recent decades, salmon abundance and phenology has shifted in the Salish Sea \citep{weinheimer2017,reed2011,ford2006}(add Nelson for chinook hatchery release timing, others for abundance data), though rates vary by species and location. We would therefore expect SRKW phenology to have shifted during this time, if prey is a primary driver of their activity in the Salish Sea. 
+
+\item SRKWs may be spending more time in Puget Sound \citep{olson2018}. However, the details are unclear because monitoring effort has also increased duiring this time. Understanding how SRKW activity varies seasonally and how these seasonal patterns have shifted in recent decades will allow us to develop and test hypotheses about potential drivers of these shifts, which in turn will provide information that may be useful for management decision-making to conserve SRKWs.
+\item Alternatively/additionally: could make this more explicitly about changes in effort/presence-only database and citizen science. 
+\end{enumerate}
+\section* {Research Questions}
+Here, we ask:
+\begin{enumerate}
+\item Has the timing of SRKW activity (phenology) shifted in the upper Salish Sea and/or Puget Sound? (First observation date, Last observation date, number of days observed)
+\item If there have been phenological shifts in SRKW activity, do these shifts coincide with shifts in phenology or abundance of their prey (chinook, coho, chum salmon)?
+\end{enumerate}
+
+
+\section* {Methods}
+\begin{enumerate}
+\item Data
+\begin{enumerate}
+\item Orca Master Database for Whale Sighting Data (Whale Museum 1978-2017).
+\item WDFW adult salmon return data for coho, chum, chinook in XX streams
+\item Alternatively, may use RMIS data for coho, chum, chinook.
+\end{enumerate}
+\item Analysis
+\begin{enumerate}
+\item Linear regression to identify trends over time for all SRKWs and for salmon adult migration timing.
+\item Simulation to investigate extent to which changes in effort may explain trends.
+\item Pod-specific occupancy models that incorpate effort to estimate detectability separately from presence/absence.
+\end{enumerate}
+\end{enumerate}
+\section*{Results}
+\section*{Discussion}
+\section*{Conclusion}
+
+\section* {Figures}
+\begin{enumerate}
+\item 3-paneled figure with the following panels: 
+\begin{enumerate}
+\item Map of Salish Sea showing 2 seasons and habitat use areas.
+\item Observations in Puget Sound (fall/winter)
+\item Observations in the upper salish sea (spring/summer)
+\end{enumerate}
+\item 4- or 6-paneled figure with trends in first and last observation dates (and number of whale days?) of whales in upper Salish Sea (summer habitat) and south Puget Sound (winter habitat)
+\item 6-paneled figured oof Pod-specific trends in first and last observation dates puget sound and the upper salish sea
+
+\end{enumerate}
+\bibliography{/Users/ailene.ettinger/Documents/GitHub/fishphen/refs/noaalib.bib}
+\end{document}
