@@ -83,7 +83,7 @@ Here, we ask:
 \item Observations in the upper salish sea (spring/summer)
 \end{enumerate}
 \item 4- or 6-paneled figure with trends in first and last observation dates (and number of whale days?) of whales in upper Salish Sea (summer habitat) and south Puget Sound (winter habitat)
-\item 6-paneled figured oof Pod-specific trends in first and last observation dates puget sound and the upper salish sea
+\item 6-paneled figured of Pod-specific trends in first and last observation dates puget sound and the upper salish sea
 
 \end{enumerate}
 \bibliography{/Users/ailene.ettinger/Documents/GitHub/fishphen/refs/noaalib.bib}
