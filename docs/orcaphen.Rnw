@@ -79,12 +79,24 @@ Here, we ask:
 \item 3-paneled figure with the following panels: 
 \begin{enumerate}
 \item Map of Salish Sea showing 2 seasons and habitat use areas.
-\item Observations in Puget Sound (fall/winter)
+\item Observations in Puget Sound (fall/winter) (rough version is Fig. \ref{fig:phenplot}
 \item Observations in the upper salish sea (spring/summer)
 \end{enumerate}
 \item 4- or 6-paneled figure with trends in first and last observation dates (and number of whale days?) of whales in upper Salish Sea (summer habitat) and south Puget Sound (winter habitat)
-\item 6-paneled figured of Pod-specific trends in first and last observation dates puget sound and the upper salish sea
-
+\item 6-paneled figured of Pod-specific trends in first and last observation dates puget sound and the upper salish sea (rough version is Fig. \ref{fig:trends}
 \end{enumerate}
+\begin{figure}[p]
+\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/figures/OrcaPhenPlots/SRKW_yr_doy.pdf} 
+\caption{\textbf{Southern resident killer whale activity in the Upper Salish Sea and Puget Sound varies by season}.Need to add a map of where observations are, and make this look prettier...}
+ \label{fig:phenplot}
+ \end{figure}
+ 
+\begin{figure}[p]
+\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/figures/J/orcaphen_1976_2017_PS_winter_Jfirst.pdf} 
+\caption{\textbf{Trends in first- and last- observation dates for J, K, and L pod.} Make this a 6-paneled figure
+ \label{fig:trends}
+ \end{figure}
+\end{enumerate}
+
 \bibliography{/Users/ailene.ettinger/Documents/GitHub/fishphen/refs/noaalib.bib}
 \end{document}
