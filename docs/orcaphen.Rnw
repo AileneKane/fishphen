@@ -59,14 +59,15 @@ Here, we ask:
 \begin{enumerate}
 \item Data
 \begin{enumerate}
-\item Orca Master Database for Whale Sighting Data (Whale Museum 1978-2017).
-\item WDFW adult salmon return data for coho, chum, chinook in XX streams
-\item Alternatively, may use RMIS data for coho, chum, chinook.
+\item To quantify orca seasonal phenology over time, we used the OrcaMaster Database for Whale Sighting Data (Whale Museum), which includes data from five main sources, including public sightings networks (e.g., OrcaNetwork), commercial whale watch data, and scientific surveys (e.g., SPOT data from satellite tracking units) \ref{olson2018}. We used data from 1976-2017, becuase prior to 1976, there was no dedicated effort to track SRKW presence in the region \ref{olson2018}. We used these sighting data to identify first observation day-of-year (DOY, the first date on which one or more pods of SRKWs were observed) and last observation DOY (the first date on which one or more pods of SRKWs were observed) for each sub-region (Upper Salish Sea and Puget Sound) and season (Winter-- October through March; and Summer-- May through August). We used these seasonal definitions because they are most aligned with mean SRKW seasonal patterns over time (Fig \ref{fig:phenplot}).
+\item WDFW adult salmon return data for coho, chum, chinook in XX streams (Alternatively, may use RMIS data for coho, chum, chinook.)
 \end{enumerate}
 \item Analysis
 \begin{enumerate}
-\item Linear regression to identify trends over time for all SRKWs and for salmon adult migration timing.
-\item Simulation to investigate extent to which changes in effort may explain trends.
+\item We used linear regression to identify trends over time in first observation and last observation dates for SRKWs in the Upper Salish Sea and in Puget Sound. 
+\item To estimate effects of increased effort (i.e. increased numbers of sightings over time) on trends in phenology, we simulated a dataset of whale presence during a season equivalent to those in our dataset (i.e. October through March, XX days). We used a probability XX for whale presence (the mean in our dataset) and kept it constant over 40 simulated years. We then created ab observation dataset, in which effort (the number of observations), differed. During the low effort time period (years 1-20), the number of observations had a mean of XX and a variance of XX (matching the OrcaMAster database from 1976-1996).  During the high effort rtime period (years 21-40 in our simulated dataset, the number of observations had a mean of XX and a variance of XX (comparable to those in the OrcaMAster database from 1997-2017). We then calculated first- and last- observations dates for each simulated year. We ran these simulatiosn 100 times and calculated the difference between the low effort and high effort time periods (see Supplemental materials, figure).
+
+\item We used linear regression to identify trends over time in first, median, and last dates of salmon adult migration timing.
 \item Pod-specific occupancy models that incorpate effort to estimate detectability separately from presence/absence.
 \end{enumerate}
 \end{enumerate}

@@ -33,10 +33,7 @@ d$Pod.cl<-d$Pod
 d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" "]<-d$LikelyPod[d$LikelyPod!="" & d$LikelyPod!=" "]
 #perhaps also stick with Pod when LikelyPod has a "?" grep("?",d$LikelyPod,)
 
-#remove non-orca data
-#d<-d[d$Pod.cl=="HB?"|d$Pod.cl=="Not Orcas",]
-
-#only using fishing areas in Washington's Salish Sea 
+#only using fishing areas in Salish Sea 
 d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82","19C","18C","29C","20C"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
 #remove sites with no fishing area:
 d<-d[!d$FishArea %in% c(""),]
@@ -64,8 +61,8 @@ d$Orcas<-1
 d$Trans<-0
 d$Trans[grep("T",d$Pod.cl)]<- 1
 
-#only data after 1978
-d<-d[d$Year>1977,]
+#only data starting with 1976 (following Olson et al)
+d<-d[d$Year>1975,]
 
 # Add a column that combines :
 #1) day, year, and region; 
