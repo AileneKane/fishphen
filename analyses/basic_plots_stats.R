@@ -91,42 +91,42 @@ colnames(orcasum)[2:6]<-c("Jobs","Kobs","Lobs","AllSRobs","AllOrcas")
 orcasum$year<-substr(orcasum$yrregion,1,4)
 orcasum$region<-substr(orcasum$yrregion,6,nchar(orcasum$yrregion))
 
-quartz()
-#par(mfrow)
-#start with uss, all SRKWs
-plot(orcasum$year[orcasum$region=="uss"],orcasum$AllSRobs[orcasum$region=="uss"],type="l",xlab="Year",ylab="Number of detections", lwd=2,bty="l", main="All SRKW sightings, 1978-2017")
-lines(orcasum$year[orcasum$region=="ps"],orcasum$AllSRobs[orcasum$region=="ps"], lwd=2,lty=2)
-lines(orcasum$year[orcasum$region=="oc"],orcasum$AllSRobs[orcasum$region=="oc"], lwd=2,lty=3)
-lines(orcasum$year[orcasum$region=="uss"],orcasum$Jobs[orcasum$region=="uss"],lwd=2,col="blue")
-lines(orcasum$year[orcasum$region=="ps"],orcasum$Jobs[orcasum$region=="ps"], lwd=2,lty=2, col="blue")
-lines(orcasum$year[orcasum$region=="oc"],orcasum$Jobs[orcasum$region=="oc"], lwd=2,lty=3, col="blue")
-lines(orcasum$year[orcasum$region=="uss"],orcasum$Kobs[orcasum$region=="uss"],lwd=2,col="purple")
-lines(orcasum$year[orcasum$region=="ps"],orcasum$Kobs[orcasum$region=="ps"], lwd=2,lty=2, col="purple")
-lines(orcasum$year[orcasum$region=="oc"],orcasum$Kobs[orcasum$region=="oc"], lwd=2,lty=3, col="purple")
-lines(orcasum$year[orcasum$region=="uss"],orcasum$Lobs[orcasum$region=="uss"],lwd=2,col="darkred")
-lines(orcasum$year[orcasum$region=="ps"],orcasum$Lobs[orcasum$region=="ps"], lwd=2,lty=2, col="darkred")
-lines(orcasum$year[orcasum$region=="oc"],orcasum$Lobs[orcasum$region=="oc"], lwd=2,lty=3, col="darkred")
-
-legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast","Js","Ks","Ls"), lty=c(1,2,3,1,1,1),col=c("black","black","black","blue","purple","darkred"), bty="n")
-#legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast"), lty=c(1,2,3),col=c("black"), bty="n")
-
-
-quartz()
-par(mfrow=c(3,1))
-#start with uss, all SRKWs
-plot(orcasum$year[orcasum$region=="uss"],orcasum$Jobs[orcasum$region=="uss"],type="l",xlab="Year",ylab="Number of detections", lwd=2,bty="l", main="J pod sightings, 1978-2017", col="blue")
-lines(orcasum$year[orcasum$region=="ps"],orcasum$Jobs[orcasum$region=="ps"], lwd=2,lty=2, col="blue")
-lines(orcasum$year[orcasum$region=="oc"],orcasum$Jobs[orcasum$region=="oc"], lwd=2,lty=3, col="blue")
-
-legend("topleft",legend=c("uss","ps","oc"), col="blue", lty=c(1,2,3), bty="n")
-#Kpod
-plot(orcasum$year[orcasum$region=="uss"],orcasum$Kobs[orcasum$region=="uss"],type="l",xlab="Year",ylab="Number of detections", lwd=2,bty="l", main="K pod sightings, 1978-2017", col="purple")
-lines(orcasum$year[orcasum$region=="ps"],orcasum$Kobs[orcasum$region=="ps"], lwd=2,lty=2, col="purple")
-lines(orcasum$year[orcasum$region=="oc"],orcasum$Kobs[orcasum$region=="oc"], lwd=2,lty=3, col="purple")
-#Lpod
-plot(orcasum$year[orcasum$region=="uss"],orcasum$Lobs[orcasum$region=="uss"],type="l",xlab="Year",ylab="Number of detections", lwd=2,bty="l", main="K pod sightings, 1978-2017", col="darkred")
-lines(orcasum$year[orcasum$region=="ps"],orcasum$Lobs[orcasum$region=="ps"], lwd=2,lty=2, col="darkred")
-lines(orcasum$year[orcasum$region=="oc"],orcasum$Lobs[orcasum$region=="oc"], lwd=2,lty=3, col="darkred")
+# quartz()
+# #par(mfrow)
+# #start with uss, all SRKWs
+# plot(orcasum$year[orcasum$region=="uss"],orcasum$AllSRobs[orcasum$region=="uss"],type="l",xlab="Year",ylab="Number of detections", lwd=2,bty="l", main="All SRKW sightings, 1978-2017")
+# lines(orcasum$year[orcasum$region=="ps"],orcasum$AllSRobs[orcasum$region=="ps"], lwd=2,lty=2)
+# lines(orcasum$year[orcasum$region=="oc"],orcasum$AllSRobs[orcasum$region=="oc"], lwd=2,lty=3)
+# lines(orcasum$year[orcasum$region=="uss"],orcasum$Jobs[orcasum$region=="uss"],lwd=2,col="blue")
+# lines(orcasum$year[orcasum$region=="ps"],orcasum$Jobs[orcasum$region=="ps"], lwd=2,lty=2, col="blue")
+# lines(orcasum$year[orcasum$region=="oc"],orcasum$Jobs[orcasum$region=="oc"], lwd=2,lty=3, col="blue")
+# lines(orcasum$year[orcasum$region=="uss"],orcasum$Kobs[orcasum$region=="uss"],lwd=2,col="purple")
+# lines(orcasum$year[orcasum$region=="ps"],orcasum$Kobs[orcasum$region=="ps"], lwd=2,lty=2, col="purple")
+# lines(orcasum$year[orcasum$region=="oc"],orcasum$Kobs[orcasum$region=="oc"], lwd=2,lty=3, col="purple")
+# lines(orcasum$year[orcasum$region=="uss"],orcasum$Lobs[orcasum$region=="uss"],lwd=2,col="darkred")
+# lines(orcasum$year[orcasum$region=="ps"],orcasum$Lobs[orcasum$region=="ps"], lwd=2,lty=2, col="darkred")
+# lines(orcasum$year[orcasum$region=="oc"],orcasum$Lobs[orcasum$region=="oc"], lwd=2,lty=3, col="darkred")
+# 
+# legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast","Js","Ks","Ls"), lty=c(1,2,3,1,1,1),col=c("black","black","black","blue","purple","darkred"), bty="n")
+# #legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast"), lty=c(1,2,3),col=c("black"), bty="n")
+# 
+# 
+# quartz()
+# par(mfrow=c(3,1))
+# #start with uss, all SRKWs
+# plot(orcasum$year[orcasum$region=="uss"],orcasum$Jobs[orcasum$region=="uss"],type="l",xlab="Year",ylab="Number of detections", lwd=2,bty="l", main="J pod sightings, 1978-2017", col="blue")
+# lines(orcasum$year[orcasum$region=="ps"],orcasum$Jobs[orcasum$region=="ps"], lwd=2,lty=2, col="blue")
+# lines(orcasum$year[orcasum$region=="oc"],orcasum$Jobs[orcasum$region=="oc"], lwd=2,lty=3, col="blue")
+# 
+# legend("topleft",legend=c("uss","ps","oc"), col="blue", lty=c(1,2,3), bty="n")
+# #Kpod
+# plot(orcasum$year[orcasum$region=="uss"],orcasum$Kobs[orcasum$region=="uss"],type="l",xlab="Year",ylab="Number of detections", lwd=2,bty="l", main="K pod sightings, 1978-2017", col="purple")
+# lines(orcasum$year[orcasum$region=="ps"],orcasum$Kobs[orcasum$region=="ps"], lwd=2,lty=2, col="purple")
+# lines(orcasum$year[orcasum$region=="oc"],orcasum$Kobs[orcasum$region=="oc"], lwd=2,lty=3, col="purple")
+# #Lpod
+# plot(orcasum$year[orcasum$region=="uss"],orcasum$Lobs[orcasum$region=="uss"],type="l",xlab="Year",ylab="Number of detections", lwd=2,bty="l", main="K pod sightings, 1978-2017", col="darkred")
+# lines(orcasum$year[orcasum$region=="ps"],orcasum$Lobs[orcasum$region=="ps"], lwd=2,lty=2, col="darkred")
+# lines(orcasum$year[orcasum$region=="oc"],orcasum$Lobs[orcasum$region=="oc"], lwd=2,lty=3, col="darkred")
 
 #2. Plot the number of "whale days" (days on which whales were observed in each region)
   #a. All pods together
@@ -154,55 +154,55 @@ wdays<-as.data.frame(tapply(orcasum.days$AllSRpres,list(orcasum.days$year,orcasu
 dim(wdays)#40 years
 colMeans(wdays[1:20,], na.rm=TRUE)
 
-quartz()
-par(mai=c(1,1,1,1.5))
-#start with uss, all SRKWs
-plot(rownames(wdays),wdays$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="All SRKW sightings, 1978-2017", ylim=c(0,200))
-lines(rownames(wdays),wdays$ps, lwd=2,lty=2)
-lines(rownames(wdays),wdays$oc, lwd=2,lty=3)
-legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast"), lty=c(1,2,3),col="black", bty="n")
-#Add dates of some significant events to the plot
-#"Dyes inlet event" 1997
-#abline(v=1997, col="blue")
-#text("Dyes inlet event",x=2000,y=200, col="blue",cex=0.8 )
-#Internet sightsing 
-abline(v=2001, col="purple")
-text("Internet sightings added",x=2008,y=190, col="purple",cex=0.8 )
+# quartz()
+# par(mai=c(1,1,1,1.5))
+# #start with uss, all SRKWs
+# plot(rownames(wdays),wdays$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="All SRKW sightings, 1978-2017", ylim=c(0,200))
+# lines(rownames(wdays),wdays$ps, lwd=2,lty=2)
+# lines(rownames(wdays),wdays$oc, lwd=2,lty=3)
+# legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast"), lty=c(1,2,3),col="black", bty="n")
+# #Add dates of some significant events to the plot
+# #"Dyes inlet event" 1997
+# #abline(v=1997, col="blue")
+# #text("Dyes inlet event",x=2000,y=200, col="blue",cex=0.8 )
+# #Internet sightsing 
+# abline(v=2001, col="purple")
+# text("Internet sightings added",x=2008,y=190, col="purple",cex=0.8 )
 
 #Is there a trend in number of days on which whales observed since 1978?
 #
-m.uss<-lm(wdays$uss~as.numeric(rownames(wdays)))
-m.ps<-lm(wdays$ps~as.numeric(rownames(wdays)))
-m.oc<-lm(wdays$oc~as.numeric(rownames(wdays)))
-abline(m.uss, col="darkred", lwd=2)
-abline(m.ps, col="darkred", lwd=2, lty=2)
-abline(m.oc, col="darkred", lwd=2, lty=3)
-mtext(paste((round(m.uss$coef[2], digits=2)*10),"days/dec"), line=-5.5, adj=1.3,cex=0.9)
-mtext(paste((round(m.ps$coef[2], digits=2)*10),"days/dec"), line=-20.5, adj=1.3,cex=0.9)
-mtext(paste((round(m.oc$coef[2], digits=2)*10),"days/dec"), line=-23.5, adj=1.3,cex=0.9)
+# m.uss<-lm(wdays$uss~as.numeric(rownames(wdays)))
+# m.ps<-lm(wdays$ps~as.numeric(rownames(wdays)))
+# m.oc<-lm(wdays$oc~as.numeric(rownames(wdays)))
+# abline(m.uss, col="darkred", lwd=2)
+# abline(m.ps, col="darkred", lwd=2, lty=2)
+# abline(m.oc, col="darkred", lwd=2, lty=3)
+# mtext(paste((round(m.uss$coef[2], digits=2)*10),"days/dec"), line=-5.5, adj=1.3,cex=0.9)
+# mtext(paste((round(m.ps$coef[2], digits=2)*10),"days/dec"), line=-20.5, adj=1.3,cex=0.9)
+# mtext(paste((round(m.oc$coef[2], digits=2)*10),"days/dec"), line=-23.5, adj=1.3,cex=0.9)
 
 wdays.J<-as.data.frame(tapply(orcasum.days$Jpres,list(orcasum.days$year,orcasum.days$region),sum))
 wdays.K<-as.data.frame(tapply(orcasum.days$Kpres,list(orcasum.days$year,orcasum.days$region),sum))
 wdays.L<-as.data.frame(tapply(orcasum.days$Lpres,list(orcasum.days$year,orcasum.days$region),sum))
 
-quartz()
-par(mfrow=c(3,1))#par(mfrow)
-#J pod
-plot(rownames(wdays.J),wdays.J$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="J sightings, 1978-2017", ylim=c(0,200), col="blue")
-lines(rownames(wdays.J),wdays.J$ps, lwd=2,lty=2, col="blue")
-lines(rownames(wdays.J),wdays.J$oc, lwd=2,lty=3, col="blue")
-legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast"), lty=c(1,2,3),col="blue", bty="n")
-
-#K
-plot(rownames(wdays.K),wdays.K$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="K sightings, 1978-2017", ylim=c(0,200), col="purple")
-lines(rownames(wdays.K),wdays.K$ps, lwd=2,lty=2, col="purple")
-lines(rownames(wdays.K),wdays.K$oc, lwd=2,lty=3, col="purple")
-
-#L
-plot(rownames(wdays.L),wdays.L$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="L sightings, 1978-2017", ylim=c(0,200), col="darkred")
-lines(rownames(wdays.L),wdays.L$ps, lwd=2,lty=2, col="darkred")
-lines(rownames(wdays.L),wdays.L$oc, lwd=2,lty=3, col="darkred")
-
+# quartz()
+# par(mfrow=c(3,1))#par(mfrow)
+# #J pod
+# plot(rownames(wdays.J),wdays.J$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="J sightings, 1978-2017", ylim=c(0,200), col="blue")
+# lines(rownames(wdays.J),wdays.J$ps, lwd=2,lty=2, col="blue")
+# lines(rownames(wdays.J),wdays.J$oc, lwd=2,lty=3, col="blue")
+# legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast"), lty=c(1,2,3),col="blue", bty="n")
+# 
+# #K
+# plot(rownames(wdays.K),wdays.K$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="K sightings, 1978-2017", ylim=c(0,200), col="purple")
+# lines(rownames(wdays.K),wdays.K$ps, lwd=2,lty=2, col="purple")
+# lines(rownames(wdays.K),wdays.K$oc, lwd=2,lty=3, col="purple")
+# 
+# #L
+# plot(rownames(wdays.L),wdays.L$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="L sightings, 1978-2017", ylim=c(0,200), col="darkred")
+# lines(rownames(wdays.L),wdays.L$ps, lwd=2,lty=2, col="darkred")
+# lines(rownames(wdays.L),wdays.L$oc, lwd=2,lty=3, col="darkred")
+# 
 
 #Plots observed or not, by doy and year
 #yaxis is year
@@ -231,7 +231,6 @@ for(p in 1:length(podcols)){
     
     }
 }
-unique()
 #summary of the number of days whales were observed in each region, by year:
  pres<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$year),sum)
  #summary of the number of days whales with rows of data (observed or not) in each region, by year:
@@ -286,7 +285,57 @@ orcasum.days$daysaftjun30[which(orcasum.days$day>179 & orcasum.days$day<367)]<-o
 orcasum.days$daysaftjun30[which(orcasum.days$day<180)]<-orcasum.days$day[which(orcasum.days$day<180)]+187#
 #add an "orca year" which runs Oct 1-Sept 31
 orcasum.days$orcayear2<-orcasum.days$year
-orcasum.days$orcayear[which(orcasum.days$day>179)]<-orcasum.days$year[which(orcasum.days$day>179)]+1
+orcasum.days$orcayear2[which(orcasum.days$day>179)]<-orcasum.days$year[which(orcasum.days$day>179)]+1
+
+#use a shifting window approach to see if trends in first and last obs date vary depending on when the start window is.
+#use july 1, aug 1, sept 1, oct 1 as start dats
+#use dec 31, jan31, feb 28, and march 31 as end dates
+
+regions=unique(orcasum.days$region)
+podcols<-c("AllSRpres")#just do for all SRs for now
+pods<-c("SRs")
+stdoy<-c(,)
+stseas<-c("07","08","09","10")
+enseas<-c("12","1","2","03")
+for(t in 1:length(stseas)){
+  styr.date<-as.Date(paste("2019",stseas[t],"1", sep="-"))
+  styr.doy<-strptime(styr.date,format = "%j")
+  styr.doy<-strftime(styr.date,format= "%j")
+  
+  ##PICK UP HERE- GETTING DAYS SINCE CHOSEN START DATE!
+  days2st<-difftime(as.POSIXct(test2), as.POSIXct(test1, tz="UTC"), units="days")
+  orcasum.days$date<-
+    
+  
+}
+
+
+years<-unique(orcasum.days$orcayear2)#use July 1 as start of orca year, as this will encompass min start date window that i want to try
+
+for(p in 1:length(podcols)){
+  colnum<-which(colnames(orcasum.days)==podcols[p])
+  for(r in 1:length(regions)){
+    regdat<-orcasum.days[orcasum.days$region==regions[r],]
+    if (regions[r]=="ps"){
+      regdat<-regdat[as.numeric(regdat$day)>273,]#look at data only after Sept 30 for PS
+    }
+    if (regions[r]=="uss"){
+      regdat<-regdat[as.numeric(regdat$day)<273,]#look at data before Sept 30 for USS
+      regdat<-regdat[as.numeric(regdat$day)>121,]#look at data after MAy 1 for USS
+    }
+    
+    for(y in 1:length(years)){
+      
+
+    }
+  }
+  }
+
+
+
+
+
+
 
 
 #See if there is a shift in first, last, mean  by decade
