@@ -268,24 +268,18 @@ for(p in 1:length(podcols)){
 #   }
 # }
 # 
-
-#Add days after sept 30:
-orcasum.days$daysaftsept30<-NA
-orcasum.days$day<-as.numeric(orcasum.days$day)
-orcasum.days$year<-as.numeric(orcasum.days$year)
-
-orcasum.days$daysaftsept30[which(orcasum.days$day>273 & orcasum.days$day<367)]<-orcasum.days$day[which(orcasum.days$day>273 & orcasum.days$day<367)]-273
-orcasum.days$daysaftsept30[which(orcasum.days$day<274)]<-orcasum.days$day[which(orcasum.days$day<274)]+93#
-#add an "orca year" which runs Oct 1-Sept 31
-orcasum.days$orcayear<-orcasum.days$year
-orcasum.days$orcayear[which(orcasum.days$day>273)]<-orcasum.days$year[which(orcasum.days$day>273)]+1
-
+orcasum.days$date<-as.Date(orcasum.days$day, origin = paste(orcasum.days$year-1,"12-31", sep="-"))
+orcasum.days$mon<-substr(orcasum.days$date,6,7)
+#orcasum.days$date-as.Date(paste(orcasum.days$year,"06-30", sep="-"))
+#head(cbind(orcasum.days$date,as.Date(paste(orcasum.days$year,"06-30", sep="-")),orcasum.days$date-as.Date(paste(orcasum.days$year,"06-30", sep="-"))))
 #Add days after June 30:
-orcasum.days$daysaftjun30[which(orcasum.days$day>179 & orcasum.days$day<367)]<-orcasum.days$day[which(orcasum.days$day>179 & orcasum.days$day<367)]-179
-orcasum.days$daysaftjun30[which(orcasum.days$day<180)]<-orcasum.days$day[which(orcasum.days$day<180)]+187#
-#add an "orca year" which runs Oct 1-Sept 31
-orcasum.days$orcayear2<-orcasum.days$year
-orcasum.days$orcayear2[which(orcasum.days$day>179)]<-orcasum.days$year[which(orcasum.days$day>179)]+1
+orcasum.days$daysaftjun30[which(orcasum.days$day>182 & orcasum.days$day<367)]<-orcasum.days$day[which(orcasum.days$day>182 & orcasum.days$day<367)]-182
+orcasum.days$daysaftjun30[which(orcasum.days$day<183)]<-orcasum.days$day[which(orcasum.days$day<183)]+182#
+#the above does not work quite right becuase of leap years...
+
+#add an "orca year" which runs jul 1-jun 30
+orcasum.days$orcayear<-orcasum.days$year
+orcasum.days$orcayear[which(orcasum.days$day>182)]<-orcasum.days$year[which(orcasum.days$day>182)]+1
 
 #use a shifting window approach to see if trends in first and last obs date vary depending on when the start window is.
 #use july 1, aug 1, sept 1, oct 1 as start dats
@@ -294,44 +288,70 @@ orcasum.days$orcayear2[which(orcasum.days$day>179)]<-orcasum.days$year[which(orc
 regions=unique(orcasum.days$region)
 podcols<-c("AllSRpres")#just do for all SRs for now
 pods<-c("SRs")
-stdoy<-c(,)
 stseas<-c("07","08","09","10")
-enseas<-c("12","1","2","03")
-for(t in 1:length(stseas)){
-  styr.date<-as.Date(paste("2019",stseas[t],"1", sep="-"))
-  styr.doy<-strptime(styr.date,format = "%j")
-  styr.doy<-strftime(styr.date,format= "%j")
-  
-  ##PICK UP HERE- GETTING DAYS SINCE CHOSEN START DATE!
-  days2st<-difftime(as.POSIXct(test2), as.POSIXct(test1, tz="UTC"), units="days")
-  orcasum.days$date<-
-    
-  
-}
+stdays<-c(1,32,63,93)
+#create a new column for each start date we want to have
+orcasum.days$st.1jul<-as.Date(paste(orcasum.days$year-1,"07-01", sep="-"))
+orcasum.days$st.1aug<-as.Date(paste(orcasum.days$year-1,"08-01", sep="-"))
+orcasum.days$st.1sep<-as.Date(paste(orcasum.days$year-1,"09-01", sep="-"))
+orcasum.days$st.1oct<-as.Date(paste(orcasum.days$year-1,"10-01", sep="-"))
 
+#Create dataframe with first, last obs for each start date in each year
+pods.all<-c()
+regions.all<-c()
+years.all<-c()
+nobs.all<-c()
+firstest.1jul.all<-c()#1
+firstest.1aug.all<-c()
+firstest.1sep.all<-c()
+firstest.1oct.all<-c()
+lastest.31dec.all<-c()
+lastest.31jan.all<-c()
+lastest.28feb.all<-c()
+lastest.31mar.all<-c()
 
 years<-unique(orcasum.days$orcayear2)#use July 1 as start of orca year, as this will encompass min start date window that i want to try
-
 for(p in 1:length(podcols)){
   colnum<-which(colnames(orcasum.days)==podcols[p])
   for(r in 1:length(regions)){
     regdat<-orcasum.days[orcasum.days$region==regions[r],]
+    for(s in 1:length(stseas)){
     if (regions[r]=="ps"){
-      regdat<-regdat[as.numeric(regdat$day)>273,]#look at data only after Sept 30 for PS
+      stday<-stdays[s]
+      regdat<-regdat[as.numeric(regdat$daysaftjun30)>=273,]#stop looking at data after mar31
     }
     if (regions[r]=="uss"){
+      
       regdat<-regdat[as.numeric(regdat$day)<273,]#look at data before Sept 30 for USS
-      regdat<-regdat[as.numeric(regdat$day)>121,]#look at data after MAy 1 for USS
+      regdat<-regdat[as.numeric(regdat$day)>121,]#look at data after May 1 for USS
     }
     
     for(y in 1:length(years)){
+      regdat<-regdat[as.numeric(regdat$daysaftjun30)>=stdays[s],]#look at data only after Sept 30 for PS
+      yrdat<-regdat[regdat$year==years[y],]
+      pods.all<-c(pods.all,pods[p])
+      regions.all<-c(regions.all,regions[r])
+      years.all<-c(years.all,years[y])
+      nobs.all<-c(nobs.all,length(yrdat$day[yrdat[,colnum]==1]))
+      firstest.1jul.all<-c()#1
+      firstest.1aug.all<-c()
+      firstest.1sep.all<-c()
+      firstest.1oct.all<-c()
+      lastest.31dec.all<-c()
+      lastest.31jan.all<-c()
+      lastest.28feb.all<-c()
+      lastest.31mar.all<-c()
       
-
+      firstest.1jul.all<-c(firstest.all,min(yrdat$daysaftjun30[yrdat[,colnum]==1], na.rm=TRUE))
+      lastest.all<-c(lastest.all,max(yrdat$daysaftjun30[yrdat[,colnum]==1], na.rm=TRUE))
+###Add in other cut-off dates to dataset!
+      
+      
     }
   }
   }
 
-
+}
 
 
 
