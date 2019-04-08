@@ -261,7 +261,7 @@ for(y in 2001:2013) {
   plot(x,exp(g$fitted.values), type="l",lwd=2,xlab = "Week",
        ylab = "Expected recreational catch", main = paste("Year: ",y))
   #add line for peak abundance week
-  #pk<-max(g$fitted.values)
+  #pk<-max(g$fitted.values)``
   #pkdoy<-x[which.max(g$fitted.values)]
   #abline(v=pkdoy, col="red", lwd=3)
   #add line for start of season
