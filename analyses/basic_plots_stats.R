@@ -62,7 +62,7 @@ d$Trans<-0
 d$Trans[grep("T",d$Pod.cl)]<- 1
 
 #only data starting with 1976 (following Olson et al)
-d<-d[d$Year>1975,]
+d<-d[d$Year>1974,]
 
 # Add a column that combines :
 #1) day, year, and region; 
@@ -151,7 +151,7 @@ orcasum.days$AllSRpres<-orcasum.days$AllSRobs
 orcasum.days$AllSRpres[orcasum.days$AllSRobs>0]<-1
 #summarize whale days per year by region
 wdays<-as.data.frame(tapply(orcasum.days$AllSRpres,list(orcasum.days$year,orcasum.days$region),sum))
-dim(wdays)#40 years
+dim(wdays)#42 years
 colMeans(wdays[1:20,], na.rm=TRUE)
 
 # quartz()
@@ -268,18 +268,36 @@ for(p in 1:length(podcols)){
 #   }
 # }
 # 
-orcasum.days$date<-as.Date(orcasum.days$day, origin = paste(orcasum.days$year-1,"12-31", sep="-"))
+orcasum.days$date<-as.Date(orcasum.days$day, format="%j",origin = paste(as.numeric(orcasum.days$year)-1,"12-31", sep="-"))
+#for some reason this gets the year wrong- replaces with current year
+orcasum.days$date<-paste(orcasum.days$year,substr(orcasum.days$date, 6,10), sep="-")
+
 orcasum.days$mon<-substr(orcasum.days$date,6,7)
 #orcasum.days$date-as.Date(paste(orcasum.days$year,"06-30", sep="-"))
 #head(cbind(orcasum.days$date,as.Date(paste(orcasum.days$year,"06-30", sep="-")),orcasum.days$date-as.Date(paste(orcasum.days$year,"06-30", sep="-"))))
 #Add days after June 30:
-orcasum.days$daysaftjun30[which(orcasum.days$day>182 & orcasum.days$day<367)]<-orcasum.days$day[which(orcasum.days$day>182 & orcasum.days$day<367)]-182
-orcasum.days$daysaftjun30[which(orcasum.days$day<183)]<-orcasum.days$day[which(orcasum.days$day<183)]+182#
-#the above does not work quite right becuase of leap years...
+orcasum.days$day<-as.numeric(orcasum.days$day)
 
-#add an "orca year" which runs jul 1-jun 30
+orcasum.days$daysaftapr30<-difftime(as.Date(orcasum.days$date), as.Date(paste(orcasum.days$year,"04-30", sep="-")),units=c("days")) 
+orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30<0)]<-difftime(as.Date(orcasum.days$date[which(orcasum.days$daysaftapr30<0)]), as.Date(paste(as.numeric(orcasum.days$year[which(orcasum.days$daysaftapr30<0)])-1,"04-30", sep="-")),units=c("days")) 
+
+#add an "orca year" which runs may 1-april 30
 orcasum.days$orcayear<-orcasum.days$year
-orcasum.days$orcayear[which(orcasum.days$day>182)]<-orcasum.days$year[which(orcasum.days$day>182)]+1
+orcasum.days$orcayear[which(orcasum.days$day>120)]<-as.numeric(orcasum.days$year[which(orcasum.days$day>120)])+1
+#currently june 30 = 0 but we want it to be 365 or 366 (depending if leap year or not). correct this
+#leap years are 1976, 1980, 1984, 1992, 200, 2004, 2008, 2012, 2016
+orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0")]<-365
+orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1976")]<-366
+orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1980")]<-366
+orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1984")]<-366
+orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1988")]<-366
+orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1992")]<-366
+orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1996")]<-366
+orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2000")]<-366
+orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2004")]<-366
+orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2008")]<-366
+orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2012")]<-366
+orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2016")]<-366
 
 #use a shifting window approach to see if trends in first and last obs date vary depending on when the start window is.
 #use july 1, aug 1, sept 1, oct 1 as start dats
@@ -288,20 +306,15 @@ orcasum.days$orcayear[which(orcasum.days$day>182)]<-orcasum.days$year[which(orca
 regions=unique(orcasum.days$region)
 podcols<-c("AllSRpres")#just do for all SRs for now
 pods<-c("SRs")
-stseas<-c("07","08","09","10")
-stdays<-c(1,32,63,93)
-#create a new column for each start date we want to have
-orcasum.days$st.1jul<-as.Date(paste(orcasum.days$year-1,"07-01", sep="-"))
-orcasum.days$st.1aug<-as.Date(paste(orcasum.days$year-1,"08-01", sep="-"))
-orcasum.days$st.1sep<-as.Date(paste(orcasum.days$year-1,"09-01", sep="-"))
-orcasum.days$st.1oct<-as.Date(paste(orcasum.days$year-1,"10-01", sep="-"))
 
 #Create dataframe with first, last obs for each start date in each year
 pods.all<-c()
 regions.all<-c()
 years.all<-c()
 nobs.all<-c()
-firstest.1jul.all<-c()#1
+firstest.1may.all<-c()
+firstest.1jun.all<-c()#1
+firstest.1jul.all<-c()
 firstest.1aug.all<-c()
 firstest.1sep.all<-c()
 firstest.1oct.all<-c()
@@ -309,50 +322,110 @@ lastest.31dec.all<-c()
 lastest.31jan.all<-c()
 lastest.28feb.all<-c()
 lastest.31mar.all<-c()
+lastest.all<-c()
 
-years<-unique(orcasum.days$orcayear2)#use July 1 as start of orca year, as this will encompass min start date window that i want to try
+years<-unique(orcasum.days$orcayear)#use July 1 as start of orca year, as this will encompass min start date window that i want to try
 for(p in 1:length(podcols)){
   colnum<-which(colnames(orcasum.days)==podcols[p])
   for(r in 1:length(regions)){
     regdat<-orcasum.days[orcasum.days$region==regions[r],]
-    for(s in 1:length(stseas)){
-    if (regions[r]=="ps"){
-      stday<-stdays[s]
-      regdat<-regdat[as.numeric(regdat$daysaftjun30)>=273,]#stop looking at data after mar31
-    }
-    if (regions[r]=="uss"){
-      
-      regdat<-regdat[as.numeric(regdat$day)<273,]#look at data before Sept 30 for USS
-      regdat<-regdat[as.numeric(regdat$day)>121,]#look at data after May 1 for USS
-    }
     
+    # if (regions[r]=="uss"){
+    #   
+    #   regdat<-regdat[as.numeric(regdat$day)<273,]#look at data before Sept 30 for USS
+    #   regdat<-regdat[as.numeric(regdat$day)>121,]#look at data after May 1 for USS
+    # }
+    # 
     for(y in 1:length(years)){
-      regdat<-regdat[as.numeric(regdat$daysaftjun30)>=stdays[s],]#look at data only after Sept 30 for PS
-      yrdat<-regdat[regdat$year==years[y],]
+      yrdat<-regdat[regdat$orcayear==years[y],]
       pods.all<-c(pods.all,pods[p])
       regions.all<-c(regions.all,regions[r])
       years.all<-c(years.all,years[y])
       nobs.all<-c(nobs.all,length(yrdat$day[yrdat[,colnum]==1]))
-      firstest.1jul.all<-c()#1
-      firstest.1aug.all<-c()
-      firstest.1sep.all<-c()
-      firstest.1oct.all<-c()
-      lastest.31dec.all<-c()
-      lastest.31jan.all<-c()
-      lastest.28feb.all<-c()
-      lastest.31mar.all<-c()
       
-      firstest.1jul.all<-c(firstest.all,min(yrdat$daysaftjun30[yrdat[,colnum]==1], na.rm=TRUE))
-      lastest.all<-c(lastest.all,max(yrdat$daysaftjun30[yrdat[,colnum]==1], na.rm=TRUE))
-###Add in other cut-off dates to dataset!
+      #if (regions[r]=="ps"){
+        yrdat<- yrdat[as.numeric(yrdat$daysaftapr30)<=273,]#look between start date and mar31
+      firstest.1may.all<-c(firstest.1may.all,min(yrdat$daysaftapr30[yrdat[,colnum]==1], na.rm=TRUE))#1may=1 day after apr30stdays
+      firstest.1jun.all<-c(firstest.1jun.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=32 & yrdat[,colnum]==1], na.rm=TRUE))#1jun=32 days after apr30
+      firstest.1jul.all<-c(firstest.1jul.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=62 & yrdat[,colnum]==1], na.rm=TRUE))#1jul=63 days after apr30
+      firstest.1aug.all<-c(firstest.1aug.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=93 & yrdat[,colnum]==1], na.rm=TRUE))#1aug=93 days after apr30
+      firstest.1sep.all<-c(firstest.1sep.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=124 & yrdat[,colnum]==1], na.rm=TRUE))#1sep=124 days after apr30
+      firstest.1oct.all<-c(firstest.1oct.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=154 & yrdat[,colnum]==1], na.rm=TRUE))#1aug=154 days after apr30
       
+      lastest.31dec.all<-c(lastest.31dec.all,max(yrdat$daysaftapr30[yrdat$daysaftapr30<=245 & yrdat[,colnum]==1], na.rm=TRUE))#31dec = 245 days after apr30
+      lastest.31jan.all<-c(lastest.31jan.all,max(yrdat$daysaftapr30[yrdat$daysaftapr30<=276 & yrdat[,colnum]==1], na.rm=TRUE))#31jan = 276 days after apr30
+      lastest.28feb.all<-c(lastest.28feb.all,max(yrdat$daysaftapr30[yrdat$daysaftapr30<=304 & yrdat[,colnum]==1], na.rm=TRUE))#28feb=304 days after apr30
+      lastest.31mar.all<-c(lastest.31mar.all,max(yrdat$daysaftapr30[yrdat$daysaftapr30<=336 & yrdat[,colnum]==1], na.rm=TRUE))#31mar= 336 days after apr30
+      lastest.all<-c(lastest.all,max(yrdat$daysaftapr30[yrdat[,colnum]==1], na.rm=TRUE))#31mar= 336 days after apr30
       
+      #}
     }
   }
   }
 
-}
+df <- as.data.frame(cbind(pods.all,regions.all,years.all,nobs.all,firstest.1may.all,firstest.1jun.all,firstest.1jul.all,firstest.1aug.all,firstest.1sep.all,firstest.1oct.all,
+                          lastest.31dec.all,lastest.31jan.all,lastest.28feb.all,lastest.31mar.all, lastest.all))
+colnames(df)[1:4]<-c("pod","region","year","nobs")
 
+#Plot trends using different start and end dates
+
+pod.df=df[df$pod=="SRs",]
+pod.df$firstest.1may.all[which(pod.df$firstest.1may.all=="Inf")]<-NA
+pod.df$firstest.1jun.all[which(pod.df$firstest.1jun.all=="Inf")]<-NA
+
+pod.df$firstest.1jul.all[which(pod.df$firstest.1jul.all=="Inf")]<-NA
+pod.df$firstest.1aug.all[which(pod.df$firstest.1aug.all=="Inf")]<-NA
+pod.df$firstest.1sep.all[which(pod.df$firstest.1sep.all=="Inf")]<-NA
+pod.df$firstest.1oct.all[which(pod.df$firstest.1oct.all=="Inf")]<-NA
+
+pod.df$lastest.31dec.all[which(pod.df$lastest.31dec.all=="-Inf")]<-NA
+pod.df$lastest.31jan.all[which(pod.df$lastest.31jan.all=="-Inf")]<-NA
+pod.df$lastest.28feb.all[which(pod.df$lastest.28feb.all=="-Inf")]<-NA
+pod.df$lastest.31mar.all[which(pod.df$lastest.31mar.all=="-Inf")]<-NA
+pod.df$lastest.all[which(pod.df$lastest.all=="-Inf")]<-NA
+
+#
+pod.df$firstest.1may.all<-as.numeric(pod.df$firstest.1may.all)
+pod.df$firstest.1jun.all<-as.numeric(pod.df$firstest.1jun.all)
+pod.df$firstest.1jul.all<-as.numeric(pod.df$firstest.1jul.all)
+pod.df$firstest.1aug.all<-as.numeric(pod.df$firstest.1aug.all)
+pod.df$firstest.1sep.all<-as.numeric(pod.df$firstest.1sep.all)
+pod.df$firstest.1oct.all<-as.numeric(pod.df$firstest.1oct.all)
+
+pod.df$lastest.31dec.all<-as.numeric(pod.df$lastest.31dec.all)
+pod.df$lastest.31jan.all<-as.numeric(pod.df$lastest.31jan.all)
+pod.df$lastest.28feb.all<-as.numeric(pod.df$lastest.28feb.all)
+pod.df$lastest.31mar.all<-as.numeric(pod.df$lastest.31mar.all)
+pod.df$lastest.all<-as.numeric(pod.df$lastest.all)
+
+pod.df$year<-as.numeric(pod.df$year)
+
+for(r in 1:length(regions)){
+  reg.df<-pod.df[pod.df$region==regions[r],]
+quartz(height=10,width=7)
+par(mfcol=c(6,2))
+  for(i in 1:6){
+ 
+  #first obs with jul1 st window
+  plot(reg.df$year,reg.df[,i+4],xlab="year",ylab="first obs doy", main=paste(colnames(reg.df)[i+4],regions[r]), bty="l", pch=21, bg="gray")
+  mod<-lm(reg.df[,i+4]~reg.df$year)
+  abline(mod)
+  mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+  mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+  }
+
+  for(j in 1:5){
+  #last obs
+  plot(reg.df$year,reg.df[,j+10],xlab="year",ylab="last obs doy", main=paste(colnames(reg.df)[j+10]), bty="l", pch=21, bg="gray")
+  mod<-lm(reg.df[,j+10]~reg.df$year)
+  mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+  abline(mod)
+  print(summary(mod))
+  mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+  }
+}
+#it appears to matter a lot which window you look at (when you start looking...) so, how to choose?
+#
 
 
 
@@ -373,20 +446,16 @@ meanest.all<-c()
 firstest.sept30.all<-c()
 lastest.sept30.all<-c()
 meanest.sept30.all<-c()
-firstest.jun30.all<-c()
-lastest.jun30.all<-c()
-meanest.jun30.all<-c()
+firstest.apr30.all<-c()
+lastest.apr30.all<-c()
+meanest.apr30.all<-c()
 for(p in 1:length(podcols)){
   colnum<-which(colnames(orcasum.days)==podcols[p])
   for(r in 1:length(regions)){
     regdat<-orcasum.days[orcasum.days$region==regions[r],]
-    if (regions[r]=="ps"){
-      regdat<-regdat[as.numeric(regdat$day)>273,]#look at data only after Sept 30 for PS
-    }
     if (regions[r]=="uss"){
       regdat<-regdat[as.numeric(regdat$day)<273,]#look at data before Sept 30 for USS
       regdat<-regdat[as.numeric(regdat$day)>121,]#look at data after MAy 1 for USS
-      
     }
     
     for(y in 1:length(years)){
@@ -400,19 +469,20 @@ for(p in 1:length(podcols)){
       meanest.all<-c(meanest.all,mean(as.numeric(yrdat$day[yrdat[,colnum]==1]), na.rm=TRUE))
       orcayrdat<-regdat[regdat$orcayear==years[y],]
       orcayrdat2<-regdat[regdat$orcayear2==years[y],]
-      
       firstest.sept30.all<-c(firstest.sept30.all,min(orcayrdat$daysaftsept30[orcayrdat[,colnum]==1], na.rm=TRUE))
       lastest.sept30.all<-c(lastest.sept30.all,max(orcayrdat$daysaftsept30[orcayrdat[,colnum]==1], na.rm=TRUE))
       meanest.sept30.all<-c(meanest.sept30.all,mean(as.numeric(orcayrdat$daysaftsept30[orcayrdat[,colnum]==1]), na.rm=TRUE))
-      firstest.jun30.all<-c(firstest.jun30.all,min(orcayrdat2$daysaftjun30[orcayrdat2[,colnum]==1], na.rm=TRUE))
-      lastest.jun30.all<-c(lastest.jun30.all,max(orcayrdat2$daysaftjun30[orcayrdat2[,colnum]==1], na.rm=TRUE))
-      meanest.jun30.all<-c(meanest.jun30.all,mean(as.numeric(orcayrdat2$daysaftjun30[orcayrdat2[,colnum]==1]), na.rm=TRUE))
+      firstest.apr30.all<-c(firstest.apr30.all,min(orcayrdat2$daysaftapr30[orcayrdat2[,colnum]==1], na.rm=TRUE))
+      lastest.apr30.all<-c(lastest.apr30.all,max(orcayrdat2$daysaftapr30[orcayrdat2[,colnum]==1], na.rm=TRUE))
+      meanest.apr30.all<-c(meanest.apr30.all,mean(as.numeric(orcayrdat2$daysaftapr30[orcayrdat2[,colnum]==1]), na.rm=TRUE))
       
       }
   }
 }
-df <- as.data.frame(cbind(pods.all,regions.all,years.all,nobs.all,firstest.all,lastest.all,meanest.all,firstest.sept30.all,lastest.sept30.all,meanest.sept30.all,firstest.jun30.all,lastest.jun30.all,meanest.jun30.all))
-colnames(df)<-c("pod","region","year","nobs","firstest","lastest","meanest","firstest.sept30","lastest.sept30","meanest.sept30","firstest.jun30","lastest.jun30","meanest.jun30") 
+
+
+df <- as.data.frame(cbind(pods.all,regions.all,years.all,nobs.all,firstest.all,lastest.all,meanest.all,firstest.sept30.all,lastest.sept30.all,meanest.sept30.all,firstest.apr30.all,lastest.apr30.all,meanest.apr30.all))
+colnames(df)<-c("pod","region","year","nobs","firstest","lastest","meanest","firstest.sept30","lastest.sept30","meanest.sept30","firstest.apr30","lastest.apr30","meanest.apr30") 
 
 #Now fit some linear models and plots
 
@@ -428,8 +498,8 @@ pod.df$meanest=as.numeric(pod.df$meanest)
 pod.df$firstest.sept30[which(pod.df$firstest.sept30=="Inf")]<-NA
 pod.df$lastest.sept30[which(pod.df$lastest.sept30=="-Inf")]<-NA
 
-pod.df$firstest.jun30[which(pod.df$firstest.jun30=="Inf")]<-NA
-pod.df$lastest.jun30[which(pod.df$lastest.jun30=="-Inf")]<-NA
+pod.df$firstest.apr30[which(pod.df$firstest.apr30=="Inf")]<-NA
+pod.df$lastest.apr30[which(pod.df$lastest.apr30=="-Inf")]<-NA
 
 for(i in 1:length(regions)){
   reg.df=pod.df[pod.df$region==regions[i],]
