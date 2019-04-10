@@ -427,7 +427,8 @@ par(mfcol=c(6,2))
 #it appears to matter a lot which window you look at (when you start looking...) so, how to choose?
 #
 
-
+tapply(pod.df$firstest.1may.all,list(pod.df$region),mean, na.rm=TRUE)
+tapply(pod.df$lastest.all,list(pod.df$region),mean, na.rm=TRUE)
 
 
 
