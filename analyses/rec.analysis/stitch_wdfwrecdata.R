@@ -19,7 +19,7 @@ setwd("~/Documents/GitHub/fishphen")
 #Read in the files
 #1987-1993 data
 d1<-read.csv("data/WDFW_fromkk/PugetSound_1987_1989-1993_SalmonCatch-ReleaseData.csv", header=TRUE)
-#Karen says 1987?1993 date format is MDDYY. 
+#Karen says 1987-1993 date format is MDDYY. 
 #Some of the years have Location names and some do not. 
 #The location code should be the same for all years. 
 #Some of the species name are available but some years it was not. All years have species codes though.
@@ -61,6 +61,7 @@ head(d2)
 unique(d2$X.OtherSpCaught)
 unique(d2$SpeciesName)
 unique(d2$OtherSpCode)#NA 101 102 103 104 105 106 123 107 108
+unique(d2$CRCArea)
 d2$CohoCaughtAD<-NA
 #add year
 d2$year<-paste("19",substr(d2$SampleDate,nchar(d2$SampleDate)-1,nchar(d2$SampleDate)), sep="")
@@ -82,7 +83,7 @@ for(i in 1:length(years)){
   plot(as.integer(yr$doy),yr$ChinCaught,type= "p", pch=21,bg="salmon",xlab="DOY", ylab="Fish Caught", main=paste(years[i]))
   points(as.integer(yr$doy),yr$CohoCaught)
 }
-colnames(d2)[1:13]<-c("SampleDate","LoCode","LocName","CRCArea","BoatIntNum","Anglers","ChinCaught","CohoCaught","OtherSpCode","SpName", "NoOtherSpp","RelSpCode","NoRel")
+colnames(d2)[1:14]<-c("SampleDate","LoCode","LocName","CRCArea","BoatIntNum","Anglers","ChinCaught","CohoCaught","OtherSpCode","SpName", "NoOtherSpp","RelSpCode","NoRel","CohoCaughtAD")
 #reorder dataset so that columns are in same order as other years
 
 
@@ -92,34 +93,58 @@ head(d3)
 unique(d3$X.OtherSpCaught)
 unique(d3$SpeciesName)
 unique(d3$OtherSpCode)#NA 101 102 103 104 105 106 123 107 108
+unique(d3$CRCArea)
+d3$year<-substr(d3$SampleDate,nchar(d3$SampleDate)-3,nchar(d3$SampleDate))
+#add doy
+d3$day<-substr(d3$SampleDate,nchar(d3$SampleDate)-5,nchar(d3$SampleDate)-4)
+d3$mon<-substr(d3$SampleDate,nchar(d3$SampleDate)-(nchar(d3$SampleDate)-1),nchar(d3$SampleDate)-6)
+
+d3$date<-as.Date(paste(d3$year,d3$mon,d3$day,sep="-"))
+d3$doy<-strftime(d3$date, format = "%j")
+colnames(d3)[1:15]<-c("SampleDate","LoCode","LocName","CRCArea","BoatIntNum","Anglers","ChinCaught","CohoCaught","CohoCaughtAD","OtherSpCode","SpName", "NoOtherSpp","RelSpCode","RelSpName","NoRel")
+#perhaps remove the following columns: CohoRelNotKnown"       "OthMarkCodeReleased"  "OthMarkCountReleased"  "X" 
 
 #2001-2002
 d4<-read.csv("data/WDFW_fromkk/PugetSound_2001-2002SalmonCatch-ReleaseData.csv", header=TRUE)
 head(d4)
-unique(d4$X.OtherSpCaught)
 unique(d4$SpeciesName)
-unique(d4$OtherSpCode)#NA 101 102 103 104 105 106 123 107 108
+unique(nchar(d4$SampleDate))
+d4$year<-substr(d4$SampleDate,nchar(d4$SampleDate)-3,nchar(d4$SampleDate))
+#add doy
+d4$day<-substr(d4$SampleDate,nchar(d4$SampleDate)-5,nchar(d4$SampleDate)-4)
+d4$mon<-substr(d4$SampleDate,nchar(d4$SampleDate)-(nchar(d4$SampleDate)-1),nchar(d4$SampleDate)-6)
+
+d4$date<-as.Date(paste(d4$year,d4$mon,d4$day,sep="-"))
+d4$doy<-strftime(d4$date, format = "%j")
+colnames(d4)[1:13]<-c("SampleDate","LoCode","LocName","CRCArea","BoatIntNum","Anglers","ChinCaught","ChinAd" ,"CohoCaught","CohoCaughtAD","OtherSpCode","SpName", "NoOtherSpp")
+
 
 #2003-2005
 d5<-read.csv("data/WDFW_fromkk/PugetSound_2003-2005SalmonCatch-ReleaseData.csv", header=TRUE)
 head(d5)
-unique(d5$X.OtherSpCaught)
 unique(d5$SpeciesName)
-unique(d5$OtherSpCode)#NA 101 102 103 104 105 106 123 107 108
 
 #2006-2008
 d6<-read.csv("data/WDFW_fromkk/PugetSound_2006-2008SalmonCatch-ReleaseData.csv", header=TRUE)
-head(d5)
-unique(d5$X.OtherSpCaught)
-unique(d5$SpeciesName)
-unique(d5$OtherSpCode)#NA 101 102 103 104 105 106 123 107 108
+head(d6)
+unique(d6$SpeciesName)
+
+#2009-2013
+d7<-read.csv("data/WDFW_fromkk/PugetSound_2009-2013SalmonCatch-ReleaseData.csv", header=TRUE)
+head(d7)
+unique(d6$SpeciesName)
 
 #2014
-d5<-read.csv("data/WDFW_fromkk/PugetSound_2014SalmonCatch-ReleaseData.csv", header=TRUE)
+d8<-read.csv("data/WDFW_fromkk/PugetSound_2014SalmonCatch-ReleaseData.csv", header=TRUE)
+
+head(d8)
+
 #2015-2017April
-head(d5)
-d6<-read.csv("data/WDFW_fromkk/PugetSound_2015-2017AprSalmonCatch-ReleaseData.csv", header=TRUE)
-head(d6)
+d9<-read.csv("data/WDFW_fromkk/PugetSound_2015-2017AprSalmonCatch-ReleaseData.csv", header=TRUE)
+head(d9)
 #2017May-2018dec
-d7<-read.csv("data/WDFW_fromkk/PugetSound_2017May-2018SalmonCatch-ReleaseData.csv", header=TRUE)
-head(d7)
+d10<-read.csv("data/WDFW_fromkk/PugetSound_2017May-2018SalmonCatch-ReleaseData.csv", header=TRUE)
+head(d10)
+
+
+#now stitch together all 10 files!
