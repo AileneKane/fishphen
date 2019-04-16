@@ -19,6 +19,7 @@ setwd("~/Documents/GitHub/fishphen")
 library(dplyr)
 library(mgcv)
 library(scales)
+library(RColorBrewer)
 # 1. Get the data
 d <- read.csv("data/AppendixII.csv")
 
@@ -269,6 +270,7 @@ for(p in 1:length(podcols)){
 # }
 # 
 orcasum.days$date<-as.Date(orcasum.days$day, format="%j",origin = paste(as.numeric(orcasum.days$year)-1,"12-31", sep="-"))
+orcasum.days$date[orcasum.days$day==366]<-as.Date(paste(as.numeric(orcasum.days$year[orcasum.days$day==366]),"12-31", sep="-"))
 #for some reason this gets the year wrong- replaces with current year
 orcasum.days$date<-paste(orcasum.days$year,substr(orcasum.days$date, 6,10), sep="-")
 
@@ -286,23 +288,147 @@ orcasum.days$orcayear<-orcasum.days$year
 orcasum.days$orcayear[which(orcasum.days$day>120)]<-as.numeric(orcasum.days$year[which(orcasum.days$day>120)])+1
 #currently june 30 = 0 but we want it to be 365 or 366 (depending if leap year or not). correct this
 #leap years are 1976, 1980, 1984, 1992, 200, 2004, 2008, 2012, 2016
+#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0")]<-366
+#rcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1980")]<-366
+#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1984")]<-366
+#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1988")]<-366
+#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1992")]<-366
+#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1996")]<-366
+#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2000")]<-366
+#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2004")]<-366
+#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2008")]<-366
+#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2012")]<-366
+#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2016")]<-366
 orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0")]<-365
-orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1976")]<-366
-orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1980")]<-366
-orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1984")]<-366
-orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1988")]<-366
-orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1992")]<-366
-orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1996")]<-366
-orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2000")]<-366
-orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2004")]<-366
-orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2008")]<-366
-orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2012")]<-366
-orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2016")]<-366
+#the above needs to be fixed to deal with leap year
+
+#check that daysafterapril 30 is working
+presapr30<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$orcayear),sum)
+
+#Ok, now look at proportion of whale days per week by season and region and by decade
+
+orcasum.days$week<-strftime(strptime(orcasum.days$date,format= "%Y-%m-%d"), format = "%V")#new weeks start on mondays
+orcasum.days$decade<-NA
+orcasum.days$decade[orcasum.days$year<1987 & orcasum.days$year>1976]<-"1977-1986"
+orcasum.days$decade[orcasum.days$year<1997 & orcasum.days$year>1986]<-"1987-1996"
+orcasum.days$decade[orcasum.days$year<2007 & orcasum.days$year>1996]<-"1997-2006"
+orcasum.days$decade[orcasum.days$year<2018 & orcasum.days$year>2006]<-"2007-2017"
+orcasum.days<-orcasum.days[!is.na(orcasum.days$decade),]
+
+
+
+#now aggregate to get proportion of days in a week in which whales were observed up by week and decade
+#number of whale days per week
+wdaysperwk<-aggregate(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$year,orcasum.days$week),sum)
+colnames(wdaysperwk)<-c("region","year","week","wdays")
+wdaysperwk<-wdaysperwk[order(wdaysperwk$region,wdaysperwk$year,wdaysperwk$week),]
+wdaysperwk$decade<-NA
+wdaysperwk$decade[wdaysperwk$year<1987 & wdaysperwk$year>1976]<-"1977-1986"
+wdaysperwk$decade[wdaysperwk$year<1997 & wdaysperwk$year>1986]<-"1987-1996"
+wdaysperwk$decade[wdaysperwk$year<2007 & wdaysperwk$year>1996]<-"1997-2006"
+wdaysperwk$decade[wdaysperwk$year<2018 & wdaysperwk$year>2006]<-"2007-2017"
+#For this, remove all the 0s
+wdaysperwk$wdays[which(wdaysperwk$wdays==0)]<-NA
+wdaysperwk$prop<-wdaysperwk$wdays/7
+#plot lines by region and year
+yrs<-unique(wdaysperwk$year)
+
+myPalette <- colorRampPalette(brewer.pal(9, "YlOrRd")) #### Gives us a heat map look
+cols = rev(myPalette(length(yrs)))
+mycols <- data.frame(cbind(sort(yrs),cols))
+colnames(mycols)[1]<-"yr"
+
+region<-unique(wdaysperwk$region)
+for(r in 1:length(region)){
+  regdat<-wdaysperwk[wdaysperwk$region==region[r],]
+  quartz()
+  par(mai=c(1,2,2,2))
+  plot(regdat$week[regdat$year=="1977"],regdat$prop[regdat$year=="1977"],type="l",col=mycols$cols[mycols$yr==1977],xlab="week",ylab="Proportion whale days/week", main=paste(region[r]))
+  for(i in 1:length(yrs)){
+  lines(regdat$week[regdat$year==paste(yrs[i+1])],regdat$prop[regdat$year==paste(yrs[i+1])],col=mycols$cols[mycols$yr==yrs[i+1]])
+  }
+}
+
+#now summarize proportions by decade
+meanperweek<-aggregate(wdaysperwk$prop,list(wdaysperwk$region, wdaysperwk$decade,wdaysperwk$week),mean, na.rm=TRUE)
+colnames(meanperweek)<-c("region","decade","week","prop.mn")
+sdperweek<-aggregate(wdaysperwk$prop,list(wdaysperwk$region, wdaysperwk$decade,wdaysperwk$week),sd, na.rm=TRUE)
+colnames(sdperweek)<-c("region","decade","week","prop.sd")
+
+decs<-unique(meanperweek$decade)
+
+cols = brewer.pal(4, "Set1")
+mycols <- data.frame(cbind(sort(decs),cols))
+colnames(mycols)[1]<-"dec"
+quartz(height=6,width=12)
+par(mai=c(.6,.6,1,.5),mfrow=c(1,3))
+region<-unique(meanperweek$region)
+reg.names=c("Puget Sound","Upper Salish Sea","Outer Coast")
+for(r in 1:length(region)){
+  regdat<-meanperweek[meanperweek$region==region[r],]
+
+  plot(regdat$week[regdat$decade=="1977-1986"],cex.lab=1.2,regdat$prop.mn[regdat$decade=="1977-1986"],type="l",lwd=2,col=mycols$cols[mycols$dec=="1977-1986"],xlab="week",ylab="Proportion whale days/week", main=paste(reg.names[r]),ylim=c(0,1))
+  for(i in 2:length(decs)){
+    lines(regdat$week[regdat$decade==decs[i]],regdat$prop.mn[regdat$decade==decs[i]],col=mycols$cols[mycols$dec==decs[i]],lwd=2)
+  }
+  if(r==3){legend("topright", legend=mycols$dec, col=mycols$cols, lwd=2,lty=1)}
+}
+
+#now, across all decades
+meanperweek2<-aggregate(wdaysperwk$prop,list(wdaysperwk$region, wdaysperwk$week),mean, na.rm=TRUE)
+colnames(meanperweek2)<-c("region","week","prop.mn")
+sdperweek2<-aggregate(wdaysperwk$prop,list(wdaysperwk$region, wdaysperwk$week),sd, na.rm=TRUE)
+colnames(sdperweek2)<-c("region","week","prop.sd")
+
+quartz(height=6,width=12)
+par(mai=c(.6,.6,1,.5), mfrow=c(1,3))
+region<-unique(meanperweek2$region)
+reg.names=c("Outer Coast","Puget Sound","Upper Salish Sea")
+for(r in 1:length(region)){
+  regdat<-meanperweek2[meanperweek2$region==region[r],]
+  
+  plot(regdat$week,cex.lab=1.2,regdat$prop.mn,type="l",lwd=2,col="#E41A1C",xlab="week",ylab="Proportion whale days/week", main=paste(reg.names[r]),ylim=c(0,1))
+  
+}
+
+
+#next thing to try: standardize the proportions- this will make seasonal patterns more clear i think
+#now, across all decades
+#mean proportion by region
+reg.means<-tapply(meanperweek2$prop.mn, meanperweek2$region, mean, na.rm=TRUE)
+reg.sds<-tapply(meanperweek2$prop.mn, meanperweek2$region, sd,na.rm=TRUE)
+
+reg.means<-as.data.frame(cbind(names(reg.means),reg.means))
+reg.sds<-as.data.frame(cbind(names(reg.sds),reg.sds))
+colnames(reg.sds)[1]<-colnames(reg.means)[1]<-"region"
+meanperweek3<-left_join(meanperweek2,reg.means, by="region", copy=TRUE)
+meanperweek4<-left_join(meanperweek3,reg.sds, by="region", copy=TRUE)
+
+meanperweek4$prop.mn.std<-(as.numeric(meanperweek4$prop.mn)-as.numeric(meanperweek4$reg.means))/as.numeric(meanperweek4$reg.sds)
+
+quartz(height=6,width=12)
+par(mai=c(.6,.6,1,.5), mfrow=c(1,3))
+region<-unique(meanperweek4$region)
+reg.names=c("Outer Coast","Puget Sound","Upper Salish Sea")
+for(r in 1:length(region)){
+  regdat<-meanperweek4[meanperweek3$region==region[r],]
+  
+  plot(regdat$week,cex.lab=1.2,regdat$prop.mn.std,type="l",lwd=2,col="#E41A1C",xlab="week",ylab="Standardized proportion whale days/week", main=paste(reg.names[r]))
+  abline(h=0, lty=2, lwd=2)
+}
+
+
+#Take home: Seasonality is hard to see in the figure with a separate line for each decade. I also plotted them with a single line showing the mean across all decades, and I standardized the proportions by substracting the means and dividing by the standard deviation. 
+#I did this to try to make seasonal patterns more obvious. It only sort of made them more obvious. Here's what I take away from these figures:
+#1) There is a very clear seasonal pattern in the SRKW use of the upper salish sea. This season ranges roughly from week 20 (mid May) through week 40 (early October).
+#2) The seasonal pattern in the SRKW use is less obvious for Puget Sound, because the maximum proportion is lower over all. However, the season during which the proportion is consistently above the mean probability
+#ranges from week 40 (early October) through week 2 (early January)
+
+#use these for whale seasons to investigate
 
 #use a shifting window approach to see if trends in first and last obs date vary depending on when the start window is.
 #use july 1, aug 1, sept 1, oct 1 as start dats
 #use dec 31, jan31, feb 28, and march 31 as end dates
-
 regions=unique(orcasum.days$region)
 podcols<-c("AllSRpres")#just do for all SRs for now
 pods<-c("SRs")
@@ -312,30 +438,33 @@ pods.all<-c()
 regions.all<-c()
 years.all<-c()
 nobs.all<-c()
-firstest.1may.all<-c()
-firstest.1jun.all<-c()#1
-firstest.1jul.all<-c()
-firstest.1aug.all<-c()
-firstest.1sep.all<-c()
-firstest.1oct.all<-c()
-lastest.31dec.all<-c()
-lastest.31jan.all<-c()
-lastest.28feb.all<-c()
-lastest.31mar.all<-c()
-lastest.all<-c()
-
-years<-unique(orcasum.days$orcayear)#use July 1 as start of orca year, as this will encompass min start date window that i want to try
+firstest.1may.all<-c()#for uss
+#firstest.1jun.all<-c()#1
+#firstest.1jul.all<-c()
+#firstest.1aug.all<-c()
+#firstest.1sep.all<-c()
+firstest.1oct.all<-c()#for ps
+#lastest.31dec.all<-c()
+lastest.31jan.all<-c()#for ps
+#lastest.28feb.all<-c()
+#lastest.31mar.all<-c()
+lastest.31oct.all<-c()#for uss
+#p=1
+#r=1
+years<-unique(orcasum.days$orcayear)#use may 1 as start of orca year, as this will encompass min start date window that i want to try
 for(p in 1:length(podcols)){
   colnum<-which(colnames(orcasum.days)==podcols[p])
-  for(r in 1:length(regions)){
+  for(r in 1:2){
     regdat<-orcasum.days[orcasum.days$region==regions[r],]
     
-    # if (regions[r]=="uss"){
-    #   
-    #   regdat<-regdat[as.numeric(regdat$day)<273,]#look at data before Sept 30 for USS
-    #   regdat<-regdat[as.numeric(regdat$day)>121,]#look at data after May 1 for USS
-    # }
-    # 
+     if (regions[r]=="uss"){
+       
+       regdat<-regdat[as.numeric(regdat$week)>19,]#look at weeks 20-40 for uss
+       regdat<-regdat[as.numeric(regdat$week)<41,]#
+     }
+    if (regions[r]=="ps"){
+      regdat<-regdat[as.numeric(regdat$week)<3 |as.numeric(regdat$week)>39,]#look at weeks 40 through the week 2 for ps
+    }
     for(y in 1:length(years)){
       yrdat<-regdat[regdat$orcayear==years[y],]
       pods.all<-c(pods.all,pods[p])
@@ -343,20 +472,20 @@ for(p in 1:length(podcols)){
       years.all<-c(years.all,years[y])
       nobs.all<-c(nobs.all,length(yrdat$day[yrdat[,colnum]==1]))
       
-      #if (regions[r]=="ps"){
-        yrdat<- yrdat[as.numeric(yrdat$daysaftapr30)<=273,]#look between start date and mar31
+    #  if (regions[r]=="uss"){
+      yrdat<- yrdat[as.numeric(yrdat$daysaftapr30)<=336,]#look between start date (may 1) and mar31
       firstest.1may.all<-c(firstest.1may.all,min(yrdat$daysaftapr30[yrdat[,colnum]==1], na.rm=TRUE))#1may=1 day after apr30stdays
-      firstest.1jun.all<-c(firstest.1jun.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=32 & yrdat[,colnum]==1], na.rm=TRUE))#1jun=32 days after apr30
-      firstest.1jul.all<-c(firstest.1jul.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=62 & yrdat[,colnum]==1], na.rm=TRUE))#1jul=63 days after apr30
-      firstest.1aug.all<-c(firstest.1aug.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=93 & yrdat[,colnum]==1], na.rm=TRUE))#1aug=93 days after apr30
-      firstest.1sep.all<-c(firstest.1sep.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=124 & yrdat[,colnum]==1], na.rm=TRUE))#1sep=124 days after apr30
+      #firstest.1jun.all<-c(firstest.1jun.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=32 & yrdat[,colnum]==1], na.rm=TRUE))#1jun=32 days after apr30
+      #firstest.1jul.all<-c(firstest.1jul.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=62 & yrdat[,colnum]==1], na.rm=TRUE))#1jul=63 days after apr30
+      #firstest.1aug.all<-c(firstest.1aug.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=93 & yrdat[,colnum]==1], na.rm=TRUE))#1aug=93 days after apr30
+      #firstest.1sep.all<-c(firstest.1sep.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=124 & yrdat[,colnum]==1], na.rm=TRUE))#1sep=124 days after apr30
       firstest.1oct.all<-c(firstest.1oct.all,min(yrdat$daysaftapr30[yrdat$daysaftapr30>=154 & yrdat[,colnum]==1], na.rm=TRUE))#1aug=154 days after apr30
       
-      lastest.31dec.all<-c(lastest.31dec.all,max(yrdat$daysaftapr30[yrdat$daysaftapr30<=245 & yrdat[,colnum]==1], na.rm=TRUE))#31dec = 245 days after apr30
+      #lastest.31dec.all<-c(lastest.31dec.all,max(yrdat$daysaftapr30[yrdat$daysaftapr30<=245 & yrdat[,colnum]==1], na.rm=TRUE))#31dec = 245 days after apr30
       lastest.31jan.all<-c(lastest.31jan.all,max(yrdat$daysaftapr30[yrdat$daysaftapr30<=276 & yrdat[,colnum]==1], na.rm=TRUE))#31jan = 276 days after apr30
-      lastest.28feb.all<-c(lastest.28feb.all,max(yrdat$daysaftapr30[yrdat$daysaftapr30<=304 & yrdat[,colnum]==1], na.rm=TRUE))#28feb=304 days after apr30
-      lastest.31mar.all<-c(lastest.31mar.all,max(yrdat$daysaftapr30[yrdat$daysaftapr30<=336 & yrdat[,colnum]==1], na.rm=TRUE))#31mar= 336 days after apr30
-      lastest.all<-c(lastest.all,max(yrdat$daysaftapr30[yrdat[,colnum]==1], na.rm=TRUE))#31mar= 336 days after apr30
+      #lastest.28feb.all<-c(lastest.28feb.all,max(yrdat$daysaftapr30[yrdat$daysaftapr30<=304 & yrdat[,colnum]==1], na.rm=TRUE))#28feb=304 days after apr30
+      lastest.31oct.all<-c(lastest.31oct.all,max(yrdat$daysaftapr30[yrdat$daysaftapr30<=184 & yrdat[,colnum]==1], na.rm=TRUE))#31oct= 184 days after apr30
+      #lastest.all<-c(lastest.all,max(yrdat$daysaftapr30[yrdat[,colnum]==1], na.rm=TRUE))#31mar= 336 days after apr30
       
       #}
     }
@@ -592,6 +721,14 @@ t<-t.test(as.numeric(pod.df$lastest[pod.df$region=="ps"])~as.factor(pod.df$perio
 mtext(paste("Change=",-1*round(t$estimate[1]-t$estimate[2], digits=1),"(",-1*round(t$conf.int[1],digits=1),",",-1*round(t$conf.int[2],digits=1),")", sep=""),side=1,line=-3, adj=1)
 
 
+
+
+
+
+
+
+
+
 ##Number of consecutive days
 doy<- strptime(paste(orcasum.days$day,orcasum.days$year, sep="-"),format = "%j")
 orcasum.days$date<-paste(orcasum.days$year,substr(doy,6,10), sep="-")
@@ -659,3 +796,94 @@ pods<-c("J","K","L","SRs")
   }
 }
 
+
+
+###To do:
+#Make clockplots of data: #11R (http://www.r-graph-gallery.com/49-clock-plot/)
+# Data
+x <- c(15, 9, 75, 90, 1, 1, 11, 5, 9, 8, 33, 11, 11, 20, 14, 13, 10, 28, 33, 21, 24, 25, 11, 33)
+
+# Clock plot function
+clock.plot <- function (x, col = rainbow(n), ...) {
+  if( min(x)<0 ) x <- x - min(x)
+  if( max(x)>1 ) x <- x/max(x)
+  n <- length(x)
+  if(is.null(names(x))) names(x) <- 0:(n-1)
+  m <- 1.05
+  plot(0, type = 'n', xlim = c(-m,m), ylim = c(-m,m), axes = F, xlab = '', ylab = '', ...)
+  a <- pi/2 - 2*pi/200*0:200
+  polygon( cos(a), sin(a) )
+  v <- .02
+  a <- pi/2 - 2*pi/n*0:n
+  segments( (1+v)*cos(a), (1+v)*sin(a), (1-v)*cos(a), (1-v)*sin(a) )
+  segments( cos(a), sin(a),0, 0, col = 'light grey', lty = 3) 
+  ca <- -2*pi/n*(0:50)/50
+  for (i in 1:n) {
+    a <- pi/2 - 2*pi/n*(i-1)
+    b <- pi/2 - 2*pi/n*i
+    polygon( c(0, x[i]*cos(a+ca), 0), c(0, x[i]*sin(a+ca), 0), col=col[i] )
+    v <- .1
+    text((1+v)*cos(a), (1+v)*sin(a), names(x)[i])
+  }
+}
+
+# Use the function on the created data
+clock.plot(x, main = "Number of visitors to a web site for each hour of the day")
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+# Data
+x <- c(15, 9, 75, 90, 1, 1, 11, 5, 9, 8, 33, 11, 11, 20, 14, 13, 10, 28, 33, 21, 24, 25, 11, 33)
+
+# Clock plot function
+clock.plot <- function (x, col = rainbow(n), ...) {
+  if( min(x)<0 ) x <- x - min(x)
+  if( max(x)>1 ) x <- x/max(x)
+  n <- length(x)
+  if(is.null(names(x))) names(x) <- 0:(n-1)
+  m <- 1.05
+  plot(0, type = 'n', xlim = c(-m,m), ylim = c(-m,m), axes = F, xlab = '', ylab = '', ...)
+  a <- pi/2 - 2*pi/200*0:200
+  polygon( cos(a), sin(a) )
+  v <- .02
+  a <- pi/2 - 2*pi/n*0:n
+  segments( (1+v)*cos(a), (1+v)*sin(a), (1-v)*cos(a), (1-v)*sin(a) )
+  segments( cos(a), sin(a),0, 0, col = 'light grey', lty = 3) 
+  ca <- -2*pi/n*(0:50)/50
+  for (i in 1:n) {
+    a <- pi/2 - 2*pi/n*(i-1)
+    b <- pi/2 - 2*pi/n*i
+    polygon( c(0, x[i]*cos(a+ca), 0), c(0, x[i]*sin(a+ca), 0), col=col[i] )
+    v <- .1
+    text((1+v)*cos(a), (1+v)*sin(a), names(x)[i])
+  }
+}
+
+# Use the function on the created data
+clock.plot(x, main = "Number of visitors to a web site for each hour of the day")
