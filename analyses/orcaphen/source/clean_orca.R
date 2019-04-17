@@ -68,11 +68,9 @@ d$FishArea[d$FishArea=="28"]<-"28C"
 d$FishArea[d$FishArea=="29"]<-"29C"
 d$FishArea[d$FishArea=="121A"]<-"121C"
 
-#6. #Remove non-orca data
-d<-d[d$LikelyPod!="HB?"|d$LikelyPod!="Not Orcas",]
+#6. #Remove non-orca data- removed this because more absence data might be good!
+#d<-d[d$LikelyPod!="HB?"|d$LikelyPod!="Not Orcas",]
 
-#7. Create a new cleaned datafile
-write.csv(d,"analyses/output/AppendixII_cleaned.csv")
 
 #select out the sites for which we have a lat/long but no fishing area
 
@@ -83,8 +81,19 @@ dlat<-dlat[as.numeric(dlat$ActLat)>45,]
 dlat<-dlat[order(as.numeric(dlat$ActLat)),]
 write.csv(dlat,"analyses/output/needfisharea.csv", row.names=FALSE)
 
-#4. Clean Year column
+#6. Clean Year column
 d$Year[d$Year==0]<-2001
 
-#5. Create a new cleaned datafile
+#7. #Create a new column that combines Pod and Likely Pod columna and removes spaces
+d$Pod.cl<-d$Pod
+
+#Always use Likely Pod column, when it is not blank:
+d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" "]<-d$LikelyPod[d$LikelyPod!="" & d$LikelyPod!=" "]
+#perhaps also stick with Pod when LikelyPod has a "?" grep("?",d$LikelyPod,)
+#8. Add week and day of year (day)
+d$day<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"),format= "%j")
+d$week<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"), format = "%V")#new weeks start on mondays
+d<-d[-which(is.na(d$day)),]
+
+#9. Create a new cleaned datafile
 write.csv(d,"analyses/output/AppendixII_cleaned.csv")
