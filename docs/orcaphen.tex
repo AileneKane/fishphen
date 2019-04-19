@@ -1,4 +1,7 @@
+% Straight up stealing preamble from Eli Holmes 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%START PREAMBLE THAT IS THE SAME FOR ALL EXAMPLES
 \documentclass{article}
+
 %Required: You must have these
 \usepackage{Sweave}
 \usepackage{graphicx}
@@ -19,6 +22,8 @@
 \setlength{\captionmargin}{30pt}
 \setlength{\abovecaptionskip}{10pt}
 \setlength{\belowcaptionskip}{10pt}
+% manual for caption  http://www.dd.chalmers.se/latex/Docs/PDF/caption.pdf
+
 %Optional: I like to muck with my margins and spacing in ways that LaTeX frowns on
 %Here's how to do that
  \topmargin -1.5cm        
@@ -26,15 +31,33 @@
  \evensidemargin -0.04cm  % same as oddsidemargin but for left-hand pages
  \textwidth 16.59cm
  \textheight 21.94cm 
+ %\pagestyle{empty}       % Uncomment if don't want page numbers
+ \parskip 7.2pt           % sets spacing between paragraphs
+ %\renewcommand{\baselinestretch}{1.5} 	% Uncomment for 1.5 spacing between lines
+\parindent 0pt% sets leading space for paragraphs
+\usepackage{setspace}
+%\doublespacing
 
+%Optional: I like fancy headers
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+%\fancyhead[LO]{How do climate change experiments actually change climate}
+%\fancyhead[RO]{2016}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%END PREAMBLE THAT IS THE SAME FOR ALL EXAMPLES
+
+%Start of the document
 \begin{document}
+
+%\SweaveOpts{concordance=TRUE}
+
 \bibliographystyle{/Users/ailene.ettinger/Documents/GitHub/fishphen/refs/bibstyles/amnat.bst}% i moved a style file into the ospree git repo. feel free to add whatever style you like and update, lizzie! I don't have besjournals
-
-\input{orcaphen-concordance}
-
 \title{Shifts in Orca Phenology and their Prey in the Salish Sea}
 \date{\today}
 \maketitle
+\author{A.K. Ettinger, C. Harvey, J. Samhouri, B. Hanson, C. Emmons, J. Olson, E. Ward}
+\maketitle  %put the fancy title on
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section* {Background}
 \begin{enumerate}
@@ -59,14 +82,18 @@ Here, we ask:
 \begin{enumerate}
 \item Data
 \begin{enumerate}
-\item To quantify orca seasonal phenology over time, we used the OrcaMaster Database for Whale Sighting Data (Whale Museum), which includes data from five main sources, including public sightings networks (e.g., OrcaNetwork), commercial whale watch data, and scientific surveys (e.g., SPOT data from satellite tracking units) \citep{olson2018}. We used data from 1976-2017, because prior to 1976, there was no dedicated effort to track SRKW presence in the region \citep{olson2018}. We used these sighting data to identify first observation day-of-year (DOY, the first date on which one or more pods of SRKWs were observed) and last observation DOY (the first date on which one or more pods of SRKWs were observed) for each sub-region (Upper Salish Sea and Puget Sound) and season (Winter-- October through March; and Summer-- May through August). We used these seasonal definitions because they are most aligned with mean SRKW seasonal activity patterns over time (Fig \ref{fig:phenplot}).
+\item To quantify orca seasonal phenology over time, we used the OrcaMaster Database for Whale Sighting Data (Whale Museum), comprised of data from five main sources, including public sightings networks (e.g., OrcaNetwork), commercial whale watch data, and scientific surveys (e.g., SPOT data from satellite tracking units) \citep{olson2018}. We used data from 1978-2017, because prior to 1976, there was no dedicated effort to track SRKW presence in the region \citep{olson2018}. We used these sighting data to identify first observation day-of-year (DOY, the first date on which one or more pods of SRKWs were observed) and last observation DOY (the first date on which one or more pods of SRKWs were observed) for each sub-region (Upper Salish Sea and Puget Sound) and season (Winter-- October through January; and Summer-- May through September). We used these seasonal definitions because they are most aligned with mean SRKW seasonal activity patterns over time (Fig \ref{fig:phenplot},Fig \ref{fig:phenplot2}).
+
+
 \item WDFW adult salmon return data for coho, chum, chinook in XX streams (Alternatively, may use RMIS data for coho, chum, chinook.)
 \end{enumerate}
 \item Analysis
 \begin{enumerate}
-\item To identify trends over time in phenology for all SRKWs in the Upper Salish Sea and in Puget Sound, we used linear regression on first  and last observation dates from 1976 through 2017. To estimate effects of increased effort (i.e., increased numbers of sightings over time) on trends in phenology, we simulated a dataset of whale presence during a season equivalent to those in our dataset (1 October through 1 March, XX days). We used probability XX for whale presence (the mean in our dataset) and kept it constant over 40 simulated years. We then created an observation dataset, in which effort (the number of observations), differed, but the whale presence dataset was unchanged. During the low effort time period (years 1-20), the number of observations had a mean of XX and a variance of XX (matching the OrcaMaster database from 1976-1996).  During the high effort time period (years 21-40 in our simulated dataset, the number of annual observations had a mean of XX and a variance of XX (comparable to those in the OrcaMAster database from 1997-2017). We then calculated first- and last- observations dates for each simulated year. We ran these simulatiosn 100 times and calculated the difference between the low effort and high effort time periods (see Supplemental materials, figure).
+\item To identify trends over time in phenology for all SRKWs in the Upper Salish Sea and in Puget Sound, we used linear regression on first  and last observation dates from 1978 through 2017. We also compared first and last observation dates across time periods (1978-1997 versus 1998-2018), using boxplots and t-tests (Fig \ref{fig:boxplot1} and \ref{fig:boxplot2}), because relationships over time did not look linear and linear regression provided poor fit (Fig \ref{fig:reg}). 
+\item To estimate effects of increased effort (i.e., increased numbers of sightings over time) on trends in phenology, we simulated datasets of whale presence during two seasons equivalent to those in our dataset (summer, which was 1 May through 31 Sept, or 153 days, and fall, which was 1 October through 1 Feb, or 123 days). We used whale presence probabilities of 0.85 for the Upper Salish Sea and 0.6 for Puget Sound (the means in our dataset for each region) and kept it constant over 40 simulated years. We then created an observation dataset, in which effort (the number of observations), varied. During the low effort time period (years 1-20), the number of observations had a mean of 15 per year for Puget Sound and 104 per year in the Upper Salish Sea (matching the means for these reagions from 1978-1997 in the OrcaMaster database).  During the high effort time period (years 21-40 in our simulated dataset), the number of annual observations had a mean of 39 for Puget Sound andand 133 for the Upper Salish Sea (matching those in the OrcaMAster database from 1998-2017). We then calculated first- and last- observations dates for each simulated year. We ran these simulation 100 times and calculated the difference between the low effort and high effort time periods. We compared these to the mean differences first- and last-observation daates across time periods in the OrcaMaster database, for each region, to understand whether observed changes may be due to changes in effort over time, rather than changes in orca activity (Fig \ref{fig:sims}).
 
-\item To identify trends over time in phenology for each pod separately (J,K,L) in the Upper Salish Sea and in Puget Sound, we used linear regression on first- and last- likely detection dates estimated from pod-specific occupancy models. These modeslincorpate effort to estimate detectability separately from presence/absence.
+\item To identify trends over time in phenology for each pod separately (J,K,L) in the Upper Salish Sea and in Puget Sound, we used linear regression on first-, last-, and peak detection dates estimated from pod-specific occupancy models. Occupancy models (MacKenzie et al. 2002) can estimate jointly species presence or abundance and detection probability (the probability to detect at least one individual present at site). We parameterized the model with annual occupancy probabilities (i.e., we did not fit a dynamic model, but a multiseason model (Royle and Kery 2007). The distribution submodel distinguishes true presence or absence of pod,p, (z, a latent state) in marine area i in year t, ...add equation here. We assumed zi,t to be a Bernoulli random variable...
+We modelled detection probability as a function of year and date, with detectability modelled as a semi-parametric, smooth function of date using flexible thin-plate spline regression modelling \citep{strebel2014}. 
 
 \item We used linear regression to identify trends over time in first, median, and last dates of salmon adult migration timing.
 \end{enumerate}
@@ -95,11 +122,42 @@ Here, we ask:
  \label{fig:phenplot}
  \end{figure}
  
+ \begin{figure}[p]
+\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/figures/basicplots/propwhdaysperweek_std.pdf} 
+\caption{\textbf{Southern resident killer whale observations, in terms of proportion of days per week that whales were observed, in the Outer Coast, Puget Sound and Upper Salish Sea, varies by season}. Proportions are the mean across all years (1978-2017) and have been standardized by subtracting the mean and dividing by the standard deviation. Thus, the "0" line marks the mean proportion for that region. Weeks range from 1 (i.e., the first week in January) to 52 (i.e., the last week in December).}
+ \label{fig:phenplot}
+ \end{figure}
+
 \begin{figure}[p]
 \includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/figures/basicplots/propwhdaysperweek.pdf} 
 \caption{\textbf{Southern resident killer whale activity varies by season and region}. Lines show proportion of days per week (1 Jan= week 1) in which whales were observed in the region.}
  \label{fig:phenplot2}
  \end{figure} 
+\begin{figure}[p]
+\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/orcaphen/figures/boxplots_1978_2017_ps.pdf} 
+\caption{\textbf{Change in in first and last observation dates of SRKW in Puget Sound.} }
+ \label{fig:boxplot1}
+ \end{figure}
+ \begin{figure}[p]
+\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/orcaphen/figures/boxplots_1978_2017_uss.pdf} 
+\caption{\textbf{Change in in first and last observation dates of SRKW in the Upper Salish Sea.} }
+ \label{fig:boxplot2}
+ \end{figure}
+ 
+\begin{figure}[p]
+\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/orcaphen/figures/simvdata_1978_2017.pdf} 
+\caption{\textbf{Change in first and last observation dates in Puget Sound and the Upper Salish Sea.} Observed changes (black dots) are compared with expected changes due to shifts in effort alone (gray lines show 90 quantiles of from a simulated dataset resulting from shifts in effort, with the probability of SRKW presence was kept constant across time).}
+ \label{fig:sim}
+ \end{figure}
+ 
+
+  \begin{figure}[p]
+\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/orcaphen/figures/linreg_1978_2017.pdf} 
+\caption{\textbf{Time series and linear regression of first and last observation dates of SRKW.} }
+ \label{fig:reg}
+ \end{figure}
+ 
+
  
 \begin{figure}[p]
 \includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/figures/J/orcaphen_1976_2017_PS_winter_Jfirst.pdf} 

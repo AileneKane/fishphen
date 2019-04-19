@@ -138,7 +138,7 @@ orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0")]<-365
 #check that daysafterapril 30 is working
 presapr30<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$orcayear),sum)
 
-#Ok, now look at proportion of whale days per week by season and region and by decade
+#Add decade
 
 orcasum.days$week<-strftime(strptime(orcasum.days$date,format= "%Y-%m-%d"), format = "%V")#new weeks start on mondays
 orcasum.days$decade<-NA
@@ -148,4 +148,7 @@ orcasum.days$decade[orcasum.days$year<2007 & orcasum.days$year>1996]<-"1997-2006
 orcasum.days$decade[orcasum.days$year<2018 & orcasum.days$year>2006]<-"2007-2017"
 orcasum.days<-orcasum.days[!is.na(orcasum.days$decade),]
 
-
+#add period
+orcasum.days$period<-NA
+orcasum.days$period[orcasum.days$year<1997 & orcasum.days$year>1976]<-"1977-1996"
+orcasum.days$period[orcasum.days$year<2017 & orcasum.days$year>1996]<-"1997-2016"

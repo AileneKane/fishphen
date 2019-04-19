@@ -23,19 +23,10 @@ library(dplyr)
 library(mgcv)
 library(scales)
 library(RColorBrewer)
-# 1. Get the data
-d <- read.csv("data/AppendixII.csv")
+# 1. Get the observation data together and plot it, do linear models and t-tests with the data
+source("analyses/orcaphen/orca_phen_linmods.R")
 
-# 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
-source("analyses/orcaphen/source/clean_orca.R")
-
-# 3. Limit space and time to 1975 or later and Salish Sea, Puget Sound, Washington Outer Coast 
-source("analyses/orcaphen/source/orca_limitspacetime.R")
-
-#4. Get data in terms of number of observations per day and "whale days": days on which whales were seen (presence/absence for each day instead of )
-source("analyses/orcaphen/source/orca_get_whaledays.R")
-
-#5. Summarize changes in effort over time
+#2. Summarize changes in effort over time
 pres<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$year),sum)
 #summary of the number of days whales with rows of data (observed or not) in each region, by year:
 totobs<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$year),length)#this is change in effort
@@ -62,9 +53,12 @@ prob.seas<-pres.seas/totobs.seas
 #summary of effort (the number of days whales with rows of data (observed or not)) in each region, by decade:
 totobs.dec<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region,orcasum.days$decade,orcasum.days$season),length)#this is change in effort
 
-
-uss=FALSE#TRUE for uss (upper salish sea), peak prob season is 1 May through 30 sept, and prob obs prob.all[3] (~.76)
-         #FALSE  for ps (puget sound), season is 1 Oct through 31 Jan, and prob obs prob.all[2] (~.52)
+#summary of effort (the number of days whales with rows of data (observed or not)) in each region, by period (first two decades versus last two decades):
+totobs.pd<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region,orcasum.days$period,orcasum.days$season),length)#this is change in effort
+reg=c(TRUE,FALSE)
+for (r in 1:length(reg)){
+uss=reg[r]#TRUE for uss (upper salish sea), peak prob season is 1 May through 30 sept, and prob obs prob.all[3] (~.76)
+       #FALSE  for ps (puget sound), season is 1 Oct through 31 Jan, and prob obs prob.all[2] (~.52)
 #biasearly=FALSE#TRUE if you want observations to be biased early in the season
               #FALSE if you want observations to be unbiased
 wholeyear=FALSE#look at each region seasonally (not the whole year)
@@ -88,16 +82,16 @@ summerdays<-seq(1,153, by=1)
 falldays<-seq(154,276, by=1)
 
 #Look at effect of increasing effort on estimate of first observation and estimate of last observation
-nreps<-10#
+nreps<-20#e.g. number of years
 
 if(uss==TRUE & wholeyear==FALSE){
-  lowobs<-89#mean whales days during the summer first 10 years: uss=89.1
-  highobs<-123#mean whales days during the summer last 10 years: uss=122.8
+  lowobs<-104#mean whales days/year during the summer first 20 years: uss=104.4
+  highobs<-133#mean whales days during the summer last 10 years: uss=132.9
 }
 
 if(uss==FALSE & wholeyear==FALSE){
-  lowobs<-16#mean whales days during the fall first 10 years: ps=16.2
-  highobs<-40#mean whales days last 10 years: ps=40.18
+  lowobs<-15#mean whales days during the fall first 10 years: ps=15.3
+  highobs<-39#mean whales days last 10 years: ps=39.25
 }
 
 effort<-c(rep(lowobs,nreps),rep(highobs,nreps))
@@ -145,9 +139,9 @@ for (i in 1:length(effort)){
   df$meantrue[i]<-mean(whalepres$days[whalepres$whaleobs==1])
   #look at difference between first and last doy in 2 time periods
   }
- print(df)
+ #print(df)
  
- quartz()
+ #quartz()
  par(mfrow=c(1,2))
  #First obs)
  boxplot(df$firstest~as.factor(df$numobs), xlab="Number of days observed", ylab="Estimate of first obs (doy)", main=paste("First obs"))
@@ -171,13 +165,57 @@ for (i in 1:length(effort)){
 
 #save simulation estimates
 if(uss==TRUE & wholeyear==FALSE){
-  uss.sim<-sum.df
-  write.csv(sum.df,"analyses/output/orcasimeffort_usssum.csv", row.names = FALSE)
+  write.csv(sum.df,"orcasimeffort_usssum.csv")
+  usssum.df<-sum.df
 }
 if(uss==FALSE & wholeyear==FALSE){
-  ps.sim<-sum.df
-  write.csv(sum.df,"analyses/output/orcasimeffort_psfall.csv", row.names = FALSE)
+  write.csv(sum.df,"orcasimeffort_psfall.csv")
+  pssum.df<-sum.df
+  }
 }
-#to avoid running the above code, read in the CSVs
-#  ps.sim<-read.csv("orcasimeffort_psfall.csv, header=TRUE)
-#  uss.sim<-read.csv("orcasimeffort_usssum.csv, header=TRUE)
+
+
+      
+      x<-c(1,2,4,5)
+      quartz()
+      plot(x,as.numeric(c(change.df$first.dif[1],change.df$last.dif[1],change.df$first.dif[2],change.df$last.dif[2])),pch=16,col="black",ylim=c(-20,20), xlim=c(0,6), typ="p", bty="l", cex=1.5, xlab="", xaxt="n", ylab="Change in day of year")
+      arrows(x,c(quantile(pssum.df$firstdif,.9),quantile(pssum.df$lastdif,.9),quantile(usssum.df$firstdif,.9),quantile(usssum.df$lastdif,.9)),
+              x,c(quantile(pssum.df$firstdif,.1),quantile(pssum.df$lastdif,.1),quantile(usssum.df$firstdif,.1),quantile(usssum.df$lastdif,.1)),length=0, col="gray", lwd=10)
+           
+
+      
+      points(x,as.numeric(c(change.df$first.dif[1],change.df$last.dif[1],change.df$first.dif[2],change.df$last.dif[2])),pch=16,col="black", cex=1.5)
+      
+      abline(h=0)
+      
+      axis(side=1, at=c(1,2,4,5), labels=c("first obs","last obs","first obs","last obs"))   
+      
+      axis(side=1, at=c(1.5,4.5), labels=c("Puget Sound","Upper Salish Sea"),line=1, lty=0)
+
+      
+      
+      ##Alterntsive version
+      
+      #plot simulations and data together
+      x<-c(1,2)
+      y<-c(mean(pssum.df$firstdif),mean(pssum.df$lastdif))
+      quartz()
+      plot(x,y,pch=16,col="gray",ylim=c(-20,20), xlim=c(0,5), typ="p", bty="l", cex=1.5, xlab="", xaxt="n", ylab="Change in day of year")
+      ysd<-c(sd(pssum.df$firstdif),mean(pssum.df$lastdif))
+      
+      arrows(x,y+ysd,x,y-ysd, length=0, col="gray", lwd=2)
+      y<-c(mean(usssum.df$firstdif),mean(usssum.df$lastdif))
+      points(x+2,y,pch=16,col="gray", cex=1.5)
+      ysd<-c(sd(usssum.df$firstdif),mean(usssum.df$lastdif))
+      arrows(x+2,y+ysd,x+2,y-ysd, length=0, col="gray", lwd=2)
+      x.dat<-c(change.df$first.dif[1],change.df$last.dif[1]) 
+      points(x,as.numeric(c(change.df$first.dif[1],change.df$last.dif[1])),pch=16,col="black", cex=1.5) 
+      points(x+2,as.numeric(c(change.df$first.dif[2],change.df$last.dif[2])),pch=16,col="black", cex=1.5) 
+      abline(h=0)
+      
+      axis(side=1, at=c(1,2,3,4), labels=c("first obs","last obs","first obs","last obs"))   
+      
+      axis(side=1, at=c(1.5,3.5), labels=c("Puget Sound","Upper Salish Sea"),line=1, lty=0)
+      legend("topleft",legend=c("Expected change, given change in effort", "Observed change"),col=c("gray","black"),pch=16)
+      
+      
