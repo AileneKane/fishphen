@@ -171,8 +171,13 @@ for (i in 1:length(effort)){
 
 #save simulation estimates
 if(uss==TRUE & wholeyear==FALSE){
-  write.csv(sum.df,"orcasimeffort_usssum.csv")
+  uss.sim<-sum.df
+  write.csv(sum.df,"analyses/output/orcasimeffort_usssum.csv", row.names = FALSE)
 }
 if(uss==FALSE & wholeyear==FALSE){
-  write.csv(sum.df,"orcasimeffort_psfall.csv")
+  ps.sim<-sum.df
+  write.csv(sum.df,"analyses/output/orcasimeffort_psfall.csv", row.names = FALSE)
 }
+#to avoid running the above code, read in the CSVs
+#  ps.sim<-read.csv("orcasimeffort_psfall.csv, header=TRUE)
+#  uss.sim<-read.csv("orcasimeffort_usssum.csv, header=TRUE)
