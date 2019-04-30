@@ -4,21 +4,21 @@
 
 ## This file builds fake data for testing Stan models for wa rec data ##
 
-#et.seed(73)
+##set.seed(73)
 
-
+## CODE IS NOT DONE!
 ##################################################################
 ## Start with a simple linear model with no random effects and only doy as a predictor:
-# fishabund ~ doy
-x##################################################################
+## fishabund ~ doy|fa + 1|year
+## Plan is to fit separate models for each species, include year as a random effect and fishing area as a random effect
 
-# Note to self (Lizzie): could improve code, so easier to see distribution for a and sigma_y
-# I did this below #
+##################################################################
 
-# nlab = 10 # number of labgroups
-nsp = 20 # number of species
 
-ntot = 50 # numbers of obs per species. 
+nfa = 10 # number of fishing areas
+nyr = 20 # number of years
+
+ntot = 50 # numbers of obs per year per fishing area  
 
 #  with species  (note to self: This is not the best, better to draw from a distribution)
 baseinter <- 60 # baseline intercept (days to BB) across all species
