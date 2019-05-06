@@ -15,7 +15,7 @@ setwd("~/Documents/GitHub/fishphen")
 # Load libraries
 
 # 1. Get the data
-d <- read.csv("data/TrapEstimate&SpawnCHCKCO.csv")
+d <- read.csv("data/TrapEstimateSpawnCHCKCO.csv")
 head(d)
 #Create columns for month, year, doy
 d$doy<-strftime(strptime(d$Event_Date,format= "%m/%d/%y"),format= "%j")
@@ -23,40 +23,57 @@ d$year<-strftime(strptime(d$Event_Date,format= "%m/%d/%y"),format= "%Y")
 d$month<-strftime(strptime(d$Event_Date,format= "%m/%d/%y"),format= "%m")
 
 unique(d$year)#goes back to 1995
-unique(d$ADULT_EVENT_TYPE_Name)#Trap estimates and PArent Spawn EVents..not sure what the difference is.. ask DFW which I should use...
-table(d$year,d$ADULT_EVENT_TYPE_Name)
+unique(d$ADULT_EVENT_TYPE_Name)#Trap estimates and Parent Spawn EVents..not sure what the difference is.. ask DFW which I should use...
+#just use trap estimates
+d<-d[d$ADULT_EVENT_TYPE_Name=="Trap Estimate",]
 unique(d$MarkCode)#should find out what these mean...
-tapply(d$Adults_Cnt, list(d$year,d$Facility_Short_Name),sum, na.rm=TRUE)
+#which column should i use- adults_Cnt, Females_Cnt, Males_Cnt
+#length(which(is.na(d$Adults_Cnt)))
+#length(which(is.na(d$Males_Cnt)))
+#length(which(is.na(d$Females_Cnt)))
+#definitely ADults_Cnt- ahs way more data!
+#When Adults_Cnt, does not have data, does Females_Cnt have data?
+#length(which(is.na(d$Females_Cnt[which(is.na(d$Adults_Cnt))])))
+#unique(d$Females_Cnt[which(is.na(d$Adults_Cnt))])
+#nope- all NAs!
+
 #The following hatcheries seem to have large amounts of continuous data and seem to be close to puget sound:
-dps<-d[d$Facility_Short_Name=="HOODSPORT HATCHERY"|d$Facility_Short_Name=="ISSAQUAH HATCHERY"|d$Facility_Short_Name=="MINTER CR HATCHERY"|
-         d$Facility_Short_Name=="SOOS CREEK HATCHERY"|d$Facility_Short_Name=="TUMWATER FALLS HATCHERY"|d$Facility_Short_Name=="VOIGHTS CR HATCHERY"|
-         d$Facility_Short_Name=="WALLACE R HATCHERY",]
-dim(dps)
+#dps<-d[d$Facility_Short_Name=="HOODSPORT HATCHERY"|d$Facility_Short_Name=="ISSAQUAH HATCHERY"|d$Facility_Short_Name=="MINTER CR HATCHERY"|
+#         d$Facility_Short_Name=="SOOS CREEK HATCHERY"|d$Facility_Short_Name=="TUMWATER FALLS HATCHERY"|d$Facility_Short_Name=="VOIGHTS CR HATCHERY"|
+#         d$Facility_Short_Name=="WALLACE R HATCHERY",]
+#dim(dps)
+dps<-d
 #other hatcheries that seem to have continuous data: BINGHAM CR HATCHERY#COWLITZ SALMON HATCHERY#DUNGENESS HATCHERY#EASTBANK HATCHERY#ELOCHOMAN HATCHERY#ELWHA HATCHERY#FALLERT CR HATCHERY #FORKS CREEK HATCHERY#GARRISON HATCHERY 
 #GRAYS RIVER HATCHERY #HUMPTULIPS HATCHERY#HUPP SPRINGS REARING#KALAMA FALLS HATCHERY #KENDALL CR HATCHERY #KLICKITAT HATCHERY#LEWIS RIVER HATCHERY#K ABERDEEN HATCHERY #LYONS FERRY HATCHERY #MARBLEMOUNT HATCHERY#MCKERNAN HATCHERY#METHOW HATCHERY 
 #NASELLE HATCHERY #NEMAH HATCHERY#NORTH TOUTLE HATCHERY#PRIEST RAPIDS HATCHERY#RINGOLD SPRINGS HATCHERY #SAMISH HATCHERY#SOLDUC HATCHERY #WASHOUGAL HATCHERY#WELLS HATCHERY
 #Plot the data and look at it and pull out first and last observation date
 dps$doy<-as.integer(dps$doy)
 allyears<-unique(dps$year)
-sites<-unique(dps$Facility_Short_Name)#7 hatcheries
-sp<-site<-firstcoefs<-firstcoefs.ci<-lastcoefs<-lastcoefs.ci<-midcoefs<-midcoefs.ci<-peakcoefs<-peakcoefs.ci<-c()
+allyears<-sort(allyears[allyears<2019])
+#7 hatcheries
+sp<-site<- firstcoefsall<-lastcoefsall<-midcoefsall<-peakcoefsall<-c()
 species<-unique(dps$SPECIES_Code)
 for(s in 1:length(species)){
   spdat<-dps[dps$SPECIES_Code==species[s],]
+  sites<-unique(spdat$Facility_Short_Name)
 for(i in 1:length(sites)){
   dat<-spdat[spdat$Facility_Short_Name==sites[i],]
-  quartz(height=10, width=20)
-  par(mfrow=c(4,6), oma=c(1,1,3,1))
-  year<-c()
+  #quartz(height=10, width=20)
+  #par(mfrow=c(4,6), oma=c(1,1,3,1))
+  #year<-sort(unique(dat$year))
+  
   firstobsdate<-c()
   lastobsdate<-c()
   midobsdate<-c()
   peakobsdate<-c()
   for(y in allyears){
     datyr<-dat[dat$year==y,]
-  if(dim(datyr)[1]==0){next}
-   count<-datyr$Females_Cnt
-   if(length(unique(datyr$Females_Cnt))==1) {if(is.na(unique(datyr$Females_Cnt))){count<-datyr$Adults_Cnt}}
+    if (dim(datyr)[1]<=1){
+      first<-last<-mid<-peak<-NA
+      total<-NA
+    }
+    if (dim(datyr)[1]>0){
+    count<-datyr$Adults_Cnt
     #plot(datyr$doy,count, pch=21, bg="gray", main=paste(y))
     #if(y==min(allyears)){mtext(paste(sites[i], species[s]),side=3, line=3)}
     datdoy<-datyr
@@ -70,59 +87,114 @@ for(i in 1:length(sites)){
     mid<-datdoy$doy[min(which(cumsum(count)>(total/2)))]#date at which half of fish have arrived
     peak<-min(datdoy$doy[which(count==max(count, na.rm=TRUE))])#date of peak number of fish observed, if multiple dates with same number, choose first of these
     #print(peak)
-    year<-c(year,y)
+    }
+    print(y);print(first);print(last);print(total); print(total); print(mid)
+    #year<-c(year,y)
+    
     firstobsdate<-c(firstobsdate,first)
     lastobsdate<-c(lastobsdate,last)
     midobsdate<-c(midobsdate,mid)
     peakobsdate<-c(peakobsdate,peak)
+    firstobsdate[which(firstobsdate=="Inf")]<-NA
+    lastobsdate[which(lastobsdate=="-Inf")]<-NA
   }
-  if(length(year)<5){next}
-  year<-as.numeric(year)
-  #quartz(height=10, width=25)
+  #if(length(which(is.na(firstobsdate)))<5){next}
+  year<-as.numeric(allyears)
   figname<-paste("analyses/figures/wdfw_returns/",sp[s],site[i],".pdf", sep="")
-  pdf(figname,height=10, width=25)
+  #pdf(figname,height=10, width=25)
+  quartz(height=10, width=25)
   par(mfrow=c(1,4), oma=c(1,1,1,1))
   plot(year,firstobsdate,pch=21, bg="gray")
-  firstmod<-lm(firstobsdate~year)
-  if(summary(firstmod)$coef[2,4]<0.10){
-    abline(firstmod)
-     text(max(year)-1,min(firstobsdate),labels=paste("coef=",round(coef(firstmod)[2], digits=2), sep=""), cex=1.2)
-    }
+  
+  if(length(which(!is.na(firstobsdate)))>3){
+    firstmod<-lm(firstobsdate~year)
+      if(summary(firstmod)$coef[2,4]<0.10){
+      abline(firstmod)
+      text(max(year)-1,min(firstobsdate, na.rm=TRUE),labels=paste("coef=",round(coef(firstmod)[2], digits=2), sep=""), cex=1.2)
+      }
+    firstcoefs<-coef(firstmod)
+    firstcoefs.ci<-confint(firstmod)
+  }
+  if(length(which(!is.na(firstobsdate)))<=3){
+    firstcoefs<-c(NA,NA)
+    firstcoefs.ci<-rbind(c(NA,NA),c(NA,NA))
+  }
+  
   plot(year,lastobsdate,pch=21, bg="gray", main=paste(species[s],sites[i]))
-  lastmod<-lm(lastobsdate~year)
-  if(summary(lastmod)$coef[2,4]<0.10){
-    abline(lastmod)
-    text(max(year)-1,min(lastobsdate),labels=paste("coef=",round(coef(lastmod)[2], digits=2), sep=""), cex=1.2)
+    
+  if(length(which(!is.na(lastobsdate)))>3){
+    lastmod<-lm(lastobsdate~year)
+      if(summary(lastmod)$coef[2,4]<0.10){
+      abline(lastmod)
+      text(max(year)-1,min(lastobsdate, na.rm=TRUE),labels=paste("coef=",round(coef(lastmod)[2], digits=2), sep=""), cex=1.2)
+      }
+    lastcoefs<-coef(lastmod)
+    lastcoefs.ci<-confint(lastmod)
+  }
+    if(length(which(!is.na(lastobsdate)))<=3){
+      lastcoefs<-c(NA,NA)
+      lastcoefs.ci<-rbind(c(NA,NA),c(NA,NA))
+    } 
+  
+  #mid observation date
+  if(length(unique(firstobsdate))!=1){
+  plot(year,midobsdate,pch=21, bg="gray")}
+  if(length(unique(firstobsdate))==1){
+    plot(year,rep(1,length(year)),pch=21, bg="gray")}
+  
+ if(length(which(!is.na(midobsdate)))>3){
+    midmod<-lm(midobsdate~year)
+      if(!is.na(summary(midmod)$coef[2,4]) & summary(midmod)$coef[2,4]<0.10){
+      abline(midmod)
+      text(max(year)-1,min(midobsdate, na.rm=TRUE),labels=paste("coef=",round(coef(midmod)[2], digits=2), sep=""), cex=1.2)
     }
-  plot(year,midobsdate,pch=21, bg="gray")
-  midmod<-lm(midobsdate~year)
-  if(summary(midmod)$coef[2,4]<0.10){
-    abline(midmod)
-    text(max(year)-1,min(midobsdate),labels=paste("coef=",round(coef(midmod)[2], digits=2), sep=""), cex=1.2)
-  }
+    midcoefs<-coef(midmod)
+    midcoefs.ci<-confint(midmod)
+  }  
+  if(length(which(!is.na(midobsdate)))<=3){
+    midcoefs<-c(NA,NA)
+    midcoefs.ci<-rbind(c(NA,NA),c(NA,NA))
+  } 
+  
+  #peak observation date
   plot(year,peakobsdate,pch=21, bg="gray")
-  peakmod<-lm(peakobsdate~year)
-  if(summary(peakmod)$coef[2,4]<0.10){
-    abline(peakmod)
-    text(max(year)-1,min(peakobsdate),labels=paste("coef=",round(coef(peakmod)[2], digits=2), sep=""), cex=1.2)
-  }
+  if(length(which(!is.na(peakobsdate)))>3){
+    peakmod<-lm(peakobsdate~year)
+    if(summary(peakmod)$coef[2,4]<0.10){
+      abline(peakmod)
+      text(max(year)-1,min(peakobsdate, na.rm=TRUE),labels=paste("coef=",round(coef(peakmod)[2], digits=2), sep=""), cex=1.2)
+    }
+    peakcoefs<-coef(peakmod)
+    peakcoefs.ci<-confint(peakmod)
+  } 
+  if(length(which(!is.na(peakobsdate)))<=3){
+    peakcoefs<-c(NA,NA)
+    peakcoefs.ci<-rbind(c(NA,NA),c(NA,NA))
+  } 
   dev.off()
   #save coefs to make a table
-  firstcoefs<-c(firstcoefs,coef(firstmod)[2])
-  firstcoefs.ci<-rbind(firstcoefs.ci,confint(firstmod)[2,])
-  lastcoefs<-c(lastcoefs,coef(lastmod)[2])
-  lastcoefs.ci<-rbind(lastcoefs.ci,confint(lastmod)[2,])
-  midcoefs<-c(midcoefs,coef(midmod)[2])
-  midcoefs.ci<-rbind(midcoefs.ci,confint(midmod)[2,])
-  peakcoefs<-c(peakcoefs,coef(peakmod)[2])
-  peakcoefs.ci<-rbind(peakcoefs.ci,confint(peakmod)[2,])
+  firstcoefsall<-rbind(firstcoefsall,c(firstcoefs[1],firstcoefs.ci[1,],firstcoefs[2],firstcoefs.ci[2,]))
+
+  lastcoefsall<-rbind(lastcoefsall,c(lastcoefs[1],lastcoefs.ci[1,],lastcoefs[2],lastcoefs.ci[2,]))
+  
+  midcoefsall<-rbind(midcoefsall,c(midcoefs[1],midcoefs.ci[1,],midcoefs[2],midcoefs.ci[2,]))
+  
+  peakcoefsall<-rbind(peakcoefsall,c(peakcoefs[1],peakcoefs.ci[1,],peakcoefs[2],peakcoefs.ci[2,]))
+  
   sp<-c(sp,species[s])
   site<-c(site, sites[i])
   }
 }
 
 #make a big table
-allmodsums<-cbind(sp,site,firstcoefs,firstcoefs.ci,lastcoefs,lastcoefs.ci,midcoefs,midecoefs.ci,peakcoefs,peakcoefs.ci)
+allmodsums<-cbind(sp,site,round(firstcoefsall, digits=3),round(lastcoefsall, digits=3),round(midcoefsall, digits=3),round(peakcoefsall, digits=3))
+colnames(allmodsums)[3:26]<-c("first.int", "first.intlci","first.intuci","first.yr", "first.yrlci","first.yruci",
+                              "last.int", "last.intlci","last.intuci","last.yr", "last.yrlci","last.yruci",
+                              "mid.int", "mid.intlci","mid.intuci","mid.yr", "mid.yrlci","mid.yruci",
+                              "pk.int", "pk.intlci","pk.intuci","pk.yr", "pk.yrlci","pk.yruci")
+#To do:
+#1) Deal with phenologies that are around the end of the year (includeing both 365 and 5, e.g.)
+#2) Get lat/longs for sites and map which sites are getting earlier, later, have data
 
 #some are getting later and some are getting earlier
 #Voights:  mid getting earlier
