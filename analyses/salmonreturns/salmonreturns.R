@@ -192,9 +192,12 @@ colnames(allmodsums)[3:26]<-c("first.int", "first.intlci","first.intuci","first.
                               "last.int", "last.intlci","last.intuci","last.yr", "last.yrlci","last.yruci",
                               "mid.int", "mid.intlci","mid.intuci","mid.yr", "mid.yrlci","mid.yruci",
                               "pk.int", "pk.intlci","pk.intuci","pk.yr", "pk.yrlci","pk.yruci")
+write.csv(allmodsums, "analyses/output/salmonreturntrends.csv", row.names = FALSE)
 #To do:
 #1) Deal with phenologies that are around the end of the year (includeing both 365 and 5, e.g.)
 #2) Get lat/longs for sites and map which sites are getting earlier, later, have data
+#3) Solve problem with s=2, i=61
+
 
 #some are getting later and some are getting earlier
 #Voights:  mid getting earlier
