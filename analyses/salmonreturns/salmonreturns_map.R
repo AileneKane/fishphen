@@ -1,0 +1,49 @@
+#Make a map of shifts in salmon return timing
+#Started by Ailene on March 12, 2019
+
+#housekeeping
+
+rm(list=ls()) 
+options(stringsAsFactors = FALSE)
+
+library(rworldmap)
+
+# Set working directory: 
+setwd("~/Documents/GitHub/fishphen")
+#or from laptop:
+#setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
+
+shifts<-read.csv( "analyses/output/salmonreturntrends.csv", header=TRUE)
+head(shifts)
+
+#make a map that shows the shifts for each phenophase
+#For now just plot lat longs of points as xs and ys
+#Chinook first:
+figname<-paste("analyses/figures/wdfw_returns/",species[s],".shifts.map.pdf", sep="")
+pdf(figname,height=10, width=25)
+
+#quartz(height=15, width=25)
+par(mfrow=c(3,4), oma=c(1,1,1,1))
+phase<-c("first","last","mid","peak")
+phasecols<-c(7,13,19,25)
+sp<-unique(shifts$sp)
+for(s in 1:length(sp)){
+  spdat<-shifts[shifts$sp==sp[s],]
+  
+  for(p in 1:length(phase)){
+  plot(spdat$lon,spdat$lat,type="p",pch=21, xlab="Longitude",ylab="Latitude", cex=2, main=paste(phase[p],sp[s]))
+  #select out the sites with credible intervals that do not overlap 0 and split them into earlier and later
+  earlier<-which(sign(spdat[,phasecols[p]])<0 & sign(spdat[,phasecols[p]])==sign(spdat[,phasecols[p]+1]))
+  later<-which(sign(spdat[,phasecols[p]])>0 & sign(spdat[,phasecols[p]])==sign(spdat[,phasecols[p]+1]))
+
+  points(spdat$lon[earlier],spdat$lat[earlier],type="p",pch=21,bg="darkred", cex=2)
+  points(spdat$lon[later],spdat$lat[later],type="p",pch=21,bg="lightblue", cex=2)
+  }
+}
+
+library(rworldmap)
+newmap <- getMap(resolution = "coarse")
+plot(newmap, xlim = c(-125, -117), ylim = c(45, 49), asp = 1)
+points(spdat$lon,spdat$lat,type="p",pch=21, cex=2)
+
+ points(airports$lon, airports$lat, col = "red", cex = .6)

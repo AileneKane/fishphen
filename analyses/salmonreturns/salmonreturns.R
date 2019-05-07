@@ -13,10 +13,11 @@ setwd("~/Documents/GitHub/fishphen")
 #setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
 
 # Load libraries
-
+library(dplyr)
 # 1. Get the data
 d <- read.csv("data/TrapEstimateSpawnCHCKCO.csv")
 head(d)
+
 #Create columns for month, year, doy
 d$doy<-strftime(strptime(d$Event_Date,format= "%m/%d/%y"),format= "%j")
 d$year<-strftime(strptime(d$Event_Date,format= "%m/%d/%y"),format= "%Y")
@@ -36,6 +37,14 @@ unique(d$MarkCode)#should find out what these mean...
 #length(which(is.na(d$Females_Cnt[which(is.na(d$Adults_Cnt))])))
 #unique(d$Females_Cnt[which(is.na(d$Adults_Cnt))])
 #nope- all NAs!
+# 2. A bit of cleaning: Brood year seems to be off in a few cases
+d$year[d$BROOD_Yr==1997 & d$year==2000]<-1997#i think the brood year is correct because all other nearby rows have year=1997
+d$BROOD_Yr[d$BROOD_Yr==1993]<-d$year[d$BROOD_Yr==1993]#
+d$BROOD_Yr[d$BROOD_Yr==2003 & d$year==2002]<-2002
+d$BROOD_Yr[d$BROOD_Yr==1997 & d$year==1998 & d$doy>250]<-1998
+
+#in most cases, the Brood year column seems to align with the spawning year in the way i want it to, but occasionally there are mistakes in it
+#especially in 1997-1998. fix this
 
 #The following hatcheries seem to have large amounts of continuous data and seem to be close to puget sound:
 #dps<-d[d$Facility_Short_Name=="HOODSPORT HATCHERY"|d$Facility_Short_Name=="ISSAQUAH HATCHERY"|d$Facility_Short_Name=="MINTER CR HATCHERY"|
@@ -48,7 +57,7 @@ dps<-d
 #NASELLE HATCHERY #NEMAH HATCHERY#NORTH TOUTLE HATCHERY#PRIEST RAPIDS HATCHERY#RINGOLD SPRINGS HATCHERY #SAMISH HATCHERY#SOLDUC HATCHERY #WASHOUGAL HATCHERY#WELLS HATCHERY
 #Plot the data and look at it and pull out first and last observation date
 dps$doy<-as.integer(dps$doy)
-allyears<-unique(dps$year)
+allyears<-unique(dps$BROOD_Yr)
 allyears<-sort(allyears[allyears<2019])
 #7 hatcheries
 sp<-site<- firstcoefsall<-lastcoefsall<-midcoefsall<-peakcoefsall<-c()
@@ -58,16 +67,12 @@ for(s in 1:length(species)){
   sites<-unique(spdat$Facility_Short_Name)
 for(i in 1:length(sites)){
   dat<-spdat[spdat$Facility_Short_Name==sites[i],]
-  #quartz(height=10, width=20)
-  #par(mfrow=c(4,6), oma=c(1,1,3,1))
-  #year<-sort(unique(dat$year))
-  
   firstobsdate<-c()
   lastobsdate<-c()
   midobsdate<-c()
   peakobsdate<-c()
   for(y in allyears){
-    datyr<-dat[dat$year==y,]
+    datyr<-dat[dat$BROOD_Yr==y,]
     if (dim(datyr)[1]<=1){
       first<-last<-mid<-peak<-NA
       total<-NA
@@ -77,10 +82,9 @@ for(i in 1:length(sites)){
     #plot(datyr$doy,count, pch=21, bg="gray", main=paste(y))
     #if(y==min(allyears)){mtext(paste(sites[i], species[s]),side=3, line=3)}
     datdoy<-datyr
-    #datyr<-datyr[which(!is.na(datyr$Females_Cnt)),]
-    #datdoy<-aggregate(datyr$Females_Cnt,by=list(datyr$doy),sum, na.rm=TRUE)
-    #colnames(datdoy)<-c("doy","Females_Cnt")
-    #points(datdoy$doy,count, pch=21, bg="red", cex=1.2,main=paste(y))
+    
+    #for first few months of a new calendar year, want to treat is a higher doy, not a lower one, so add 365
+    datdoy$doy[datdoy$BROOD_Yr==as.numeric(datdoy$year)-1 & as.numeric(datdoy$doy)<80]<-as.numeric(datdoy$doy[datdoy$BROOD_Yr==as.numeric(datdoy$year)-1 & as.numeric(datdoy$doy)<80])+365
     first<-min(datdoy$doy[which(count>0)])
     last<-max(datdoy$doy[which(count>0)])
     total<-sum(count,na.rm=TRUE)
@@ -96,15 +100,16 @@ for(i in 1:length(sites)){
     midobsdate<-c(midobsdate,mid)
     peakobsdate<-c(peakobsdate,peak)
     firstobsdate[which(firstobsdate=="Inf")]<-NA
+    peakobsdate[which(peakobsdate=="Inf")]<-NA
     lastobsdate[which(lastobsdate=="-Inf")]<-NA
   }
   #if(length(which(is.na(firstobsdate)))<5){next}
   year<-as.numeric(allyears)
-  figname<-paste("analyses/figures/wdfw_returns/",sp[s],site[i],".pdf", sep="")
-  #pdf(figname,height=10, width=25)
-  quartz(height=10, width=25)
+  figname<-paste("analyses/figures/wdfw_returns/",species[s],sites[i],".pdf", sep="")
+  pdf(figname,height=10, width=25)
+  #quartz(height=10, width=25)
   par(mfrow=c(1,4), oma=c(1,1,1,1))
-  plot(year,firstobsdate,pch=21, bg="gray")
+  plot(year,firstobsdate,pch=21, bg="gray", main=paste(species[s],sites[i]))
   
   if(length(which(!is.na(firstobsdate)))>3){
     firstmod<-lm(firstobsdate~year)
@@ -120,7 +125,7 @@ for(i in 1:length(sites)){
     firstcoefs.ci<-rbind(c(NA,NA),c(NA,NA))
   }
   
-  plot(year,lastobsdate,pch=21, bg="gray", main=paste(species[s],sites[i]))
+  plot(year,lastobsdate,pch=21, bg="gray")
     
   if(length(which(!is.na(lastobsdate)))>3){
     lastmod<-lm(lastobsdate~year)
@@ -137,9 +142,9 @@ for(i in 1:length(sites)){
     } 
   
   #mid observation date
-  if(length(unique(firstobsdate))!=1){
+  if(length(unique(midobsdate))!=1){
   plot(year,midobsdate,pch=21, bg="gray")}
-  if(length(unique(firstobsdate))==1){
+  if(length(unique(midobsdate))==1){
     plot(year,rep(1,length(year)),pch=21, bg="gray")}
   
  if(length(which(!is.na(midobsdate)))>3){
@@ -187,17 +192,21 @@ for(i in 1:length(sites)){
 }
 
 #make a big table
-allmodsums<-cbind(sp,site,round(firstcoefsall, digits=3),round(lastcoefsall, digits=3),round(midcoefsall, digits=3),round(peakcoefsall, digits=3))
+allmodsums<-as.data.frame(cbind(sp,site,round(firstcoefsall, digits=3),round(lastcoefsall, digits=3),
+                                round(midcoefsall, digits=3),round(peakcoefsall, digits=3)))
 colnames(allmodsums)[3:26]<-c("first.int", "first.intlci","first.intuci","first.yr", "first.yrlci","first.yruci",
                               "last.int", "last.intlci","last.intuci","last.yr", "last.yrlci","last.yruci",
                               "mid.int", "mid.intlci","mid.intuci","mid.yr", "mid.yrlci","mid.yruci",
                               "pk.int", "pk.intlci","pk.intuci","pk.yr", "pk.yrlci","pk.yruci")
-write.csv(allmodsums, "analyses/output/salmonreturntrends.csv", row.names = FALSE)
-#To do:
-#1) Deal with phenologies that are around the end of the year (includeing both 365 and 5, e.g.)
-#2) Get lat/longs for sites and map which sites are getting earlier, later, have data
-#3) Solve problem with s=2, i=61
 
+#Add Lat/Long to the table
+latlon<-read.csv("data/TrapEstimateSpawnCHCKCO_LatLong.csv", header=TRUE)
+colnames(latlon)<-c("site","lat","lon")
+modsums<-left_join(allmodsums,latlon, by="site",copy=TRUE)
+write.csv(modsums, "analyses/output/salmonreturntrends.csv", row.names = FALSE)
+unique(allmodsums$site)
+#write csv of list of sites to ask for lat/longs
+#write.csv(allmodsums$site, "analyses/output/salmonreturnsites.csv", row.names = FALSE)
 
 #some are getting later and some are getting earlier
 #Voights:  mid getting earlier
