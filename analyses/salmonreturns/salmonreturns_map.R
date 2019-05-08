@@ -19,7 +19,7 @@ head(shifts)
 #make a map that shows the shifts for each phenophase
 #For now just plot lat longs of points as xs and ys
 #Chinook first:
-figname<-paste("analyses/figures/wdfw_returns/",species[s],".shifts.map.pdf", sep="")
+figname<-paste("analyses/figures/wdfw_returns/salmon.shifts.map.pdf")
 pdf(figname,height=10, width=25)
 
 #quartz(height=15, width=25)
@@ -40,10 +40,28 @@ for(s in 1:length(sp)){
   points(spdat$lon[later],spdat$lat[later],type="p",pch=21,bg="lightblue", cex=2)
   }
 }
+dev.off()
 
-library(rworldmap)
-newmap <- getMap(resolution = "coarse")
-plot(newmap, xlim = c(-125, -117), ylim = c(45, 49), asp = 1)
-points(spdat$lon,spdat$lat,type="p",pch=21, cex=2)
+newmap <- getMap(resolution = "low")
 
- points(airports$lon, airports$lat, col = "red", cex = .6)
+figname<-paste("analyses/figures/wdfw_returns/salmon.shifts.mapwa.pdf")
+pdf(figname,height=10, width=25)
+
+#quartz(height=15, width=25)
+par(mfrow=c(3,4), oma=c(1,1,1,1))
+for(s in 1:length(sp)){
+  spdat<-shifts[shifts$sp==sp[s],]
+  
+  for(p in 1:length(phase)){
+    
+    plot(newmap, xlim = c(-125, -117), ylim = c(45, 49), asp = 1,main=paste(phase[p],sp[s]))
+    points(spdat$lon,spdat$lat,type="p",pch=21, cex=2)
+    #select out the sites with credible intervals that do not overlap 0 and split them into earlier and later
+    earlier<-which(sign(spdat[,phasecols[p]])<0 & sign(spdat[,phasecols[p]])==sign(spdat[,phasecols[p]+1]))
+    later<-which(sign(spdat[,phasecols[p]])>0 & sign(spdat[,phasecols[p]])==sign(spdat[,phasecols[p]+1]))
+    points(spdat$lon[earlier],spdat$lat[earlier],type="p",pch=21,bg="darkred", cex=2)
+    points(spdat$lon[later],spdat$lat[later],type="p",pch=21,bg="lightblue", cex=2)
+  
+  }
+}
+dev.off()

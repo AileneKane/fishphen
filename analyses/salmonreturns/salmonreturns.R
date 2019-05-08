@@ -203,15 +203,8 @@ colnames(allmodsums)[3:26]<-c("first.int", "first.intlci","first.intuci","first.
 latlon<-read.csv("data/TrapEstimateSpawnCHCKCO_LatLong.csv", header=TRUE)
 colnames(latlon)<-c("site","lat","lon")
 modsums<-left_join(allmodsums,latlon, by="site",copy=TRUE)
+#Add priority stocks column for chinook
+
 write.csv(modsums, "analyses/output/salmonreturntrends.csv", row.names = FALSE)
-unique(allmodsums$site)
-#write csv of list of sites to ask for lat/longs
-#write.csv(allmodsums$site, "analyses/output/salmonreturnsites.csv", row.names = FALSE)
-
-#some are getting later and some are getting earlier
-#Voights:  mid getting earlier
-#Tumwater: All getting earlier (first, last, mid)
-#minter: first getting earlier, mid getting later
-#soos: first getting earlier, mid getting earlier
-#hoodsport: first getting later
-
+# Look at trends in a bit more details
+#1) 
