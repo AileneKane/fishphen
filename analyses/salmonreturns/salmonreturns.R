@@ -1,6 +1,8 @@
 #Salmon return timing phenology using WDFW data
 #Started by Ailene on March 12, 2019
-
+# To do:
+# 1. Check that correlations on map are correct- some seem to have significant lines when they ar not super strong relationships...  
+# 2. Plot curves of each stream/year as a separate line on same figure
 #housekeeping
 
 rm(list=ls()) 
@@ -49,21 +51,19 @@ d$BROOD_Yr[d$BROOD_Yr==1997 & d$year==1998 & d$doy>250]<-1998
 #The following hatcheries seem to have large amounts of continuous data and seem to be close to puget sound:
 #dps<-d[d$Facility_Short_Name=="HOODSPORT HATCHERY"|d$Facility_Short_Name=="ISSAQUAH HATCHERY"|d$Facility_Short_Name=="MINTER CR HATCHERY"|
 #         d$Facility_Short_Name=="SOOS CREEK HATCHERY"|d$Facility_Short_Name=="TUMWATER FALLS HATCHERY"|d$Facility_Short_Name=="VOIGHTS CR HATCHERY"|
-#         d$Facility_Short_Name=="WALLACE R HATCHERY",]
-#dim(dps)
-dps<-d
+
 #other hatcheries that seem to have continuous data: BINGHAM CR HATCHERY#COWLITZ SALMON HATCHERY#DUNGENESS HATCHERY#EASTBANK HATCHERY#ELOCHOMAN HATCHERY#ELWHA HATCHERY#FALLERT CR HATCHERY #FORKS CREEK HATCHERY#GARRISON HATCHERY 
 #GRAYS RIVER HATCHERY #HUMPTULIPS HATCHERY#HUPP SPRINGS REARING#KALAMA FALLS HATCHERY #KENDALL CR HATCHERY #KLICKITAT HATCHERY#LEWIS RIVER HATCHERY#K ABERDEEN HATCHERY #LYONS FERRY HATCHERY #MARBLEMOUNT HATCHERY#MCKERNAN HATCHERY#METHOW HATCHERY 
 #NASELLE HATCHERY #NEMAH HATCHERY#NORTH TOUTLE HATCHERY#PRIEST RAPIDS HATCHERY#RINGOLD SPRINGS HATCHERY #SAMISH HATCHERY#SOLDUC HATCHERY #WASHOUGAL HATCHERY#WELLS HATCHERY
 #Plot the data and look at it and pull out first and last observation date
-dps$doy<-as.integer(dps$doy)
-allyears<-unique(dps$BROOD_Yr)
+d$doy<-as.integer(d$doy)
+allyears<-unique(d$BROOD_Yr)
 allyears<-sort(allyears[allyears<2019])
 #7 hatcheries
 sp<-site<- firstcoefsall<-lastcoefsall<-midcoefsall<-peakcoefsall<-meantotalall<-c()
-species<-unique(dps$SPECIES_Code)
+species<-unique(d$SPECIES_Code)
 for(s in 1:length(species)){
-  spdat<-dps[dps$SPECIES_Code==species[s],]
+  spdat<-d[d$SPECIES_Code==species[s],]
   sites<-unique(spdat$Facility_Short_Name)
 for(i in 1:length(sites)){
   dat<-spdat[spdat$Facility_Short_Name==sites[i],]

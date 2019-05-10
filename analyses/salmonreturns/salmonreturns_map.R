@@ -75,35 +75,6 @@ dev.off()
 
 newmap <- getMap(resolution = "low")
 
-figname<-paste("analyses/figures/wdfw_returns/salmon.shifts.mapwa.pdf")
-pdf(figname,height=10, width=25)
-
-#quartz(height=15, width=25)
-par(mfrow=c(3,4), oma=c(1,1,1,1))
-for(s in 1:length(sp)){
-  spdat<-shifts[shifts$sp==sp[s],]
-  
-  for(p in 1:length(phase)){
-    
-    plot(newmap, xlim = c(-125, -117), ylim = c(45, 49), asp = 1,main=paste(phase[p],sp[s]))
-    points(spdat$lon,spdat$lat,type="p",pch=21, cex=log(spdat$mn.total, base=10), main=paste(phase[p],sp[s]))
-    #select out the sites with credible intervals that do not overlap 0 and split them into earlier and later
-    earlier<-which(sign(spdat[,phasecols[p]])<0 & sign(spdat[,phasecols[p]])==sign(spdat[,phasecols[p]+1]))
-    later<-which(sign(spdat[,phasecols[p]])>0 & sign(spdat[,phasecols[p]])==sign(spdat[,phasecols[p]+1]))
-    
-    points(spdat$lon[earlier],spdat$lat[earlier],type="p",pch=21,bg=alpha("darkred",.4), cex=log(spdat$mn.total, base=10))
-    points(spdat$lon[later],spdat$lat[later],type="p",pch=21,bg=alpha("lightblue",.4), cex=log(spdat$mn.total, base=10))
-  }
-}
-legend(-120,49,legend=c(" shifting earlier"," shifting later", " no change", " Run size = 10"," Run size = 1,000"),
-       pch=21, pt.bg=alpha(c("darkred","lightblue","white"), .4), pt.cex=1.5)
-
-
-dev.off()
-
-newmap <- getMap(resolution = "low")
-
-#size points by total run size
 figname<-paste("analyses/figures/wdfw_returns/salmon.shifts.mapwasize.pdf")
 pdf(figname,height=10, width=25)
 
@@ -124,3 +95,35 @@ for(s in 1:length(sp)){
   }
 }
 dev.off()
+
+#now with points sized by total run size
+
+figname<-paste("analyses/figures/wdfw_returns/salmon.shifts.mapwasize.pdf")
+pdf(figname,height=10, width=25)
+
+#quartz(height=15, width=25)
+par(mfrow=c(3,4), oma=c(1,1,1,1))
+for(s in 1:length(sp)){
+  spdat<-shifts[shifts$sp==sp[s],]
+  
+  for(p in 1:length(phase)){
+    
+    plot(newmap, xlim = c(-125, -117), ylim = c(45, 49), asp = 1,main=paste(phase[p],sp[s]))
+    points(spdat$lon,spdat$lat,type="p",pch=21, cex=log(spdat$mn.total, base=10), main=paste(phase[p],sp[s]))
+    #select out the sites with credible intervals that do not overlap 0 and split them into earlier and later
+    earlier<-which(sign(spdat[,phasecols[p]])<0 & sign(spdat[,phasecols[p]])==sign(spdat[,phasecols[p]+1]))
+    later<-which(sign(spdat[,phasecols[p]])>0 & sign(spdat[,phasecols[p]])==sign(spdat[,phasecols[p]+1]))
+    
+    points(spdat$lon[earlier],spdat$lat[earlier],type="p",pch=21,bg=alpha("darkred",.4), cex=log(spdat$mn.total, base=10))
+    points(spdat$lon[later],spdat$lat[later],type="p",pch=21,bg=alpha("lightblue",.4), cex=log(spdat$mn.total, base=10))
+  }
+}
+legend(-120,49,legend=c(" shifting earlier"," shifting later", " no change", " Run size = 10"," Run size = 1,000"),
+       pch=21, bty="n",pt.bg=alpha(c("darkred","lightblue","white","white","white"), .4), pt.cex=c(1.5,1.5,1.5,log(10, base=10), log(10000, base=10)))
+
+
+dev.off()
+
+newmap <- getMap(resolution = "low")
+
+#size points by total run size
