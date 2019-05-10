@@ -60,7 +60,7 @@ dps$doy<-as.integer(dps$doy)
 allyears<-unique(dps$BROOD_Yr)
 allyears<-sort(allyears[allyears<2019])
 #7 hatcheries
-sp<-site<- firstcoefsall<-lastcoefsall<-midcoefsall<-peakcoefsall<-c()
+sp<-site<- firstcoefsall<-lastcoefsall<-midcoefsall<-peakcoefsall<-meantotalall<-c()
 species<-unique(dps$SPECIES_Code)
 for(s in 1:length(species)){
   spdat<-dps[dps$SPECIES_Code==species[s],]
@@ -71,6 +71,7 @@ for(i in 1:length(sites)){
   lastobsdate<-c()
   midobsdate<-c()
   peakobsdate<-c()
+  alltotal<-c()
   for(y in allyears){
     datyr<-dat[dat$BROOD_Yr==y,]
     if (dim(datyr)[1]<=1){
@@ -99,6 +100,8 @@ for(i in 1:length(sites)){
     lastobsdate<-c(lastobsdate,last)
     midobsdate<-c(midobsdate,mid)
     peakobsdate<-c(peakobsdate,peak)
+    alltotal<-c(alltotal,total)
+    
     firstobsdate[which(firstobsdate=="Inf")]<-NA
     peakobsdate[which(peakobsdate=="Inf")]<-NA
     lastobsdate[which(lastobsdate=="-Inf")]<-NA
@@ -177,6 +180,13 @@ for(i in 1:length(sites)){
     peakcoefs.ci<-rbind(c(NA,NA),c(NA,NA))
   } 
   dev.off()
+  if(length(which(!is.na(midobsdate)))>0){
+    meantotal<-mean(alltotal, na.rm=TRUE)
+  }  
+  if(length(which(!is.na(midobsdate)))<=0){
+    meantotal<-NA
+  } 
+  
   #save coefs to make a table
   firstcoefsall<-rbind(firstcoefsall,c(firstcoefs[1],firstcoefs.ci[1,],firstcoefs[2],firstcoefs.ci[2,]))
 
@@ -186,15 +196,17 @@ for(i in 1:length(sites)){
   
   peakcoefsall<-rbind(peakcoefsall,c(peakcoefs[1],peakcoefs.ci[1,],peakcoefs[2],peakcoefs.ci[2,]))
   
+  meantotalall<-c(meantotalall,meantotal)
+  
   sp<-c(sp,species[s])
   site<-c(site, sites[i])
   }
 }
 
 #make a big table
-allmodsums<-as.data.frame(cbind(sp,site,round(firstcoefsall, digits=3),round(lastcoefsall, digits=3),
+allmodsums<-as.data.frame(cbind(sp,site,meantotalall,round(firstcoefsall, digits=3),round(lastcoefsall, digits=3),
                                 round(midcoefsall, digits=3),round(peakcoefsall, digits=3)))
-colnames(allmodsums)[3:26]<-c("first.int", "first.intlci","first.intuci","first.yr", "first.yrlci","first.yruci",
+colnames(allmodsums)[3:27]<-c("mn.total.runsize","first.int", "first.intlci","first.intuci","first.yr", "first.yrlci","first.yruci",
                               "last.int", "last.intlci","last.intuci","last.yr", "last.yrlci","last.yruci",
                               "mid.int", "mid.intlci","mid.intuci","mid.yr", "mid.yrlci","mid.yruci",
                               "pk.int", "pk.intlci","pk.intuci","pk.yr", "pk.yrlci","pk.yruci")
@@ -207,4 +219,7 @@ modsums<-left_join(allmodsums,latlon, by="site",copy=TRUE)
 
 write.csv(modsums, "analyses/output/salmonreturntrends.csv", row.names = FALSE)
 # Look at trends in a bit more details
-#1) 
+# Make annual abundance curves, to look at variation, of individual streams and of Puget Sound vs Upper Salish Sea as a whole
+modsums$mn.total.runsize
+
+
