@@ -217,5 +217,18 @@ if(uss==FALSE & wholeyear==FALSE){
       
       axis(side=1, at=c(1.5,3.5), labels=c("Puget Sound","Upper Salish Sea"),line=1, lty=0)
       legend("topleft",legend=c("Expected change, given change in effort", "Observed change"),col=c("gray","black"),pch=16)
+  
       
+      #Make a plot of expected shift due to change in effort alone
+      x<-c(1,3,7,9)
+      y<-c(mean(uss.sim$firstdif),mean(ps.sim$firstdif),mean(uss.sim$lastdif),mean(ps.sim$lastdif))
+      quartz(height=5,width=7)
+      plot(x,y,type="p", pch=21, bg="gray", bty="l", xlab="",ylab="Change in day of year", cex=1.5, ylim=c(-10,10))
+      sd<-c(sd(uss.sim$firstdif),sd(ps.sim$firstdif),sd(uss.sim$lastdif),sd(ps.sim$lastdif))
+      abline(h=0, lty=2)
+      for(i in 1:length(y)){
+        arrows(x[i],y[i]+sd[i],x[i],y[i]-sd[i], length=0.01, angle=90, code=3)
+      }
+      points(x,y, pch=21, bg="gray",cex=1.5, )
+      #now add points of observed with error
       
