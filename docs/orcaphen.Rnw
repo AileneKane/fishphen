@@ -50,8 +50,8 @@
 \SweaveOpts{concordance=FALSE}
 %\SweaveOpts{concordance=TRUE}
 
-\bibliographystyle{/Users/ailene.ettinger/Documents/GitHub/fishphen/refs/bibstyles/amnat.bst}% i moved a style file into the ospree git repo. feel free to add whatever style you like and update, lizzie! I don't have besjournals
-\title{Shifts in Orca Phenology and their Prey in the Salish Sea}
+\bibliographystyle{../refs/bibstyles/amnat.bst}% i moved a style file into the ospree git repo. feel free to add whatever style you like and update, lizzie! I don't have besjournals
+\title{Shifts in Southern Resident Killer Whale Phenology in the Salish Sea}
 \date{\today}
 \maketitle
 \author{A.K. Ettinger, C. Harvey, J. Samhouri, B. Hanson, C. Emmons, J. Olson, E. Ward}
@@ -60,12 +60,14 @@
 
 \section* {Background}
 \begin{enumerate}
+<<<<<<< HEAD
 \item Southern resident killer whales (SRKWs) are a threatened population, use of the Salish Sea varies seasonally across two broad areas in the waters of Washington State. During the spring and summer, SRKWs can commonly be found in the upper Salish Sea (north of Admiralty Inlet, Figure 1), whereas during the winter they are more commonly seen in  Puget Sound.
 \item Efforts are underway to alter hatchery production to benefit orca whales, because one of the threats facing SRKWs is thought to be lack of prey. We know that SRKWs forage on chinook salmon as a primary food source (cite hanson papers), but there are lots of questions about what other species they use and how their prey varies seasonally. 
 \item SRKW activity is generally thought to be related to finding prey. In recent decades, salmon abundance and phenology has shifted in the Salish Sea \citep{weinheimer2017,reed2011,ford2006}(add Nelson for chinook hatchery release timing, others for abundance data), though rates vary by species and location. We would therefore expect SRKW phenology to have shifted during this time, if prey is a primary driver of their activity in the Salish Sea. 
 
 \item SRKWs may be spending more time in Puget Sound \citep{olson2018}. However, the details are unclear because monitoring effort has also increased duiring this time. Understanding how SRKW activity varies seasonally and how these seasonal patterns have shifted in recent decades will allow us to develop and test hypotheses about potential drivers of these shifts, which in turn will provide information that may be useful for management decision-making to conserve SRKWs.
 \item Additionally: could make this more explicitly about changes in effort/presence-only database and citizen science. 
+
 \end{enumerate}
 \section* {Research Questions}
 Here, we ask:
@@ -114,42 +116,42 @@ We modelled detection probability as a function of year and date, with detectabi
 \end{enumerate}
 
 \begin{figure}[p]
-\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/figures/OrcaPhenPlots/SRKW_yr_doy.pdf} 
-\caption{\textbf{Southern resident killer whale activity in the Upper Salish Sea and Puget Sound varies by season}.Need to add a map of where observations are, and make this look prettier...}
+\includegraphics{../analyses/figures/OrcaPhenPlots/SRKW_yr_doy.pdf} 
+\caption{\textbf{Southern resident killer whale activity in the Upper Salish Sea and Puget Sound varies by season}. Need to add a map of where observations are, and make this look prettier...}
  \label{fig:phenplot}
  \end{figure}
  
- \begin{figure}[p]
-\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/figures/basicplots/propwhdaysperweek_std.pdf} 
-\caption{\textbf{Southern resident killer whale observations, in terms of proportion of days per week that whales were observed, in the Outer Coast, Puget Sound and Upper Salish Sea, varies by season}. Proportions are the mean across all years (1978-2017) and have been standardized by subtracting the mean and dividing by the standard deviation. Thus, the "0" line marks the mean proportion for that region. Weeks range from 1 (i.e., the first week in January) to 52 (i.e., the last week in December).}
- \label{fig:phenplot}
- \end{figure}
+%  \begin{figure}[p]
+% \includegraphics{../analyses/figures/basicplots/propwhdaysperweek_std.pdf} 
+% \caption{\textbf{Southern resident killer whale observations, in terms of proportion of days per week that whales were observed, in the Outer Coast, Puget Sound and Upper Salish Sea, varies by season}. Proportions are the mean across all years (1978-2017) and have been standardized by subtracting the mean and dividing by the standard deviation. Thus, the "0" line marks the mean proportion for that region. Weeks range from 1 (i.e., the first week in January) to 52 (i.e., the last week in December).}
+%  \label{fig:phenplot1}
+%  \end{figure}
 
 \begin{figure}[p]
-\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/figures/basicplots/propwhdaysperweek.pdf} 
+\includegraphics{../analyses/figures/basicplots/propwhdaysperweek.pdf} 
 \caption{\textbf{Southern resident killer whale activity varies by season and region}. Lines show proportion of days per week (1 Jan= week 1) in which whales were observed in the region.}
  \label{fig:phenplot2}
  \end{figure} 
 \begin{figure}[p]
-\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/orcaphen/figures/boxplots_1978_2017_ps.pdf} 
+\includegraphics{../analyses/orcaphen/figures/boxplots_1978_2017_ps.pdf} 
 \caption{\textbf{Change in in first and last observation dates of SRKW in Puget Sound.} }
  \label{fig:boxplot1}
  \end{figure}
  \begin{figure}[p]
-\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/orcaphen/figures/boxplots_1978_2017_uss.pdf} 
+\includegraphics{../analyses/orcaphen/figures/boxplots_1978_2017_uss.pdf} 
 \caption{\textbf{Change in in first and last observation dates of SRKW in the Upper Salish Sea.} }
  \label{fig:boxplot2}
  \end{figure}
  
 \begin{figure}[p]
-\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/orcaphen/figures/simvdata_1978_2017.pdf} 
+\includegraphics{../analyses/orcaphen/figures/simvdata_1978_2017.pdf} 
 \caption{\textbf{Change in first and last observation dates in Puget Sound and the Upper Salish Sea.} Observed changes (black dots) are compared with expected changes due to shifts in effort alone (gray lines show 90 quantiles of from a simulated dataset resulting from shifts in effort, with the probability of SRKW presence was kept constant across time).}
  \label{fig:sim}
  \end{figure}
  
 
   \begin{figure}[p]
-\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/orcaphen/figures/linreg_1978_2017.pdf} 
+\includegraphics{../analyses/orcaphen/figures/linreg_1978_2017.pdf} 
 \caption{\textbf{Time series and linear regression of first and last observation dates of SRKW.} }
  \label{fig:reg}
  \end{figure}
@@ -157,10 +159,10 @@ We modelled detection probability as a function of year and date, with detectabi
 
  
 \begin{figure}[p]
-\includegraphics{/Users/ailene.ettinger/Documents/GitHub/fishphen/analyses/figures/J/orcaphen_1976_2017_PS_winter_Jfirst.pdf} 
+\includegraphics{../analyses/figures/J/orcaphen_1976_2017_PS_winter_Jfirst.pdf} 
 \caption{\textbf{Trends in first- and last- observation dates for J, K, and L pod.} Make this a 6-paneled figure}
  \label{fig:trends}
  \end{figure}
 
-\bibliography{/Users/ailene.ettinger/Documents/GitHub/fishphen/refs/noaalib.bib}
+\bibliography{../refs/noaalib.bib}
 \end{document}
