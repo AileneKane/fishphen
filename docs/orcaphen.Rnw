@@ -60,9 +60,7 @@
 
 \section* {Background}
 \begin{enumerate}
-\item Southern resident killer whales (SRKWs) are a threatened population, recieved much scientific and public attention.
-\item  SRKWs use of the Salish Sea varies seasonally across two broad areas: the upper Salish Sea 
-(north of Admiralty Inlet, reference Map).
+\item Southern resident killer whales (SRKWs) are a threatened population, use of the Salish Sea varies seasonally across two broad areas in the waters of Washington State. During the spring and summer, SRKWs can commonly be found in the upper Salish Sea (north of Admiralty Inlet, Figure 1), whereas during the winter they are more commonly seen in  Puget Sound.
 \item Efforts are underway to alter hatchery production to benefit orca whales, because one of the threats facing SRKWs is thought to be lack of prey. We know that SRKWs forage on chinook salmon as a primary food source (cite hanson papers), but there are lots of questions about what other species they use and how their prey varies seasonally. 
 \item SRKW activity is generally thought to be related to finding prey. In recent decades, salmon abundance and phenology has shifted in the Salish Sea \citep{weinheimer2017,reed2011,ford2006}(add Nelson for chinook hatchery release timing, others for abundance data), though rates vary by species and location. We would therefore expect SRKW phenology to have shifted during this time, if prey is a primary driver of their activity in the Salish Sea. 
 

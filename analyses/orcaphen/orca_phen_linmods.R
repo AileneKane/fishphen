@@ -53,8 +53,8 @@ wdays.L<-as.data.frame(tapply(orcasum.days$Lpres,list(orcasum.days$year,orcasum.
 #use may 1 for uss season, oct 1 for ps season as start dates
 #use oct 31 for uss season, jan31 for ps season, as end dates
 regions=unique(orcasum.days$region)
-podcols<-c("AllSRpres")#just do for all SRs for now
-pods<-c("SRs")
+podcols<-c("Jpres","Kpres","Lpres","AllSRpres")
+pods<-c("J", "K","L","SRs")
 
 #Create dataframe with first, last obs for each start date in each year
 pods.all<-c()
@@ -79,7 +79,7 @@ for(p in 1:length(podcols)){
     regdat<-orcasum.days[orcasum.days$region==regions[r],]
     
      if (regions[r]=="uss"){
-       regdat<-regdat[as.numeric(regdat$daysaftapr30)<185,]#may 1 through oct 31 for summer season
+       regdat<-regdat[as.numeric(regdat$daysaftapr30)<185,]#may 1 through sept 30 for summer season
      }
     if (regions[r]=="ps"){
       regdat<-regdat[as.numeric(regdat$daysaftapr30)>=154 &as.numeric(regdat$daysaftapr30)<277,]#include data oct 1 through jan 31
@@ -115,7 +115,7 @@ colnames(df)[1:4]<-c("pod","region","year","nobs")
 
 #Plot trends using different start and end dates
 
-pod.df=df[df$pod=="SRs",]
+pod.df=df[df$pod=="L",]
 pod.df$firstest.all[which(pod.df$firstest.all=="Inf")]<-NA
 pod.df$lastest.all[which(pod.df$lastest.all=="-Inf")]<-NA
 

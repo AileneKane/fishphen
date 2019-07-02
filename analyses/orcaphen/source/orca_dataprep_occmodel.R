@@ -16,7 +16,7 @@ library(dplyr)
 d <- read.csv("data/AppendixII.csv")
 
 # 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
-source("analyses/clean_orca.R")
+source("analyses/orcaphen/source/clean_orca.R")
 
 #Create a new column that combines Pod and Likely Pod columna and removes spaces
 d$Pod.cl<-d$Pod
@@ -94,7 +94,7 @@ det$day<-substr(det$yrdayfa,6,8)
 det$fa<-substr(det$yrdayfa,10,nchar(det$yrdayfa))
 #assign to ps (puget sound) or uss (upper salish sea) using fishing area
 det$region<-"ps"
-det$region[det$fa=="07"|det$fa=="06"|det$fa=="02"|det$fa=="04"|det$fa=="19C"|det$fa== "18C"|det$fa=="20C"]<-"uss"
+det$region[det$fa=="07"|det$fa=="06"|det$fa=="05"|det$fa=="04"|det$fa=="19C"|det$fa== "18C"|det$fa=="20C"]<-"uss"
 det$region[det$fa=="01"|det$fa=="02"|det$fa=="03"]<-"oc"#outer coast
 
 det$site<-as.numeric(as.factor(det$fa))
@@ -222,13 +222,14 @@ for(i in 1:length(pods)){
   
   years<-unique(dat$year)
   for(yr in min(years):max(years)){
-    pdf(file=paste("analyses/figures/", pod,"/rawdat",yr,"_",season,"_",region,".pdf", sep=""),width=8,height=6)
+    #pdf(file=paste("analyses/figures/", pod,"/rawdat",yr,"_",season,"_",region,".pdf", sep=""),width=8,height=6)
     yrdat<-dat[dat$year==yr,]
     x=yrdat$day
     y=yrdat$ndet
+    quartz()
     plot(x,y,main=paste("Number sightings","\n",pod," Pod",yr),
          ylim=c(min(yrdat$nrep, na.rm = TRUE),max(yrdat$nrep, na.rm = TRUE)),pch=16,type="p", col="black")
-    dev.off()
+    #dev.off()
   }
   
   
@@ -268,30 +269,3 @@ for(i in 1:length(pods)){
 
 
 
-
-
-#The below code does not work anymore
-# Make Figure 1 (detectability index bar plot) for J, K, and L pod in 2017
-# We will have to decide if we want detectability to vary by fishing area as well
-#convert to proportion
-#det$Jprop<-det$Jobs/det$totob
-#det$Kprop<-det$Kobs/det$totob
-#det$Lprop<-det$Lobs/det$totob
-
-#years<-unique(det$year)
-#for(i in 1:length(years)){
-#  quartz(width=9,height=4)
-#  par(mfrow=c(1,3))
-#  yrdet=det[det$year==years[i],]
-#  barplot(yrdet$Jprop,names.arg=yrdet$wk, main="J")
-#  mtext("Detectability index", side=2, line=2, cex=0.9)
-#  mtext("Week", side=1, line=2, cex=0.9)
-#  barplot(yrdet$Kprop,names.arg=yrdet$wk, main="K")
-#  mtext("Week", side=1, line=2, cex=0.9)
-#  mtext(paste(years[i]), side=1, line=3)
-#  barplot(yrdet$Lprop,names.arg=yrdet$wk, main="L")
-#  mtext("Week", side=1, line=2, cex=0.9)
-#}
-# Questions about full model: what to use for J (number of days in a season)
-# I think season length can vary from one year to the next
-# Fit the model separately for each pod (min day in the year- max day in the year- may be 365 in some years)

@@ -3,6 +3,7 @@
 # To do:
 # 1. Check that correlations on map are correct- some seem to have significant lines when they ar not super strong relationships...  
 # 2. Plot curves of each stream/year as a separate line on same figure
+# 3. Using curves, decide on different seasons to use per stream/hatchery
 #housekeeping
 
 rm(list=ls()) 
@@ -26,9 +27,9 @@ d$year<-strftime(strptime(d$Event_Date,format= "%m/%d/%y"),format= "%Y")
 d$month<-strftime(strptime(d$Event_Date,format= "%m/%d/%y"),format= "%m")
 
 unique(d$year)#goes back to 1995
-unique(d$ADULT_EVENT_TYPE_Name)#Trap estimates and Parent Spawn EVents..not sure what the difference is.. ask DFW which I should use...
+unique(d$ADULT_EVENT_TYPE_Name)#Trap estimates 
 #just use trap estimates
-d<-d[d$ADULT_EVENT_TYPE_Name=="Trap Estimate",]
+d<-d[d$ADULT_EVENT_TYPE_Name=="Trap Estimate",] #start with trap events. could also look at Parent Spawn EVents
 unique(d$MarkCode)#should find out what these mean...
 #which column should i use- adults_Cnt, Females_Cnt, Males_Cnt
 #length(which(is.na(d$Adults_Cnt)))
@@ -45,6 +46,7 @@ d$BROOD_Yr[d$BROOD_Yr==1993]<-d$year[d$BROOD_Yr==1993]#
 d$BROOD_Yr[d$BROOD_Yr==2003 & d$year==2002]<-2002
 d$BROOD_Yr[d$BROOD_Yr==1997 & d$year==1998 & d$doy>250]<-1998
 
+d$Adults_Cnt[which(d$Adults_Cnt<0)]<-abs(d$Adults_Cnt[which(d$Adults_Cnt<0)])
 #in most cases, the Brood year column seems to align with the spawning year in the way i want it to, but occasionally there are mistakes in it
 #especially in 1997-1998. fix this
 
@@ -219,7 +221,43 @@ modsums<-left_join(allmodsums,latlon, by="site",copy=TRUE)
 
 write.csv(modsums, "analyses/output/salmonreturntrends.csv", row.names = FALSE)
 # Look at trends in a bit more details
+
 # Make annual abundance curves, to look at variation, of individual streams and of Puget Sound vs Upper Salish Sea as a whole
 modsums$mn.total.runsize
+head(modsums)
 
+#Plot the data and look at it and pull out first and last observation date
+d$doy<-as.integer(d$doy)
+allyears<-sort(allyears[allyears<2019])
+sp<-site<-c()
+species<-unique(d$SPECIES_Code)
+for(s in 1:length(species)){
+  spdat<-d[d$SPECIES_Code==species[s],]
+  spdat<-spdat[order(spdat$year,spdat$doy),]
+  years<-sort(unique(spdat$BROOD_Yr))
+  quartz(height=10,width=25)
+  par(mfrow=c(3,8),oma=c(1,1,1,1))
+   for(y in years){
+   datyr<-spdat[spdat$BROOD_Yr==y,]
+   datyr$Facility_Short_Name<-as.factor(datyr$Facility_Short_Name)
+   sites<-unique(datyr$Facility_Short_Name)
+   #different colored points/lines for each site
+   color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
+   cols=sample(color,length(sites))
 
+    plot(datyr$doy,datyr$Adults_Cnt, pch=21, xlab="DOY",ylab="# Adults",bg=cols[as.numeric(datyr$Facility_Short_Name)], main=paste(y))
+    if(y==min(years)){mtext(paste(species[s]),side=2, line=4)}
+       #fit a gam for each site and plot curves
+    sites<-unique(datyr$Facility_Short_Name)
+    for(i in 1:length(sites)){
+        sitedat<-datyr[datyr$Facility_Short_Name==sites[i],]
+        sitedat<-sitedat[-which(is.na(sitedat$Adults_Cnt)),]
+        if(length(sitedat$Adults_Cnt)<12){next}
+        g = gam(sitedat$Adults_Cnt ~ s(sitedat$doy), family="poisson")
+        lines(sitedat$doy,g$fitted.values,lwd=3, col=cols[i])
+    }
+     }
+     
+   }
+      
+      
