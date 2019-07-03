@@ -115,7 +115,7 @@ colnames(df)[1:4]<-c("pod","region","year","nobs")
 
 #Plot trends using different start and end dates
 
-pod.df=df[df$pod=="L",]
+pod.df=df[df$pod=="SRs",]
 pod.df$firstest.all[which(pod.df$firstest.all=="Inf")]<-NA
 pod.df$lastest.all[which(pod.df$lastest.all=="-Inf")]<-NA
 

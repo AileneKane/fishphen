@@ -15,7 +15,7 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="L"#options= J,K,L,SR
+pod="J"#options= J,K,L,SR
 season="1"#options= 1(winter) or 2(summer)
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
@@ -156,7 +156,7 @@ parameters <- c("a","b","c","lp","psi","taub")
 
 ### Run MCMC Analysis using jags
 
-jags.out<-jags.parallel(jags.data,f.inits,parameters,"splinesSiteOcc S4.txt",nc,ni,nb,nt)
+jags.out<-jags.parallel(jags.data,f.inits,parameters,"analyses/splinesSiteOcc S4.txt",nc,ni,nb,nt)
 names(jags.out$BUGSoutput)
 quartz()
 plot(jags.out)
@@ -216,6 +216,7 @@ lpmax[lpmax==min(dat$day)]<-NA
 dim(out$sims.list$psi)
 
 # summarize estimates
+
 ann.res<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","10%","90%")))
 res<-apply(lpmax,c(2),mean,na.rm=T)
 ann.res[names(res),"mean"]<-res
@@ -246,13 +247,14 @@ slope.90<-quantile(r[,2],c(0.90),na.rm=T)
 
 
 
-#get first date when detectability is greater than 0.5
+#get first date when detectability is greater than some chosen probability
+prob<-0.5
 findfirst.fn<-function(x) {
-  min(which(plogis(x)>0.10), na.rm=TRUE)
+  min(which(plogis(x)>0.5), na.rm=TRUE)
 }
 #check:
 #count.fn<-function(x) {
-#  length(which(plogis(x)<0.10))
+#  length(which(plogis(x)<0.5))
 #}
 firstlp<-array(data=NA,dim=c(out$n.sims,nyear))
 dimnames(firstlp)<-list(c(1:out$n.sims),c(sort(unique(dat$year))))
@@ -302,7 +304,7 @@ slope.first.90<-quantile(r.first[,2],c(0.90),na.rm=T)
 
 #get last date when detectability is greater than 0.5
 findlast.fn<-function(x) {
-  max(which(plogis(x)>0.10), na.rm=TRUE)
+  max(which(plogis(x)>0.5), na.rm=TRUE)
 }
 #check:
 #count.fn<-function(x) {
@@ -400,15 +402,7 @@ if(season=="2"){
 # Plot output
 #-----------------------------------------------------------------
 # save plotted results as pdf
-if(pod=="J" & season=="1" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_winter_J.pdf"),width=7,height=6)}
-if(pod=="J" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_PS_winter_J.pdf"),width=7,height=6)}
-if(pod=="J" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_summer_J.pdf"),width=7,height=6)}
-if(pod=="K" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_PS_winter_K.pdf"),width=7,height=6)}
-if(pod=="K" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_USS_summer_K.pdf"),width=7,height=6)}
-if(pod=="L" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/L/orcaphen_1976_2017_PS_winter_L.pdf"),width=7,height=6)}
-if(pod=="L" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/L/orcaphen_1976_2017_USS_summer_L.pdf"),width=7,height=6)}
-if(pod=="SR" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017_PS_winter_SR.pdf"),width=7,height=6)}
-if(pod=="SR" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017_USS_summer_SR.pdf"),width=7,height=6)}
+pdf(file=paste("analyses/figures/",pod,"/orcaphen_1976_2017","_",region,"_",season,"_",pod,"_",prob,".pdf", sep=""),width=7,height=6)
 
 ### plot estimates of peak detectability over all years
 #quartz(width=7, height=6)
@@ -442,18 +436,11 @@ abline(a=intercept,b=slope,col="darkred",lwd=2)
 dev.off()
 #
 #-----------------------------------------------------------------
-# Plot first date detectability >0.5  or .0.10
+# Plot first date detectability >0.5  
 #-----------------------------------------------------------------
 # save plotted results as pdf
 if(pod=="J" & season=="1" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_winter_Jfirst.pdf"),width=7,height=6)}
-if(pod=="J" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_PS_winter_Jfirst_0.1.pdf"),width=7,height=6)}
-if(pod=="J" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_summer_Jfirst.pdf"),width=7,height=6)}
-if(pod=="K" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_PS_winter_Kfirst.pdf"),width=7,height=6)}
-if(pod=="K" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_USS_summer_Kfirst.pdf"),width=7,height=6)}
-if(pod=="L" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/L/orcaphen_1976_2017_PS_winter_Lfirst.pdf"),width=7,height=6)}
-if(pod=="L" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/L/orcaphen_1976_2017_USS_summer_Lfirst.pdf"),width=7,height=6)}
-if(pod=="SR" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017_PS_winter_SRfirst.pdf"),width=7,height=6)}
-if(pod=="SR" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017_USS_summer_SRfirst.pdf"),width=7,height=6)}
+pdf(file=paste("analyses/figures/",pod,"/orcaphen_1976_2017","_",region,"_",season,"_",pod,"_first_",prob,".pdf", sep=""),width=7,height=6)
 
 ### plot estimates of peak detectability over all years
 #quartz(width=7, height=6)
@@ -461,7 +448,7 @@ par(mfrow=c(1,1),mai=c(1,1,1,0.5))
 x=rownames(ann.first)
 y=ann.first[,"mean"]
 seasname<-c("winter","summer")
-plot(x,y,xlab="",ylab="",axes=F,main=paste("First Detection Probability >0.1","\n",pod," Pod",seasname[as.numeric(season)],region),
+plot(x,y,xlab="",ylab="",axes=F,main=paste("First Detection Probability",prob,"\n",pod," Pod",seasname[as.numeric(season)],region),
      ylim=c(min(ann.first, na.rm = TRUE),max(ann.first, na.rm = TRUE)),pch=16,type="l", lwd=2,col="black")
 #polygon(c(rev(x),x),c(rev(ann.res[,"90%"]),ann.res[,"10%"]),col=alpha("grey",0.2),lwd=0.1)
 
@@ -487,15 +474,7 @@ abline(a=intercept.first,b=slope.first,col="darkred",lwd=2)
 dev.off()
 
 # save plotted results as pdf
-if(pod=="J" & season=="1" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_winter_Jlast0.1.pdf"),width=7,height=6)}
-if(pod=="J" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_PS_winter_Jlast.pdf"),width=7,height=6)}
-if(pod=="J" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1976_2017_USS_summer_Jlast.pdf"),width=7,height=6)}
-if(pod=="K" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_PS_winter_Klast.pdf"),width=7,height=6)}
-if(pod=="K" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/K/orcaphen_1976_2017_USS_summer_Klast.pdf"),width=7,height=6)}
-if(pod=="L" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/L/orcaphen_1976_2017_PS_winter_Llast.pdf"),width=7,height=6)}
-if(pod=="L" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/L/orcaphen_1976_2017_USS_summer_Llast.pdf"),width=7,height=6)}
-if(pod=="SR" & season=="1" & region=="ps"){pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017_PS_winter_SRlast.pdf"),width=7,height=6)}
-if(pod=="SR" & season=="2" & region=="uss"){pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017_USS_summer_SRlast.pdf"),width=7,height=6)}
+pdf(file=paste("analyses/figures/",pod,"/orcaphen_1976_2017","_",region,"_",season,"_",pod,"last_",prob,".pdf", sep=""),width=7,height=6)
 
 ### plot estimates of last detectability >0.5 over all years
 #quartz(width=7, height=6)
@@ -503,7 +482,7 @@ par(mfrow=c(1,1),mai=c(1,1,1,0.5))
 x=rownames(ann.last)
 y=ann.last[,"mean"]
 seasname<-c("winter","summer")
-plot(x,y,xlab="",ylab="",axes=F,main=paste("Last Detection Probability >0.1","\n",pod," Pod",seasname[as.numeric(season)],region),
+plot(x,y,xlab="",ylab="",axes=F,main=paste("Last Detection Probability",prob,"\n",pod," Pod",seasname[as.numeric(season)],region),
      ylim=c(min(ann.first, na.rm = TRUE),max(ann.last, na.rm = TRUE)),pch=16,type="l", lwd=2,col="black")
 #polygon(c(rev(x),x),c(rev(ann.res[,"90%"]),ann.res[,"10%"]),col=alpha("grey",0.2),lwd=0.1)
 
