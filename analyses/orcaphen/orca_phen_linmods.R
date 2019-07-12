@@ -56,6 +56,37 @@ regions=unique(orcasum.days$region)
 podcols<-c("Jpres","Kpres","Lpres","AllSRpres")
 pods<-c("J", "K","L","SRs")
 
+
+
+years<-seq(1978,2017, by=1)#restrict to these years for orcayears
+#Look at trends in SRKW phenology across all years, for all pods
+years.all<-c()
+nobs.all<-c()
+firstest.all<-c()
+lastest.all<-c()
+
+for(y in 1:length(years)){
+  yrdat<-orcasum.days[orcasum.days$orcayear==years[y],]
+  years.all<-c(years.all,years[y])
+  nobs.all<-c(nobs.all,length(yrdat$day[yrdat$AllSRobs==1]))
+  firstest.all<-c(firstest.all,min(yrdat$daysaftapr30[yrdat$AllSRobs==1], na.rm=TRUE))
+  lastest.all<-c(lastest.all,max(yrdat$day[yrdat$AllSRobs==1], na.rm=TRUE))
+}
+df <- as.data.frame(cbind(years.all,nobs.all,firstest.all,lastest.all))
+colnames(df)[1:2]<-c("year","nobs")
+
+plot(df$year,df$firstest.all,xlab="year",ylab="first obs doy", main="", bty="l", pch=21, bg="gray")
+mod<-lm(df$firstest.all~df$year)
+abline(mod)
+mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+
+plot(df$year,df$lastest.all,xlab="year",ylab="first obs doy", main="", bty="l", pch=21, bg="gray")
+mod<-lm(df$lastest.all~df$year)
+abline(mod)
+mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+
 #Create dataframe with first, last obs for each start date in each year
 pods.all<-c()
 regions.all<-c()
@@ -70,7 +101,7 @@ lastest.all<-c()
 
 #p=1
 #r=1
-years<-seq(1978,2017, by=1)#restrict to these years for orcayears
+
 #unique(orcasum.days$orcayear)#use may 1 as start of orca year, as this will encompass min start date window that i want to try
 
 for(p in 1:length(podcols)){
