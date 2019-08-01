@@ -19,6 +19,9 @@ pod="J"#options= J,K,L,SR
 season="1"#options= 1(winter) or 2(summer)
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
+#Choose the credible intervals you want
+lci<-0.125
+uci<-0.875
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
 
 if(pod=="J"){dat<-read.csv("analyses/output/j_dat.csv",header=T)}
@@ -217,13 +220,13 @@ dim(out$sims.list$psi)
 
 # summarize estimates
 
-ann.res<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","10%","90%")))
+ann.res<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","lci","uci")))
 res<-apply(lpmax,c(2),mean,na.rm=T)
 ann.res[names(res),"mean"]<-res
-res<-apply(lpmax,c(2),quantile,probs=0.10,na.rm=T)
-ann.res[names(res),"10%"]<-res
-res<-apply(lpmax,c(2),quantile,probs=0.90,na.rm=T)
-ann.res[names(res),"90%"]<-res
+res<-apply(lpmax,c(2),quantile,probs=lci,na.rm=T)
+ann.res[names(res),"lci"]<-res
+res<-apply(lpmax,c(2),quantile,probs=uci,na.rm=T)
+ann.res[names(res),"uci"]<-res
 
 # get estimate of trend in date of peak detectability over years
 do.lm<-function(x) {
@@ -239,11 +242,11 @@ for (o in 1:(dim(lpmax)[1])) {
 slopevec<-as.vector(r[,2])
 intercept<-mean(r[,1],na.rm=T)
 slope<-mean(r[,2],na.rm=T)
-intercept.10<-quantile(r[,1],c(0.10),na.rm=T)
-intercept.90<-quantile(r[,1],c(0.90),na.rm=T)
+intercept.lci<-quantile(r[,1],c(lci),na.rm=T)
+intercept.uci<-quantile(r[,1],c(uci),na.rm=T)
 
-slope.10<-quantile(r[,2],c(0.10),na.rm=T)
-slope.90<-quantile(r[,2],c(0.90),na.rm=T)
+slope.lci<-quantile(r[,2],c(lci),na.rm=T)
+slope.uci<-quantile(r[,2],c(uci),na.rm=T)
 
 
 
@@ -274,14 +277,14 @@ firstlp[which(firstlp=="Inf")]<-NA
 #returns "inf" when no estimates are >0.50
 
 # summarize estimates
-ann.first<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","10%","90%")))
+ann.first<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","lci","uci")))
 
 first<-apply(firstlp,c(2),mean,na.rm=T)
 ann.first[names(first),"mean"]<-first
-first<-apply(firstlp,c(2),quantile,probs=0.10,na.rm=T)
-ann.first[names(first),"10%"]<-first
-first<-apply(firstlp,c(2),quantile,probs=0.90,na.rm=T)
-ann.first[names(first),"90%"]<-first
+first<-apply(firstlp,c(2),quantile,probs=lci,na.rm=T)
+ann.first[names(first),"lci"]<-first
+first<-apply(firstlp,c(2),quantile,probs=uci,na.rm=T)
+ann.first[names(first),"uci"]<-first
 
 # get estimate of trend in date of peak detectability over years
 #firstlp<-as.numeric()
@@ -296,11 +299,11 @@ for (o in 1:(dim(firstlp)[1])) {
 slopevec.first<-as.vector(r.first[,2])
 intercept.first<-mean(r.first[,1],na.rm=T)
 slope.first<-mean(r.first[,2],na.rm=T)
-intercept.first.10<-quantile(r.first[,1],c(0.10),na.rm=T)
-intercept.first.90<-quantile(r.first[,1],c(0.90),na.rm=T)
+intercept.first.lci<-quantile(r.first[,1],c(lci),na.rm=T)
+intercept.first.uci<-quantile(r.first[,1],c(uci),na.rm=T)
 
-slope.first.10<-quantile(r.first[,2],c(0.10),na.rm=T)
-slope.first.90<-quantile(r.first[,2],c(0.90),na.rm=T)
+slope.first.lci<-quantile(r.first[,2],c(lci),na.rm=T)
+slope.first.uci<-quantile(r.first[,2],c(uci),na.rm=T)
 
 #get last date when detectability is greater than 0.5
 findlast.fn<-function(x) {
@@ -330,14 +333,14 @@ lastlp[which(lastlp=="-Inf")]<-NA
 #returns "inf" when no estimates are >0.50
 
 # summarize estimates
-ann.last<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","10%","90%")))
+ann.last<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","lci","uci")))
 
 last<-apply(lastlp,c(2),mean,na.rm=T)
 ann.last[names(last),"mean"]<-last
-last<-apply(lastlp,c(2),quantile,probs=0.10,na.rm=T)
-ann.last[names(last),"10%"]<-last
-last<-apply(lastlp,c(2),quantile,probs=0.90,na.rm=T)
-ann.last[names(last),"90%"]<-last
+last<-apply(lastlp,c(2),quantile,probs=lci,na.rm=T)
+ann.last[names(last),"lci"]<-last
+last<-apply(lastlp,c(2),quantile,probs=uci,na.rm=T)
+ann.last[names(last),"uci"]<-last
 
 # get estimate of trend in date of peak detectability over years
 #firstlp<-as.numeric()
@@ -352,18 +355,18 @@ for (o in 1:(dim(lastlp)[1])) {
 slopevec.last<-as.vector(r.last[,2])
 intercept.last<-mean(r.last[,1],na.rm=T)
 slope.last<-mean(r.last[,2],na.rm=T)
-intercept.last.10<-quantile(r.last[,1],c(0.10),na.rm=T)
-intercept.last.90<-quantile(r.last[,1],c(0.90),na.rm=T)
+intercept.last.lci<-quantile(r.last[,1],c(lci),na.rm=T)
+intercept.last.uci<-quantile(r.last[,1],c(uci),na.rm=T)
 
-slope.last.10<-quantile(r.last[,2],c(0.10),na.rm=T)
-slope.last.90<-quantile(r.last[,2],c(0.90),na.rm=T)
+slope.last.lci<-quantile(r.last[,2],c(lci),na.rm=T)
+slope.last.uci<-quantile(r.last[,2],c(uci),na.rm=T)
 
 ### Write results (in console if argument file is not specified in function cat)
 if(season=="1"){
 cat(paste("summary results",pod,region,season),"\n",
     paste("annual change of activity peak:", round(mean(slopevec,na.rm=T),digits=2),"days"),
-    paste("confidence interval from", round(quantile(slopevec,0.10,na.rm=T),digits=2),
-          "to",round(quantile(slopevec,0.90,na.rm=T),digits=2)),
+    paste("confidence interval from", round(quantile(slopevec,lci,na.rm=T),digits=2),
+          "to",round(quantile(slopevec,uci,na.rm=T),digits=2)),
     "\n","mean estimate of activity peak","as date",
     as.character(as.Date(x=c(ann.res[,colnames(ann.res)=="mean"]),origin=c(paste(row.names(ann.res),"-09-30",sep="")))),"\n",
     sep="\n","as days after sept 30",
@@ -371,8 +374,8 @@ cat(paste("summary results",pod,region,season),"\n",
   
   cat(paste("summary results",pod,region,season),"\n",
       paste("annual change of first activity doy:", round(mean(slopevec.first,na.rm=T),digits=2),"days"),
-      paste("confidence interval from", round(quantile(slopevec.first,0.10,na.rm=T),digits=2),
-            "to",round(quantile(slopevec.first,0.90,na.rm=T),digits=2)),
+      paste("confidence interval from", round(quantile(slopevec.first,lci,na.rm=T),digits=2),
+            "to",round(quantile(slopevec.first,uci,na.rm=T),digits=2)),
       "\n","mean estimate of first activity doy","as date",
       as.character(as.Date(x=c(ann.first[,colnames(ann.first)=="mean"]),origin=c(paste(row.names(ann.first),"-09-30",sep="")))),"\n",
       sep="\n","as days after sept 30",
@@ -380,24 +383,33 @@ cat(paste("summary results",pod,region,season),"\n",
   
   cat(paste("summary results",pod,region,season),"\n",
       paste("annual change of last activity doy:", round(mean(slopevec.last,na.rm=T),digits=2),"days"),
-      paste("confidence interval from", round(quantile(slopevec.last,0.10,na.rm=T),digits=2),
-            "to",round(quantile(slopevec.last,0.90,na.rm=T),digits=2)),
+      paste("confidence interval from", round(quantile(slopevec.last,lci,na.rm=T),digits=2),
+            "to",round(quantile(slopevec.last,uci,na.rm=T),digits=2)),
       "\n","mean estimate of last activity doy","as date",
       as.character(as.Date(x=c(ann.last[,colnames(ann.last)=="mean"]),origin=c(paste(row.names(ann.last),"-09-30",sep="")))),"\n",
       sep="\n","as days after sept 30",
       paste(rownames(ann.last),round(ann.last[,"mean"])))
-  
-}
+  }
 if(season=="2"){
   cat(paste("summary results",pod,region,season),"\n",
       paste("annual change of activity peak:", round(mean(slopevec,na.rm=T),digits=2),"days"),
-      paste("confidence interval from", round(quantile(slopevec,0.10,na.rm=T),digits=2),
-            "to",round(quantile(slopevec,0.90,na.rm=T),digits=2)),
+      paste("confidence interval from", round(quantile(slopevec,lci,na.rm=T),digits=2),
+            "to",round(quantile(slopevec,uci,na.rm=T),digits=2)),
       "\n","mean estimate of activity peak","as date",
       as.character(as.Date(x=c(ann.res[,colnames(ann.res)=="mean"]),origin=c(paste(row.names(ann.res),"-01-01",sep="")))),"\n",
       sep="\n","as day of year",
       paste(rownames(ann.res),round(ann.res[,"mean"])))   
 }
+#save a dataframe of trends in all three phenophases
+df<-rbind(
+  c(pod,region,season,"peak",round(mean(slopevec,na.rm=T),digits=2),round(quantile(slopevec,lci,na.rm=T),digits=2),round(quantile(slopevec,uci,na.rm=T),digits=2)),
+  c(pod,region,season,"first",round(mean(slopevec.first,na.rm=T),digits=2),round(quantile(slopevec.first,lci,na.rm=T),digits=2),round(quantile(slopevec.first,uci,na.rm=T),digits=2)),
+  c(pod,region,season,"last",round(mean(slopevec.last,na.rm=T),digits=2),round(quantile(slopevec.last,lci,na.rm=T),digits=2),round(quantile(slopevec.last,uci,na.rm=T),digits=2))
+)
+colnames(df)<-c("pod","region","season","phase","slope.mn","slope.lci","slope.uci")
+df.name<-paste("analyses/output/",pod,"_",season,"_",region,".csv")
+write.csv(df,df.name, row.names=FALSE)
+
 #-----------------------------------------------------------------
 # Plot output
 #-----------------------------------------------------------------
