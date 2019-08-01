@@ -20,21 +20,23 @@ library(dplyr)
 library(mgcv)
 library(scales)
 library(RColorBrewer)
-# 1. Get the data
+# 1. Choose the years and regions of interest and get the data
+includeCanada=TRUE
+firstyear=1975#probably set to 1975 or 1976 (Olson et al)
 d <- read.csv("data/AppendixII.csv")
 
 # 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
 source("analyses/orcaphen/source/clean_orca.R")
 
-# 3. Limit space and time to 1975 or later and Salish Sea, Puget Sound, Washington Outer Coast 
+# 3. Limit space and time to firstyear or later and Salish Sea, Puget Sound, Washington Outer Coast 
 source("analyses/orcaphen/source/orca_limitspacetime.R")
 
-#4. Get data in terms of number of observations per day and "whale days": days on which whales were seen (presence/absence for each day instead of )
+#4. Get data in terms of number of observations per day and "whale days": days on which whales were seen (presence/absence for each day)
 source("analyses/orcaphen/source/orca_get_whaledays.R")
 
 #5. summarize whale days per year by region
 wdays<-as.data.frame(tapply(orcasum.days$AllSRpres,list(orcasum.days$year,orcasum.days$region),sum))
-colMeans(wdays[1:20,], na.rm=TRUE)
+#colMeans(wdays[1:20,], na.rm=TRUE)
 
 wdays.J<-as.data.frame(tapply(orcasum.days$Jpres,list(orcasum.days$year,orcasum.days$region),sum))
 wdays.K<-as.data.frame(tapply(orcasum.days$Kpres,list(orcasum.days$year,orcasum.days$region),sum))
