@@ -23,9 +23,10 @@ for(p in 1:length(podcols)){
       days = yrdat$day[yrdat[,colnum]==1]
       if(r=="ps"){col="darkblue"}
       if(r=="uss"){col="salmon"}
-      
+      polygon(c(275,274,365,365),c(max(as.numeric(years)),min(as.numeric(years)),min(as.numeric(years)),max(as.numeric(years))),
+                       col=alpha(col,0.5),
+                      border=NA)
       points(x=days,y=rep(y,length=length(days)), pch=16,col= col, cex=1.3)
-      
       #lines(x=days,y=rep(y,length=length(days)), lwd=2)
     }  
     #if(r=="uss"){mtext(paste(pods[p]), side=3,line=3, adj=0.5)}

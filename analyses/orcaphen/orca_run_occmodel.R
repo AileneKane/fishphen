@@ -16,7 +16,6 @@ library(scales)
 
 # Choose the data you want:
 pod="J"#options= J,K,L,SR
-season="1"#options= 1(winter) or 2(summer)
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
 #Choose the credible intervals you want
@@ -29,16 +28,39 @@ if(pod=="K"){dat<-read.csv("analyses/output/k_dat.csv",header=T)}
 if(pod=="L"){dat<-read.csv("analyses/output/l_dat.csv",header=T)}
 if(pod=="SR"){dat<-read.csv("analyses/output/allsr_dat.csv",header=T)}
 
-#restrict to season
+#choose region
+dat<-dat[dat$region==region,]
+
+#Add a column for "season" and restrict data to season that is appropriate to the region
+#use may 1 for uss season, oct 1 for ps season as start dates
+#use oct 31 for uss season, jan31 for ps season, as end dates
+if(region == "ps"){
+  season="1"#winter
+  dat$season<-NA
+  dat$season[dat$day>274]<-1#winter (Oct 1-Dec 31)#should extend this to Jan 31
+}
+
+#to extend to jan31, add an "orca year" which runs Oct 1-Sept 31
+#dat$orcayear<-dat$year
+#dat$orcayear[which(dat$day>273)]<-dat$year[which(dat$day>273)]+1
+#dat$daysaftsept30<-NA
+#dat$daysaftsept30[which(dat$day>273 & dat$day<367)]<-dat$day[which(dat$day>273 & dat$day<367)]-273
+#dat$daysaftsept30[which(dat$day<274)]<-dat$day[which(dat$day<274)]+93#this should actually vary depending on whether or not it is a leap year
+
+if(region == "uss"){
+  season="2"#summer
+  dat$season<-NA
+  dat$season[dat$day>121 & dat$day<304]<-2#summer (May-Oct 31)
+}
 dat<-dat[dat$season==season,]
+dat <- dat[apply(dat, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
+
 #if winter  (season 1), then days= days ater sept 30
 #if(season=="1"){
 #  dat<-subset(dat,select=c(nrep,ndet,site, daysaftsept30,year,season,region))
 #colnames(dat)[4]<-"day"
 #  }
 
-#choose region
-dat<-dat[dat$region==region,]
 
 dim(dat)
 
@@ -147,7 +169,7 @@ y <- dat$ndet
 
 # Simulation parameters
 #ni=15000; nc=2; nb=0; nt=10
-ni=5000; nc=2; nb=1500; nt=1
+ni=7000; nc=2; nb=2500; nt=1
 # List input data
 jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots","n","X","Z","nc", "nb", "ni", "nt","zst","y")
 
