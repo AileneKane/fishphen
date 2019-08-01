@@ -2,7 +2,6 @@
 # Started November 1327, 2018
 # by Ailene Ettinger ailene.ettinger@noo.gov
 #NEed to fix this
-!
 #housekeeping
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
@@ -12,30 +11,24 @@ setwd("~/Documents/GitHub/fishphen")
 
 # Load libraries
 library(dplyr)
-# 1. Get the data
+#1. Choose the years and regions of interest and get the data
+includeCanada=TRUE
+firstyear=1975#probably set to 1975 or 1976 (Olson et al)
 d <- read.csv("data/AppendixII.csv")
 
 # 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
 source("analyses/orcaphen/source/clean_orca.R")
 
-#Create a new column that combines Pod and Likely Pod columna and removes spaces
-d$Pod.cl<-d$Pod
+# 1. Choose the years and regions of interest and get the data
+includeCanada=TRUE
+firstyear=1975#set to 1975 or 1976 (Olson et al)
+d <- read.csv("data/AppendixII.csv")
 
+# 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
+source("analyses/orcaphen/source/clean_orca.R")
 
-#Always use Likely Pod column, when it is not blank:
-d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" "]<-d$LikelyPod[d$LikelyPod!="" & d$LikelyPod!=" "]
-#perhaps also stick with Pod when LikelyPod has a "?" grep("?",d$LikelyPod,)
-
-#remove non-orca data
-#d<-d[d$Pod.cl=="HB?"|d$Pod.cl=="Not Orcas",]
-
-#only using fishing areas in Washington's Salish Sea 
-#d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
-#keep canadian sites in upper salish sea
-d<-d[d$FishArea %in% c("01","02","03","04","05","06","07","09","10","11","12","13","81","82","19C","18C","29C","20C"),]#not sure where 17, 18, 19, 20, 28, 29 are...need to find out. also, where is 42583,42584
-#remove sites with no fishing area:
-d<-d[!d$FishArea %in% c(""),]
-
+# 3. Limit space and time to firstyear or later and Salish Sea, Puget Sound, Washington Outer Coast 
+source("analyses/orcaphen/source/orca_limitspacetime.R")
 
 #Only use fishing areas that have atleast 4 years with >20 observations:
 #11 fishing areas with >5
@@ -64,9 +57,6 @@ d$SRKW[grep("SR",d$Pod.cl)]<- 1
 d$SRKW[d$J==1|d$K==1|d$L==1]<- 1   
 d$Orcas<-1
 
-#only data after 1978
-d<-d[d$Year>1978,]
-
 #Prepare data for running model from strebel et al 2014
 #"nrep" "ndet" "site" "day" "year"
 
@@ -94,7 +84,7 @@ det$day<-substr(det$yrdayfa,6,8)
 det$fa<-substr(det$yrdayfa,10,nchar(det$yrdayfa))
 #assign to ps (puget sound) or uss (upper salish sea) using fishing area
 det$region<-"ps"
-det$region[det$fa=="07"|det$fa=="06"|det$fa=="05"|det$fa=="04"|det$fa=="19C"|det$fa== "18C"|det$fa=="20C"]<-"uss"
+det$region[det$fa=="07"|det$fa=="06"|det$fa=="05"|det$fa=="04"|det$fa=="19C"|det$fa== "18C"|det$fa=="20C"|det$fa=="29C"]<-"uss"
 det$region[det$fa=="01"|det$fa=="02"|det$fa=="03"]<-"oc"#outer coast
 
 det$site<-as.numeric(as.factor(det$fa))
@@ -139,133 +129,3 @@ write.csv(srdet,"analyses/output/allsr_dat.csv",row.names = FALSE)
 write.csv(ldet,"analyses/output/l_dat.csv",row.names = FALSE)
 write.csv(kdet,"analyses/output/k_dat.csv",row.names = FALSE)
 write.csv(jdet,"analyses/output/j_dat.csv",row.names = FALSE)
-
-#Make some plots to look at the data
-#summarize by sitings per day of each season and pod over time
-# Choose the data you want to look at:
-pods<-c("J","K","L","SR")
-seasons<-c(1,2)
-for(i in 1:length(pods)){
-  for(j in 1:length(seasons)){
-    
-  pod=pods[i]#options= J,K,L, SR (all 3 pods)
-  season=seasons[j]#options= 1(winter) or 2(summer)
-  if(season==1){region="ps"}#options=upper salish sea (uss) or puget sound (ps)
-  if(season==2){region="uss"}
-
-  if(pod=="J"){dat<-jdet}
-  if(pod=="K"){dat<-kdet}
-  if(pod=="L"){dat<-ldet}
-  if(pod=="SR"){dat<-srdet}
-
-  #restrict to season
-  dat<-dat[dat$season==season,]
-
-  #if winter  (season 1), then days= days ater sept 30
-  if(season=="1"){
-  dat<-subset(dat,select=c(nrep,ndet,site, daysaftsept30,year,season,region))
-  colnames(dat)[4]<-"day"
-  }
-
-  #choose region
-  dat<-dat[dat$region==region,]
-
-  dim(dat)
-  #find doy with max number of obs for each year
-
-  dayobs<-aggregate(dat$ndet,list(dat$year,dat$day),sum)
-  colnames(dayobs)<-c("year","day","obs")
-
-  dayeffort<-aggregate(dat$nrep,list(dat$year,dat$day),sum)
-  colnames(dayeffort)<-c("year","day","effort")
-
-  propobs<-left_join(dayobs,dayeffort)
-  propobs$propobs<-propobs$obs/propobs$effort
-
-  #find which day this occurs on
-  maxobs<-aggregate(dayobs$obs,list(dayobs$year),max)
-  colnames(maxobs)<-c("year","obs")
-  peakobs<-dplyr::inner_join(maxobs, dayobs)
-
-  maxprop<-aggregate(propobs$propobs,list(propobs$year),max)
-  colnames(maxprop)<-c("year","propobs")
-  peakpropdoy<-dplyr::inner_join(maxprop,propobs)
-
-  #plot peak obs by year
-  pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017",region,season,pod,"rawdat.pdf", sep="_"),width=7,height=6)
-
-  ### plot peak number of obs over all years
-  #quartz()
-  par(mfrow=c(1,1),mai=c(1,1,1,0.5))
-  x=peakobs$year
-  y=peakobs$day
-  plot(x,y,xlab="Year",ylab="DOY of peak # sightings",main=paste("Peak Number of Sightings","\n",pod[i]," Pod",season[j]),
-     ylim=c(min(peakobs$day),max(peakobs$day)),pch=21,type="p", bg="gray")
-  dev.off()
-  print(pods[i]);  print(seasons[j]);
-  print(summary(lm(y~x)))
-  print(summary(lmer(y~x+(1|as.factor(x)))))
-
-  # plot peak proportion of obs over all years
-  #quartz()
-  pdf(file=paste("analyses/figures/SR/orcaphen_1976_2017",region,season,pod,"prop.pdf", sep="_"),width=7,height=6)
-  
-  par(mfrow=c(1,1),mai=c(1,1,1,0.5))
-  x=peakpropdoy$year
-  y=peakpropdoy$day
-  plot(x,y,xlab="Year",ylab="DOY of peak proportion sightings",main=paste("Peak Proportion of Sightings","\n",pod[i]," Pod",season[j]),
-     ylim=c(min(peakpropdoy$day),max(peakpropdoy$day)),pch=21,type="p", bg="gray")
-  dev.off()
-  print(pods[i]);print(seasons[j])
-  print(summary(lm(y~x)))
-  print(summary(lmer(y~x+(1|as.factor(x)))))
-  
-  years<-unique(dat$year)
-  for(yr in min(years):max(years)){
-    #pdf(file=paste("analyses/figures/", pod,"/rawdat",yr,"_",season,"_",region,".pdf", sep=""),width=8,height=6)
-    yrdat<-dat[dat$year==yr,]
-    x=yrdat$day
-    y=yrdat$ndet
-    quartz()
-    plot(x,y,main=paste("Number sightings","\n",pod," Pod",yr),
-         ylim=c(min(yrdat$nrep, na.rm = TRUE),max(yrdat$nrep, na.rm = TRUE)),pch=16,type="p", col="black")
-    #dev.off()
-  }
-  
-  
-}
-}
-
-#Now make figures for whole year
-# Choose the data you want to look at:
-pods<-c("J","K","L","SR")
-for(i in 1:length(pods)){
-    pod=pods[i]
-    if(pod=="J"){dat<-jdet}
-    if(pod=="K"){dat<-kdet}
-    if(pod=="L"){dat<-ldet}
-    if(pod=="SR"){dat<-srdet}
-    
-    #find doy with max number of obs for each year
-    
-    dayobs<-aggregate(dat$ndet,list(dat$year,dat$day),sum)
-    colnames(dayobs)<-c("year","day","obs")
-  
-    years<-unique(dayobs$year)
-    for(yr in min(years):max(years)){
-      pdf(file=paste("analyses/figures/", pod,"/rawdat",yr,"_yearroundallsites_",".pdf", sep=""),width=8,height=6)
-      yrdat<-dayobs[dayobs$year==yr,]
-      x=yrdat$day
-      y=yrdat$obs
-      plot(x,y,main=paste("Number sightings","\n",pod," Pod",yr),
-           ylim=c(min(yrdat$nrep, na.rm = TRUE),max(yrdat$nrep, na.rm = TRUE)),xlab="doy",ylab="# sightings",pch=16,type="p", col="black")
-      dev.off()
-    }
-    
-    
-  }
-}
-
-
-
-

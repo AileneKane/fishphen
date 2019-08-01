@@ -95,5 +95,9 @@ d$day<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%
 d$week<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"), format = "%V")#new weeks start on mondays
 d<-d[-which(is.na(d$day)),]
 
+#clean the Latitude and  longitude columns- replace with ActLat and ActLong columns when these are present
+d$Lat[which(!is.na(d$ActLat))]<-d$ActLat[which(!is.na(d$ActLat))]
+d$Long[which(!is.na(d$ActLong))]<-d$ActLong[which(!is.na(d$ActLong))]
+
 #9. Create a new cleaned datafile
 write.csv(d,"analyses/output/AppendixII_cleaned.csv")

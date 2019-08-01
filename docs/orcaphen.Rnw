@@ -134,18 +134,12 @@ Last-detection dates have gotten later by XX days in Puget Sound and by XX days 
 \section* {Figures}
 Add the following:
 \begin{enumerate}
-\item A figure that is a 3-paneled figure with the following panels: 
-\begin{enumerate}
-\item Map of Salish Sea showing 2 seasons and habitat use areas.
-\item Observations in Puget Sound (fall/winter) (rough versions are Fig. \ref{fig:phenplot} and \ref{fig:phenplot2}
-\item Observations in the upper Salish sea (spring/summer)
-\end{enumerate}
 \item A figure comparing SRKW to salmon abundance and phenology: could be SRKW vs salmon, or plot with effect sizes for all over time (i.e. change in days/proportion per decade)
 \end{enumerate}
 
 \begin{figure}[p]
-\includegraphics{../analyses/figures/OrcaPhenPlots/SRKW_yr_doy.pdf} 
-\caption{\textbf{Southern resident killer whale activity in the Upper Salish Sea and Puget Sound varies by season}. Need to add a map of where observations are, and make this look prettier...}
+\includegraphics{../analyses/figures/OrcaPhenPlots/srkw_phenmap.pdf} 
+\caption{\textbf{Southern resident killer whale activity in the Upper Salish Sea and Puget Sound varies by season}. }
  \label{fig:phenplot}
  \end{figure}
  

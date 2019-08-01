@@ -1,4 +1,4 @@
-#code snippet tha tIs tarted (but doesn't work yet) to calculate consecutive days of SRKW observations
+#code snippet that Istarted (but doesn't work yet) to calculate consecutive days of SRKW observations
 
 ##consecutive days
 df <- orcasum.days[order(orcasum.days$region,orcasum.days$date),] 

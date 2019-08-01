@@ -20,6 +20,8 @@ library(dplyr)
 library(mgcv)
 library(scales)
 library(RColorBrewer)
+library(rworldmap)
+library(scales)
 # 1. Choose the years and regions of interest and get the data
 includeCanada=TRUE
 firstyear=1975#probably set to 1975 or 1976 (Olson et al)
@@ -43,7 +45,11 @@ wdays.K<-as.data.frame(tapply(orcasum.days$Kpres,list(orcasum.days$year,orcasum.
 wdays.L<-as.data.frame(tapply(orcasum.days$Lpres,list(orcasum.days$year,orcasum.days$region),sum))
 
 #6. if you want to do some basic plots of the data. This includes proportion of days in a week in which whales were observed up by week and decade
-#source("analyses/orcaphen/source/orca_plotdata.R")
+source("analyses/orcaphen/source/orca_plotdata.R")
+
+#7. Make a map of the SRKW sightings in ps and uss
+source("analyses/orcaphen/source/orca_makemap.R")
+
 
 #Take home from the above plots: Seasonality is hard to see in the figure with a separate line for each decade. I also plotted them with a single line showing the mean across all decades, and I standardized the proportions by substracting the means and dividing by the standard deviation. 
 #I did this to try to make seasonal patterns more obvious. It only sort of made them more obvious. Here's what I take away from these figures:
@@ -83,7 +89,7 @@ abline(mod)
 mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
 mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
 
-plot(df$year,df$lastest.all,xlab="year",ylab="first obs doy", main="", bty="l", pch=21, bg="gray")
+plot(df$year,df$lastest.all,xlab="year",ylab="last obs doy", main="", bty="l", pch=21, bg="gray")
 mod<-lm(df$lastest.all~df$year)
 abline(mod)
 mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
@@ -372,3 +378,4 @@ colnames(change.df)<-c("pod","region","nobs","prob","first.dif","first.p","last.
   #mod<-lm(reg.df$meanest.sept30~reg.df$year)
   #mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
   #abline(mod)
+
