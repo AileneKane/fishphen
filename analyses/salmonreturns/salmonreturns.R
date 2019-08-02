@@ -17,6 +17,7 @@ setwd("~/Documents/GitHub/fishphen")
 
 # Load libraries
 library(dplyr)
+library(mgcv)
 # 1. Get the data
 d <- read.csv("data/TrapEstimateSpawnCHCKCO.csv")
 head(d)
@@ -229,6 +230,10 @@ head(modsums)
 #Plot the data and look at it and pull out first and last observation date
 d$doy<-as.integer(d$doy)
 allyears<-sort(allyears[allyears<2019])
+#different colored points/lines for each site
+color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
+cols=sample(color,length(unique(datyr$Facility_Short_Name)))
+#d$cols<-cols
 sp<-site<-c()
 species<-unique(d$SPECIES_Code)
 for(s in 1:length(species)){
@@ -241,14 +246,10 @@ for(s in 1:length(species)){
    datyr<-spdat[spdat$BROOD_Yr==y,]
    datyr$Facility_Short_Name<-as.factor(datyr$Facility_Short_Name)
    sites<-unique(datyr$Facility_Short_Name)
-   #different colored points/lines for each site
-   color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
-   cols=sample(color,length(sites))
-
+   
     plot(datyr$doy,datyr$Adults_Cnt, pch=21, xlab="DOY",ylab="# Adults",bg=cols[as.numeric(datyr$Facility_Short_Name)], main=paste(y))
     if(y==min(years)){mtext(paste(species[s]),side=2, line=4)}
        #fit a gam for each site and plot curves
-    sites<-unique(datyr$Facility_Short_Name)
     for(i in 1:length(sites)){
         sitedat<-datyr[datyr$Facility_Short_Name==sites[i],]
         sitedat<-sitedat[-which(is.na(sitedat$Adults_Cnt)),]
@@ -260,4 +261,11 @@ for(s in 1:length(species)){
      
    }
       
-      
+#Choosing what hatcheries to focus on:
+co<-table(d$Facility_Short_Name[d$SPECIES_Code=="CO"],d$ORIGIN_TYPE_Code[d$SPECIES_Code=="CO"])
+ch<-as.data.frame(table(d$Facility_Short_Name[d$SPECIES_Code=="CH"],d$ORIGIN_TYPE_Code[d$SPECIES_Code=="CH"]))
+ck<-as.data.frame(table(d$Facility_Short_Name[d$SPECIES_Code=="CK"],d$ORIGIN_TYPE_Code[d$SPECIES_Code=="CK"]))
+
+colnames(ch)<- c("H.ch","M.ch","U.ch","W.ch")
+colnames(co)<- c("H.co","M.co","U.co","W.co")
+colnames(ck)<- c("H.ck","M.ck","U.ck","W.ck")

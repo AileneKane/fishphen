@@ -1,0 +1,4 @@
+"pod","region","season","phase","slope.mn","slope.lci","slope.uci"
+"L","uss","2","peak","-0.31","-0.64","0.02"
+"L","uss","2","first","-0.95","-1.22","-0.68"
+"L","uss","2","last","0.49","0.04","0.96"

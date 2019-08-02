@@ -18,14 +18,23 @@ for(p in 1:length(podcols)){
     regdat<-orcasum.days[orcasum.days$region==r,]
     years = unique(orcasum.days$year)
     plot(0, type = 'n', las=1, xlim=c(1,366),ylim=c(min(as.numeric(years)),max(as.numeric(years))),ylab="",xlab="Day of year", main="", cex.axis=1.1, cex.lab=1.3)
+    if(r=="uss"){
+      col="darkblue"
+      polygon(c(121,121,304,304),c(max(as.numeric(years))+1,min(as.numeric(years))-1,min(as.numeric(years))-1,max(as.numeric(years))+1),
+              col=adjustcolor(col,alpha.f=0.2),
+              border=NA)
+    }
+    if(r=="ps"){
+      col="salmon"
+      polygon(c(244,244,368,368),c(max(as.numeric(years))+1,min(as.numeric(years))-1,min(as.numeric(years))-1,max(as.numeric(years))+1),
+              col=adjustcolor(col,alpha.f=0.2),
+              border=NA)
+    }
+    
     for(y in years){
       yrdat = regdat[regdat$year==y,]
       days = yrdat$day[yrdat[,colnum]==1]
-      if(r=="ps"){col="darkblue"}
-      if(r=="uss"){col="salmon"}
-      polygon(c(275,274,365,365),c(max(as.numeric(years)),min(as.numeric(years)),min(as.numeric(years)),max(as.numeric(years))),
-                       col=alpha(col,0.5),
-                      border=NA)
+          
       points(x=days,y=rep(y,length=length(days)), pch=16,col= col, cex=1.3)
       #lines(x=days,y=rep(y,length=length(days)), lwd=2)
     }  
@@ -54,9 +63,9 @@ newmap <- getMap(resolution = "low")
 
 #quartz(height=6, width=6)
  plot(newmap, xlim = c(-125, -120), ylim = c(47, 49), asp = 1)
-  points(meannumdays$lon[meannumdays$region=="ps"],meannumdays$lat[meannumdays$region=="ps"],type="p",pch=16, col="darkblue",cex=log(meannumdays$mnnumdays, base=10))
-  points(meannumdays$lon[meannumdays$region=="uss"],meannumdays$lat[meannumdays$region=="uss"],type="p",pch=16, col="salmon",cex=log(meannumdays$mnnumdays, base=10))
+  points(meannumdays$lon[meannumdays$region=="ps"],meannumdays$lat[meannumdays$region=="ps"],type="p",pch=16, col="salmon",cex=log(meannumdays$mnnumdays, base=10))
+  points(meannumdays$lon[meannumdays$region=="uss"],meannumdays$lat[meannumdays$region=="uss"],type="p",pch=16, col="darkblue",cex=log(meannumdays$mnnumdays, base=10))
   legend(-122.2,48,legend=c("# days per year= 2","# days per year= 78"),
-         pch=21, bty="n",pt.bg=c("salmon","salmon"), pt.cex=c(log(2, base=10), log(78, base=10)))
+         pch=21, bty="n",pt.bg=c("darkblue","darkblue"), pt.cex=c(log(2, base=10), log(78, base=10)))
   
 dev.off()

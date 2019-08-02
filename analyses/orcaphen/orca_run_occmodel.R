@@ -15,7 +15,7 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="J"#options= J,K,L,SR
+pod="L"#options= J,K,L,SR
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
 #Choose the credible intervals you want
@@ -37,7 +37,7 @@ dat<-dat[dat$region==region,]
 if(region == "ps"){
   season="1"#winter
   dat$season<-NA
-  dat$season[dat$day>274]<-1#winter (Oct 1-Dec 31)#should extend this to Jan 31
+  dat$season[dat$day>244]<-1#winter (Sept 1-Dec 31)#should extend this to Jan 31
 }
 
 #to extend to jan31, add an "orca year" which runs Oct 1-Sept 31
@@ -429,7 +429,7 @@ df<-rbind(
   c(pod,region,season,"last",round(mean(slopevec.last,na.rm=T),digits=2),round(quantile(slopevec.last,lci,na.rm=T),digits=2),round(quantile(slopevec.last,uci,na.rm=T),digits=2))
 )
 colnames(df)<-c("pod","region","season","phase","slope.mn","slope.lci","slope.uci")
-df.name<-paste("analyses/output/",pod,"_",season,"_",region,".csv")
+df.name<-paste("analyses/output/",pod,"_",season,"sept1_",region,".csv", sep="")
 write.csv(df,df.name, row.names=FALSE)
 
 #-----------------------------------------------------------------

@@ -124,6 +124,15 @@ legend(-120,49,legend=c(" shifting earlier"," shifting later", " no change", " R
 
 dev.off()
 
+
+#Make a map with names by species, to help me decide which sites to use for looking at trends in return dates
+quartz(height=8, width=25)
+par(mfrow=c(1,3), oma=c(1,1,1,1))
 newmap <- getMap(resolution = "low")
 
-#size points by total run size
+for(s in 1:length(sp)){
+  spdat<-shifts[shifts$sp==sp[s],]
+    plot(newmap, xlim = c(-125, -119), ylim = c(47, 48), asp = 1,main=paste(sp[s]))
+    points(spdat$lon,spdat$lat,type="p",pch=21, cex=log(spdat$mn.total, base=10), main=paste(phase[p],sp[s]))
+    text(spdat$lon,spdat$lat,labels=substr(spdat$site,1,5), cex=0.8) 
+}
