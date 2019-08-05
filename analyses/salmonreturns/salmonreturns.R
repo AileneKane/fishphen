@@ -1,6 +1,12 @@
 #Salmon return timing phenology using WDFW data
 #Started by Ailene on March 12, 2019
-# To do:
+# To do for orca paper:
+# 1. Choose streams to include in paper. Choose streams that 
+### a) have high total run sizes for wild coho, chum, chinook; 
+### b) are close to puget sound
+#2. See if there are multiple runs in these focal streams by looking at day of year when peak occurs
+#3. Extract first, last, peak and median dates, then look at trends by fitting linear models
+# Also:
 # 1. Check that correlations on map are correct- some seem to have significant lines when they ar not super strong relationships...  
 # 2. Plot curves of each stream/year as a separate line on same figure
 # 3. Using curves, decide on different seasons to use per stream/hatchery
@@ -18,55 +24,39 @@ setwd("~/Documents/GitHub/fishphen")
 # Load libraries
 library(dplyr)
 library(mgcv)
+library(rworldmap)
+library(scales)
+
 # 1. Get the data
 d <- read.csv("data/TrapEstimateSpawnCHCKCO.csv")
-head(d)
+latlon<-read.csv("data/TrapEstimateSpawnCHCKCO_LatLong.csv", header=TRUE)
+colnames(latlon)<-c("Facility_Short_Name","Lat","Lon")
+d<-left_join(d,latlon, by="Facility_Short_Name",copy=TRUE)
 
-#Create columns for month, year, doy
-d$doy<-strftime(strptime(d$Event_Date,format= "%m/%d/%y"),format= "%j")
-d$year<-strftime(strptime(d$Event_Date,format= "%m/%d/%y"),format= "%Y")
-d$month<-strftime(strptime(d$Event_Date,format= "%m/%d/%y"),format= "%m")
+# 2. Clean  and format the data
 
-unique(d$year)#goes back to 1995
-unique(d$ADULT_EVENT_TYPE_Name)#Trap estimates 
-#just use trap estimates
-d<-d[d$ADULT_EVENT_TYPE_Name=="Trap Estimate",] #start with trap events. could also look at Parent Spawn EVents
-unique(d$MarkCode)#should find out what these mean...
-#which column should i use- adults_Cnt, Females_Cnt, Males_Cnt
-#length(which(is.na(d$Adults_Cnt)))
-#length(which(is.na(d$Males_Cnt)))
-#length(which(is.na(d$Females_Cnt)))
-#definitely ADults_Cnt- ahs way more data!
-#When Adults_Cnt, does not have data, does Females_Cnt have data?
-#length(which(is.na(d$Females_Cnt[which(is.na(d$Adults_Cnt))])))
-#unique(d$Females_Cnt[which(is.na(d$Adults_Cnt))])
-#nope- all NAs!
-# 2. A bit of cleaning: Brood year seems to be off in a few cases
-d$year[d$BROOD_Yr==1997 & d$year==2000]<-1997#i think the brood year is correct because all other nearby rows have year=1997
-d$BROOD_Yr[d$BROOD_Yr==1993]<-d$year[d$BROOD_Yr==1993]#
-d$BROOD_Yr[d$BROOD_Yr==2003 & d$year==2002]<-2002
-d$BROOD_Yr[d$BROOD_Yr==1997 & d$year==1998 & d$doy>250]<-1998
+source("analyses/salmonreturns/source/clean_salmonreturns.R")
 
-d$Adults_Cnt[which(d$Adults_Cnt<0)]<-abs(d$Adults_Cnt[which(d$Adults_Cnt<0)])
-#in most cases, the Brood year column seems to align with the spawning year in the way i want it to, but occasionally there are mistakes in it
-#especially in 1997-1998. fix this
+# 3. Choose what sites to focus on: creates 2 dataframes (wild, hatch) that  include list of sites for each species
 
-#The following hatcheries seem to have large amounts of continuous data and seem to be close to puget sound:
-#dps<-d[d$Facility_Short_Name=="HOODSPORT HATCHERY"|d$Facility_Short_Name=="ISSAQUAH HATCHERY"|d$Facility_Short_Name=="MINTER CR HATCHERY"|
-#         d$Facility_Short_Name=="SOOS CREEK HATCHERY"|d$Facility_Short_Name=="TUMWATER FALLS HATCHERY"|d$Facility_Short_Name=="VOIGHTS CR HATCHERY"|
+source("analyses/salmonreturns/source/salmonreturns_choosesites.R")
 
-#other hatcheries that seem to have continuous data: BINGHAM CR HATCHERY#COWLITZ SALMON HATCHERY#DUNGENESS HATCHERY#EASTBANK HATCHERY#ELOCHOMAN HATCHERY#ELWHA HATCHERY#FALLERT CR HATCHERY #FORKS CREEK HATCHERY#GARRISON HATCHERY 
-#GRAYS RIVER HATCHERY #HUMPTULIPS HATCHERY#HUPP SPRINGS REARING#KALAMA FALLS HATCHERY #KENDALL CR HATCHERY #KLICKITAT HATCHERY#LEWIS RIVER HATCHERY#K ABERDEEN HATCHERY #LYONS FERRY HATCHERY #MARBLEMOUNT HATCHERY#MCKERNAN HATCHERY#METHOW HATCHERY 
-#NASELLE HATCHERY #NEMAH HATCHERY#NORTH TOUTLE HATCHERY#PRIEST RAPIDS HATCHERY#RINGOLD SPRINGS HATCHERY #SAMISH HATCHERY#SOLDUC HATCHERY #WASHOUGAL HATCHERY#WELLS HATCHERY
-#Plot the data and look at it and pull out first and last observation date
-d$doy<-as.integer(d$doy)
-allyears<-unique(d$BROOD_Yr)
+wild.d<-left_join(wild,d)
+hatch.d<-left_join(hatch,d)
+types<-c("wild","hatch")
+sp<-site<-type<-firstcoefsall<-lastcoefsall<-midcoefsall<-peakcoefsall<-meantotalall<-c()
+
+for(w in 1:2){#type
+  if(w==1){d2<-wild.d}
+  if(w==2){d2<-hatch.d}
+  
+
+allyears<-unique(d2$BROOD_Yr)
 allyears<-sort(allyears[allyears<2019])
-# hatcheries
-sp<-site<- firstcoefsall<-lastcoefsall<-midcoefsall<-peakcoefsall<-meantotalall<-c()
-species<-unique(d$SPECIES_Code)
-for(s in 1:length(species)){
-  spdat<-d[d$SPECIES_Code==species[s],]
+species<-unique(d2$SPECIES_Code)
+for(p in 1:length(species)){
+  spdat<-d2[d2$SPECIES_Code==species[p],]
+  spdat$Facility_Short_Name<-as.factor(spdat$Facility_Short_Name)
   sites<-unique(spdat$Facility_Short_Name)
 for(i in 1:length(sites)){
   dat<-spdat[spdat$Facility_Short_Name==sites[i],]
@@ -84,7 +74,7 @@ for(i in 1:length(sites)){
     if (dim(datyr)[1]>0){
     count<-datyr$Adults_Cnt
     #plot(datyr$doy,count, pch=21, bg="gray", main=paste(y))
-    #if(y==min(allyears)){mtext(paste(sites[i], species[s]),side=3, line=3)}
+    #if(y==min(allyears)){mtext(paste(sites[i], species[p]),side=3, line=3)}
     datdoy<-datyr
     
     #for first few months of a new calendar year, want to treat is a higher doy, not a lower one, so add 365
@@ -96,9 +86,8 @@ for(i in 1:length(sites)){
     peak<-min(datdoy$doy[which(count==max(count, na.rm=TRUE))])#date of peak number of fish observed, if multiple dates with same number, choose first of these
     #print(peak)
     }
-    print(y);print(first);print(last);print(total); print(total); print(mid)
+    print(y);print(first);print(last);print(total); print(mid)
     #year<-c(year,y)
-    
     firstobsdate<-c(firstobsdate,first)
     lastobsdate<-c(lastobsdate,last)
     midobsdate<-c(midobsdate,mid)
@@ -111,11 +100,12 @@ for(i in 1:length(sites)){
   }
   #if(length(which(is.na(firstobsdate)))<5){next}
   year<-as.numeric(allyears)
-  figname<-paste("analyses/figures/wdfw_returns/",species[s],sites[i],".pdf", sep="")
-  pdf(figname,height=10, width=25)
-  #quartz(height=10, width=25)
-  par(mfrow=c(1,4), oma=c(1,1,1,1))
-  plot(year,firstobsdate,pch=21, bg="gray", main=paste(species[s],sites[i]))
+  #figname<-paste("analyses/figures/wdfw_returns/",types[w],species[p],sites[i],".pdf", sep="_")
+  #pdf(figname,height=10, width=25)
+  quartz(height=8, width=30)
+  par(mfrow=c(1,5), oma=c(1,1,1,1))
+  hist(dat$doy)
+  plot(year,firstobsdate,pch=21, bg="gray", main=paste(species[p],sites[i],types[w]))
   
   if(length(which(!is.na(firstobsdate)))>3){
     firstmod<-lm(firstobsdate~year)
@@ -124,7 +114,7 @@ for(i in 1:length(sites)){
       text(max(year)-1,min(firstobsdate, na.rm=TRUE),labels=paste("coef=",round(coef(firstmod)[2], digits=2), sep=""), cex=1.2)
       }
     firstcoefs<-coef(firstmod)
-    firstcoefs.ci<-confint(firstmod)
+    firstcoefs.ci<-confint(firstmod,level = 0.75)
   }
   if(length(which(!is.na(firstobsdate)))<=3){
     firstcoefs<-c(NA,NA)
@@ -140,7 +130,7 @@ for(i in 1:length(sites)){
       text(max(year)-1,min(lastobsdate, na.rm=TRUE),labels=paste("coef=",round(coef(lastmod)[2], digits=2), sep=""), cex=1.2)
       }
     lastcoefs<-coef(lastmod)
-    lastcoefs.ci<-confint(lastmod)
+    lastcoefs.ci<-confint(lastmod,level = 0.75)
   }
     if(length(which(!is.na(lastobsdate)))<=3){
       lastcoefs<-c(NA,NA)
@@ -160,7 +150,7 @@ for(i in 1:length(sites)){
       text(max(year)-1,min(midobsdate, na.rm=TRUE),labels=paste("coef=",round(coef(midmod)[2], digits=2), sep=""), cex=1.2)
     }
     midcoefs<-coef(midmod)
-    midcoefs.ci<-confint(midmod)
+    midcoefs.ci<-confint(midmod,level = 0.75)
   }  
   if(length(which(!is.na(midobsdate)))<=3){
     midcoefs<-c(NA,NA)
@@ -176,13 +166,13 @@ for(i in 1:length(sites)){
       text(max(year)-1,min(peakobsdate, na.rm=TRUE),labels=paste("coef=",round(coef(peakmod)[2], digits=2), sep=""), cex=1.2)
     }
     peakcoefs<-coef(peakmod)
-    peakcoefs.ci<-confint(peakmod)
+    peakcoefs.ci<-confint(peakmod,level = 0.75)
   } 
   if(length(which(!is.na(peakobsdate)))<=3){
     peakcoefs<-c(NA,NA)
     peakcoefs.ci<-rbind(c(NA,NA),c(NA,NA))
   } 
-  dev.off()
+  #dev.off()
   if(length(which(!is.na(midobsdate)))>0){
     meantotal<-mean(alltotal, na.rm=TRUE)
   }  
@@ -201,28 +191,28 @@ for(i in 1:length(sites)){
   
   meantotalall<-c(meantotalall,meantotal)
   
-  sp<-c(sp,species[s])
-  site<-c(site, sites[i])
+  sp<-c(sp,species[p])
+  site<-c(site, as.character(sites[i]))
+  type<-c(type,types[w])
   }
 }
 
 #make a big table
-allmodsums<-as.data.frame(cbind(sp,site,meantotalall,round(firstcoefsall, digits=3),round(lastcoefsall, digits=3),
+allmodsums<-as.data.frame(cbind(type,sp,site,meantotalall,round(firstcoefsall, digits=3),round(lastcoefsall, digits=3),
                                 round(midcoefsall, digits=3),round(peakcoefsall, digits=3)))
-colnames(allmodsums)[3:27]<-c("mn.total.runsize","first.int", "first.intlci","first.intuci","first.yr", "first.yrlci","first.yruci",
+colnames(allmodsums)[4:28]<-c("mn.total.runsize","first.int", "first.intlci","first.intuci","first.yr", "first.yrlci","first.yruci",
                               "last.int", "last.intlci","last.intuci","last.yr", "last.yrlci","last.yruci",
                               "mid.int", "mid.intlci","mid.intuci","mid.yr", "mid.yrlci","mid.yruci",
                               "pk.int", "pk.intlci","pk.intuci","pk.yr", "pk.yrlci","pk.yruci")
 
-#Add Lat/Long to the table
-latlon<-read.csv("data/TrapEstimateSpawnCHCKCO_LatLong.csv", header=TRUE)
-colnames(latlon)<-c("site","lat","lon")
-modsums<-left_join(allmodsums,latlon, by="site",copy=TRUE)
 #Add priority stocks column for chinook
+if(w==1){write.csv(allmodsums, "analyses/output/salmonreturntrends_wild.csv", row.names = FALSE)}
+if(w==2){write.csv(allmodsums[allmodsums$type=="hatch",], "analyses/output/salmonreturntrends_hatch.csv", row.names = FALSE)}
 
-write.csv(modsums, "analyses/output/salmonreturntrends.csv", row.names = FALSE)
-# Look at trends in a bit more details
+}
 
+
+#The below has not been updated recently
 # Make annual abundance curves, to look at variation, of individual streams and of Puget Sound vs Upper Salish Sea as a whole
 modsums$mn.total.runsize
 head(modsums)
@@ -236,8 +226,8 @@ cols=sample(color,length(unique(datyr$Facility_Short_Name)))
 #d$cols<-cols
 sp<-site<-c()
 species<-unique(d$SPECIES_Code)
-for(s in 1:length(species)){
-  spdat<-d[d$SPECIES_Code==species[s],]
+for(p in 1:length(species)){
+  spdat<-d[d$SPECIES_Code==species[p],]
   spdat<-spdat[order(spdat$year,spdat$doy),]
   years<-sort(unique(spdat$BROOD_Yr))
   quartz(height=10,width=25)
@@ -248,7 +238,7 @@ for(s in 1:length(species)){
    sites<-unique(datyr$Facility_Short_Name)
    
     plot(datyr$doy,datyr$Adults_Cnt, pch=21, xlab="DOY",ylab="# Adults",bg=cols[as.numeric(datyr$Facility_Short_Name)], main=paste(y))
-    if(y==min(years)){mtext(paste(species[s]),side=2, line=4)}
+    if(y==min(years)){mtext(paste(species[p]),side=2, line=4)}
        #fit a gam for each site and plot curves
     for(i in 1:length(sites)){
         sitedat<-datyr[datyr$Facility_Short_Name==sites[i],]
@@ -260,38 +250,3 @@ for(s in 1:length(species)){
      }
      
    }
-      
-#Choosing what hatcheries to focus on:
-co<-table(d$Facility_Short_Name[d$SPECIES_Code=="CO"],d$ORIGIN_TYPE_Code[d$SPECIES_Code=="CO"])
-ch<-table(d$Facility_Short_Name[d$SPECIES_Code=="CH"],d$ORIGIN_TYPE_Code[d$SPECIES_Code=="CH"])
-ck<-table(d$Facility_Short_Name[d$SPECIES_Code=="CK"],d$ORIGIN_TYPE_Code[d$SPECIES_Code=="CK"])
-ch.df<-as.data.frame(cbind(rownames(ch),ch[,1],ch[,2],ch[,3],ch[,4]))
-colnames(ch.df)<- c("site","H.ch","M.ch","U.ch","W.ch")
-co.df<-as.data.frame(cbind(rownames(co),co[,1],co[,2],co[,3],co[,4]))
-colnames(co.df)<- c("site","H.co","M.co","U.co","W.co")
-ck.df<-as.data.frame(cbind(rownames(ck),ck[,1],ck[,2],ck[,3],ck[,4]))
-colnames(ck.df)<- c("site","H.ck","M.ck","U.ck","W.ck")
-ckco<-full_join(ck.df,co.df)
-chckco<-full_join(ckco,ch.df)
-chckco<-chckco[order(as.numeric(chckco$H.ck),decreasing=TRUE),]
-head(chckco)
-#sites with most hatchery/wild ck
-ck.df<-ck.df[order(as.numeric(ck.df$H.ck)),]
-ck.hatch<-tail(ck.df$site)
-ck.df<-ck.df[order(as.numeric(ck.df$W.ck)),]
-ck.wild<-tail(ck.df$site)
-ck.sites<-unique(c(ck.hatch,ck.wild))
-
-#sites with most hatchery ch
-ch.df<-ch.df[order(as.numeric(ch.df$H.ch)),]
-ch.hatch<-tail(ch.df$site)
-ch.df<-ch.df[order(as.numeric(ch.df$W.ch)),]
-ch.wild<-tail(ch.df$site)
-ch.sites<-unique(c(ch.hatch,ch.wild))
-
-#sites with most hatchery ch
-co.df<-co.df[order(as.numeric(co.df$H.co)),]
-co.hatch<-tail(co.df$site)
-co.df<-co.df[order(as.numeric(co.df$W.co)),]
-co.wild<-tail(co.df$site)
-co.sites<-unique(c(co.hatch,co.wild))
