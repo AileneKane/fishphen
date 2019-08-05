@@ -62,7 +62,7 @@ d$Adults_Cnt[which(d$Adults_Cnt<0)]<-abs(d$Adults_Cnt[which(d$Adults_Cnt<0)])
 d$doy<-as.integer(d$doy)
 allyears<-unique(d$BROOD_Yr)
 allyears<-sort(allyears[allyears<2019])
-#7 hatcheries
+# hatcheries
 sp<-site<- firstcoefsall<-lastcoefsall<-midcoefsall<-peakcoefsall<-meantotalall<-c()
 species<-unique(d$SPECIES_Code)
 for(s in 1:length(species)){
@@ -263,9 +263,35 @@ for(s in 1:length(species)){
       
 #Choosing what hatcheries to focus on:
 co<-table(d$Facility_Short_Name[d$SPECIES_Code=="CO"],d$ORIGIN_TYPE_Code[d$SPECIES_Code=="CO"])
-ch<-as.data.frame(table(d$Facility_Short_Name[d$SPECIES_Code=="CH"],d$ORIGIN_TYPE_Code[d$SPECIES_Code=="CH"]))
-ck<-as.data.frame(table(d$Facility_Short_Name[d$SPECIES_Code=="CK"],d$ORIGIN_TYPE_Code[d$SPECIES_Code=="CK"]))
+ch<-table(d$Facility_Short_Name[d$SPECIES_Code=="CH"],d$ORIGIN_TYPE_Code[d$SPECIES_Code=="CH"])
+ck<-table(d$Facility_Short_Name[d$SPECIES_Code=="CK"],d$ORIGIN_TYPE_Code[d$SPECIES_Code=="CK"])
+ch.df<-as.data.frame(cbind(rownames(ch),ch[,1],ch[,2],ch[,3],ch[,4]))
+colnames(ch.df)<- c("site","H.ch","M.ch","U.ch","W.ch")
+co.df<-as.data.frame(cbind(rownames(co),co[,1],co[,2],co[,3],co[,4]))
+colnames(co.df)<- c("site","H.co","M.co","U.co","W.co")
+ck.df<-as.data.frame(cbind(rownames(ck),ck[,1],ck[,2],ck[,3],ck[,4]))
+colnames(ck.df)<- c("site","H.ck","M.ck","U.ck","W.ck")
+ckco<-full_join(ck.df,co.df)
+chckco<-full_join(ckco,ch.df)
+chckco<-chckco[order(as.numeric(chckco$H.ck),decreasing=TRUE),]
+head(chckco)
+#sites with most hatchery/wild ck
+ck.df<-ck.df[order(as.numeric(ck.df$H.ck)),]
+ck.hatch<-tail(ck.df$site)
+ck.df<-ck.df[order(as.numeric(ck.df$W.ck)),]
+ck.wild<-tail(ck.df$site)
+ck.sites<-unique(c(ck.hatch,ck.wild))
 
-colnames(ch)<- c("H.ch","M.ch","U.ch","W.ch")
-colnames(co)<- c("H.co","M.co","U.co","W.co")
-colnames(ck)<- c("H.ck","M.ck","U.ck","W.ck")
+#sites with most hatchery ch
+ch.df<-ch.df[order(as.numeric(ch.df$H.ch)),]
+ch.hatch<-tail(ch.df$site)
+ch.df<-ch.df[order(as.numeric(ch.df$W.ch)),]
+ch.wild<-tail(ch.df$site)
+ch.sites<-unique(c(ch.hatch,ch.wild))
+
+#sites with most hatchery ch
+co.df<-co.df[order(as.numeric(co.df$H.co)),]
+co.hatch<-tail(co.df$site)
+co.df<-co.df[order(as.numeric(co.df$W.co)),]
+co.wild<-tail(co.df$site)
+co.sites<-unique(c(co.hatch,co.wild))
