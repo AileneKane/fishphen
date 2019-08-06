@@ -4,7 +4,7 @@
 figname<-paste("analyses/figures/OrcaPhenPlots/srkw_phenmap.pdf")
 pdf(figname,height=6, width=15)
 #quartz(height=6, width=15)
-par(omi=c(.5,2,.5,.5), mfrow=c(1,3))
+par(omi=c(.5,.5,.5,.5), mfrow=c(1,3))
 
 podcols<-"AllSRpres"
 pods<-"SRs"
