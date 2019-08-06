@@ -68,7 +68,10 @@ axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
 
 wildshifts<-read.csv("analyses/output/salmonreturntrends_wild.csv",header=TRUE)
 hatchshifts<-read.csv( "analyses/output/salmonreturntrends_hatch.csv",header=TRUE)
+
 #hatchshifts<-hatchshifts[hatchshifts$type=="hatch",]
+albionshifts<-read.csv("analyses/output/albionreturntrends.csv",header=TRUE)
+names(albionshifts)<-albionshifts$X
 x<-rep(1,times=6)
 range(dd$first.yrlci)
 
