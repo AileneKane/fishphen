@@ -129,10 +129,10 @@ if(length(which(!is.na(peakobsdate)))<=3){
   peakcoefs.ci<-rbind(c(NA,NA),c(NA,NA))
 } 
 #dev.off()
-if(length(which(!is.na(meantotal)))>0){
+if(length(which(!is.na(cpue)))>0){
   meantotal<-mean(cpue, na.rm=TRUE)
 }  
-if(length(which(!is.na(meantotal)))<=0){
+if(length(which(!is.na(cpue)))<=0){
   meantotal<-NA
 } 
 
@@ -144,13 +144,17 @@ lastcoefsall<-c(lastcoefs[1],lastcoefs.ci[1,],lastcoefs[2],lastcoefs.ci[2,])
 midcoefsall<-c(midcoefs[1],midcoefs.ci[1,],midcoefs[2],midcoefs.ci[2,])
 
 peakcoefsall<-c(peakcoefs[1],peakcoefs.ci[1,],peakcoefs[2],peakcoefs.ci[2,])
+#add total catch (not effort corrected)
+total.year<-aggregate(d$catch,by=list(d$year), sum)
+mn.total<-mean(total.year$x)
 
 
-allmodsums<-c("ck","albion",meantotal,round(firstcoefsall, digits=3),round(lastcoefsall, digits=3),
+allmodsums<-c("ck","albion",meantotal,mn.total,round(firstcoefsall, digits=3),round(lastcoefsall, digits=3),
                                 round(midcoefsall, digits=3),round(peakcoefsall, digits=3))
-names(allmodsums)<-c("sp","site","mn.cpue","first.int","first.intlci","first.intuci","first.yr", "first.yrlci","first.yruci",
+names(allmodsums)<-c("sp","site","mn.cpue","mn.total","meanfirst.int","first.intlci","first.intuci","first.yr", "first.yrlci","first.yruci",
                               "last.int", "last.intlci","last.intuci","last.yr", "last.yrlci","last.yruci",
                               "mid.int", "mid.intlci","mid.intuci","mid.yr", "mid.yrlci","mid.yruci",
                               "pk.int", "pk.intlci","pk.intuci","pk.yr", "pk.yrlci","pk.yruci")
+
 
 write.csv(allmodsums, "analyses/output/albionreturntrends.csv", row.names = TRUE)

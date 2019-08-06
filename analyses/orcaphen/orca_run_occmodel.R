@@ -15,7 +15,7 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="L"#options= J,K,L,SR
+pod="J"#options= J,K,L,SR
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
 #Choose the credible intervals you want
@@ -38,7 +38,8 @@ if(region == "ps"){
   season="1"#winter
   dat$season<-NA
   dat$season[dat$day>244]<-1#winter (Sept 1-Dec 31)#should extend this to Jan 31
-}
+  dat<-dat[dat$year>1996,]
+  }
 
 #to extend to jan31, add an "orca year" which runs Oct 1-Sept 31
 #dat$orcayear<-dat$year
