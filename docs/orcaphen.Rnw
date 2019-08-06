@@ -117,6 +117,9 @@ Last-detection dates have gotten later by XX days in Puget Sound and by XX days 
 \item What other figures would be helpful?
 \end{enumerate}
 
+\bibliography{../refs/noaalib.bib}
+
+
 \section* {Figures}
 
 \begin{figure}[h!]
@@ -183,5 +186,4 @@ Last-detection dates have gotten later by XX days in Puget Sound and by XX days 
 % \label{fig:salmon}
 % \end{figure}
 
-\bibliography{../refs/noaalib.bib}
 \end{document}
