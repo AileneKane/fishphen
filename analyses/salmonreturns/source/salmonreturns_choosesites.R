@@ -16,19 +16,19 @@ colnames(co.df)<- c("site","H.co","M.co","U.co","W.co")
 ck.df<-as.data.frame(cbind(rownames(ck),ck[,1],ck[,2],ck[,3],ck[,4]))
 colnames(ck.df)<- c("site","H.ck","M.ck","U.ck","W.ck")
 
-#sites with most hatchery/wild ck
+#sites with most hatchery/wild ck data
 ck.df<-ck.df[order(as.numeric(ck.df$H.ck)),]
 ck.hatch<-ck.df$site[as.numeric(ck.df$H.ck)>500]
 ck.wild<-ck.df$site[as.numeric(ck.df$W.ck)>200]
 ck.sites<-unique(c(ck.hatch,ck.wild))
 
-#sites with most hatchery ch
+#sites with most hatchery ch data
 ch.df<-ch.df[order(as.numeric(ch.df$H.ch)),]
 ch.hatch<-ch.df$site[as.numeric(ch.df$H.ch)>100]
 ch.wild<-ch.df$site[as.numeric(ch.df$W.ch)>60]
 ch.sites<-unique(c(ch.hatch,ch.wild))
 
-#sites with most hatchery ch
+#sites with most hatchery ch data
 co.df<-co.df[order(as.numeric(co.df$H.co)),]
 co.hatch<-co.df$site[as.numeric(co.df$H.co)>400]
 co.wild<-co.df$site[as.numeric(co.df$W.co)>100]
@@ -54,30 +54,30 @@ hatch<-left_join(hatch,latlon,rep=TRUE)
 #Map the wild vs hatchery sites to see where they are
 
 #Make a map with names by species, to help me decide which sites to use for looking at trends in return dates
-# quartz(height=8, width=25)
-# par(mfrow=c(1,3), oma=c(1,1,1,1))
-# newmap <- getMap(resolution = "low")
-# sp<-unique(wild$sp)
-# col=c("darkred","darkblue","darkgreen")
-# for(s in 1:length(sp)){
-#   spdat<-wild[wild$sp==sp[s],]
-#   plot(newmap, xlim = c(-125, -119), ylim = c(47, 48), asp = 1,main=paste(sp[s],"-wild"))
-#   points(spdat$Lon,spdat$Lat,type="p",pch=21, cex=1.3, bg=col[s])
-#   text(spdat$Lon,spdat$Lat,labels=substr(spdat$Facility_Short_Name,1,5), cex=0.8)
-# }
-# 
-# #now hatchery salmon
-# quartz(height=8, width=25)
-# par(mfrow=c(1,3), oma=c(1,1,1,1))
-# newmap <- getMap(resolution = "low")
-# sp<-unique(hatch$sp)
-# col=c("darkred","darkblue","darkgreen")
-# for(s in 1:length(sp)){
-#   spdat<-hatch[hatch$sp==sp[s],]
-#   plot(newmap, xlim = c(-125, -119), ylim = c(47, 48), asp = 1,main=paste(sp[s],"-hatch"))
-#   points(spdat$Lon,spdat$Lat,type="p",pch=21, cex=1.3, bg=col[s])
-#   text(spdat$Lon,spdat$Lat,labels=substr(spdat$Facility_Short_Name,1,5), cex=1.1)
-# }
+quartz(height=8, width=25)
+par(mfrow=c(1,3), oma=c(1,1,1,1))
+newmap <- getMap(resolution = "low")
+sp<-unique(wild$sp)
+col=c("darkred","darkblue","darkgreen")
+for(s in 1:length(sp)){
+  spdat<-wild[wild$sp==sp[s],]
+  plot(newmap, xlim = c(-125, -119), ylim = c(47, 48), asp = 1,main=paste(sp[s],"-wild"))
+  points(spdat$Lon,spdat$Lat,type="p",pch=21, cex=1.3, bg=col[s])
+  text(spdat$Lon,spdat$Lat,labels=substr(spdat$Facility_Short_Name,1,5), cex=0.8)
+}
+
+#now hatchery salmon
+quartz(height=8, width=25)
+par(mfrow=c(1,3), oma=c(1,1,1,1))
+newmap <- getMap(resolution = "low")
+sp<-unique(hatch$sp)
+col=c("darkred","darkblue","darkgreen")
+for(s in 1:length(sp)){
+  spdat<-hatch[hatch$sp==sp[s],]
+  plot(newmap, xlim = c(-125, -119), ylim = c(47, 48), asp = 1,main=paste(sp[s],"-hatch"))
+  points(spdat$Lon,spdat$Lat,type="p",pch=21, cex=1.3, bg=col[s])
+  text(spdat$Lon,spdat$Lat,labels=substr(spdat$Facility_Short_Name,1,5), cex=1.1)
+}
 
 
 

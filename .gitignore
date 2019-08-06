@@ -42,3 +42,6 @@ docs/orcaphen.log
 analyses/figures/.DS_Store
 analyses/.DS_Store
 .DS_Store
+jags.output/lpod out season1  >1996
+jags.output/jpod out season1 >1996
+jags.output/kpod out season1 >1996
