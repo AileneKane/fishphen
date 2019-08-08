@@ -45,3 +45,4 @@ analyses/.DS_Store
 jags.output/lpod out season1  >1996
 jags.output/jpod out season1 >1996
 jags.output/kpod out season1 >1996
+.Rhistory
