@@ -6,9 +6,15 @@ d$K<-0
 d$K[grep("K",d$Pod.cl)]<- 1
 d$L<-0
 d$L[grep("L",d$Pod.cl)]<- 1
-d$SRKW<-0
-d$SRKW[grep("SR",d$Pod.cl)]<- 1
-d$SRKW[d$J==1|d$K==1|d$L==1]<- 1   
+
+if(assumeSRKW==TRUE){
+      d$SRKW<-1
+      d$SRKW[grep("NR",d$Pod.cl)]<- 0
+      d$SRKW[grep("T",d$Pod.cl)]<- 0 } 
+if(assumeSRKW==FALSE){
+    d$SRKW<-0
+    d$SRKW[grep("SR",d$Pod.cl)]<- 1
+    d$SRKW[d$J==1|d$K==1|d$L==1]<- 1  } 
 d$Orcas<-1
 d$Trans<-0
 d$Trans[grep("T",d$Pod.cl)]<- 1
@@ -108,35 +114,23 @@ orcasum.days$date[orcasum.days$day==366]<-as.Date(paste(as.numeric(orcasum.days$
 orcasum.days$date<-paste(orcasum.days$year,substr(orcasum.days$date, 6,10), sep="-")
 
 orcasum.days$mon<-substr(orcasum.days$date,6,7)
-#orcasum.days$date-as.Date(paste(orcasum.days$year,"06-30", sep="-"))
-#head(cbind(orcasum.days$date,as.Date(paste(orcasum.days$year,"06-30", sep="-")),orcasum.days$date-as.Date(paste(orcasum.days$year,"06-30", sep="-"))))
-#Add days after June 30:
+
+#Add days after March 31:
 orcasum.days$day<-as.numeric(orcasum.days$day)
 
-orcasum.days$daysaftapr30<-difftime(as.Date(orcasum.days$date), as.Date(paste(orcasum.days$year,"04-30", sep="-")),units=c("days")) 
-orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30<0)]<-difftime(as.Date(orcasum.days$date[which(orcasum.days$daysaftapr30<0)]), as.Date(paste(as.numeric(orcasum.days$year[which(orcasum.days$daysaftapr30<0)])-1,"04-30", sep="-")),units=c("days")) 
+orcasum.days$daysaftmar31<-difftime(as.Date(orcasum.days$date), as.Date(paste(orcasum.days$year,"03-31", sep="-")),units=c("days")) 
+orcasum.days$daysaftmar31[which(orcasum.days$daysaftmar31<0)]<-difftime(as.Date(orcasum.days$date[which(orcasum.days$daysaftmar31<0)]), as.Date(paste(as.numeric(orcasum.days$year[which(orcasum.days$daysaftmar31<0)])-1,"03-31", sep="-")),units=c("days")) 
 
-#add an "orca year" which runs may 1-april 30
+#add an "orca year" which runs apr1-mar 31
 orcasum.days$orcayear<-orcasum.days$year
-orcasum.days$orcayear[which(orcasum.days$day>120)]<-as.numeric(orcasum.days$year[which(orcasum.days$day>120)])+1
-#currently june 30 = 0 but we want it to be 365 or 366 (depending if leap year or not). correct this
-#leap years are 1976, 1980, 1984, 1992, 200, 2004, 2008, 2012, 2016
-#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0")]<-366
-#rcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1980")]<-366
-#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1984")]<-366
-#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1988")]<-366
-#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1992")]<-366
-#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="1996")]<-366
-#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2000")]<-366
-#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2004")]<-366
-#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2008")]<-366
-#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2012")]<-366
-#orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0" & orcasum.days$year=="2016")]<-366
-orcasum.days$daysaftapr30[which(orcasum.days$daysaftapr30=="0")]<-365
-#the above needs to be fixed to deal with leap year
+orcasum.days$orcayear[which(orcasum.days$day>90)]<-as.numeric(orcasum.days$year[which(orcasum.days$day>90)])-1
+#leap years are 1976, 1980, 1984, 1992, 2000, 2004, 2008, 2012, 2016
 
-#check that daysafterapril 30 is working
-presapr30<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$orcayear),sum)
+orcasum.days$daysaftmar31[which(orcasum.days$daysaftmar31=="0")]<-366
+
+
+#check that daysaftermar31 is working
+presapr1<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$orcayear),sum)
 
 #Add decade
 

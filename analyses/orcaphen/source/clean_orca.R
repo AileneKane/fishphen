@@ -20,6 +20,7 @@ d$Pod[d$Pod=="JKl"|d$Pod=="JKL  "]<-"JKL"
 d$Pod[d$Pod=="T"|d$Pod=="Ts "]<-"Ts"
 d$Pod[d$Pod=="Orca"|d$Pod=="orca"|d$Pod=="orcas"]<-"Orcas"
 d$Pod[d$Pod=="SR"|d$Pod=="sRs"|d$Pod=="S"|d$Pod=="SWKW"|d$Pod=="SRS"]<-"SRs"
+
 #dim(d)
 # 2. Clean the Likely Pod column
 d$LikelyPod[d$LikelyPod==" J"|d$LikelyPod=="J "|d$LikelyPod=="J  "|d$LikelyPod=="J   "]<-"J"
@@ -149,15 +150,27 @@ d$FishArea[d$FishArea=="42584" & d$Quadrant=="398"]<-quads$Fish.Area[quads$Quad=
 #Remove non-orca data- removed this because more absence data might be good!
 #d<-d[d$LikelyPod!="HB?"|d$LikelyPod!="Not Orcas",]
 ###Are there any sites that hace qudrant but no lat long?
-unique(d$Quadrant[which(is.na(as.numeric(d$Lat)))])
-YES! Add these
+#unique(d$Quadrant[which(is.na(as.numeric(d$Lat)))])
+#YES! Add these
+d$Lat[d$Lat=="" & d$Quadrant=="20"]<-quads$Lat[quads$Quad==20]
+d$Long[d$Long=="" & d$Quadrant=="20"]<-quads$Long[quads$Quad==20]
+
+d$Lat[d$Lat=="" & d$Quadrant=="401"]<-quads$Lat[quads$Quad==401]
+d$Long[d$Long=="" & d$Quadrant=="401"]<-quads$Long[quads$Quad==401]
+
+d$Lat[d$Lat=="" & d$Quadrant=="167"]<-quads$Lat[quads$Quad==167]
+d$Long[d$Long=="" & d$Quadrant=="167"]<-quads$Long[quads$Quad==167]
+
+d$Lat[d$Lat=="" & d$Quadrant=="412"]<-quads$Lat[quads$Quad==412]
+d$Long[d$Long=="" & d$Quadrant=="412"]<-quads$Long[quads$Quad==412]
+
 
 #7. #Create a new column that combines Pod and Likely Pod columna and removes spaces
 d$Pod.cl<-d$Pod
 
 #Always use Likely Pod column, when it is not blank:
-d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" "]<-d$LikelyPod[d$LikelyPod!="" & d$LikelyPod!=" "]
-#perhaps also stick with Pod when LikelyPod has a "?" grep("?",d$LikelyPod,)
+d$Pod.cl[d$LikelyPod!="" & d$LikelyPod!=" " & d$LikelyPod!="?"]<-d$LikelyPod[d$LikelyPod!="" & d$LikelyPod!=" "& d$LikelyPod!="?"]
+
 #8. Add week and day of year (day)
 d$day<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"),format= "%j")
 d$week<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"), format = "%V")#new weeks start on mondays

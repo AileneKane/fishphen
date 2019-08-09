@@ -11,29 +11,26 @@ setwd("~/Documents/GitHub/fishphen")
 
 # Load libraries
 library(dplyr)
-#1. Choose the years and regions of interest and get the data
+
+# 1. Choose the years, regions of interest, assumption about reports in the OrcaMaster and get the data
 includeCanada=TRUE
-firstyear=1975#probably set to 1975 or 1976 (Olson et al)
+firstyear=1976#probably set to 1975 or 1976 (Olson et al)
+assumeSRKW=TRUE #If true, assume that "Orcas" means SRKW unless noted otherwuse (i.e. Transients or NRKWs)
+use3regions=FALSE#If true, separate out the straight of Juan de Fuca as a 3rd region, distinct from CSS and PS
 d <- read.csv("data/AppendixII.csv")
+quads<-read.csv("data/QuadCentroids.csv")
+
 
 # 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
 source("analyses/orcaphen/source/clean_orca.R")
 
-# 1. Choose the years and regions of interest and get the data
-includeCanada=TRUE
-firstyear=1975#set to 1975 or 1976 (Olson et al)
-d <- read.csv("data/AppendixII.csv")
-
-# 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
-source("analyses/orcaphen/source/clean_orca.R")
 
 # 3. Limit space and time to firstyear or later and Salish Sea, Puget Sound, Washington Outer Coast 
 source("analyses/orcaphen/source/orca_limitspacetime.R")
 
+
 #Only use fishing areas that have atleast 4 years with >20 observations:
-#11 fishing areas with >5
-# 8 fishing areas with >10
-# 8 fishing areas with >20
+
 tab.fa.yr<-table(d$FishArea,d$Year)
 tab.fa.yr[tab.fa.yr < 20] <- 0
 tab.fa.yr[tab.fa.yr >= 20] <- 1

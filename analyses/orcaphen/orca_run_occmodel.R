@@ -15,7 +15,7 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="L"#options= J,K,L,SR
+pod="J"#options= J,K,L,SR
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
 #Choose the credible intervals you want
@@ -38,9 +38,9 @@ if(region == "ps"){
   season="1"#winter
   dat$season<-NA
   dat$season[dat$day>244]<-1#winter (Sept 1-Dec 31)#should extend this to Jan 31
-  dat<-dat[dat$year>1996,]
+  #
   }
-
+dat<-dat[dat$year>1999,]
 #to extend to jan31, add an "orca year" which runs Oct 1-Sept 31
 #dat$orcayear<-dat$year
 #dat$orcayear[which(dat$day>273)]<-dat$year[which(dat$day>273)]+1
@@ -202,11 +202,11 @@ plot(jags.out)
 out<-jags.out$BUGSoutput
 jags.out$BUGSoutput$mean$psi#probability of presence (annual)
 # Save model output
-if(pod=="J" & season=="1"){save(out,file="jags.output/jpod out season1 >1996")}
+if(pod=="J" & season=="1"){save(out,file="jags.output/jpod out season1")}
 if(pod=="J" & season=="2"){save(out,file="jags.output/jpod out season2")}
-if(pod=="K" & season=="1"){save(out,file="jags.output/kpod out season1 >1996")}
+if(pod=="K" & season=="1"){save(out,file="jags.output/kpod out season1")}
 if(pod=="K" & season=="2"){save(out,file="jags.output/kpod out season2")}
-if(pod=="L" & season=="1"){save(out,file="jags.output/lpod out season1  >1996")}
+if(pod=="L" & season=="1"){save(out,file="jags.output/lpod out season1")}
 if(pod=="L" & season=="2"){save(out,file="jags.output/lpod out season2")}
 if(pod=="SR" & season=="1"){save(out,file="jags.output/allsrpods out season1")}
 if(pod=="SR" & season=="2"){save(out,file="jags.output/allsrpods out season2")}
@@ -430,14 +430,14 @@ df<-rbind(
   c(pod,region,season,"last",round(mean(slopevec.last,na.rm=T),digits=2),round(quantile(slopevec.last,lci,na.rm=T),digits=2),round(quantile(slopevec.last,uci,na.rm=T),digits=2))
 )
 colnames(df)<-c("pod","region","season","phase","slope.mn","slope.lci","slope.uci")
-df.name<-paste("analyses/output/",pod,"_",season,"sept1_",region,"_1997-2017.csv", sep="")
+df.name<-paste("analyses/output/",pod,"_",season,"sept1_",region,min(dat$year),"-",max(dat$year),".csv", sep="")
 write.csv(df,df.name, row.names=FALSE)
 
 #-----------------------------------------------------------------
 # Plot output
 #-----------------------------------------------------------------
 # save plotted results as pdf
-pdf(file=paste("analyses/figures/",pod,"/orcaphen_1997_2017","_",region,"_",season,"_",pod,"_",prob,".pdf", sep=""),width=7,height=6)
+pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_",pod,"_",prob,".pdf", sep=""),width=7,height=6)
 
 ### plot estimates of peak detectability over all years
 #quartz(width=7, height=6)
@@ -474,8 +474,7 @@ dev.off()
 # Plot first date detectability >0.5  
 #-----------------------------------------------------------------
 # save plotted results as pdf
-if(pod=="J" & season=="1" & region=="uss"){pdf(file=paste("analyses/figures/J/orcaphen_1997_2017_USS_winter_Jfirst.pdf"),width=7,height=6)}
-pdf(file=paste("analyses/figures/",pod,"/orcaphen_1997_2017","_",region,"_",season,"_",pod,"_first_",prob,".pdf", sep=""),width=7,height=6)
+pdf(file=paste("analyses/figures/",pod,"/orcaphen",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_",pod,"_first_",prob,".pdf", sep=""),width=7,height=6)
 
 ### plot estimates of peak detectability over all years
 #quartz(width=7, height=6)
@@ -509,7 +508,7 @@ abline(a=intercept.first,b=slope.first,col="darkred",lwd=2)
 dev.off()
 
 # save plotted results as pdf
-pdf(file=paste("analyses/figures/",pod,"/orcaphen_1997_2017","_",region,"_",season,"_",pod,"last_",prob,".pdf", sep=""),width=7,height=6)
+pdf(file=paste("analyses/figures/",pod,"/orcaphen",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_",pod,"last_",prob,".pdf", sep=""),width=7,height=6)
 
 ### plot estimates of last detectability >0.5 over all years
 #quartz(width=7, height=6)

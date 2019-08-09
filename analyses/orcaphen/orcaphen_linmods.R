@@ -22,44 +22,58 @@ library(scales)
 library(RColorBrewer)
 library(rworldmap)
 library(scales)
-# 1. Choose the years and regions of interest and get the data
+# 1. Choose the years, regions of interest, assumption about reports in the OrcaMaster and get the data
 includeCanada=TRUE
 firstyear=1976#probably set to 1975 or 1976 (Olson et al)
+assumeSRKW=TRUE #If true, assume that "Orcas" means SRKW unless noted otherwuse (i.e. Transients or NRKWs)
+use3regions=FALSE#If true, separate out the straight of Juan de Fuca as a 3rd region, distinct from CSS and PS
 d <- read.csv("data/AppendixII.csv")
 quads<-read.csv("data/QuadCentroids.csv")
 dim(d)#105344     18 on August 8, 2019
 
 # 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
 source("analyses/orcaphen/source/clean_orca.R")
-dim(d)#105339     21 on August 8, 2019
+#dim(d)#105339     21 on August 8, 2019
+
+
 # 3. Limit space and time to firstyear or later and Salish Sea, Puget Sound, Washington Outer Coast 
 source("analyses/orcaphen/source/orca_limitspacetime.R")
-dim(d)#102038
+#dim(d)#102894 22  on August 8, 2019
+
 #check that this lines up with olson et al numbers
 #tapply(d$SightDate[d$Year>1975 & d$Year<2015],d$Source[d$Year>1975 & d$Year<2015],length)
-#to get their Lime Kiln Station sightings data:
-#tapply(d$SightDate[d$Year>1975 & d$Year<2015 & d$Quadrant == 18],d$Source[d$Year>1975 & d$Year<2015 & d$Quadrant == 18],length)
+#to get their Lime Kiln Station sightings data (the below is after limitspacetime):
 #BCCSN        SPOT TWM-HYD-Pub TWM-HYD-Rel    TWM-Otis   TWM-Pager  TWM-SA-Pub  TWM-SA-Rel   TWM-SA-WW 
-#8869        8360        1011        2377        1844       18887       13416       15506        7690 
+#9333        8360        1011        2377        1844       18887       13418       15507        7787 
 #TWM-SW 
-#13100
+#13100 
+#tapply(d$SightDate[d$Year>1975 & d$Year<2015 & d$Quadrant == 18],d$Source[d$Year>1975 & d$Year<2015 & d$Quadrant == 18],length)
+# BCCSN TWM-SA-Pub TWM-SA-Rel 
+#1          1          2 
 #I think some of the difference in whale days is due to this part- throw out some data without fishing area when i should
 #be able to include it! with lat/longs. Olson et al use the Quadrants...
 ##d$year.doy<-paste(d$Year,d$day,sep=".")
-#length(unique(d$year.doy))#8394
+#length(unique(d$year.doy))#8447
 #4. Get data in terms of number of observations per day and "whale days": days on which whales were seen (presence/absence for each day)
 source("analyses/orcaphen/source/orca_get_whaledays.R")
 
 #5. summarize whale days per year by region
 wdays<-as.data.frame(tapply(orcasum.days$AllSRpres,list(orcasum.days$year,orcasum.days$region),sum))
 #colMeans(wdays[1:20,], na.rm=TRUE)
+#with assumeSRKW=TRUE:
+#oc         ps        uss 
+#1.846154  35.550000 144.450000 
+
+##with assumeSRKW=FALSE:
+#       oc         ps        uss 
+#0.2307692 13.7500000 94.9000000 
 
 wdays.J<-as.data.frame(tapply(orcasum.days$Jpres,list(orcasum.days$year,orcasum.days$region),sum))
 wdays.K<-as.data.frame(tapply(orcasum.days$Kpres,list(orcasum.days$year,orcasum.days$region),sum))
 wdays.L<-as.data.frame(tapply(orcasum.days$Lpres,list(orcasum.days$year,orcasum.days$region),sum))
 
 #6. if you want to do some basic plots of the data. This includes proportion of days in a week in which whales were observed up by week and decade
-source("analyses/orcaphen/source/orca_plotdata.R")
+#source("analyses/orcaphen/source/orca_plotdata.R")
 
 #7. Make a map of the SRKW sightings in ps and uss
 source("analyses/orcaphen/source/orca_makemap.R")

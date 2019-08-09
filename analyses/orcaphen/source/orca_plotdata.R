@@ -1,49 +1,49 @@
 
-# quartz()
-# par(mai=c(1,1,1,1.5))
-# #start with uss, all SRKWs
-# plot(rownames(wdays),wdays$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="All SRKW sightings, 1978-2017", ylim=c(0,200))
-# lines(rownames(wdays),wdays$ps, lwd=2,lty=2)
-# lines(rownames(wdays),wdays$oc, lwd=2,lty=3)
-# legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast"), lty=c(1,2,3),col="black", bty="n")
-# #Add dates of some significant events to the plot
-# #"Dyes inlet event" 1997
-# #abline(v=1997, col="blue")
-# #text("Dyes inlet event",x=2000,y=200, col="blue",cex=0.8 )
-# #Internet sightsing 
-# abline(v=2001, col="purple")
-# text("Internet sightings added",x=2008,y=190, col="purple",cex=0.8 )
+ quartz()
+ par(mai=c(1,1,1,1.5))
+ #start with uss, all SRKWs
+ plot(rownames(wdays),wdays$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="All SRKW sightings, 1978-2017", ylim=c(0,300))
+ lines(rownames(wdays),wdays$ps, lwd=2,lty=2)
+ lines(rownames(wdays),wdays$oc, lwd=2,lty=3)
+ legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast"), lty=c(1,2,3),col="black", bty="n")
+ #Add dates of some significant events to the plot
+ #"Dyes inlet event" 1997
+ abline(v=1997, col="blue")
+ text("Dyes inlet event",x=2000,y=200, col="blue",cex=0.8 )
+# #Internet sightsing
+ abline(v=2001, col="purple")
+ text("Internet sightings added",x=2008,y=190, col="purple",cex=0.8 )
 
 #Is there a trend in number of days on which whales observed since 1978?
-#
-# m.uss<-lm(wdays$uss~as.numeric(rownames(wdays)))
-# m.ps<-lm(wdays$ps~as.numeric(rownames(wdays)))
-# m.oc<-lm(wdays$oc~as.numeric(rownames(wdays)))
-# abline(m.uss, col="darkred", lwd=2)
-# abline(m.ps, col="darkred", lwd=2, lty=2)
-# abline(m.oc, col="darkred", lwd=2, lty=3)
-# mtext(paste((round(m.uss$coef[2], digits=2)*10),"days/dec"), line=-5.5, adj=1.3,cex=0.9)
-# mtext(paste((round(m.ps$coef[2], digits=2)*10),"days/dec"), line=-20.5, adj=1.3,cex=0.9)
-# mtext(paste((round(m.oc$coef[2], digits=2)*10),"days/dec"), line=-23.5, adj=1.3,cex=0.9)
 
-# quartz()
-# par(mfrow=c(3,1))#par(mfrow)
-# #J pod
-# plot(rownames(wdays.J),wdays.J$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="J sightings, 1978-2017", ylim=c(0,200), col="blue")
-# lines(rownames(wdays.J),wdays.J$ps, lwd=2,lty=2, col="blue")
-# lines(rownames(wdays.J),wdays.J$oc, lwd=2,lty=3, col="blue")
-# legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast"), lty=c(1,2,3),col="blue", bty="n")
-# 
-# #K
-# plot(rownames(wdays.K),wdays.K$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="K sightings, 1978-2017", ylim=c(0,200), col="purple")
-# lines(rownames(wdays.K),wdays.K$ps, lwd=2,lty=2, col="purple")
-# lines(rownames(wdays.K),wdays.K$oc, lwd=2,lty=3, col="purple")
-# 
-# #L
-# plot(rownames(wdays.L),wdays.L$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="L sightings, 1978-2017", ylim=c(0,200), col="darkred")
-# lines(rownames(wdays.L),wdays.L$ps, lwd=2,lty=2, col="darkred")
-# lines(rownames(wdays.L),wdays.L$oc, lwd=2,lty=3, col="darkred")
-# 
+ m.uss<-lm(wdays$uss~as.numeric(rownames(wdays)))
+ m.ps<-lm(wdays$ps~as.numeric(rownames(wdays)))
+ m.oc<-lm(wdays$oc~as.numeric(rownames(wdays)))
+ abline(m.uss, col="darkred", lwd=2)
+ abline(m.ps, col="darkred", lwd=2, lty=2)
+ abline(m.oc, col="darkred", lwd=2, lty=3)
+ mtext(paste((round(m.uss$coef[2], digits=2)*10),"days/dec"), line=-5.5, adj=1.3,cex=0.9)
+ mtext(paste((round(m.ps$coef[2], digits=2)*10),"days/dec"), line=-20.5, adj=1.3,cex=0.9)
+ mtext(paste((round(m.oc$coef[2], digits=2)*10),"days/dec"), line=-23.5, adj=1.3,cex=0.9)
+
+ quartz()
+ par(mfrow=c(3,1))#par(mfrow)
+ #J pod
+ plot(rownames(wdays.J),wdays.J$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="J sightings, 1978-2017", ylim=c(0,200), col="blue")
+ lines(rownames(wdays.J),wdays.J$ps, lwd=2,lty=2, col="blue")
+ lines(rownames(wdays.J),wdays.J$oc, lwd=2,lty=3, col="blue")
+ legend("topleft",legend=c("Upper Salish Sea","Puget Sound","Outer Coast"), lty=c(1,2,3),col="blue", bty="n")
+
+ #K
+ plot(rownames(wdays.K),wdays.K$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="K sightings, 1978-2017", ylim=c(0,200), col="purple")
+ lines(rownames(wdays.K),wdays.K$ps, lwd=2,lty=2, col="purple")
+ lines(rownames(wdays.K),wdays.K$oc, lwd=2,lty=3, col="purple")
+
+ #L
+ plot(rownames(wdays.L),wdays.L$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="L sightings, 1978-2017", ylim=c(0,200), col="darkred")
+ lines(rownames(wdays.L),wdays.L$ps, lwd=2,lty=2, col="darkred")
+ lines(rownames(wdays.L),wdays.L$oc, lwd=2,lty=3, col="darkred")
+
 
 #Plots observed or not, by doy and year
 #yaxis is year
