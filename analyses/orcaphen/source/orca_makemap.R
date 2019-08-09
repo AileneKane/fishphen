@@ -17,7 +17,8 @@ if(use3regions==TRUE){
   par(omi=c(.5,.5,.5,.5), mfrow=c(1,4))
 }
 
-
+podcols<-c("AllSRpres")
+pods<-c("SRs")
 for(p in 1:length(podcols)){
   colnum<-which(colnames(orcasum.days)==podcols[p])
   regions=sort(unique(orcasum.days$region[-which(orcasum.days$region=="oc")]),decreasing=TRUE)
@@ -39,7 +40,13 @@ for(p in 1:length(podcols)){
               col=adjustcolor(col,alpha.f=0.2),
               border=NA)
     }
-    
+    if(r=="jf"){
+      col="darkgreen"
+      #using orcayears
+      #polygon(c(1,1,214,214),c(max(as.numeric(years))+1,min(as.numeric(years))-1,min(as.numeric(years))-1,max(as.numeric(years))+1),
+       #       col=adjustcolor(col,alpha.f=0.2),
+        #      border=NA)
+    } 
     for(y in years){
       yrdat = regdat[regdat$orcayear==y,]
       days = yrdat$daysaftmar31[yrdat[,colnum]==1]
@@ -76,6 +83,8 @@ newmap <- getMap(resolution = "low")
 plot(newmap, xlim = c(-125, -120), ylim = c(47, 49), asp = 1)
 points(meannumdays$lon[meannumdays$region=="ps"],meannumdays$lat[meannumdays$region=="ps"],type="p",pch=16, col="salmon",cex=log(meannumdays$mnnumdays, base=10))
 points(meannumdays$lon[meannumdays$region=="uss"],meannumdays$lat[meannumdays$region=="uss"],type="p",pch=16, col="darkblue",cex=log(meannumdays$mnnumdays, base=10))
+points(meannumdays$lon[meannumdays$region=="jf"],meannumdays$lat[meannumdays$region=="jf"],type="p",pch=16, col="darkgreen",cex=log(meannumdays$mnnumdays, base=10))
+
 legend(-122.2,48,legend=c("# days per year= 2","# days per year= 78"),
        pch=21, bty="n",pt.bg=c("darkblue","darkblue"), pt.cex=c(log(2, base=10), log(80, base=10)))
 
@@ -125,8 +134,16 @@ for(p in 1:length(podcols)){
               col=adjustcolor(col,alpha.f=0.2),
               border=NA)
       boxplot(as.numeric(regdat$daysaftmar31[regdat[,colnum]==1])~as.factor(regdat$orcayear[regdat[,colnum]==1]),horizontal=TRUE,las=1,col=col,xaxt='n')    
-      
     }
+      if(r=="jf"){
+        col="darkgreen"
+        #using orcayears
+        boxplot(as.numeric(regdat$daysaftmar31[regdat[,colnum]==1])~as.factor(regdat$orcayear[regdat[,colnum]==1]),horizontal=TRUE,las=1,col=col,xaxt='n')    
+        
+        polygon(c(1,1,214,214),c(max(as.numeric(years))+1,min(as.numeric(years))-1,min(as.numeric(years))-1,max(as.numeric(years))+1),
+                col=adjustcolor(col,alpha.f=0.2),
+                border=NA)
+      } 
     
     for(y in years){
       yrdat = regdat[regdat$orcayear==y,]

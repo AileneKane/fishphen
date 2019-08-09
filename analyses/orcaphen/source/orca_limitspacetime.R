@@ -49,8 +49,3 @@ uss.start<-91#April 1 = 91,
 ##d$year.doy<-paste(d$Year,d$day,sep=".")
 #length(unique(d$year.doy))#8447
 
-
-ps.end<-#July 1 = 182
-uss.starts<273#Sept 30 = 273
-
-

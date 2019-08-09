@@ -37,10 +37,10 @@ dat<-dat[dat$region==region,]
 if(region == "ps"){
   season="1"#winter
   dat$season<-NA
-  dat$season[dat$day>244]<-1#winter (Sept 1-Dec 31)#should extend this to Jan 31
-  #
+  dat$season[dat$day>182]<-1#winter (Sept 1-Dec 31 = >244#should extend this to Jan 31
+  #dat<-dat[dat$year>1996,]
   }
-dat<-dat[dat$year>1999,]
+
 #to extend to jan31, add an "orca year" which runs Oct 1-Sept 31
 #dat$orcayear<-dat$year
 #dat$orcayear[which(dat$day>273)]<-dat$year[which(dat$day>273)]+1
@@ -241,7 +241,7 @@ lpmax[lpmax==min(dat$day)]<-NA
 #would like to Extract psi (probability of presence by day...)
 dim(out$sims.list$psi)
 
-# summarize estimates
+# summarize estimates and look at change across the whole time series
 
 ann.res<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","lci","uci")))
 res<-apply(lpmax,c(2),mean,na.rm=T)
@@ -250,6 +250,9 @@ res<-apply(lpmax,c(2),quantile,probs=lci,na.rm=T)
 ann.res[names(res),"lci"]<-res
 res<-apply(lpmax,c(2),quantile,probs=uci,na.rm=T)
 ann.res[names(res),"uci"]<-res
+
+# look at change only since
+
 
 # get estimate of trend in date of peak detectability over years
 do.lm<-function(x) {
