@@ -7,9 +7,9 @@ if(assumeSRKW==TRUE & use3regions==TRUE){figname<-paste("analyses/figures/OrcaPh
 if(assumeSRKW==FALSE & use3regions==TRUE){figname<-paste("analyses/figures/OrcaPhenPlots/srkw_phenmap_3regs_April1.pdf")}
 
 if(use3regions==FALSE){
-  pdf(figname,height=6, width=15)
+  pdf(figname,height=12, width=6)
   #quartz(height=6, width=15)
-  par(omi=c(.5,.5,.5,.5), mfrow=c(1,3))
+  par(omi=c(.5,.5,.5,.5), mfrow=c(2,1))
 }
 if(use3regions==TRUE){
   pdf(figname,height=6, width=20)
@@ -62,7 +62,7 @@ for(p in 1:length(podcols)){
   }
 }
 
-
+if(use3regions==FALSE){dev.off()}
 #summarize the days on which atleast one sighting occured for each lat/long in ps and uss
 srlatlon = aggregate(d$SRKW, list(d$Lat,d$Long,d$region,d$Year,d$day),sum)
 colnames(srlatlon)<-c("lat","lon","region","year","doy","numsights")
@@ -77,16 +77,20 @@ numdays<-numdays[numdays$numdays>0,]#remove zeros
 meannumdays<-aggregate(numdays$numdays, list(numdays$lat,numdays$lon,numdays$region),mean)
 colnames(meannumdays)<-c("lat","lon","region","mnnumdays")
 #make a map that shows mean number of whale days by lat long in each region
+
 newmap <- getMap(resolution = "low")
 
-#quartz(height=6, width=6)
-plot(newmap, xlim = c(-125, -120), ylim = c(47, 49), asp = 1)
+#quartz(height=12, width=6)
+if(assumeSRKW==TRUE & use3regions==FALSE){mapname<-paste("analyses/figures/OrcaPhenPlots/srkw_justmap_assumeSRKW_April1.pdf")
+    pdf(mapname,height=12, width=6)
+}
+plot(newmap, xlim = c(-126, -120), ylim = c(49.2, 51), asp = 1)
 points(meannumdays$lon[meannumdays$region=="ps"],meannumdays$lat[meannumdays$region=="ps"],type="p",pch=16, col="salmon",cex=log(meannumdays$mnnumdays, base=10))
 points(meannumdays$lon[meannumdays$region=="uss"],meannumdays$lat[meannumdays$region=="uss"],type="p",pch=16, col="darkblue",cex=log(meannumdays$mnnumdays, base=10))
 points(meannumdays$lon[meannumdays$region=="jf"],meannumdays$lat[meannumdays$region=="jf"],type="p",pch=16, col="darkgreen",cex=log(meannumdays$mnnumdays, base=10))
 
-legend(-122.2,48,legend=c("# days per year= 2","# days per year= 78"),
-       pch=21, bty="n",pt.bg=c("darkblue","darkblue"), pt.cex=c(log(2, base=10), log(80, base=10)))
+legend(-122.3,47,legend=c("# days per year= 2","# days per year= 80"),
+       pch=21, pt.bg=c("darkblue","darkblue"), pt.cex=c(log(2, base=10), log(80, base=10)))
 
 dev.off()
 
@@ -98,9 +102,9 @@ if(assumeSRKW==TRUE & use3regions==TRUE){figname<-paste("analyses/figures/OrcaPh
 if(assumeSRKW==FALSE & use3regions==TRUE){figname<-paste("analyses/figures/OrcaPhenPlots/srkw_phenmap_3regs_April1box.pdf")}
 
 if(use3regions==FALSE){
-  pdf(figname,height=6, width=15)
-  #quartz(height=6, width=15)
-  par(omi=c(.5,.5,.5,.5), mfrow=c(1,3))
+  pdf(figname,height=12, width=6)
+  #quartz(height=12, width=6)
+  par(omi=c(.5,.5,.5,.5), mfrow=c(2,1))
 }
 if(use3regions==TRUE){
   pdf(figname,height=6, width=20)
@@ -122,7 +126,7 @@ for(p in 1:length(podcols)){
       col="darkblue"
       #using orcayears
       boxplot(as.numeric(regdat$daysaftmar31[regdat[,colnum]==1])~as.factor(regdat$orcayear[regdat[,colnum]==1]),horizontal=TRUE,las=1,col=col,xaxt='n')    
-      
+      points(c(1,1,214,214),c(max(as.numeric(years))+1,min(as.numeric(years))-1,min(as.numeric(years))-1,max(as.numeric(years))+1))
       polygon(c(1,1,214,214),c(max(as.numeric(years))+1,min(as.numeric(years))-1,min(as.numeric(years))-1,max(as.numeric(years))+1),
               col=adjustcolor(col,alpha.f=0.2),
               border=NA)
@@ -160,6 +164,7 @@ for(p in 1:length(podcols)){
   }
 }
 
+if(use3regions==FALSE){dev.off()}
 
 #summarize the days on which atleast one sighting occured for each lat/long in ps and uss
 srlatlon = aggregate(d$SRKW, list(d$Lat,d$Long,d$region,d$Year,d$day),sum)
@@ -177,12 +182,15 @@ colnames(meannumdays)<-c("lat","lon","region","mnnumdays")
 #make a map that shows mean number of whale days by lat long in each region
 newmap <- getMap(resolution = "low")
 
-#quartz(height=6, width=6)
-plot(newmap, xlim = c(-125, -120), ylim = c(47, 49), asp = 1)
+#quartz(height=12, width=6)
+if(assumeSRKW==TRUE & use3regions==FALSE){mapname<-paste("analyses/figures/OrcaPhenPlots/srkw_justmap_assumeSRKW_April1.pdf")
+pdf(mapname,height=12, width=6)
+}
+plot(newmap, xlim = c(-126, -120), ylim = c(49.2, 51), asp = 1)
 points(meannumdays$lon[meannumdays$region=="ps"],meannumdays$lat[meannumdays$region=="ps"],type="p",pch=16, col="salmon",cex=log(meannumdays$mnnumdays, base=10))
 points(meannumdays$lon[meannumdays$region=="uss"],meannumdays$lat[meannumdays$region=="uss"],type="p",pch=16, col="darkblue",cex=log(meannumdays$mnnumdays, base=10))
-legend(-122.2,48,legend=c("# days per year= 2","# days per year= 78"),
-       pch=21, bty="n",pt.bg=c("darkblue","darkblue"), pt.cex=c(log(2, base=10), log(80, base=10)))
+legend(-122.3,47,legend=c("# days per year= 2","# days per year= 80"),
+       pch=21, pt.bg=c("darkblue","darkblue"), pt.cex=c(log(2, base=10), log(80, base=10)))
 
 dev.off()
 
