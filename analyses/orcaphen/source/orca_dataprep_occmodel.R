@@ -29,30 +29,16 @@ source("analyses/orcaphen/source/clean_orca.R")
 source("analyses/orcaphen/source/orca_limitspacetime.R")
 
 
+#4. Get data in terms of number of observations per day and "whale days": days on which whales were seen (presence/absence for each day)
+source("analyses/orcaphen/source/orca_get_whaledays.R")
+
 #Only use fishing areas that have atleast 4 years with >20 observations:
 
-tab.fa.yr<-table(d$FishArea,d$Year)
-tab.fa.yr[tab.fa.yr < 20] <- 0
-tab.fa.yr[tab.fa.yr >= 20] <- 1
-sites.touse<-rownames(tab.fa.yr)[rowSums(tab.fa.yr)>4]
-d<-d[d$FishArea %in% c(sites.touse),]
-
-#Add week and day of year (day)
-d$day<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"),format= "%j")
-d$week<-strftime(strptime(paste(d$Month, d$Day, d$Year, sep="."),format= "%m.%d.%Y"), format = "%V")#new weeks start on mondays
-
-#Add a column for presences (1/0) for each pod, for Ts, and for SRKWs
-
-d$J<-0
-d$J[grep("J",d$Pod.cl)]<- 1
-d$K<-0
-d$K[grep("K",d$Pod.cl)]<- 1
-d$L<-0
-d$L[grep("L",d$Pod.cl)]<- 1
-d$SRKW<-0
-d$SRKW[grep("SR",d$Pod.cl)]<- 1
-d$SRKW[d$J==1|d$K==1|d$L==1]<- 1   
-d$Orcas<-1
+#tab.fa.yr<-table(d$FishArea,d$Year)
+#tab.fa.yr[tab.fa.yr < 20] <- 0
+#tab.fa.yr[tab.fa.yr >= 20] <- 1
+#sites.touse<-rownames(tab.fa.yr)[rowSums(tab.fa.yr)>4]
+#d<-d[d$FishArea %in% c(sites.touse),]
 
 #Prepare data for running model from strebel et al 2014
 #"nrep" "ndet" "site" "day" "year"
@@ -79,10 +65,21 @@ colnames(det)[2:6]<-c("Jobs","Kobs","Lobs","AllSRobs","nrep")
 det$year<-substr(det$yrdayfa,1,4)
 det$day<-substr(det$yrdayfa,6,8)
 det$fa<-substr(det$yrdayfa,10,nchar(det$yrdayfa))
-#assign to ps (puget sound) or uss (upper salish sea) using fishing area
-det$region<-"ps"
-det$region[det$fa=="07"|det$fa=="06"|det$fa=="05"|det$fa=="04"|det$fa=="19C"|det$fa== "18C"|det$fa=="20C"|det$fa=="29C"]<-"uss"
-det$region[det$fa=="01"|det$fa=="02"|det$fa=="03"]<-"oc"#outer coast
+
+#4.#Assign region to this new aggregated dataset, based on fishing area:
+if(use3regions==FALSE){
+  det$region<-"ps"
+  det$region[det$FishArea=="04"|det$FishArea=="05"|det$FishArea=="06"|det$FishArea=="07"|det$FishArea== "16C"|det$FishArea=="17C"|det$FishArea== "18C"|det$FishArea=="19C"|det$FishArea=="20C"|det$FishArea=="29C"]<-"uss"
+  det$region[det$FishArea=="01"|det$FishArea=="02"|det$FishArea=="03"]<-"oc"#outer coast
+}
+
+if(use3regions==TRUE){
+  
+  det$region<-"ps"
+  det$region[det$FishArea=="06"|det$FishArea=="07"|det$FishArea== "16C"|det$FishArea=="17C"|det$FishArea== "18C"|det$FishArea=="19C"|det$FishArea=="29C"]<-"uss"
+  det$region[det$FishArea=="01"|det$FishArea=="02"|det$FishArea=="03"]<-"oc"#outer coast
+  det$region[det$FishArea=="04"|det$FishArea=="05"|det$FishArea=="20C"|det$FishArea=="21C"|det$FishArea=="22C"|det$FishArea=="121C"]<-"jf"#straight of juan de fuca
+}
 
 det$site<-as.numeric(as.factor(det$fa))
 det$day<-as.numeric(det$day)

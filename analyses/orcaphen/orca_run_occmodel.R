@@ -19,8 +19,8 @@ pod="J"#options= J,K,L,SR
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
 #Choose the credible intervals you want
-lci<-0.125
-uci<-0.875
+lci<-0.10
+uci<-0.90
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
 
 if(pod=="J"){dat<-read.csv("analyses/output/j_dat.csv",header=T)}
@@ -30,18 +30,16 @@ if(pod=="SR"){dat<-read.csv("analyses/output/allsr_dat.csv",header=T)}
 
 #choose region
 dat<-dat[dat$region==region,]
-
 #Add a column for "season" and restrict data to season that is appropriate to the region
 #use may 1 for uss season, oct 1 for ps season as start dates
 #use oct 31 for uss season, jan31 for ps season, as end dates
 if(region == "ps"){
   season="1"#winter
   dat$season<-NA
-  dat$season[dat$day>182]<-1#winter (Sept 1-Dec 31 = >244#should extend this to Jan 31
-  #dat<-dat[dat$year>1996,]
+  dat$season[dat$day>182]<-1#winter (July 1-Dec 31 = >182#should extend this to Jan 31
   }
 
-#to extend to jan31, add an "orca year" which runs Oct 1-Sept 31
+#to extend to jan31, add an "orca year" which runs Apr 1-Mar 31
 #dat$orcayear<-dat$year
 #dat$orcayear[which(dat$day>273)]<-dat$year[which(dat$day>273)]+1
 #dat$daysaftsept30<-NA
@@ -51,7 +49,7 @@ if(region == "ps"){
 if(region == "uss"){
   season="2"#summer
   dat$season<-NA
-  dat$season[dat$day>121 & dat$day<304]<-2#summer (May-Oct 31)
+  dat$season[dat$day>91 & dat$day<304]<-2#summer (April 1-Oct 31)
 }
 dat<-dat[dat$season==season,]
 dat <- dat[apply(dat, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
