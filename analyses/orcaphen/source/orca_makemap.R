@@ -189,10 +189,20 @@ pdf(mapname,height=12, width=6)
 plot(newmap, xlim = c(-126, -120), ylim = c(49.2, 51), asp = 1)
 points(meannumdays$lon[meannumdays$region=="ps"],meannumdays$lat[meannumdays$region=="ps"],type="p",pch=16, col="salmon",cex=log(meannumdays$mnnumdays, base=10))
 points(meannumdays$lon[meannumdays$region=="uss"],meannumdays$lat[meannumdays$region=="uss"],type="p",pch=16, col="darkblue",cex=log(meannumdays$mnnumdays, base=10))
-legend(-122.3,47,legend=c("# days per year= 2","# days per year= 80"),
+legend(-123.5,46,legend=c("# days per year= 2","# days per year= 80"),
        pch=21, pt.bg=c("darkblue","darkblue"), pt.cex=c(log(2, base=10), log(80, base=10)))
 
 dev.off()
 
 
+#Make box plots of data across all years
 
+  pdf("analyses/figures/OrcaPhenPlots/meanphenboxplot.pdf",height=6, width=10)
+  #quartz(height=6, width=6)
+  par(omi=c(.5,1.5,.5,.5), mfrow=c(1,1))
+  ps.ussdat<-orcasum.days[orcasum.days$region!="oc",]
+      cols=c("salmon","darkblue")
+      #using orcayears
+      boxplot(as.numeric(ps.ussdat$daysaftmar31)~as.factor(ps.ussdat$region),horizontal=TRUE,las=1,col=cols,xaxt='n', bty="l",boxwex=.75, at = c(1,5), names=c("Puget Sound","Central Salish Sea"), cex.label=1.2)    
+    axis(side=1,at = c(1,92,184,276,365), labels=c("1Apr","1Jul","1Oct","1Jan","31Mar"))
+dev.off()

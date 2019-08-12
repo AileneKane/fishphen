@@ -26,7 +26,7 @@ library(scales)
 includeCanada=TRUE
 firstyear=1976#probably set to 1975 or 1976 (Olson et al)
 assumeSRKW=TRUE #If true, assume that "Orcas" means SRKW unless noted otherwuse (i.e. Transients or NRKWs)
-use3regions=TRUE#If true, separate out the straight of Juan de Fuca as a 3rd region, distinct from CSS and PS
+use3regions=FALSE#If true, separate out the straight of Juan de Fuca as a 3rd region, distinct from CSS and PS
 d <- read.csv("data/AppendixII.csv")
 quads<-read.csv("data/QuadCentroids.csv")
 dim(d)#105344     18 on August 8, 2019
@@ -45,7 +45,49 @@ source("analyses/orcaphen/source/orca_limitspacetime.R")
 source("analyses/orcaphen/source/orca_get_whaledays.R")
 
 #5. summarize whale days per year by region
+#plot time series of whale days in central salish sea and ouget sound proper 
+
 wdays<-as.data.frame(tapply(orcasum.days$AllSRpres,list(orcasum.days$year,orcasum.days$region),sum))
+pdf("analyses/figures/OrcaPhenPlots/whaledays_2regs.pdf",height= 6, width = 10)
+plot(rownames(wdays),wdays$uss,type = "l", ylab= "Number of whale days", xlab= "Year", col = "darkblue", lwd=2,ylim= c(0,250),cex.axis=1.2,cex.lab=1.2)
+lines(rownames(wdays),wdays$ps,lwd=2,col = "salmon")
+legend("topleft",legend=c("Central Salish Sea","Puget Sound Proper"), lty= 1, col=c("darkblue","salmon"), bty="n", lwd=2)
+dev.off()
+
+pdf("analyses/figures/OrcaPhenPlots/whaledays_ps_v_uss.pdf",height= 6, width = 10)
+#pdf("analyses/figures/OrcaPhenPlots/whaledays_ps_v_uss_noline.pdf",height= 6, width = 10)
+
+#plot time series against eachother:
+plot(as.numeric(wdays$uss),as.numeric(wdays$ps),type = "p", pch=16,cex.axis=1.2,cex.lab=1.2,ylab= "Number of whale days in Puget Sound", xlab= "Number of whale days in the Central Salish Sea",ylim=c(0,100))
+#dev.off()
+
+mod<-lm(as.numeric(wdays$ps)~as.numeric(wdays$uss))
+mod.ci<-confint(mod,level=.8)
+abline(mod, lty= 3, lwd=2)
+mtext(paste("r2 = ",round(summary(mod)$r.squared, digits =2)), side=3, adj=.9,line =-2, cex=1.2)
+#abline(a=mod.ci[1,1],b=mod.ci[2,1], lty=2)
+#abline(a=mod.ci[1,2],b=mod.ci[2,2], lty=2)
+dev.off()
+
+#pdf("analyses/figures/OrcaPhenPlots/whaledays_ps_v_uss_2000_2017.pdf",height= 6, width = 10)
+
+
+numsightings<-as.data.frame(tapply(d$SRKW[d$SRKW==1],list(d$Year[d$SRKW==1],d$region[d$SRKW==1]),length))
+pdf("analyses/figures/OrcaPhenPlots/numsighs_2regs.pdf",height= 6, width = 10)
+plot(rownames(numsightings),numsightings$uss,type = "l", ylab= "Number of Sightings", xlab= "Year", col = "darkblue", lwd=2,ylim= c(0,7000),cex.axis=1.2,cex.lab=1.2)
+lines(rownames(numsightings),numsightings$ps,lwd=2,col = "salmon")
+legend("topleft",legend=c("Central Salish Sea","Puget Sound Proper"), lty= 1, col=c("darkblue","salmon"), bty="n", lwd=2)
+dev.off()
+
+#plot time series against eachother:
+#plot(as.numeric(wdays$uss)[24:41],as.numeric(wdays$ps)[24:41],type = "p", pch=16,ylab= "Number of whale days in Puget Sound", xlab= "Number of whale days in the Central Salish Sea",ylim=c(0,100))
+#mod<-lm(as.numeric(wdays$ps)[24:41]~as.numeric(wdays$uss)[24:41])
+
+#mod.ci<-confint(mod,level=.8)
+#abline(mod, lty= 1, lwd=1)
+#abline(a=mod.ci[1,1],b=mod.ci[2,1], lty=2)
+#abline(a=mod.ci[1,2],b=mod.ci[2,2], lty=2)
+#dev.off()
 #colMeans(wdays[1:20,], na.rm=TRUE)
 #with assumeSRKW=TRUE:
 #oc         ps        uss 
