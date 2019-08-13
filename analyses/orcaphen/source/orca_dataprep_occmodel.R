@@ -69,16 +69,16 @@ det$fa<-substr(det$yrdayfa,10,nchar(det$yrdayfa))
 #4.#Assign region to this new aggregated dataset, based on fishing area:
 if(use3regions==FALSE){
   det$region<-"ps"
-  det$region[det$FishArea=="04"|det$FishArea=="05"|det$FishArea=="06"|det$FishArea=="07"|det$FishArea== "16C"|det$FishArea=="17C"|det$FishArea== "18C"|det$FishArea=="19C"|det$FishArea=="20C"|det$FishArea=="29C"]<-"uss"
-  det$region[det$FishArea=="01"|det$FishArea=="02"|det$FishArea=="03"]<-"oc"#outer coast
+  det$region[det$fa=="04"|det$fa=="05"|det$fa=="06"|det$fa=="07"|det$fa== "16C"|det$fa=="17C"|det$fa== "18C"|det$fa=="19C"|det$fa=="20C"|det$fa=="29C"]<-"uss"
+  det$region[det$fa=="01"|det$fa=="02"|det$fa=="03"]<-"oc"#outer coast
 }
 
 if(use3regions==TRUE){
   
   det$region<-"ps"
-  det$region[det$FishArea=="06"|det$FishArea=="07"|det$FishArea== "16C"|det$FishArea=="17C"|det$FishArea== "18C"|det$FishArea=="19C"|det$FishArea=="29C"]<-"uss"
-  det$region[det$FishArea=="01"|det$FishArea=="02"|det$FishArea=="03"]<-"oc"#outer coast
-  det$region[det$FishArea=="04"|det$FishArea=="05"|det$FishArea=="20C"|det$FishArea=="21C"|det$FishArea=="22C"|det$FishArea=="121C"]<-"jf"#straight of juan de fuca
+  det$region[det$fa=="06"|det$fa=="07"|det$fa== "16C"|det$fa=="17C"|det$fa== "18C"|det$fa=="19C"|det$fa=="29C"]<-"uss"
+  det$region[det$fa=="01"|det$fa=="02"|det$fa=="03"]<-"oc"#outer coast
+  det$region[det$fa=="04"|det$fa=="05"|det$fa=="20C"|det$fa=="21C"|det$fa=="22C"|det$fa=="121C"]<-"jf"#straight of juan de fuca
 }
 
 det$site<-as.numeric(as.factor(det$fa))
