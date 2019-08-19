@@ -10,13 +10,13 @@ if(includeCanada==FALSE & use3regions==TRUE){d<-d[d$FishArea %in% c("01","02","0
 d<-d[!d$FishArea %in% c(""),]
 
 #2.#Assign region, based on fishing area:
-if(use3regions==FALSE){
+if(includeCanada==TRUE & use3regions==FALSE){
   d$region<-"ps"
   d$region[d$FishArea=="04"|d$FishArea=="05"|d$FishArea=="06"|d$FishArea=="07"|d$FishArea== "16C"|d$FishArea=="17C"|d$FishArea== "18C"|d$FishArea=="19C"|d$FishArea=="20C"|d$FishArea=="29C"]<-"uss"
   d$region[d$FishArea=="01"|d$FishArea=="02"|d$FishArea=="03"]<-"oc"#outer coast
 }
 
-if(use3regions==TRUE){
+if(includeCanada==TRUE & use3regions==TRUE){
   
   d$region<-"ps"
   d$region[d$FishArea=="06"|d$FishArea=="07"|d$FishArea== "16C"|d$FishArea=="17C"|d$FishArea== "18C"|d$FishArea=="19C"|d$FishArea=="29C"]<-"uss"

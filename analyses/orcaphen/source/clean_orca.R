@@ -64,7 +64,9 @@ d$FishArea[d$FishArea=="28"]<-"28C"
 d$FishArea[d$FishArea=="29"]<-"29C"
 d$FishArea[d$FishArea=="121A"]<-"121C"
 
-#6. Convert quad data to FishArea and Lat Long
+#6. Clean Long and Convert quad data to FishArea and Lat Long
+d$Long[which(as.numeric(d$Long)>0)]<-as.numeric(d$Long[which(as.numeric(d$Long)>0)])*-1
+
 quads<-quads[,1:6]
 #format "quads" to match orcamaster database above
 
