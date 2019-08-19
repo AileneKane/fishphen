@@ -258,9 +258,10 @@ do.lm<-function(x) {
   return(lmres)
 }
 r<-matrix(NA,dim(lpmax)[1],2)
+#just do lm from 1978-2017
 for (o in 1:(dim(lpmax)[1])) {
   # if(!is.na(sum(lpmax[o,]))) {
-  lm(lpmax[o,]~as.numeric(colnames(lpmax)))$coefficients->r[o,]
+  lm(lpmax[o,3:42]~as.numeric(colnames(lpmax))[3:42])$coefficients->r[o,]
   #}    
 }
 slopevec<-as.vector(r[,2])
@@ -443,6 +444,9 @@ write.csv(df,df.name, row.names=FALSE)
 #-----------------------------------------------------------------
 # Plot output
 #-----------------------------------------------------------------
+if(region == "uss"){color = "darkblue"}
+if(region == "ps"){color = "salmon"}
+
 # save plotted results as pdf
 pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_",pod,"_",prob,".pdf", sep=""),width=7,height=6)
 
@@ -451,16 +455,16 @@ pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$ye
 par(mfrow=c(1,1),mai=c(1,1,1,0.5))
 x=rownames(ann.res)
 y=ann.res[,"mean"]
-y[38]<-360
 seasname<-c("winter","summer")
+
 plot(x,y,xlab="",ylab="",axes=F,main=paste("Peak Detection Probability","\n",pod," Pod",seasname[as.numeric(season)],region),
-     ylim=c(min(ann.res, na.rm = TRUE),max(ann.res, na.rm = TRUE)),pch=16,type="l", lwd=2,col="salmon")
+     ylim=c(min(ann.res, na.rm = TRUE),max(ann.res, na.rm = TRUE)),pch=16,type="l", lwd=2,col=color)
 #polygon(c(rev(x),x),c(rev(ann.res[,"90%"]),ann.res[,"10%"]),col=alpha("grey",0.2),lwd=0.1)
 
 axis(side=1,at=x)
 if(season==2){
-  axis(side=2,at=c(122,152,183,214,244,274),
-    labels=c("1May","1Jun","1Jul","1Aug","1Sept","1Oct"))
+  axis(side=2,at=c(92,122,152,183,214,244,274,303),
+    labels=c("1Apri","1May","1Jun","1Jul","1Aug","1Sept","1Oct","1Nov"))
   }
 if(season==1){
   axis(side=2,at=c(182,213,244,274,305,335,366),
@@ -473,7 +477,8 @@ for (o in 1:500) {
   
   #}    
 }
-abline(a=intercept,b=slope,col="darkred",lwd=2)
+clip(2008,2017, min(y), max(y))
+abline(a=intercept,b=slope,col=color,lwd=2)
 
 dev.off()
 #
