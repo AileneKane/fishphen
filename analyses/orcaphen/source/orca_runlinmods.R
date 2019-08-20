@@ -11,7 +11,7 @@ for(y in 1:length(years)){
   years.all<-c(years.all,years[y])
   nobs.all<-c(nobs.all,length(yrdat$day[yrdat$AllSRobs==1]))
   firstest.all<-c(firstest.all,min(yrdat$daysaftmar31[yrdat$AllSRobs==1], na.rm=TRUE))
-  lastest.all<-c(lastest.all,max(yrdat$day[yrdat$AllSRobs==1], na.rm=TRUE))
+  lastest.all<-c(lastest.all,max(yrdat$daysaftmar31[yrdat$AllSRobs==1], na.rm=TRUE))
 }
 df <- as.data.frame(cbind(years.all,nobs.all,firstest.all,lastest.all))
 colnames(df)[1:2]<-c("year","nobs")
@@ -51,10 +51,10 @@ for(p in 1:length(podcols)){
     regdat<-orcasum.days[orcasum.days$region==regions[r],]
     
     if (regions[r]=="uss"){
-      regdat<-regdat[as.numeric(regdat$daysaftapr30)<185,]#may 1 through sept 30 for summer season
+      regdat<-regdat[as.numeric(regdat$daysaftmar31)<185,]#may 1 through sept 30 for summer season
     }
     if (regions[r]=="ps"){
-      regdat<-regdat[as.numeric(regdat$daysaftapr30)>=154 &as.numeric(regdat$daysaftapr30)<277,]#include data oct 1 through jan 31
+      regdat<-regdat[as.numeric(regdat$daysaftmar31)>=154 &as.numeric(regdat$daysaftmar31)<277,]#include data oct 1 through jan 31
     }
     for(y in 1:length(years)){
       yrdat<-regdat[regdat$orcayear==years[y],]
@@ -75,8 +75,8 @@ for(p in 1:length(podcols)){
       #       firstest.1may.all<-c(firstest.1may.all,NA)
       #      lastest.31oct.all<-c(lastest.31oct.all,NA)
       #     }
-      firstest.all<-c(firstest.all,min(yrdat$daysaftapr30[yrdat[,colnum]==1], na.rm=TRUE))
-      lastest.all<-c(lastest.all,max(yrdat$daysaftapr30[yrdat[,colnum]==1], na.rm=TRUE))
+      firstest.all<-c(firstest.all,min(yrdat$daysaftmar31[yrdat[,colnum]==1], na.rm=TRUE))
+      lastest.all<-c(lastest.all,max(yrdat$daysaftmar31[yrdat[,colnum]==1], na.rm=TRUE))
       
     }
   }
@@ -173,3 +173,4 @@ lastdifp.uss<-last.t.uss$p.value
 change.df<-as.data.frame(rbind(c("SRs","ps",mean(as.numeric(pod.df$nobs[pod.df$region=="ps"], na.rm=TRUE)),NA,firstdif.ps,firstdifp.ps,lastdif.ps,lastdifp.ps),
                                c("SRs","uss",mean(as.numeric(pod.df$nobs[pod.df$region=="uss"], na.rm=TRUE)),NA,firstdif.uss,firstdifp.uss,lastdif.uss,lastdifp.uss)))
 colnames(change.df)<-c("pod","region","nobs","prob","first.dif","first.p","last.dif","last.p")
+

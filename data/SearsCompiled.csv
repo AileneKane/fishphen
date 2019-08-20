@@ -1,0 +1,775 @@
+﻿Sight.Date,Time,Location,Location.2,ActLat,ActLong,Species,Pod,LikelyPod,Count,Direction,Comments,Channel,Source,ReportingParty,Hydrophone,Harrassment,SJCStranding,OtherStranding,FieldInvestigation,LevelANumber,RecordID,FishArea,Quadrant
+12/17/86,14:00,Point Williams,,0.00,0,Orca,,SRs,8-12,N,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,75680,10,414
+12/19/86,12:30,Point Williams,,0.00,0,Orca,,SRs,20-25,S,3 males,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,75681,10,414
+10/3/91,18:20,Point Williams,,0.00,0,Orca,JKL?,,,S,more than JK,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,75789,10,414
+11/21/91,11:30,Point Williams,,0.00,0,Orca,J,,,N,18.5 hrs. after last sighting,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,75795,10,414
+10/22/92,,"Elliott Bay, off of",,0.00,0,Orca,J,,,,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,67879,10,410
+10/30/92,18:00,"Colvos Passage, S half",,0.00,0,Orca,J,,,S,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,65682,11,418
+10/30/92,13:40,"Blake Island, S of",,0.00,0,Orca,J,,,S,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,64680,10,412
+10/31/92,8:30,West Point,,0.00,0,Orca,J,,,N,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81179,10,408
+11/3/92,9:25,Point Williams,,0.00,0,Orca,J,,,N,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,75797,10,414
+11/3/92,9:00,Fauntleroy,,0.00,0,Orca,J,,8-10,N,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,68245,10,414
+11/3/92,11:30,"Elliott Bay, off of",,0.00,0,Orca,J,,,N,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,67880,10,410
+1/1/93,15:15,Robinson Point,,0.00,0,Orca,J,,,S,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,77248,11,419
+1/1/93,13:00,Point Williams,,0.00,0,Orca,J,,,S,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,75798,10,414
+1/1/93,16:45,Dash Point,,0.00,0,Orca,J,,,S,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,65903,11,420
+1/1/93,,Alki Point,,0.00,0,Orca,J,,,S,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,62411,10,413
+1/2/93,16:00,West Point,,0.00,0,Orca,J,,,N,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81181,10,408
+1/2/93,13:00,Point Williams,,0.00,0,Orca,J,,,N,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,75800,10,414
+3/25/93,8:15,West Seattle,,0.00,0,Orca,Ts,,3-4,,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81194,10,413
+12/19/93,13:13,Point Whitney Shellfish Lab,,0.00,0,Orca,,,7-12+,S,Spent 4 hours in bay,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81489,12,442
+12/27/93,,West Seattle,,0.00,0,Orca,J,,,N,later in day - P.M. sighting,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81195,10,413
+12/27/93,,"Colvos Passage, S half",,0.00,0,Orca,J,,,S,A.M. sightings,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,65683,11,418
+1/18/94,,West Seattle,,0.00,0,Orca,J,,,,There all afternoon,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81196,10,413
+11/3/94,17:15,"Spring Beach, Vashon Island",,0.00,0,Orca,J,,,N,3 news calves present,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,79477,11,418
+11/3/94,15:00,Quartermaster Harbor,mouth of,0.00,0,Orca,J,,,N,Headed up Colvos Passage,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,76856,11,420
+12/15/94,,Three Tree Point (aka Point Pully),,0.00,0,Orca,J?,,,,Almost positive on ID,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,80156,11,416
+12/16/94,13:50,Robinson Point,,0.00,0,Orca,,J,,S,Feeding on chums,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,77256,11,419
+12/17/94,14:45,Point Beals,Vashon,0.00,0,Orca,,,pod,S,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,75203,11,415
+12/31/94,16:15,Point Defiance,,0.00,0,Orca,J,,,,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,75317,11,422
+12/31/94,13:00,Maury Island,,0.00,0,Orca,J,,,S,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,73482,11,419
+12/31/94,10:00,Alki Point,,0.00,0,Orca,J,,,S,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,62416,10,413
+1/1/95,10:55,Robinson Point,,0.00,0,Orca,J,,,,New calf with J-14,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,77257,11,419
+1/1/95,16:10,Restoration Point,,0.00,0,Orca,J,,,,,HDB,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,77134,10,410
+1/11/95,12:00,Point Jefferson,,0.00,0,Orca,J,,,,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,82161,10,404
+1/17/95,18:00,Robinson Point,,0.00,0,Orca,J,,,N,All whales accounted for,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,82152,11,419
+2/15/95,14:00,Point Caution,,0.00,0,Orca,,,,,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,82123,7,188
+9/13/95,14:00,Richmond Beach,,0.00,0,Orca,J,,,N,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81591,10,402
+9/23/95,6:30,Robinson Point,,0.00,0,Orca,J,,,N,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81572,11,419
+9/27/95,18:30,Point Williams,,0.00,0,Orca,J,,,S,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81561,10,414
+10/3/95,17:15,Eagle Harbor,,0.00,0,Orca,J,,,N,Feeding on chum,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81538,10,408
+10/3/95,12:30,Robinson Point,,0.00,0,Orca,J,,,,resting,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81537,11,419
+11/28/95,15:45,Alki Point,,0.00,0,Orca,J,,,S,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81463,10,413
+12/19/95,10:00,Dabob Bay,,0.00,0,Orca,,,~10,,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81487,12,442
+12/22/95,14:45,Piner Point,,0.00,0,Orca,J,,,N,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81499,11,420
+12/22/95,13:00,Point Defiance,,0.00,0,Orca,J,,,N,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81498,11,422
+12/22/95,10:15,Robinson Point,,0.00,0,Orca,J,,,S,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81497,11,419
+12/22/95,13:00,Point Defiance,,0.00,0,Orca,J,,,N,Didn't see J-4 - no new calves,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81494,11,422
+12/23/95,14:15,West Point,,0.00,0,Orca,J,,,N,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81503,10,408
+12/23/95,10:30,Three Tree Point (aka Point Pully),,0.00,0,Orca,J,,,N,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81502,11,416
+12/25/95,14:15,Three Tree Point (aka Point Pully),,0.00,0,Orca,J,,,,Didn't see J-4 or J-12,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81516,11,416
+12/25/95,12:30,Point Williams,,0.00,0,Orca,J,,,,Didn't see J-4 or J-12,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,81515,10,414
+11/24/01,11:00,East Passage - default,,,,Orca,"K,L",,pod,S then N,"Mark picked up at his place, followed down to Pt. Robinson where whales turned and headed N (around 13:30).  ID'd L58 (only bull), L71, 73, 74, K40 & 7.  Two calves seen - one looked to have serious fetal folds (new?)",Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,2800,11,416
+11/24/01,11:00,Blake Island,,,,Orca,,,pod,S,,Orca Net,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,2794,10,412
+12/4/01,8:15,"Blake Island, E of",,,,Orca,,,40+,N,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,2817,10,413
+12/12/01,14:00,Olalla,,,,Orca,"J,K.L",,,N,Followed whales up Colvos Passage to Restoration Pt. (16:00).  J1 only bull; L-100 not seen travelling with L67; K34 seen,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,2840,11,417
+12/20/01,12:30,Alki Point,,,,Orca,L,,,N,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,2846,10,413
+12/20/01,11:30,Brace Point,,,,Orca,L,,30+,N,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,2845,10,414
+12/25/01,16:30,Eagle Harbor,,,,Orca,"K,L",,,N,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,2864,10,408
+1/2/02,15:30,Alki Point,,,,Orca,"K,L",,pod,N,"Fast, foraging.",Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,2909,10,413
+1/3/02,11:30,Tacoma Narrows,,,,Orca,L,,pod,S,Split off from J and K pods south of Vashon  Island,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,2901,11,422
+1/3/02,15:20,Eagle Harbor,,,,Orca,"J,K",,pod,N,,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,2900,10,408
+1/14/02,13:40,"Vashon Island, NE tip",,,,Orca,,,1,,"Mark Sears located the mysterious orca calf and stayed with it on and off throughout afternoon; funny coloration, gray and yellow; lethargic and energetic (spyhopping, breaching)",Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,2939,11,414
+11/3/02,10:13,Fern Cove,,,,Orca,L,,,N,"Partial L Pod, including L-57",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6449,11,417
+11/3/02,9:40,"Alki Point, NW of",,,,Orca,"J,K,L",,,N,Partial L Pod; Tight Group; Speed Variable,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6448,10,410
+11/3/02,9:30,"Colvos Passage, no specifics",,,,Orca,L,,20,N,"Partial L Pod, including L-57; 6-8 miles behind East Pass whales in 8:10 sighting",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6447,11,
+11/3/02,8:10,Brace Point,"Brace Point, 1.5 mi SW",,,Orca,"J,K,L",,,N,Partial L Pod; Tight Group,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6446,10,414
+11/3/02,6:25,Robinson Point,,,,Orca,,,20+,N,Tight Group,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6445,11,419
+11/3/02,8:30,"Colvos Passage, no specifics",,,,Orca,L,,,N,Part of L-pod,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,3999,11,
+11/3/02,9:40,Alki Point,,,,Orca,"J,K,L",,,N,All of Lpod,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,3996,10,413
+11/3/02,8:00,West Seattle,,,,Orca,"J,K,L",,,N,Partial L pod,Hotline,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,3995,10,413
+11/8/02,20:10,Robinson Point,,,,Orca,"J,K,L",,,N,"Partial L Pod; Heard, not seen",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6457,11,419
+11/8/02,16:30,Robinson Point,,,,Orca,"J,K,L",,,S,Partial L Pod,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6456,11,419
+11/8/02,15:30,Three Tree Point (aka Point Pully),,,,Orca,"J,K,L",,,S,Partial L Pod,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6455,11,416
+11/8/02,13:45,Brace Point,"Brace Point, 1.5 mi SW",,,Orca,"J,K,L",,,S,"Partial L Pod; J-1, L-57 identified",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6454,10,414
+11/8/02,13:00,Point Williams,,,,Orca,"J,K,L",,,,Partial L Pod,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6453,10,414
+11/8/02,12:15,Alki Point,,,,Orca,"J,K,L",,,,Partial L Pod,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6452,10,413
+11/8/02,10:30,West Point,,,,Orca,"J,K,L",,,S,Partial L Pod,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6451,10,408
+11/8/02,9:30,Shilshole Bay,,,,Orca,"J,K,L",,,S,Partial L Pod,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6450,10,407
+11/8/02,20:00,Robinson Point,,,,Orca,,,,N,"Heard blows, whales not seen.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,4028,11,419
+11/8/02,16:30,Robinson Point,,,,Orca,,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,4027,11,419
+11/18/02,17:00,Robinson Point,,,,Orca,,,1,S,1 Bull sighted,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6459,11,419
+11/18/02,15:12,"Vashon Island, NE tip",,,,Orca,,,20+,S,1 Bull sighted,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6458,11,414
+11/19/02,16:00,"Point Williams, N of",,,,Orca,"K,L",,,N,Slightly looser and faster formation than 14:30 sighting.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6464,10,413
+11/19/02,14:30,Arroyo Beach,,,,Orca,"K,L",,,N,"Slow speed; K-40, L-41, L-57, L-58, L-73 identified",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6463,11,414
+11/19/02,13:30,Three Tree Point (aka Point Pully),,,,Orca,"K,L",,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6462,11,416
+11/19/02,12:30,Robinson Point,,,,Orca,"K,L",,,,Slow speed,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6461,11,419
+11/19/02,9:45,Fauntleroy/Vashon ferry,,,,Orca,"K,L",,12+,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6460,10,414
+12/2/02,9:00,Fauntleroy,,,,Orca,"K,L",,,N,"Tight rest pattern; slow speed, variable",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6465,10,414
+12/4/02,16:55,Cove,,,,Orca,"J,K",,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6469,11,417
+12/4/02,14:35,Point Dalco,,,,Orca,"J,K",,,E,Tight formation,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6468,11,420
+12/4/02,13:45,Point Richmond,,,,Orca,"J,K",,,,"Tight, slow travel/rest pattern",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6467,11,418
+12/4/02,11:30,"Colvos Passage, N half",,,,Orca,"J,K",,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6466,11,417
+12/16/02,,Fauntleroy/Vashon ferry,,,,Orca,K,,,N,"Video footage from KIRO TV helicopter which Sears viwed later. He identified K-7, K-18, K-21, K-40 from the footage.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6475,10,414
+12/17/02,16:30,Des Moines,,,,Orca,K,,,E,Scattered formation,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6472,11,419
+12/17/02,15:45,Robinson Point,,,,Orca,K,,,,"Scattered formation, foraging",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6471,11,419
+12/17/02,13:00,Dolphin Point,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6470,11,414
+12/29/02,16:20,Point Williams,,,,Orca,,,,S,"Several whales; 1 Bull in lead, possibly 1 Bull to rear, moving rapidly 5-6 knots",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6474,10,414
+12/29/02,16:00,Restoration Point,,,,Orca,,,,,Heard radio report,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6473,10,410
+1/3/03,20:00,Neill Point,,,,Orca,"J,K,L",,,,Heard whales blowing.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6493,11,420
+1/3/03,13:00,Robinson Point,,,,Orca,"J,K,L",,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6492,11,419
+1/4/03,15:00,Robinson Point,,,,Orca,,,30,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6495,11,419
+1/4/03,7:30,"Colvos Passage, no specifics",,,,Orca,L,,,N,"L-41, L-57, L-71 identified",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6494,11,
+1/6/03,23:30,Cove,,,,Orca,"K,L",,,N,"Whales heard, not seen",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6499,11,417
+1/6/03,15:50,Fauntleroy,,,,Orca,"K,L",,,S,Speed increased,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6498,10,414
+1/6/03,15:30,Blake Island,,,,Orca,"K,L",,,S,"Whales began to group up - L's in middle, K's scattered and small groups to East",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6497,10,412
+1/6/03,14:30,Point Williams,,,,Orca,"K,L",,,N,"Several whales, scattered and distant",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6496,10,414
+1/8/03,16:30,Robinson Point,,,,Orca,"K,L",,20+,S,"""Probable K,L Pods""; L Pod in rear, probably K Pod in lead",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6501,11,419
+1/8/03,14:00,Point Williams,,,,Orca,"K,L",,20+,S,"""Probable K,L Pods""",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6500,10,414
+1/10/03,16:00,Allan Island,,,,Orca,K,,,S,"Tight, slow rest pattern; L-Pod approaching from Colvos Pass. Sears notes harrassment from McMillan vessel.",Other,Sears,,FALSE,TRUE,FALSE,FALSE,FALSE,,6531,10,414
+1/10/03,23:45,Cove,,,,Orca,"K,L",,,N,Heard whales blowing,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6508,11,417
+1/10/03,19:15,Robinson Point,,,,Orca,"K,L",,,,"Scattered, not close to shore",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6507,11,419
+1/10/03,16:20,Allan Island,,,,Orca,"K,L",,,S,"K & L- Pods join together and head South, scattering out in a forage pattern at dusk. Sears notes that pods join after McMillan and other vessels have left.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6506,10,414
+1/10/03,16:00,Allan Island,,,,Orca,L,,,N,"Speed slows, waffling direction; approach of K-Pod 0.5 mi. to West. Sears notes harrassment from McMillan vessel.",Other,Sears,,FALSE,TRUE,FALSE,FALSE,FALSE,,6505,10,414
+1/10/03,15:00,Cove,,,,Orca,L,,,N,"DV film ID's: L-22, L-25, L-27, L-41, L-55, L-58, L-71, L-77, L-79, L-83+91",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6504,11,417
+1/10/03,14:30,Restoration Point,,,,Orca,"K,L",,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6503,10,410
+1/10/03,10:00,Possession Bar,,,,Orca,"K,L",,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6502,9,398
+1/11/03,14:00,"West Point, N of",,,,Orca,K,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6510,10,407
+1/11/03,13:30,Elliott Bay,,,,Orca,K,,,,"Whales ""wandering"" in bay",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6509,10,409
+1/14/03,15:00,Point Jefferson,,,,Orca,K,,,N,Still tight formation,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6514,10,404
+1/14/03,14:00,Point Monroe,,,,Orca,K,,,N,Tight rest pattern,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6513,10,407
+1/14/03,13:00,Skiff Point,,,,Orca,K,,,,Widely scattered and foraging,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6512,10,408
+1/14/03,9:10,Fauntleroy,,,,Orca,K,,,N,"Whales widely scattered in Fauntleroy-Vashon ferry lanes; K-18, K-21 identified",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6511,10,414
+1/20/03,16:25,Lindsay's Beach,,,,Orca,T,,,S,T-14 and T-74 groups,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6535,12,442
+1/20/03,15:45,Lindsay's Beach,,,,Orca,T,,5+,N,T-14 group foraging,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6534,12,442
+1/20/03,1:20,Lindsay's Beach,,,,Orca,T,,,S,"Heard both bull and juvenile blows; a second group came from the South, united with the first group near Lindsay Beach, then both groups headed South.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6533,12,442
+1/20/03,0:30,Lindsay's Beach,,,,Orca,T,,,N,Heard whales blowing near entrance to Quilcene Bay.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6532,12,442
+1/25/03,4:00,"Colvos Passage, no specifics",,,,Orca,L,,,N,L-54 identified,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6515,11,
+2/3/03,15:15,"West Point, N of",,,,Orca,J,,,N,"Scattered subgroups, J-1 in lead",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6522,10,407
+2/3/03,14:05,"Alki Point, NW of",,,,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6520,10,410
+2/3/03,13:20,Alki Point,,,,Orca,J,,,N,"Whales in rest group, socializing; J-1 still on easternmost side; J-8 & J-19 in small group to West",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6519,10,413
+2/3/03,13:00,Alki Point,,,,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6518,10,413
+2/3/03,12:00,Allan Island,,,,Orca,J,,,N,Scattered in small groups; J-1 identified,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6517,10,414
+2/3/03,8:30,Neill Point,,,,Orca,J,,10+,W,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6516,11,420
+2/28/03,19:00,Dabob Bay,,,,Orca,T,,,S,Fast speed,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6526,12,442
+2/28/03,17:00,Broad Spit,,,,Orca,T,,,N,"Stalling mid-channel, slow movement",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6525,12,442
+2/28/03,16:35,Dabob Bay,,,,Orca,T,,,N,"Slow, tight formation",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6524,12,442
+2/28/03,15:00,Lindsay's Beach,,,,Orca,T,,1,N,"One lone bull, moving slowly",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6523,12,442
+3/1/03,14:45,Whitney Point,,,,Orca,T,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6529,12,442
+3/1/03,13:00,Dabob Bay,,,,Orca,T,,,S,"Most whales following shoreline closely, inside mooring buoys; 2 bulls outside, approx. 0.33 mi.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6528,12,442
+3/1/03,11:35,Lindsay's Beach,,,,Orca,T,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6527,12,442
+3/2/03,16:30,Lindsay's Beach,,,,Orca,T,,3,S,"One bull, 1 female, 1 juvenile",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6530,12,442
+11/4/03,15:15,West Point,,,,Orca,"J, K",,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6881,10,408
+11/4/03,15:15,West Point,,,,Orca,"J,K",,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6559,10,408
+11/4/03,13:54,"Restoration Point, S of",,,,Orca,"J,K",,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6558,10,412
+11/4/03,13:15,"Blake Island, E of",,,,Orca,"J,K",,,NNW,,Orca Net,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6557,10,413
+11/4/03,12:35,Fauntleroy,,,,Orca,"J,K",,,N,"Tight formation, rapid speed; J-1, K-40, K-14 and calf, identified",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6556,10,414
+11/4/03,9:40,Bainbridge,,,,Orca,"J,K",,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6555,10,408
+11/7/03,9:05,"Blake Island, E of",,,,Orca,"J,K,L",,,N,"J & K-Pods ahead by 0.5 mi., L-Pod shifting course occasionally toward bainbridge Is.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6562,10,413
+11/7/03,8:30,Allan Island,,,,Orca,"J,K,L",,,N,"Many breaches; whales generally in two groups; J-1, L-41, L-57 (K-40 noted east of Blake Is.)",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6561,10,414
+11/7/03,7:15,Cove,,,,Orca,"J,K,L",,,N,"Scattered, foraging",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6560,11,417
+12/3/03,9:30,Three Tree Point (aka Point Pully),,,,Orca,"J, K",,,,Tight grouping,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6882,11,416
+12/3/03,8:20,Robinson Point,,,,Orca,"J,K",,12+,N,"Very close to shore, tight formation, slow speed; one bull identified, possibly J-1",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6564,11,419
+12/3/03,7:40,Gold Beach,,,,Orca,"J,K",,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6563,11,420
+12/9/03,14:20,Point Jefferson,,,,Orca,"J, K",,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6883,10,404
+12/9/03,13:40,Yeomalt Point,,,,Orca,"J,K",,,N,"J-1, J-2, J-8, J-14+Sub, J-27, K-7, K-11, K-20, K-21, K-40, and other J's and K's",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6665,10,408
+12/9/03,11:45,West Point,,,,Orca,"J,K",,,,Widely scattered,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6664,10,408
+12/11/03,15:30,Point Defiance,,,,Orca,K,,,W,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6672,11,422
+12/11/03,15:00,Commencement Bay,,,,Orca,K,,,W,"K-7, K-14, K-16, K-21, K-26 wrestling with calf K-36, K-35; still scattered",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6671,11,421
+12/11/03,14:20,Commencement Bay,,,,Orca,K,,,,"Non-directional, scattered, foraging",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6670,11,421
+12/11/03,12:10,Gold Beach,,,,Orca,K,,,S,Very scattered,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6669,11,420
+12/11/03,11:30,Robinson Point,,,,Orca,K,,,S,,Orca Net,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6668,11,419
+12/11/03,9:30,Point Beals,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6667,11,415
+12/11/03,9:00,Dolphin Point,,,,Orca,K,,,S,Very scattered,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6666,11,414
+12/12/03,11:10,Three Tree Point (aka Point Pully),,,,Orca,K,,,S,Still scattered,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6884,11,416
+12/12/03,15:45,Tahlequah,,,,Orca,K,,,,"Stateler informant reported seeing whales, no further info.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6678,11,420
+12/12/03,14:15,Gold Beach,,,,Orca,K,,,S,Slow movement,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6677,11,420
+12/12/03,12:45,Robinson Point,,,,Orca,K,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6676,11,419
+12/12/03,10:20,Point Beals,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6675,11,414
+12/12/03,9:40,Point Beals,"Fauntleroy, 2 mi. S of ferry lanes",,,Orca,K,,,S,"Scattered, foraging; K-14, K-21, K-36, K-40",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6674,11,415
+12/12/03,9:00,Fauntleroy,,,,Orca,K,,,S,Very scattered singles and pairs,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6673,10,414
+12/14/03,17:00,Tahlequah,,,,Orca,K,,,,Info from Tahlequah informant.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6682,11,420
+12/14/03,15:50,Gold Beach,,,,Orca,K,,,S,Some foraging behavior,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6681,11,420
+12/14/03,14:45,Robinson Point,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6680,11,419
+12/14/03,12:30,Dolphin Point,,,,Orca,K,,3,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6679,11,414
+12/19/03,20:00,Cove,,,,Orca,K,,,N,"Blows heard, whales not seen",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6691,11,417
+12/19/03,17:00,Tahlequah,,,,Orca,K,,,,Informant report,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6690,11,420
+12/19/03,15:55,Gold Beach,,,,Orca,K,,,S,Tight rest pattern,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6689,11,420
+12/19/03,15:10,Robinson Point,,,,Orca,K,,,SW,parallel to Maury Is. Shore,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6688,11,419
+12/19/03,14:25,Luana Beach,,,,Orca,K,,,,Whales tightening from being widely scattered as they approach the beach.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6687,11,416
+12/19/03,13:35,Point Heyer,,,,Orca,K,,,SW,"K-20, K-40",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6686,11,416
+12/19/03,13:00,Point Beals,,,,Orca,K,,,S,"Very scattered, foraging",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6685,11,415
+12/19/03,12:20,Dolphin Point,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6684,11,414
+12/19/03,10:00,Bainbridge,,,,Orca,K,,,S,Informant report.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6683,10,408
+12/20/03,17:30,Cove,,,,Orca,K,,,N,"Whales heard blowing, not seen",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6696,11,417
+12/20/03,16:00,Point Richmond,,,,Orca,K,,,,Foraging,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6695,11,418
+12/20/03,15:30,Point Sandford,,,,Orca,K,,,S,Fast speed,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6694,11,418
+12/20/03,14:40,"Colvos Passage, N half","Pt. Southworth, 3 mi. S",,,Orca,K,,,S,"K-12, K-22, K-28, K-31, K-33",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6693,11,417
+12/20/03,14:00,Cove,,,,Orca,K,,,N,"Scattered, no bulls.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6692,11,417
+12/26/03,12:56,Three Tree Point (aka Point Pully),,,,Orca,K,,,,"All whales at fast speed; K-14, K-16, K-21, K-25, K-35, K-36",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6885,11,416
+12/26/03,15:45,Restoration Point,,,,Orca,K,,,N,,Orca Net,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6702,10,410
+12/26/03,14:20,Dolphin Point,,,,Orca,K,,,N,"New calf detected, K-37, with group of 6-7 females and juveniles.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6701,11,414
+12/26/03,14:00,Dolphin Point,,,,Orca,K,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6700,11,414
+12/26/03,12:30,Point Beals,,,,Orca,K,,,S,Foraging,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6699,11,415
+12/26/03,12:00,"Dolphin Point, S of",,,,Orca,K,,,,"K-7, K-21, K-40; some whales grouped, others foraging",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6698,11,415
+12/26/03,11:20,Point Williams,,,,Orca,K,,,S,Scattered,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6697,10,414
+12/27/03,15:30,Neill Point,,,,Orca,K,,,,Foraging for over an hour.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6705,11,420
+12/27/03,13:15,Robinson Point,,,,Orca,K,,,,"New calf sighted among group of females and juveniles; K-20, K-21, K-14+36, K-25.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6704,11,419
+12/27/03,11:30,Point Beals,,,,Orca,K,,,S,Informant report,Orca Net,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6703,11,415
+12/31/03,17:00,Dolphin Point,,,,Orca,K,,,S,"Females, juveniles, and calves sighted.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6707,11,414
+12/31/03,16:20,Dolphin Point,,,,Orca,K,,4+,,"Very scattered, foraging; K-20, K-40",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6706,11,414
+1/1/04,16:00,Alki Point,,,,Orca,K,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6796,10,413
+1/1/04,15:15,Point Williams,,,,Orca,K,,,N,"K-13, K-21, K-22, K-40",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6795,10,414
+1/1/04,14:00,Three Tree Point (aka Point Pully),,,,Orca,K,,,N,Fairly tight formation.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6794,11,416
+1/1/04,13:15,Robinson Point,,,,Orca,K,,,N,Luana informant report.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6793,11,419
+1/9/04,16:30,Point Williams,,,,Orca,L,,,N,Fairly tight formation.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6800,10,414
+1/9/04,15:00,Robinson Point,,,,Orca,L,,,N,"Most whales were close to beach; fast, sporadic surfacings.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6799,11,419
+1/9/04,14:15,Gold Beach,,,,Orca,L,,,N,Tight rest pattern.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6798,11,420
+1/9/04,12:15,Point Defiance,,,,Orca,L,,,,Informant report.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,6797,11,422
+5/19/04,15:00,Dyes Inlet,,,,Orca,T,,,,"3-hr observation period: whales generally grouped close together, meandered throughout entire inlet, abruptly variable speeds.",Other,Sears,,FALSE,TRUE,FALSE,FALSE,FALSE,,6803,10,411
+9/14/04,18:00,Andrews Bay,,,,Orca,"J,L",,,,,Orca Net,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,7161,7,176
+11/12/04,13:00,Kingston,,,,Orca,"J,K",,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9554,10,401
+11/13/04,16:30,"Blake Island, E of",,,,Orca,K,,,S,Widely scattered and foraging intensively,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9529,10,413
+11/16/04,17:00,East Passage,,,,Orca,K,,,N,Scattered and foraging,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9530,11,420
+11/16/04,15:30,"Colvos Passage, no specifics",,,,Orca,K,,,S,Maintained tight travel pattern,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9528,11,
+11/20/04,13:00,Point Beals,,,,Orca,K,,,N,Mixed behaviors; variety of vessels following whales,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9531,11,415
+11/22/04,16:40,"Vashon Island, NE tip",,,,Orca,J,,,,Scattered widely and foraging intensively,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9533,11,414
+11/22/04,14:45,Elliott Bay,,,,Orca,J,,,S,Scattered widely and foraging intensively,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9532,10,409
+11/23/04,15:45,Dolphin Point,,,,Orca,K,,,N,"Exhibited very slow, tight rest pattern with brief opportunistic foraging",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9534,11,414
+12/1/04,13:00,"Blake Island, E of",,,,Orca,"J,K",,,N,"Traveling in mixed groups, mid-channel.  Occasionally foraging and exhibiting active social behavior and surface displays.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9535,10,413
+12/2/04,14:20,Restoration Point,,,,Orca,"J,K",,,N,Whales had been in resting pattern since Blake Island but broke up into foraging groups again off of Bainbridge.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9537,10,410
+12/2/04,10:20,Dolphin Point,,,,Orca,"J,K",,,N,Very active foraging; K34 spotted with chum salmon,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9536,11,414
+12/21/04,16:00,Yeomalt Point,,,,Orca,"J,K",,,N,"Around Eagle Harbor both pods together shifted direction, swimming slowly in a large oblong circle counter-clockwise before resuming prior northerly direction.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9539,10,408
+12/21/04,10:00,Robinson Point,,,,Orca,"J,K",,,N,New calf - J40 - documented for first time.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9538,11,419
+12/21/04,,"Colvos Passage, no specifics",,,,Orca,J,,,,"J-14's calf was one of the whales, getting lots of attention and surrounded by other juvenile and female whales",Orca Network,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,7496,11,
+12/22/04,14:45,"Colvos Passage, no specifics",,,,Orca,"J,K",,,N,New calf - K38 - documented for the first time.  Born within previous 24-hour period.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9540,11,
+12/22/04,,"Colvos Passage, no specifics",,,,Orca,K,,,,"K-20's calf was one of the whales, getting lots of attention and surrounded by other juvenile and female whales",Orca Network,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,7497,11,
+12/25/04,11:10,Brace Point,,,,Orca,K,,,N,Actively foraging,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9541,10,414
+12/26/04,16:25,Alki Point,,,,Orca,K,,,N,Many vessels following whales; whales exhibiting longer down times than normal.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9543,10,413
+12/26/04,8:50,Fauntleroy,,,,Orca,K,,,S,Very active foraging as whales moved south.  Reversed direction at Pt. Robinson and began 2 hr. period of social activity.  Several vessels following whales,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9542,10,414
+12/27/04,15:20,Point Beals,,,,Orca,K,,,S,Widely scattered pod; foraging behaviors apparent,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9544,11,415
+12/28/04,15:45,Point Peter,,,,Orca,K,,,N,"Small scattered subgroups and pairs alternating between travel, rest, and occasional foraging opportunities.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9545,11,417
+12/29/04,12:50,Point Williams,,,,Orca,,,,,Appeared to be foraging on Allen Bank,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9559,10,414
+12/31/04,15:55,Point Vashon,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9571,10,412
+12/31/04,14:45,Allan Island,,,,Orca,K,,,S,All vessels have now departed and whales immediately lengthen surface periods from 90-120 secs. to 3-4 minutes.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9570,10,414
+12/31/04,14:30,"Blake Island, SE of",,,,Orca,K,,,S,"Whales tight together, moving fast",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9569,10,414
+12/31/04,13:55,"Blake Island, E of",,,,Orca,K,,,SW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9568,10,413
+12/31/04,13:30,Restoration Point,,,,Orca,K,,,S,4 vessels with whales,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9567,10,410
+12/31/04,12:00,"Colvos Passage, no specifics",,,,Orca,K,,,N,Several vessels with the whales as they exit the Passage.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9566,11,
+1/1/05,,Maury Island,,,,Orca,Ts,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9572,11,419
+1/3/05,11:30,"Colvos Passage, N half",,,,Orca,K,,,"N, then S","Whales traveled up Colvos towards Blake, foraged for a while, then headed S again back into Colvos.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9546,11,417
+1/10/05,11:45,Dolphin Point,,,,Orca,K,,,S,"As whales traveled S, alternated between foraging, social activity, and a bit of resting thrown in.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9547,11,414
+1/12/05,16:00,Alki Point,,,,Orca,K,,,N,Whales intensively foraging between Alki Pt. and Tango buoy.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9549,10,413
+1/12/05,14:00,"Colvos Passage, N half",,,,Orca,K,,,N,Moving rapidly northbound with intensive foraging.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9548,11,417
+1/13/05,16:30,Dalco Passage,,,,Orca,K,,,W,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9552,11,420
+1/13/05,15:00,Robinson Point,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9551,11,419
+1/13/05,13:00,Point Beals,,,,Orca,K,,,S,Widely scattered; foraging.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9550,11,415
+3/8/05,9:45,Fauntleroy,,,,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,9553,10,414
+2/5/06,12:00,Skiff Point,,,,Orca,Ts,,~12,NE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13657,10,408
+2/5/06,11:25,Yeomalt Point,,,,Orca,Ts,,~12,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13656,10,408
+2/5/06,10:45,Restoration Point,,,,Orca,Ts,,~12,,Group engaged in an apparent mock attack on a CA sea lion,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13655,10,410
+2/5/06,9:40,"Blake Island, E of",,,,Orca,Ts,,~12,E,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13654,10,413
+2/5/06,9:00,"Blake Island, E of",,,,Orca,Ts,,~12,N,Seal interaction continues,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13653,10,413
+2/5/06,8:15,Allan Island,,,,Orca,Ts,,~12,mill,Group engaged in interaction with a harbor seal - appeared to be play behavior rather than a serious attack.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13652,10,414
+2/5/06,7:30,Allan Island,,,,Orca,Ts,,~12,mill,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13651,10,414
+2/13/06,17:15,Point Richmond,,,,Orca,Ts,,20+,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13666,11,418
+2/13/06,16:40,Point Richmond,,,,Orca,Ts,,20+,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13665,11,418
+2/13/06,16:05,Point Dalco,,,,Orca,Ts,,20+,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13664,11,420
+2/13/06,15:20,Tahlequah,,,,Orca,Ts,,20+,,Lots of surface displays,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13663,11,420
+2/13/06,15:00,Dalco Passage,,,,Orca,Ts,,20+,WNW,Behaving more like southern residents at this point,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13662,11,420
+2/13/06,14:20,"Browns Point, S of",,,,Orca,Ts,,20+,,Possible prey/kill - whales vocalizing above surface with seagulls hovering around,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13661,11,421
+2/13/06,13:55,Commencement Bay,,,,Orca,Ts,,20+,mill,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13660,11,421
+3/4/06,17:40,Allan Island,,,,Orca,KL,,,N,Very rough waters; L-74 only whale successfully documented.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13671,10,414
+6/20/06,18:20,Alki Point,,,,Orca,Ts,,6-7,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13672,10,413
+6/29/06,8:40,Blakely Rock,,,,Orca,Ts,,~6,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13681,10,410
+6/29/06,8:30,Restoration Point,,,,Orca,Ts,,~6,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13680,10,410
+6/29/06,7:55,"Blake Island, N of",,,,Orca,Ts,,~6,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13679,10,412
+6/30/06,19:20,Prospect Point,,,,Orca,Ts,,5,S,"ID'd as T101, 101A, 101C, 102, and 124C",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13688,11,417
+6/30/06,19:05,Cove,,,,Orca,Ts,,5,SW,"ID'd as T101, 101A, 101C, 102, and 124C",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13687,11,417
+6/30/06,18:30,Fern Cove,,,,Orca,Ts,,5,S,"Lots of vessels in area and whales doing long soundings; ID'd as T101, 101A, 101C, 102, and 124C",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13686,11,417
+6/30/06,18:07,"Colvos Passage, N half",,,,Orca,Ts,,5,,"ID'd as T101, 101A, 101C, 102, and 124C",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13685,11,417
+6/30/06,17:50,Allan Island,,,,Orca,Ts,,5,,"ID'd as T101, 101A, 101C, 102, and 124C",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13684,10,414
+6/30/06,17:10,"Restoration Point, S of",,,,Orca,Ts,,5,,"ID'd as T101, 101A, 101C, 102, and 124C",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13683,10,412
+8/16/06,10:00,West Point,,,,Orca,Ts,,~15,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13693,10,408
+8/16/06,9:05,Elliott Bay,,,,Orca,Ts,,~15,NW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13692,10,409
+8/16/06,8:35,Duwamish Head,,,,Orca,Ts,,~15,SE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13691,10,409
+8/16/06,8:00,Alki Point,,,,Orca,Ts,,~15,NE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13690,10,413
+10/18/06,16:30,Ketron Island,,,,Orca,KL,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13700,13,426
+10/18/06,16:10,"Anderson Island, S tip",,,,Orca,KL,,,N,Very slow rest mode,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13699,13,427
+10/18/06,15:45,Ketron Island,,,,Orca,KL,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13698,13,426
+11/18/06,14:32,Useless Bay,,,,Orca,JKL,,,N,Slowly moving north in tight groups,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13713,9,396
+11/18/06,14:25,Useless Bay,,,,Orca,JKL,,,,Large tanker navigates through tight resting superpod,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13712,9,396
+11/18/06,14:08,"Point no Point, Kitsap Peninsula",,,,Orca,JKL,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13711,9,397
+11/18/06,13:51,Skunk Bay,,,,Orca,JKL,,,SE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13710,9,395
+11/18/06,13:27,Double Bluff,,,,Orca,JKL,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13709,9,394
+11/18/06,13:19,Double Bluff,,,,Orca,JKL,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13708,9,394
+11/18/06,12:48,Useless Bay,,,,Orca,JKL,,,NE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13707,9,396
+11/18/06,12:36,Useless Bay,,,,Orca,JKL,,,NE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13706,9,396
+11/18/06,12:17,"Point no Point, Kitsap Peninsula",,,,Orca,JKL,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13705,9,397
+11/18/06,11:55,"Point no Point, Kitsap Peninsula",,,,Orca,JKL,,,,Scattered with a variety of behaviors being displayed,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13704,9,397
+11/18/06,11:15,"Point no Point, Kitsap Peninsula",,,,Orca,JKL,,,NNE,Mixed behaviors,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13703,9,397
+11/18/06,10:55,"Point no Point, S of",,,,Orca,JKL,,,,Scattered and actively foraging,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13702,9,400
+11/5/07,15:30,Olalla,,,,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13535,11,417
+11/5/07,14:40,Point Richmond,,,,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13534,11,418
+11/5/07,14:10,"Colvos Passage, S half",,,,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13533,11,418
+11/5/07,13:40,Dalco Passage,,,,Orca,J,,,W,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13532,11,420
+11/5/07,13:00,Dalco Passage,,,,Orca,J,,,,Foraging,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13531,11,420
+11/5/07,12:47,Piner Point,,47.35,-122.4322,Orca,J,,,,Prey remains recovery event,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13530,11,420
+11/5/07,12:00,Robinson Point,,,,Orca,J,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13529,11,419
+11/5/07,8:30,"Blake Island, E of",,,,Orca,J,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13528,10,413
+11/7/07,16:31,Yeomalt Point,,47.63,-122.4695,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13546,10,408
+11/7/07,16:06,Blakely Rock,,47.60,-122.4673,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13545,10,410
+11/7/07,15:21,Alki Point,,47.56,-122.4462,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13544,10,413
+11/7/07,14:52,Alki Point,,47.55,-122.4358,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13543,10,413
+11/7/07,14:07,Point Williams,,47.53,-122.4321,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13542,10,414
+11/7/07,13:38,Allan Island,,47.53,-122.4416,Orca,J,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13541,10,414
+11/7/07,13:11,Point Williams,,47.53,-122.4318,Orca,J,,,,Prey remains recovery event,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13540,10,414
+11/7/07,12:39,Point Williams,,47.53,-122.4262,Orca,J,,,,L43 first seen - born during previous 45 hours as not spotted on 11/5/07,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13539,10,414
+11/7/07,11:45,"Blake Island, E of",,,,Orca,J,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13538,10,413
+11/7/07,10:10,Point Williams,,,,Orca,J,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13537,10,414
+11/7/07,8:15,Bremerton ferry,,,,Orca,J,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13536,10,410
+11/9/07,15:57,"Spring Beach, Vashon Island",,47.38,-122.5361,Orca,J,,,SE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13553,11,418
+11/9/07,15:21,Point Richmond,,47.38,-122.5374,Orca,J,,,N then S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13552,11,418
+11/9/07,15:12,Point Richmond,,47.37,-122.537,Orca,J,,,N,No sign of J2s with new calf,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13551,11,418
+11/9/07,14:18,"Colvos Passage, S half",,47.33,-122.5305,Orca,J,,,NW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13550,11,418
+11/9/07,13:00,Gold Beach,,,,Orca,J,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13549,11,420
+11/9/07,12:10,Robinson Point,,,,Orca,J,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13548,11,419
+11/9/07,10:30,Dolphin Point,,,,Orca,J,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13547,11,414
+11/21/07,15:40,Robinson Point,,,,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13563,11,419
+11/21/07,14:35,Maury Island gravel pier,,47.36,-122.4298,Orca,J,,,NE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13562,11,420
+11/21/07,14:00,Piner Point,,,,Orca,J,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13561,11,420
+11/21/07,13:20,Neill Point,,,,Orca,J,,,NE,"New calf, J43, appears to be missing",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13560,11,420
+11/21/07,13:05,"Maury Island, S end",,,,Orca,J,,,W then NE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13559,11,420
+11/23/07,16:00,Gold Beach,,47.35,-122.4107,Orca,J,,,NE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13578,11,420
+11/23/07,15:23,Browns Point,,,,Orca,J,,,NE,Calf group stopping every few minutes to mill and attend to calf,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13577,11,420
+11/23/07,14:45,Piner Point,,,,Orca,J,,,NE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13576,11,420
+11/23/07,14:00,Neill Point,,,,Orca,J,,,NE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13575,11,420
+11/23/07,13:30,Neill Point,,47.34,-122.4585,Orca,J,,,mill,Still stopping to swarm calf,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13574,11,420
+11/23/07,12:56,Dalco Passage,,,,Orca,J,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13573,11,420
+11/23/07,12:40,Piner Point,,47.34,-122.4503,Orca,J,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13572,11,420
+11/23/07,12:15,Maury Island gravel pier,,47.36,-122.4298,Orca,J,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13571,11,420
+11/23/07,11:22,Robinson Point,,47.38,-122.3803,Orca,J,,,SWS,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13570,11,419
+11/23/07,10:37,"Maury Island, N of",,47.41,-122.3465,Orca,J,,,,"Group stops periodically to circle around calf, pushing it to surface between adults.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13569,11,416
+11/23/07,10:00,Three Tree Point (aka Point Pully),,,,Orca,J,,,S,A new calf appeared to be focus of intense activity with calf being lifted above surface repeatedly.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13568,11,416
+11/23/07,9:40,Seahurst Park,,47.47,-122.392,Orca,J,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13567,11,415
+11/23/07,9:15,Dolphin Point,,47.50,-122.4037,Orca,J,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13566,11,414
+11/23/07,8:10,Point Williams,,,,Orca,J,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13565,10,414
+12/12/07,15:50,Point Wells,,,,Orca,KL?,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13582,10,402
+12/12/07,13:15,West Point,,,,Orca,KL?,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13581,10,408
+12/13/07,15:30,West Point,,,,Orca,KL?,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13590,10,408
+12/13/07,13:45,Dolphin Point,,,,Orca,KL?,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13589,11,414
+12/13/07,12:57,Point Beals,,,,Orca,KL?,,,mill,Still foraging,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13588,11,414
+12/13/07,12:30,Point Beals,,,,Orca,KL?,,,mill,Foraging intensly,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13587,11,415
+12/14/07,14:25,Allan Island,,,,Orca,KL2s,,,mill,Lots of socializing and surface displays,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13595,10,414
+12/14/07,14:15,Point Vashon,,,,Orca,KL2s,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13594,10,412
+12/14/07,13:20,Cove,,,,Orca,KL2s,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13593,11,417
+12/16/07,15:15,Double Bluff,,,,Orca,KL2s,,,NW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13605,9,394
+12/16/07,11:45,Shilshole Bay,,,,Orca,KL2s,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13604,10,407
+12/20/07,16:20,"Robinson Point, N of - keep",,,,Orca,KL2s,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13608,11,416
+12/20/07,15:42,Klahanie,,,,Orca,KL2s,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13607,11,416
+12/23/07,12:10,"Elliott Bay, off of",,,,Orca,KL2s,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13616,10,410
+12/23/07,11:45,West Point,,,,Orca,KL2s,,,,Increased predation activity,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13615,10,408
+12/23/07,11:30,"Alki Point, NW of",,,,Orca,KL2s,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13614,10,410
+12/23/07,11:00,Alki Point,,,,Orca,KL2s,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13613,10,413
+12/23/07,10:16,Point Williams,,47.52,-122.4102,Orca,KL2s,,,,Prey remains recovery event,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13612,10,414
+12/23/07,9:20,Point Beals,,47.49,-122.399,Orca,KL2s,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13611,11,415
+12/24/07,15:00,Allan Island,,,,Orca,K?,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13745,10,414
+12/26/07,15:45,Piner Point,,,,Orca,K,,,SW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13754,11,420
+12/26/07,15:00,Dalco Passage,,,,Orca,K,,,SSW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13753,11,420
+12/26/07,14:00,Robinson Point,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13752,11,419
+12/26/07,13:45,"Maury Island, N of",,,,Orca,K,,,SE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13751,11,416
+12/26/07,13:30,Klahanie,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13750,11,416
+12/26/07,12:35,Point Beals,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13749,11,415
+12/26/07,12:00,Dolphin Point,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13748,11,414
+12/26/07,11:10,Blake Island,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13747,10,412
+12/26/07,10:15,Restoration Point,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13746,10,410
+12/27/07,16:25,Harper Passage,,,,Orca,K,,,NW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13760,10,412
+12/27/07,16:00,Southworth,,,,Orca,K,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13759,10,412
+12/27/07,15:00,Cove,,,,Orca,K,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13758,11,417
+12/27/07,14:30,Lisabeula,,,,Orca,K,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13757,11,418
+12/27/07,13:15,Point Dalco,,,,Orca,K,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13756,11,420
+12/27/07,10:00,Robinson Point,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13755,11,419
+12/28/07,14:00,Fauntleroy/Vashon ferry,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13763,10,414
+12/29/07,15:35,Quartermaster Harbor,,,,Orca,K,,,SW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13770,11,420
+12/29/07,14:15,Dash Point,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13769,11,420
+12/29/07,13:50,Robinson Point,,,,Orca,K,,,,WW vessel getting too close to take photos,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13768,11,419
+12/29/07,13:30,"Maury Island, N of",,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13767,11,416
+12/29/07,12:50,Tramp Harbor,,,,Orca,K,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13766,11,416
+12/31/07,15:40,West Point,,47.66,-122.4619,Orca,K,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13775,10,408
+12/31/07,12:35,"Robinson Point, N of - keep",,47.43,-122.389,Orca,K,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13774,11,416
+12/31/07,9:30,Tacoma Narrows Bridge,,,,Orca,K,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,13771,11,422
+10/22/08,12:45,Seahurst Park,1 mi off,47.48,-122.3948,Orca,JKLp,,,N,Whales midchannel with speed increased from 5-6 mph,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19888,11,415
+2/20/09,16:15,Pilot Point,,47.87,-122.4888,Orca,L,,,N,Very spread out N to S.  No predation events observed throughout whole day.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19869,9,397
+2/20/09,15:50,Eglon,1.5 miles off,0.00,0,Orca,L,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19868,9,400
+2/20/09,11:50,Sierra Golf Buoy,,47.67,-122.4751,Orca,L,,,N,No foraging behavior observed,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19867,10,408
+2/20/09,11:20,Eagle Harbor,2 mi E,47.63,-122.4521,Orca,L,,,N,Whales very scattered,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19866,10,408
+2/20/09,9:15,"Colvos Passage, N half",,0.00,0,Orca,L,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19865,11,417
+7/13/09,17:00,Admiralty Head,"and Marrowstone Point, b/w",0.00,0,Orca,J,,,NW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19871,9,388
+7/13/09,13:45,Double Bluff,,0.00,0,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19870,9,394
+8/31/09,13:00,Point Sandford,,0.00,0,Orca,Ts,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19875,11,418
+8/31/09,11:35,Tahlequah,,0.00,0,Orca,Ts,,6-7,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19874,11,420
+8/31/09,10:45,Quartermaster Harbor,mouth of,0.00,0,Orca,Ts,,6-7,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19873,11,420
+8/31/09,9:45,Sandy Shores,,0.00,0,Orca,Ts,,6-7,S,One bull in group,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19872,11,420
+9/6/09,9:30,Point Williams,,0.00,0,Orca,Ts,,5-6,,One sprouter in group,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19876,10,414
+10/22/09,17:06,Point Monroe,,47.68,-122.4806,Orca,JKLp,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19902,10,407
+10/22/09,16:52,Sierra Golf Buoy,W of,47.67,-122.4816,Orca,JKLp,,,N,Scattered west of buoy,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19901,10,408
+10/22/09,16:36,Skiff Point,,47.65,-122.4823,Orca,JKLp,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19900,10,408
+10/22/09,15:33,Blakely Rock,1 mi E,47.60,-122.4652,Orca,JKLp,,,N,Subsurface fecal with blood spots collected,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19899,10,410
+10/22/09,15:15,Restoration Point,1 mi off,47.58,-122.464,Orca,JKLp,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19898,10,410
+10/22/09,15:11,Alki Point,"and Restoration Point, b/w",0.00,0,Orca,JKLp,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19897,10,413
+10/22/09,14:58,Alki Point,mid-channel,47.58,-122.4534,Orca,JKLp,,,N,Scale and fish fragment recovery,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19896,10,413
+10/22/09,14:55,Alki Point,,0.00,0,Orca,JKLp,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19895,10,413
+10/22/09,14:20,Alki Point,S of,47.56,-122.4342,Orca,JKLp,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19894,10,413
+10/22/09,13:50,"Point Williams, N of",,47.54,-122.4199,Orca,JKLp,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19893,10,413
+10/22/09,13:25,Fauntleroy,,0.00,0,Orca,JKLp,,,,Forage behavior observed,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19892,10,414
+10/22/09,13:21,Brace Point,,47.51,-122.401,Orca,JKLp,,,N,Scales recovered from predation event,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19891,10,414
+10/22/09,13:15,Brace Point,S of,47.50,-122.3978,Orca,JKLp,,,N,Prey remains collected,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19890,11,414
+10/22/09,13:00,Seola Beach,,47.50,-122.397,Orca,JKLp,,,N,Bull engaged in prey chase,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19889,11,414
+10/22/09,12:30,"Three Tree Point, N of",,47.46,-122.3926,Orca,JKLp,,,N,Subsurface fecal recovery,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19887,11,415
+10/22/09,12:10,Three Tree Point (aka Point Pully),,47.45,-122.3874,Orca,JKLp,,,N,Subsurface fecal recovery,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19886,11,416
+10/22/09,11:55,Three Tree Point (aka Point Pully),S of,47.44,-122.3855,Orca,JKLp,,,N,Subsurface fecal recovery,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19885,11,416
+10/22/09,11:40,Point Heyer,mid-channel,47.43,-122.389,Orca,JKLp,,,N,Complete direction shift from E to N,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19884,11,416
+10/22/09,11:33,Point Heyer,,47.43,-122.3941,Orca,JKLp,,,,Surface mucous recovery,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19883,11,416
+10/22/09,11:30,Point Heyer,mid-channel,47.43,-122.3965,Orca,JKLp,,,SE,Very slow speed,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19882,11,416
+10/22/09,11:10,Three Tree Point (aka Point Pully),S of,47.44,-122.4069,Orca,JKLp,,,S,Abrupt direction changes and prey chasing observed,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19881,11,416
+10/22/09,10:45,Dilworth,,0.00,0,Orca,JKLp,,,S,Lots of meandering,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19880,11,415
+10/22/09,8:25,Point Williams,,0.00,0,Orca,JKLp,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19879,10,414
+10/22/09,8:10,Point Williams,,0.00,0,Orca,JKLp,,,,Whales moving in all directions and scattered across entire channel,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19878,10,414
+11/3/09,11:30,Southworth ferry,,0.00,0,Orca,Ts,,6-8,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19905,10,412
+11/3/09,9:45,Olalla,,0.00,0,Orca,Ts,,6-8,,No adult males in group,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19904,11,417
+11/3/09,9:00,"Spring Beach, Vashon Island",,0.00,0,Orca,Ts,,6-8,N,No adult males in group,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19903,11,418
+11/12/09,15:48,"Apple Cove Point, N of",,47.84,-122.4496,Orca,JKLp?,,,NNE,Scattered,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19910,9,400
+11/12/09,15:38,"Apple Cove Point, N of",,47.84,-122.4469,Orca,JKLp?,,,NNE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19909,9,400
+11/12/09,15:30,"Apple Cove Point, N of",,47.84,-122.4541,Orca,JKLp?,,,,Saw J28 and new calf J46 - looks healthy,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19908,9,400
+11/12/09,14:52,Eglon,South of in mid-channel,47.86,-122.4648,Orca,JKLp?,,,E,Direction shift from SE to E,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19907,9,400
+11/12/09,14:10,Eglon,,47.87,-122.4882,Orca,JKLp?,,,S,Whales very scattered,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19906,9,400
+11/13/09,8:40,Point Williams,,0.00,0,Orca,,SRs,,N,Scattered across Puget Sound,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19911,10,414
+11/21/09,17:20,Robinson Point,well offshore,0.00,0,Orca,,J,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19917,11,419
+11/21/09,16:45,"Tango Alpha Buoy, Vashon",,0.00,0,Orca,,J,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19916,11,416
+11/21/09,13:40,Dolphin Point,,0.00,0,Orca,,J,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19915,11,414
+11/21/09,13:45,Fauntleroy,In and around ferry lanes,0.00,0,Orca,,J,,mill,Probable foraging,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19914,10,414
+11/21/09,13:00,Alki Point,Mid-channel,0.00,0,Orca,,J,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19913,10,413
+11/21/09,10:30,Carkeek Park,,0.00,0,Orca,,J,20+,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19912,10,403
+11/22/09,16:00,Yeomalt Point,"SE of, and W of mid-channel",47.63,-122.4797,Orca,J,,,mill,Frequent predation events,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19926,10,408
+11/22/09,15:33,Eagle Harbor,off Tyee Shoal,47.61,-122.4726,Orca,J,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19925,10,408
+11/22/09,15:18,Blakely Rock,,47.59,-122.4712,Orca,J,,,,Frequent fish chases observed,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19924,10,410
+11/22/09,15:10,Restoration Point,,47.59,-122.4705,Orca,J,,,,Moving fast,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19923,10,410
+11/22/09,14:38,"Blake Island, E of",mid-channel,47.56,-122.4494,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19922,10,413
+11/22/09,13:30,Dolphin Point,,0.00,0,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19921,11,414
+11/22/09,11:15,Point Beals,,0.00,0,Orca,J,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19920,11,415
+11/22/09,10:15,"Vashon Island, NE tip",,0.00,0,Orca,J,,,mill,Very spread out,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19919,11,414
+11/22/09,9:30,"Blake Island, E of",west side of channel,0.00,0,Orca,J,,,mill,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19918,10,413
+11/25/09,9:00,Yeomalt Point,"and Sierra Golf buoy, b/w",0.00,0,Orca,,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19928,10,408
+11/25/09,8:50,West Point,,0.00,0,Orca,,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19927,10,408
+12/3/09,15:20,Scatchet Head buoy,"and Eglon, b/w",47.89,-122.4565,Orca,KLp?,,,E,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19938,9,397
+12/3/09,15:12,Scatchet Head buoy,"and Eglon, b/w",47.89,-122.4541,Orca,KLp?,,,mill,Whales scattered and foraging,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19937,9,397
+12/3/09,14:57,Scatchet Head buoy,"and Eglon, b/w",47.89,-122.4506,Orca,KLp?,,,S,Complete direction shift by all whales from NW to S,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19936,9,397
+12/3/09,14:45,Possession Bar,,47.88,-122.4564,Orca,KLp?,,,NW,Tracking K20 and K38,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19935,9,398
+12/3/09,14:25,Possession Bar,,47.89,-122.4209,Orca,KLp?,,,W,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19934,9,398
+12/3/09,14:04,Possession Point,,47.89,-122.4027,Orca,KLp?,,,S,Foraging ceases and whales start heading S,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19933,9,398
+12/3/09,13:25,Possession Point,,47.89,-122.3894,Orca,KLp?,,,,All whales scattered individually and engaged in foraging behavior,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19932,9,398
+12/3/09,13:10,Possession Point,,47.90,-122.3981,Orca,KLp?,,,,Predation scale recovery,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19931,9,398
+12/3/09,13:00,Possession Point,~.75 mi S,47.89,-122.3987,Orca,KLp?,,8-10,mill,Intensive surface activity and rapid movements,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19930,9,398
+12/3/09,8:30,"Point no Point, Kitsap Peninsula",,0.00,0,Orca,KLp?,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19929,9,397
+12/8/09,15:43,Possession Bar,,47.88,-122.4368,Orca,JKp,,,ENE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19947,9,398
+12/8/09,15:10,Pilot Point,N of a bit and mid-channel,47.88,-122.4464,Orca,JKp,,,E,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19946,9,397
+12/8/09,15:00,Pilot Point,mid-channel,47.88,-122.4532,Orca,JKp,,12+,E,J1 joined group,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19945,9,397
+12/8/09,14:54,Pile Point,mid-channel,47.88,-122.4592,Orca,JKp,,,,Subsurface fecal recovery,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19944,7,184
+12/8/09,14:45,Pilot Point,Closer now to mid-channel,47.88,-122.4646,Orca,JKp,,8-10,ESE,"Other whales scattered wide, some very distant",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19943,9,397
+12/8/09,14:26,Pilot Point,,47.88,-122.4833,Orca,JKp,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19942,9,397
+12/8/09,14:15,Pilot Point,,47.88,-122.5075,Orca,JKp,,,,Scale and fish fragment recovery,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19941,9,397
+12/8/09,13:50,Pilot Point,,47.88,-122.5084,Orca,JKp,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19940,9,397
+12/8/09,12:10,Eglon,,0.00,0,Orca,JKp,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19939,9,400
+12/9/09,15:35,East Passage,N of Dash Point,47.34,-122.4083,Orca,JKLp?,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19958,11,420
+12/9/09,15:13,Dumas Bay,,47.34,-122.3768,Orca,JKLp,,8,,8 scattered adult whales traveling parallel to shore,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19957,11,419
+12/9/09,15:00,Redondo,,47.35,-122.3662,Orca,JKLp?,,,S,Scale and fish fragment recovery,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19956,11,419
+12/9/09,14:40,Redondo,"No of, mid-channel",47.36,-122.3529,Orca,JKLp?,,,S,Subsurface fecal recovery,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19955,11,419
+12/9/09,14:15,Robinson Point,"S of, mid-channel",47.37,-122.3512,Orca,JKLp?,,,SE,Rapid speed of 6-7+ mph,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19954,11,419
+12/9/09,14:03,"Tango Bravo buoy, Maury Island",1/2 m N,47.39,-122.3543,Orca,JKLp?,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19953,11,416
+12/9/09,13:53,"Robinson Point, N of - keep",,47.39,-122.3544,Orca,JKLp?,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19952,11,416
+12/9/09,13:37,"Robinson Point, N of - keep",,47.40,-122.3686,Orca,JKLp?,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19951,11,416
+12/9/09,13:20,"Tango Alpha Buoy, Vashon",,47.41,-122.3767,Orca,JKLp?,,,,J1 and J2 engaged in chase behavior,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19950,11,416
+12/9/09,13:00,"Tango Alpha Buoy, Vashon",,47.43,-122.3923,Orca,JKLp?,,,S,Whales scattered west and south of buoy,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19949,11,416
+12/9/09,13:00,"Tango Alpha Buoy, Vashon",,47.43,-122.3923,Orca,JKLp,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,19948,11,416
+12/21/09,18:00,Cove hydrophone array,,0.00,0,Orca,J,,,N,Hearing calls for over an hour,Other,Sears,,TRUE,FALSE,FALSE,FALSE,FALSE,,19959,11,417
+1/3/10,15:37,Fauntleroy/Vashon ferry,,47.50,-122.4301,Orca,J,,,N,Approaching ferry lanes,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40354,10,414
+1/3/10,15:28,"Fauntleroy, S of",,47.49,-122.4232,Orca,J,,,NW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40353,11,414
+1/3/10,15:17,"Fauntleroy, S of",,47.49,-122.4166,Orca,J,,,NW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40352,11,414
+1/3/10,15:06,"Fauntleroy, S of",,47.48,-122.4105,Orca,J,,,NW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40351,11,414
+1/3/10,14:43,Seahurst Park,,47.47,-122.4056,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40350,11,415
+1/3/10,14:30,Seahurst Park,,47.46,-122.3987,Orca,J,,8,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40349,11,415
+1/3/10,14:07,"Maury Island, N of",,47.44,-122.3887,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40348,11,416
+1/3/10,14:00,"Maury Island, N of",,47.43,-122.386,Orca,J,,9-10,N,New Calf sighted. Mother J35 (calf J47),Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40347,11,416
+1/3/10,13:45,"Maury Island, N of",,47.43,-122.386,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40346,11,416
+1/3/10,12:45,Robinson Point,,0.00,0,Orca,,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40345,11,419
+1/3/10,11:35,Gold Beach,,0.00,0,Orca,J,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40344,11,420
+3/13/10,10:03,"Bainbridge, S end",Estimated 1 mile from bainbridge shore,0.00,0,Orca,T,,,WNW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40357,10,412
+3/13/10,9:22,"Blake Island, S of",,0.00,0,Orca,T,,,WNW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40356,10,412
+3/13/10,9:05,Fauntleroy/Vashon ferry,,0.00,0,Orca,T,,~5-6,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40355,10,414
+3/15/10,,Dolphin Point,1 mile ENE of dolphin point,47.51,-122.4412,Orca,T,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40365,11,414
+3/15/10,16:40,Point Williams,Midchannel between blake island and pt williams,47.54,-122.4426,Orca,T,,,,Predation carcass sighted subsurface. Whales hauled the carcass with them from kill site approximately 2 miles to the south.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40364,10,414
+3/15/10,16:25,"Point Williams, N of",,47.52,-122.4423,Orca,T,,,N,Predation sample collected.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40363,10,413
+3/15/10,15:50,Dolphin Point,,0.00,0,Orca,T,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40362,11,414
+3/15/10,14:00,Dolphin Point,1/2 mile SSE of dolphin point,47.50,-122.4415,Orca,T,,,MILL,Another predation sample obtained. ~ 1lb of pinniped flesh.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40361,11,414
+3/15/10,13:15,Dolphin Point,,47.51,-122.4409,Orca,T,,,,Predation sample obtained,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40360,11,414
+3/15/10,12:40,Dolphin Point,1 mile ENE of dolphin point,47.51,-122.4412,Orca,T,,12-15,MILL,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40359,11,414
+3/15/10,10:25,Dolphin Point,,,,Orca,T,,,MILL,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40358,11,414
+4/1/10,19:30,Dolphin Point,1 mile SE of dolphin point,0.00,0,Orca,,T,,MILL,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40369,11,414
+4/1/10,17:45,Dolphin Point,1+ mile SSE of dolphin point,0.00,0,Orca,,T,,SSE,Drifting with flooding tide SSE. Tightly grouped and milling. Probable prey kill. 100+ seagulls flocking around whales at 18:20.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40368,11,414
+4/1/10,16:10,Dolphin Point,1/2 mile ESE,0.00,0,Orca,,T,6+,MILL,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40367,11,414
+4/1/10,15:40,Dolphin Point,,0.00,0,Orca,,T,6-8,MILL,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40366,11,414
+4/3/10,13:00,"Alki Point, NW of",,0.00,0,Orca,T,,,,WA State Ferry MV Wenatchee and 2 US coast guard escort vessels run full speed directly towards milling whales. Whales sound on approach. 1 escort vessel did slow. Whales were not sighted again within 25 min even with clear vantage point.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40374,10,410
+4/3/10,12:37,"Alki Point, NW of",,0.00,0,Orca,T,,,MILL,At 12:37 whales sound for 6 minutes. Surface with behavior indicative or prey capture/kill. Surface behavior continues for 15 mintues.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40373,10,410
+4/3/10,12:35,"Alki Point, NW of",1 mile N of alki point,0.00,0,Orca,T,,,NE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40372,10,410
+4/3/10,12:00,"Point Williams, N of",,0.00,0,Orca,T,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40371,10,413
+4/3/10,11:35,Fauntleroy/Vashon ferry,,0.00,0,Orca,T,,~6,N,Rapid movement.. No bulls sighted in group.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40370,10,414
+4/4/10,14:00,"Point Williams, N of",Mid channel between pt williams and restoration pt,47.56,-122.4386,Orca,T,,,NNW,Very rapid travel 10+mph porpoising. Very rough water SE wind 20+mph.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40380,10,413
+4/4/10,13:40,"Point Williams, N of",Mid channel between pt orchard and pt williams,47.53,-122.4322,Orca,T,,,N,Sudden rapid travel,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40379,10,413
+4/4/10,13:20,Point Williams,Mid channel between pt williams and pt vashon,47.52,-122.4322,Orca,T,,,N,Whales moving slowly N with prey carcass.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40378,10,414
+4/4/10,12:45,Point Williams,Between dolphin and williams point in ferry lanes,47.52,-122.422,Orca,T,,,,Whales exhibit very excited and intense activity at surface and around boat.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40377,10,414
+4/4/10,12:30,Brace Point,,47.51,-122.4193,Orca,T,,,N,Pinniped prey remains recovered. Whales stationary but drifting slowly N with ebb current.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40376,10,414
+4/4/10,11:40,Brace Point,,47.51,-122.4155,Orca,T,,~12-15,MILL,Prey animal observed among whales still alive but subdued. Dark color possible juvenile zalophus californianus or dark phase adult phoca vitulina.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40375,10,414
+5/25/10,20:00,"Tango Bravo buoy, Maury Island","Spread btwn pt robinson and buoy, closer to buoy",47.39,-122.3722,Orca,T,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40388,11,416
+5/25/10,19:38,"Maury Island, N of",1 mile N of robinson point,47.41,-122.3636,Orca,T,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40387,11,416
+5/25/10,19:24,Normandy Park,,47.43,-122.3708,Orca,T,,,SE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40386,11,416
+5/25/10,19:14,Normandy Park,,47.43,-122.386,Orca,T,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40385,11,416
+5/25/10,18:30,Seahurst Park,Midchannel,47.47,-122.4078,Orca,T,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40384,11,415
+5/25/10,18:18,Point Beals,Midchannel,47.48,-122.4115,Orca,T,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40383,11,415
+5/25/10,18:03,Dolphin Point,South of dolphin pt midchannel.,47.49,-122.4228,Orca,T,,,S,"Slow movement, tight formation, long soundings 5+ min.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40382,11,414
+5/25/10,17:00,West Seattle,Mid channel btwn blake island and west seattle,0.00,0,Orca,T,,~12-15,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40381,10,413
+5/27/10,20:00,Fort Ward State Park,Exiting passage,47.58,-122.5318,Orca,T,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40401,10,412
+5/27/10,19:35,Fort Ward State Park,Orchard rocks reef around dayboard marker,47.58,-122.5319,Orca,T,,,MILL,Appear to be rubbing on reef rocks for approx 20 min. Intense vocals. Observed rolling to their sides along bottom boulders.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40400,10,412
+5/27/10,19:20,Rich Passage,,47.57,-122.5213,Orca,T,,,N,Split into 2 groups upon approach to passage travelling parallel,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40399,10,412
+5/27/10,19:05,"Blake Island, W of",,47.54,-122.5187,Orca,T,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40398,10,412
+5/27/10,19:00,"Blake Island, W of",1/2 mile west of blake island,47.53,-122.5147,Orca,T,,6,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40397,10,412
+5/27/10,18:38,Southworth,,47.52,-122.4965,Orca,T,,,NW,Group of 5 unite with single juvenile,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40396,10,412
+5/27/10,18:37,Point Southworth,,0.00,0,Orca,,T,~5,N,Group of 5 whales appear rounding pt southworth N bound,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40395,11,412
+5/27/10,18:34,"Blake Island, S of",,47.52,-122.4858,Orca,T,,1,SW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40394,10,412
+5/27/10,18:34,Southworth ferry,,0.00,0,Orca,T,,1,SW,Approaching Southworth Ferry terminal whale erupts with multiple violent fluke thrashing on surface as ferry m/v klahoway begins to depart terminal.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40393,10,412
+5/27/10,18:31,"Blake Island, SE of",,0.00,0,Orca,T,,1,SW,Abrupt shift change,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40392,10,414
+5/27/10,18:27,"Colvos Passage, N half",,47.52,-122.482,Orca,T,,1,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40391,11,417
+5/27/10,18:11,"Colvos Passage, N half",,47.50,-122.488,Orca,T,,1,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40390,11,417
+5/27/10,18:05,"Colvos Passage, N half",,47.50,-122.487,Orca,T,,1,N,Single juvenile bull. No other whales in sight but previous reports verify more in area.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40389,11,417
+9/1/10,7:30,West Point,,0.00,0,Orca,,T,4-5,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40422,10,408
+9/1/10,6:45,Meadow Point,,0.00,0,Orca,,T,5,S,1 bull observed,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40421,10,407
+9/7/10,7:40,Piner Point,,0.00,0,Orca,,T,2,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40423,11,420
+9/23/10,9:00,"Vashon Island, NE tip",,0.00,0,Orca,,T,4,N,1 bull sighted,other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40424,11,414
+10/1/10,12:50,Sierra Golf Buoy,Off west point,47.66,-122.4553,Orca,JKLp,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40412,10,408
+10/1/10,12:20,Yeomalt Point,Midchannel and west,47.57,-122.4522,Orca,JKLp,,,MILL,"Seas continue to rise. Very active, breaching, porposing, socializing",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40411,10,408
+10/1/10,11:37,Alki Point,mid channel,47.57,-122.4522,Orca,JKLp,,,NW,Speed increase to 7.0 mph. J2 & J26 ID,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40410,10,413
+10/1/10,11:20,"Lincoln Park, N of",,47.55,-122.4286,Orca,JKLp,,,,Fecal recovery,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40409,10,413
+10/1/10,11:10,"Lincoln Park, N of",scattered across channel,47.55,-122.4197,Orca,JKLp,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40408,10,413
+10/1/10,10:50,Fauntleroy/Vashon ferry,1/3 mile NW of ferry terminal,47.53,-122.4077,Orca,SR,,1,,Observed single bull in fish chase at surface. 1 scale recovered.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40407,10,414
+10/1/10,10:18,Fauntleroy/Vashon ferry,scattered in ferry lanes,47.52,-122.4332,Orca,JKLp,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40406,10,414
+10/1/10,10:03,Dolphin Point,spread across channel,47.51,-122.4327,Orca,JKLp,,,N,social activity increase,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40405,11,414
+10/1/10,9:33,Brace Point,1.5 miles SW of brace pt,47.51,-122.4137,Orca,J,,1,N,"J34 Regurgitation event. Several nematode  parasitic worms, fish flesh and bone.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40404,10,414
+10/1/10,9:25,Brace Point,1.5 miles sw of brace pt,47.51,-122.4144,Orca,JKLp,,,MILL,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40403,10,414
+10/1/10,7:30,Point Williams,,0.00,0,Orca,,,,S,large # observed scattered across channel,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40402,10,414
+11/16/10,15:50,Dolphin Point,In ferry lanes western side of channel,47.51,-122.4362,Orca,JKLp,,,NW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40420,11,414
+11/16/10,15:30,Dolphin Point,,47.50,-122.4278,Orca,JKLp,,,,Increased speed 6 mph,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40419,11,414
+11/16/10,15:10,Point Beals,,47.48,-122.4223,Orca,JKLp,,,N,"Auto carrier vessel ""sierra nevada highway"" cruises full speed ahead directly through whales.",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40418,11,415
+11/16/10,15:00,Point Beals,1 mile east of pt beals,47.47,-122.4177,Orca,JKLp,,,,Very intense social actiivty several penile displays,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40417,11,415
+11/16/10,14:25,Point Beals,SE of pt beals,47.44,-122.412,Orca,JKLp,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40416,11,415
+11/16/10,14:02,Tramp Harbor,North of,47.42,-122.4123,Orca,JKLp,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40415,11,416
+11/16/10,13:45,"Maury Island, N of",,0.00,0,Orca,JKLp,,,N,abrupt and complete direction shift change accompanied by suface social activity.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40414,11,416
+11/16/10,13:40,"Maury Island, N of",1 mile N of maury island,47.42,-122.4123,Orca,JKLp,,,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,40413,11,416
+4/5/11,12:10,Alki Point,,0.00,0,Orca,Ts,,~6,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45949,10,413
+4/5/11,11:00,Alki Point,,0.00,0,Orca,Ts,,~6,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45948,10,413
+4/5/11,10:15,Point Williams,,0.00,0,Orca,Ts,,~6,,Females and juveniles,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45947,10,414
+4/5/11,9:55,Point Williams,,0.00,0,Orca,Ts,,~6,,Females and juveniles,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45946,10,414
+5/12/11,19:00,Apple Cove Point,,47.81,-122.4474,Orca,Jp,,,SSW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45961,9,401
+5/12/11,18:43,"Apple Cove Point, N of",,47.83,-122.4485,Orca,Jp,,,SSW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45960,9,400
+5/12/11,18:15,Eglon,,47.86,-122.4282,Orca,Jp,,,,Predation event - scale samples gathered,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45959,9,400
+5/12/11,17:58,Possession Bar,,47.86,-122.4204,Orca,Jp,,,W,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45958,9,398
+5/12/11,17:43,Possession Bar,,47.88,-122.4093,Orca,Jp,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45957,9,398
+5/12/11,17:32,Possession Bar,,47.88,-122.4007,Orca,Jp,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45956,9,398
+5/12/11,17:22,Possession Bar,,47.88,-122.3934,Orca,Jp,,,,J-22 and J-34 probable prey chase/share,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45955,9,398
+5/12/11,17:10,Possession Bar,,47.88,-122.3835,Orca,Jp,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45954,9,398
+5/12/11,17:00,Possession Bar,,47.88,-122.3675,Orca,Jp,,,NW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45953,9,398
+5/12/11,16:20,Browns Bay,,47.87,-122.3569,Orca,Jp,,10+,mill,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45952,9,399
+8/26/11,10:56,"Tango Alpha Buoy, Vashon",,47.44,-122.3958,Orca,Ts,,15-20,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45970,11,416
+8/26/11,10:50,Three Tree Point (aka Point Pully),,47.45,-122.3933,Orca,Ts,,15-20,,Smaller group disappeared,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45969,11,416
+8/26/11,10:40,Seahurst Park,,47.46,-122.39385,Orca,Ts,,25-30,SW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45968,11,415
+8/26/11,10:32,Seahurst Park,,47.47,-122.38925,Orca,Ts,,25-30,mill,Social interactions,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45967,11,415
+8/26/11,10:27,Seahurst Park,,47.47,-122.38925,Orca,Ts,,25-30,ESE,2-3 bulls,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45966,11,415
+8/26/11,10:21,Seahurst Park,,47.47,-122.392,Orca,Ts,,25-30,mill,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45965,11,415
+8/26/11,10:16,Seahurst Park,,47.48,-122.3905,Orca,Ts,,25-30,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45964,11,415
+8/26/11,10:08,Seahurst Park,,47.47,-122.3913,Orca,Ts,,25-30,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45963,11,415
+8/26/11,9:30,Point Williams,,0.00,0,Orca,Ts,,25-30,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45962,10,414
+9/11/11,13:00,"Dolphin Point, S of",,47.48,-122.44205,Orca,Ts,,6-7,mill,Whales disappeared after this last encounter,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45976,11,415
+9/11/11,12:45,"Dolphin Point, S of",,47.48,-122.4436,Orca,Ts,,,W,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45975,11,415
+9/11/11,12:41,"Dolphin Point, S of",,47.48,-122.4416,Orca,Ts,,,NW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45974,11,415
+9/11/11,12:30,Point Beals,,47.47,-122.431,Orca,Ts,,6-7,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45973,11,415
+9/11/11,12:15,Point Beals,,47.45,-122.4265,Orca,Ts,,6-7,N,No bulls,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45972,11,415
+10/28/11,16:10,"Maury Island, N of",,47.40,-122.3798,Orca,JKL,,,N,Tons of surface activities,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45984,11,416
+10/28/11,15:45,Robinson Point,,0.00,0,Orca,JKL,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45983,11,419
+10/28/11,14:55,Maury Island,,47.36,-122.4151,Orca,JKL,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45982,11,419
+10/28/11,14:47,Maury Island,,47.36,-122.4241,Orca,JKL,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45981,11,419
+10/28/11,14:33,Maury Island,,47.35,-122.4382,Orca,JKL,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45980,11,419
+10/28/11,14:28,Maury Island,,47.35,-122.4405,Orca,JKL,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45979,11,419
+10/28/11,14:05,Maury Island,,47.36,-122.4332,Orca,JKL,,,SW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45978,11,419
+10/28/11,13:15,Robinson Point,,47.38,-122.3723,Orca,JKL,,80+,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45977,11,419
+11/29/11,14:52,"Elliott Bay, off of",,47.59,-122.4301,Orca,JK,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45990,10,410
+11/29/11,14:26,Alki Point,,47.57,-122.4353,Orca,JK,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45989,10,413
+11/29/11,14:02,Alki Point,,47.56,-122.4392,Orca,JK,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45988,10,413
+11/29/11,13:53,Alki Point,,47.56,-122.4398,Orca,JK,,,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45987,10,413
+11/30/11,13:05,Point Vashon,,0.00,0,Orca,JK,,,W,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45994,10,412
+11/30/11,12:55,Vashon Ferry Terminal,,0.00,0,Orca,JK,,,NW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45993,11,414
+11/30/11,12:30,Dolphin Point,,0.00,0,Orca,JK,,,mill,Foraging,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45992,11,414
+11/30/11,12:00,Point Williams,,0.00,0,Orca,JK,,,S,Bad sea conditions prevented boat encounter,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45991,10,414
+12/31/11,15:37,Point Jefferson,,47.72,-122.4813,Orca,Ts,,6-7,SSW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,46008,10,404
+12/31/11,15:27,Point Jefferson,,47.73,-122.4769,Orca,Ts,,6-7,,Still harassing Pp,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,46007,10,404
+12/31/11,14:57,Point Jefferson,,47.73,-122.47345,Orca,Ts,,6-7,SW,"Group began interactions with  harbor porpoise, esp. youngest whale (~2 yrs. Old) - interaction lasted ~30 mins.  No predation on porpoise was observed",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,46006,10,404
+12/31/11,14:48,Point Jefferson,,47.73,-122.4645,Orca,Ts,,6-7,SW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,46005,10,404
+12/31/11,14:35,Point Jefferson,,47.74,-122.4454,Orca,Ts,,6-7,SW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,46004,10,404
+12/31/11,14:18,Point Jefferson,,47.74,-122.4242,Orca,Ts,,6-7,SW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,46003,10,404
+12/31/11,14:04,Richmond Beach,,47.76,-122.408,Orca,Ts,,6-7,SW,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,46002,10,402
+12/31/11,14:00,Richmond Beach,,47.75,-122.4041,Orca,Ts,,6-7,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,46001,10,402
+12/31/11,13:51,Richmond Beach,,47.76,-122.4148,Orca,Ts,,6-7,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,46000,10,402
+12/31/11,13:31,President Point,,47.78,-122.4466,Orca,Ts,,6-7,SE,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45999,10,402
+12/31/11,13:25,Appletree Cove,,47.78,-122.4543,Orca,Ts,,6-7,SE,2 bulls,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45998,10,401
+12/31/11,13:00,Apple Cove Point,,47.81,-122.4701,Orca,Ts,,7-8,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,45996,9,401
+1/6/12,15:00,President Point,,47.77,-122.4617,Orca,JKp,JK,30+,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83384,10,402
+1/6/12,11:10,"Alki Point, NW of",,47.59,-122.43,Orca,JKp,JK,30+,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83383,10,410
+2/4/12,11:00,Magnolia Bluff,,0.00,0,Orca,Ts,,8+,Milling,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83393,10,408
+2/5/12,12:30,"Colvos Passage, N half",,0.00,0,Orca,Ts,,8-12,S,3 bulls,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83394,11,417
+2/8/12,12:00,Possession Bar,E. of Possession Bar,0.00,0,Orca,,,10+,S,2 bulls,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83395,9,398
+4/7/12,18:26,"Dolphin Point, S of",,0.00,0,Orca,Ts,,8-10,SW,No bulls,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83397,11,415
+4/7/12,16:00,"Blake Island, E of",Mid channel NW of Point. Williams,0.00,0,Orca,Ts,,8-10,SW,No bulls,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83396,10,413
+4/8/12,4:30,Tahlequah,,0.00,0,Orca,,Ts,,,,Other,Sears,,TRUE,FALSE,FALSE,FALSE,FALSE,,83399,11,420
+4/8/12,3:30,Tahlequah,,0.00,0,Orca,,Ts,,,,Other,Sears,,TRUE,FALSE,FALSE,FALSE,FALSE,,83398,11,420
+4/15/12,12:45,"Blake Island, E of",b/w blake Island an Point Williams,0.00,0,Orca,Ts,,8+,Milling,No bulls,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83401,10,413
+4/15/12,10:50,"Point Williams, N of",B/w Pt Williams and Blake Island,0.00,0,Orca,Ts,,8+,Milling,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83400,10,413
+4/18/12,15:00,"Colvos Passage, no specifics",,0.00,0,Orca,Ts,,10+,S,No bulls,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83403,11,
+4/18/12,12:45,"Blake Island, E of","Blake Island, NE of",0.00,0,Orca,Ts,,10+,Milling,No bulls,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83402,10,413
+5/21/12,16:10,Point Williams,,0.00,0,Orca,Ts,,8-10,S,no bulls,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83404,10,414
+5/24/12,13:15,Double Bluff,Midchannel off Double Bluff,0.00,0,Orca,,Ts,4,,2 bulls,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83405,9,394
+9/19/12,21:00,Tahlequah,,0.00,0,Orca,Ts,,,,Blows heard,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83406,11,420
+10/8/12,18:30,Alki Point,Restoration Pt-spread b/w,0.00,0,Orca,SRs,,20-50,S,Spread b/w Alki-Restoration-South Point,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83408,10,413
+10/8/12,17:30,Alki Point,Restoration Point-spread b/w,0.00,0,Orca,SRs,,20-50,S,Scattered b/w Alki-Restoration point,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83407,10,413
+10/19/12,20:45,Tahlequah,,0.00,0,Orca,SRs,,,,Hydrophone off Tahlequah,Other,Sears,,TRUE,FALSE,FALSE,FALSE,FALSE,,83410,11,420
+10/19/12,8:50,Shilshole Bay,,0.00,0,Orca,SRs,,,S,WDFW reported,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83409,10,407
+10/25/12,17:37,West Point,,47.65,-122.445,Orca,L,,20~,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83386,10,408
+10/25/12,14:40,Edmonds,,47.81,-122.4221,Orca,L,,20~,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83385,9,401
+11/27/12,15:18,"Robinson Point, N of - keep",,47.39,-122.3726,Orca,JK,,45,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83388,11,416
+11/27/12,,"Vashon Island, NE tip",,47.50,-122.4231,Orca,JK,,45,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83387,11,414
+12/3/12,14:40,Yeomalt Point,,47.63,-122.4711,Orca,K,,19,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83390,10,408
+12/3/12,13:30,Alki Point,,47.58,-122.442,Orca,K,,19,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83389,10,413
+12/17/12,19:25,Tahlequah,,0.00,0,Orca,K,,,,From Tahlequah Hydrophone,Other,Sears,,TRUE,FALSE,FALSE,FALSE,FALSE,,83413,11,420
+12/17/12,15:30,"Colvos Passage, no specifics",,0.00,0,Orca,K,,15-20,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83412,11,
+12/17/12,12:55,"Blake Island, N of",NE Blake Ilsand,0.00,0,Orca,K,,,S,2 bulls,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83411,10,412
+12/20/12,15:45,"Colvos Passage, N half",,0.00,0,Orca,SRs,,30+,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83415,11,417
+12/20/12,13:00,Dalco Passage,,0.00,0,Orca,SRs,,30+,W,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83414,11,420
+12/24/12,15:30,Alki Point,,47.57,-122.463,Orca,K,,19,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83392,10,413
+12/24/12,13:45,"Colvos Passage, N half",,47.47,-122.5127,Orca,K,,19,N,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83391,11,417
+12/29/12,10:30,Point Beals,Point Beals-NE of,0.00,0,Orca,Ts,,10+,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,83416,11,415
+1/8/13,13:00,Shilshole Bay,,0.00,0,Orca,Ts,,,Milling,Small group,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86665,10,407
+1/9/13,11:30,West Point,1/2 mile NW of West Point,0.00,0,Orca,Ts,,4,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86666,10,408
+1/19/13,15:08,Blake Island,,47.55,-122.5112167,Orca,Ts,,8,,Ids: T87 and 7 females/juveniles. Whales harassing adult harbor seal,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86690,10,412
+1/19/13,14:31,Blake Island,,47.55,-122.4972833,Orca,Ts,,8,,Ids: T87 and 7 females/juveniles,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86686,10,412
+1/19/13,14:10,Blake Island,,47.52,-122.4853167,Orca,Ts,,8,N,Ids: T87 and 7 females/juveniles. 8 whales emerging from Colvos Passage in tight formation.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86683,10,412
+1/29/13,15:34,Blake Island,,47.56,-122.5146667,Orca,Ts,,8,N,"Ids: T87 and 7 females/juveniles. End of encounter. Whales entering Rich Passage, still feeding on seal carcass while traveling",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86692,10,412
+1/29/13,15:21,Blake Island,,47.55,-122.5122,Orca,Ts,,8,,Ids: T87 and 7 females/juveniles. Harbor seal is killed.,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86691,10,412
+1/29/13,14:52,Blake Island,,47.56,-122.50945,Orca,Ts,,8,S,"Ids: T87 and 7 females/juveniles. Milling ceases, whales begin traveling south toward Blake",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86689,10,412
+1/29/13,14:44,Blake Island,,47.55,-122.5091,Orca,Ts,,8,Milling,Ids: T87 and 7 females/juveniles,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86688,10,412
+1/29/13,14:17,Blake Island,,47.53,-122.4972833,Orca,Ts,,8,NW,Ids: T87 and 7 females/juveniles. Whales in 2 groups; 3 harbor porpoise ovserved surfacing between groups with no reaction from the whales,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86684,10,412
+5/16/13,15:00,Dalco Passage,,0.00,0,Orca,Ts,,,W,"1 bull, two females. Then south into Narrows",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86668,11,420
+5/16/13,9:00,Dalco Passage,,0.00,0,Orca,Ts,,6-8,W,"then close to shore off Gig Harbor, then south into Tacoma Narrows",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86667,11,420
+5/18/13,13:00,Dalco Passage,,0.00,0,Orca,Ts,,5-6,E,"1 sprouter bull, two females",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86669,11,420
+12/1/13,12:00,"Point Williams, N of",b/w Point Willisams and Blake Island,0.00,0,Orca,JK,,4-6,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86670,10,413
+12/2/13,13:30,Dalco Passage,,0.00,0,Orca,Ts,,6-8,W,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86672,11,420
+12/2/13,10:00,"Glen Acres, Vashon Is.",,0.00,0,Orca,Ts,,6-8,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86671,11,415
+12/7/13,14:15,Point Williams,,0.00,0,Orca,SRs,SRs,,S,Ids: K25,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86673,10,414
+12/11/13,14:20,Point Defiance,,0.00,0,Orca,Ts,,,Milling,"Small group. Milling for ~1 hour, then headed south into Tacoma Narrows",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86674,11,422
+12/13/13,15:20,East Passage - default,,0.00,0,Orca,Ts,,6-8,N,Northerly in East Pass then Southerly into Colvos Passage,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86676,11,416
+12/13/13,10:20,Point Defiance,,0.00,0,Orca,Ts,,6-8,Milling,"Milling off PD for an hour, probable kill, then headed NE into Dalco Passage",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86675,11,422
+12/14/13,16:30,Point Williams,,0.00,0,Orca,JKL,,,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86678,10,414
+12/14/13,7:45,Point Williams,,0.00,0,Orca,JKL,,,S,"South to Point Pully, then very slow north all day back to Point Williams at dusk",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86677,10,414
+12/18/13,10:25,Point Beals,,0.00,0,Orca,SRs,JK,15-20,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86680,11,415
+12/18/13,9:30,"Tango Alpha Buoy, Vashon",,0.00,0,Orca,SRs,JK,15-20,,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86679,11,416
+12/21/13,15:45,Alki Point,1/2 -3/4 mi off light station,0.00,0,Orca,SRs?,,,S,"1 bull, 5 females. Fast travel (6-7knots).",Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86681,10,413
+12/25/13,16:30,Magnolia Bluff,,0.00,0,Orca,,JK,5-6,S,,Other,Sears,,FALSE,FALSE,FALSE,FALSE,FALSE,,86682,10,408
+11/22/14,15:50,"Vashon Island, NE tip",,0.00,0,Orca,JKL,,,N,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,94180,11,414
+11/22/14,12:00,"Vashon Island, NE tip",,0.00,0,Orca,JKL,,,N,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,94179,11,414
+12/5/14,15:51,Bainbridge,,0.00,0,Orca,Ts,,,N,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,94182,10,408
+12/5/14,14:40,"Bainbridge, SE side",,0.00,0,Orca,Ts,,,N,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,94181,10,410
+1/10/15,15:00,"Apple Cove Point, N of",,47.84,-122.4633333,Orca,J,,all,,all of the pod,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101568,9,400
+1/10/15,11:20,Bainbridge,,47.62,-122.4403667,Orca,J,,all,,all of the pod,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101567,10,408
+1/30/15,15:58,"Bainbridge, SW side",,47.60,-122.5895667,Orca,K,,all,,all of the pod,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101570,10,411
+1/30/15,12:55,Blake Island,,47.54,-122.5105833,Orca,K,,all,,all of the pod,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101569,10,412
+6/23/15,16:12,Indian Point,,47.96,-122.49025,Orca,Ts,,10-12,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101572,9,396
+6/23/15,13:00,Appletree Cove,,47.80,-122.4738333,Orca,Ts,,10-12,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101571,9,401
+10/25/15,15:00,"Bainbridge, SW side",,47.58,-122.6249333,Orca,Ts,,4,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101574,10,411
+10/25/15,14:47,"Bainbridge, SW side",,47.57,-122.61675,Orca,Ts,,4,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101573,10,411
+11/3/15,14:45,Bainbridge,,47.64,-122.48055,Orca,JKLp,,50+,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101576,10,408
+11/3/15,11:12,"Blake Island, SE of",,47.50,-122.4225,Orca,JKLp,,50+,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101575,11,414
+11/5/15,15:37,Appletree Cove,,47.83,-122.4970333,Orca,JK,,45,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101578,9,401
+11/5/15,12:54,"Bainbridge, NE side",,47.67,-122.46375,Orca,JK,,45,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101577,10,407
+11/6/15,15:00,"Maury Island, S end",,47.33,-122.4540667,Orca,JKp,,35,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101580,11,420
+11/6/15,11:57,"Maury Island, N of",,47.44,-122.41155,Orca,JKp,,35,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101579,11,416
+11/10/15,15:00,"Alki Point, NW of",,47.59,-122.4189167,Orca,JKp,,40-50,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101582,10,410
+11/10/15,13:30,"Blake Island, SE of",,47.53,-122.4094833,Orca,JKp,,40-50,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101581,11,414
+11/27/15,12:05,"Alki Point, NW of",,47.59,-122.4476,Orca,,SRs,,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101584,10,410
+11/27/15,11:54,"Blake Island, E of",,47.58,-122.4644167,Orca,,SRs,,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101583,10,413
+12/2/15,14:46,Quad 403,,47.71,-122.4258333,Orca,Kp,,7,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101586,10,403
+12/2/15,14:17,"Bainbridge, NE side",,47.69,-122.4464333,Orca,Kp,,7,,,Other,Reliable,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,101585,10,407
+5/16/16,16:54,Quad 420,,47.32,-122.5112833,Orca,Ts,,4,S,T137's,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108974,11,420
+5/16/16,13:15,Quad 414,,47.50,-122.3972667,Orca,Ts,,4,S,T137's,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108973,11,414
+5/21/16,19:57,Quad 414,,47.53,-122.44745,Orca,Ts,,6,S,"T137s, T125A, T128",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108976,11,414
+5/21/16,17:20,Quad 407,,47.69,-122.4853667,Orca,Ts,,6,S,"T137s, T125A, T128",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108975,10,407
+6/27/16,12:30,Quad 407,,47.68,-122.4271667,Orca,Ts,,8,N,"T036, T036B, T036B1, T036B2 probably, T099, T099B, T099C, possible T099D",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108978,10,407
+6/27/16,10:15,Quad 410,,47.61,-122.4478333,Orca,Ts,,8,N,"T036, T036B, T036B1, T036B2 probably, T099, T099B, T099C, possible T099D",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108977,10,410
+6/28/16,15:20,Quad 408,,47.64,-122.4203333,Orca,Ts,,2,N,"T125A, T128",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108979,10,408
+7/18/16,18:43,Quad 415,,47.45,-122.4246667,Orca,Ts,,5,S,"T065A, T065A2, T065A3, T065A4, T065A5",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108981,11,415
+7/18/16,16:50,Quad 413,,47.55,-122.4178333,Orca,Ts,,5,S,"T065A, T065A2, T065A3, T065A4, T065A5",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108980,10,413
+9/18/16,15:20,Quad 415,,47.47,-122.4308333,Orca,Ts,,9-10,S,"T065B, T65B1, T100, T100C, T100F, T101, T101A, T101B, T102",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108983,11,415
+9/18/16,14:12,Quad 412,,47.56,-122.479,Orca,Ts,,9-10,S,"T065B, T65B1, T100, T100C, T100F, T101, T101A, T101B, T102;",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108982,10,412
+10/3/16,10:11,Quad 408,,47.66,-122.4446667,Orca,JK,,~40,N,"Widely Scattered, no J17 member was seen",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108985,10,408
+10/3/16,9:40,Quad 408,,47.63,-122.4391667,Orca,JK,,~40,N,"Widely Scattered, no J17 member was seen",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108984,10,408
+10/24/16,15:40,Quad 414,,47.50,-122.4286667,Orca,JK,,40-45,S,"16 individuals confirmed, estimated 40-45 total",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108987,11,414
+10/24/16,12:43,Quad 410,,47.61,-122.4416667,Orca,JK,,40-45,S,"16 individuals confirmed, estimated 40-45 total",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108986,10,410
+11/14/16,12:28,Quad 402,,47.78,-122.4445,Orca,JK,,12+,N,"At least 12, full pods possible (~45)",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108989,10,402
+11/14/16,10:09,Quad 408,,47.62,-122.4463333,Orca,JK,,12+,N,"At least 12, full pods possible (~45)",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,108988,10,408
+4/15/17,18:20,Quad 415,,47.45,-122.39355,Orca,Ts,,8,S,"T100s, T101s, T102",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115982,11,415
+4/15/17,13:45,Quad 410,,47.60,-122.4430667,Orca,Ts,,8,S,"T100s, T101s, T102",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115981,10,410
+5/8/17,15:52,Quad 403,,47.73,-122.3912167,Orca,Ts,,12+,,"T101s, T124As+ Others",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115984,10,403
+5/8/17,13:50,Quad 402,,47.75,-122.3896667,Orca,Ts,,12+,,"T101s, T124As+ Others",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115983,10,402
+6/17/17,19:00,Quad 420,,47.31,-122.4683333,Orca,Ts,,5,S,T46s + T122,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115986,11,420
+6/17/17,17:30,Quad 419,,47.36,-122.3921,Orca,Ts,,5,S,T46s + T122,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115985,11,419
+7/6/17,16:43,Quad 411,,47.60,-122.6642667,Orca,Ts,,9,,"T36, T36Bs, T37A1, T99s; Pacing enclosed area (Dyes Inlet)",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115988,10,411
+7/6/17,13:38,Quad 411,,47.63,-122.6838833,Orca,Ts,,9,,"T36, T36Bs, T37A1, T99s; Pacing enclosed area (Dyes Inlet)",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115987,10,411
+9/3/17,17:00,Quad 409,,47.60,-122.3871333,Orca,Ts,,6,N,"T137s + T36, T37A1",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115990,10,409
+9/3/17,13:30,Quad 417,,47.43,-122.52935,Orca,Ts,,6,N,"T137s + T36, T37A1",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115989,11,417
+9/8/17,19:16,Quad 410,,47.58,-122.4245,Orca,Ts,,9,N,"T36, T36Bs, T37A1, T101s, T102,",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115992,10,410
+9/8/17,17:00,Quad 417,,47.46,-122.5173167,Orca,Ts,,9,N,"T36, T36Bs, T37A1, T101s, T102,",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115991,11,417
+9/15/17,16:03,Quad 422,,47.31,-122.55745,Orca,Ts,,9,S,"T36, T36Bs T37A1, T137s",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115994,11,422
+9/15/17,11:35,Quad 408,,47.66,-122.438,Orca,Ts,,9,S,"T36, T36Bs T37A1, T137s",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115993,10,408
+10/1/17,16:40,Quad 407,,47.67,-122.4491667,Orca,Ts,,4,,"T87, T100B, T100B1, T100B2",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115996,10,407
+10/1/17,13:10,Quad 408,,47.65,-122.4594167,Orca,Ts,,4,S then E then N,"T87, T100B, T100B1, T100B2",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115995,10,408
+10/16/17,15:06,Quad 407,,47.67,-122.4481833,Orca,Jp,,5,S,J16s*,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115998,10,407
+10/16/17,14:50,Quad 410,,47.61,-122.4487167,Orca,Jp,,5,S,J16s*,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115997,10,410
+11/6/17,16:10,Quad 410,,47.59,-122.4618167,Orca,Lp,,5,N,"L54s, L84, L88",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,116000,10,410
+11/6/17,13:05,Quad 414,,47.51,-122.4250833,Orca,Lp,,5,N,"L54s, L84, L88",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,115999,11,414
+11/8/17,16:15,Quad 412,N exit Colvos Passage,47.51,-122.4833333,Orca,J,,23,N,"J Pod, L87",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125657,10,412
+11/8/17,13:15,Quad 418,S Colvos Massage,47.36,-122.53345,Orca,J,,23,N,"J Pod, L87",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125656,11,418
+11/8/17,15:53,Quad 410,,47.58,-122.4285667,Orca,KLp,,23,N,"K Pod, L54s, L84, L88",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,116002,10,410
+11/8/17,13:57,Quad 414,,47.53,-122.40485,Orca,KLp,,23,N,"K Pod, L54s, L84, L88",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,116001,11,414
+11/22/17,13:40,Quad 395,,47.95,-122.5387833,Orca,K,,18,,K Pod,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,116004,9,395
+11/22/17,11:10,Quad 402,,47.78,-122.4365,Orca,K,,18,,K Pod,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,116003,10,402
+12/3/17,15:07,Quad 400,,47.83,-122.4567333,Orca,K,,18,N,K Pod,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,116006,9,400
+12/3/17,12:10,Quad 404,,47.73,-122.4695833,Orca,K,,18,N,K Pod,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,116005,10,404
+12/5/17,14:08,Quad 419,,47.37,-122.3801667,Orca,JK,,23-41,S,"J, K Pods",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,116008,11,419
+12/5/17,10:45,Quad 413,,47.53,-122.43375,Orca,JK,,23-41,S,"J, K Pods",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,116007,10,413
+12/11/17,15:46,Quad 410,,47.59,-122.4477667,Orca,JK,,14-41,S,"J, K Pods",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,116010,10,410
+12/11/17,14:00,Quad 404,,47.71,-122.4395833,Orca,JK,,14-41,S,"J, K Pods",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,116009,10,404
+12/12/17,14:25,Quad 401,,47.82,-122.4540833,Orca,JK,,20-41,N,"J, K Pods",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,116012,9,401
+12/12/17,9:38,Quad 413,,47.53,-122.4372667,Orca,JK,,20-41,N,"J, K Pods",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,116011,10,413
+1/1/18,15:45,Quad 404,Jefferson Pt.,47.73,-122.4873333,Orca,Kp,,4-6,N,K13s,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125641,10,404
+1/1/18,15:00,Quad 407,Fay Bainbridge,47.70,-122.4859667,Orca,Kp,,4-6,N,K13s,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125640,10,407
+1/4/18,14:40,Quad 401,Apple Cove Pt,47.80,-122.4620667,Orca,Ts,,8,N,"T100s, T124As",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125643,9,401
+1/4/18,13:43,Quad 403,Carkeek Park,47.72,-122.42375,Orca,Ts,,8,N,"T100s, T124As",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125642,10,403
+1/6/18,14:00,Quad 410,Alki-Restoration Pts,47.59,-122.4558333,Orca,K,,16,N,K Pod,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125645,10,410
+1/6/18,12:23,Quad 414,Dolphin Pt.,47.49,-122.4268667,Orca,K,,16,N,K Pod,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125644,11,414
+7/28/18,14:00,Quad 402,Richmond Beach-Pt. Jefferson,47.76,-122.4285,Orca,Ts,,9,N,"T46s, T122, T137s",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125647,10,402
+7/28/18,12:10,Quad 410,Blakely Rock,47.60,-122.4626667,Orca,Ts,,9,N,"T46s, T122, T137s",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125646,10,410
+9/6/18,15:40,Quad 416,Pt. Robinson,47.39,-122.3712,Orca,Ts,,6,S,T65A’s,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125649,11,416
+9/6/18,13:04,Quad 414,Dolphin Pt.,47.52,-122.4305833,Orca,Ts,,6,S,T65A’s,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125648,11,414
+11/4/18,16:09,Quad 408,West Point,47.66,-122.43905,Orca,J,,23,S then N,"J Pod, L87",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125651,10,408
+11/4/18,11:50,Quad 407,Pt. Monroe,47.70,-122.458,Orca,J,,23,S then N,"J Pod, L87",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125650,10,407
+11/5/18,16:01,Quad 414,Brace-Dolphin Pts,47.51,-122.4276667,Orca,J,,23,S,"J Pod, L87",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125653,11,414
+11/5/18,13:40,Quad 413,Alki-Restoration Pts,47.57,-122.4533,Orca,J,,23,S,"J Pod, L87",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125652,10,413
+11/6/18,13:15,Quad 401,Possession Bar,47.81,-122.42425,Orca,J,,23,N,"J Pod, L87",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125655,9,401
+11/6/18,11:58,Quad 404,Pt. Wells,47.74,-122.436,Orca,J,,23,N,"J Pod, L87",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125654,10,404
+11/13/18,14:48,Quad 419,Dash Pt.,47.35,-122.40705,Orca,JK,,~41,S,"J, K Pods, L87",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125659,11,419
+11/13/18,11:42,Quad 413,Pt. Williams,47.53,-122.44825,Orca,JK,,~41,S,"J, K Pods, L87",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125658,10,413
+11/30/18,14:08,Quad 419,Pt. Robinson,47.37,-122.3801667,Orca,K,,18,S,K Pod,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125661,11,419
+11/30/18,10:45,Quad 413,Pt. Williams-Blake Is.,47.53,-122.43375,Orca,K,,18,S,K Pod,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125660,10,413
+12/1/18,15:46,Quad 410,Alki-Restoration Pts,47.59,-122.4477667,Orca,K,,18,S,K Pod,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125663,10,410
+12/1/18,14:00,Quad 404,Golden Gardens,47.71,-122.4395833,Orca,K,,18,S,K Pod,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125662,10,404
+12/6/18,14:25,Quad 410,Restoration Pt,47.59,-122.4736667,Orca,J,,23,S then N,J Pod + L87,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125666,10,410
+12/6/18,12:10,Quad 414,Brace-Dolphin Pts,47.51,-122.4287667,Orca,J,,23,S then N,J Pod + L87,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125665,11,414
+12/6/18,10:35,Quad 410,Blakely Rock,47.60,-122.4530667,Orca,J,,23,S then N,J Pod + L87,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125664,10,410
+12/13/18,15:50,Quad 408,West Point,47.66,-122.4679667,Orca,J,,22-23,N,J Pod,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125668,10,408
+12/13/18,14:13,Quad 410,Alki Point,47.58,-122.4234,Orca,J,,22-23,N,J Pod,Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125667,10,410
+12/30/18,16:03,Quad 412,Pt. Southworth,47.51,-122.4931667,Orca,Ts,,6,N,"T124A2s, T124Ds",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125670,10,412
+12/30/18,14:21,Quad 417,Ollala,47.43,-122.5223333,Orca,Ts,,6,N,"T124A2s, T124Ds",Other,Rel,Sears,FALSE,FALSE,FALSE,FALSE,FALSE,,125669,11,417

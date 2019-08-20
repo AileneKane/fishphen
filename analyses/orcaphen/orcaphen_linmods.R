@@ -27,7 +27,7 @@ library(matrixStats)
 includeCanada=TRUE
 firstyear=1976#probably set to 1975 or 1976 (Olson et al)
 assumeSRKW=TRUE #If true, assume that "Orcas" means SRKW unless noted otherwuse (i.e. Transients or NRKWs)
-use3regions=FALSE#If true, separate out the straight of Juan de Fuca as a 3rd region, distinct from CSS and PS
+use3regions=FALSE#If true, separate out the straight of Juan de Fuca as a 3rd region, distinct from CSS and PS (all code not yet working for 3 regions!)
 d <- read.csv("data/AppendixII.csv")
 quads<-read.csv("data/QuadCentroids.csv")
 dim(d)#105344     18 on August 8, 2019
@@ -73,8 +73,14 @@ podcols<-c("Jpres","Kpres","Lpres","AllSRpres")
 pods<-c("J", "K","L","SRs")
 source("analyses/orcaphen/source/orca_runlinmods.R")
 
-#9. Fit some basic linear models to subsets of data (lime kiln and west seattle only)
-regions=unique(orcasum.days$region)
-podcols<-c("Jpres","Kpres","Lpres","AllSRpres")
-pods<-c("J", "K","L","SRs")
-source("analyses/orcaphen/source/orca_runlinmods_subsets.R")
+#9. Fit some basic linear models to lime kiln data only
+limed<-d[d$Source=="TWM-Otis",]
+source("analyses/orcaphen/source/orca_runlinmods_lime.R")
+
+#10. Fit some basic linear models to west seattle only
+searsd<-read.csv("data/SearsCompiled.csv")
+#first clean the data and get in same format as orcamaster
+source("analyses/orcaphen/source/clean_sears.R")
+
+source("analyses/orcaphen/source/orca_runlinmods_sears.R")
+

@@ -227,3 +227,4 @@ dev.off()
       boxplot(as.numeric(ps.ussdat$daysaftmar31)~as.factor(ps.ussdat$region),horizontal=TRUE,las=1,col=cols,xaxt='n', bty="l",boxwex=.75, at = c(1,5), names=c("Puget Sound","Central Salish Sea"), cex.label=1.2)    
     axis(side=1,at = c(1,92,184,276,365), labels=c("1Apr","1Jul","1Oct","1Jan","31Mar"))
 dev.off()
+
