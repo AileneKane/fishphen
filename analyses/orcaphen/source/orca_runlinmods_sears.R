@@ -133,7 +133,7 @@ for(y in 1:length(years)){
   pods.all<-c(pods.all,pods[p])
   
 }
-sears.df <- as.data.frame(cbind(pods.all,years.all,nobs.all,firstest.all,lastest.all,mean.all))
+sears.df <- as.data.frame(cbind(pods.all,years.all,nobs.all,firstest.all,lastest.all,mean.all,lower.all,upper.all))
 colnames(sears.df)[1:3]<-c("pod","year","nobs")
 
 
@@ -166,8 +166,8 @@ for(p in 1:length(podcols)){
   }
 }
 
-sears.df <- cbind(sears.df,pods.all.p,years.all.p,nobs.all.p,firstest.all.p,lastest.all.p,mean.all.p)
-colnames(sears.df)[10:18]<-c("firstest.p","firstest.plcl","firstest.pucl","lastest.p","lastest.plcl","lastest.pucl","mean.p","mean.plcl","mean.pucl")
+sears.df <- cbind(sears.df,pods.all.p,years.all.p,nobs.all.p,firstest.all.p,lastest.all.p)
+colnames(sears.df)[12:17]<-c("firstest.p","firstest.plcl","firstest.pucl","lastest.p","lastest.plcl","lastest.pucl")
 
 sears.df$year<-as.numeric(sears.df$year)
 sears.df$firstest.all<-as.numeric(sears.df$firstest.all)
@@ -208,7 +208,7 @@ plot(sears.df$year,sears.df$mean.all,xlab="year",ylab="mean obs doy", main="", b
 mod<-lm(sears.df$mean.all~sears.df$year)
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
 if(summary(mod)$coef[2,4]<.1){abline(mod, lty=3)}
-arrows(sears.df$year,sears.df$mean.plcl,sears.df$year,sears.df$mean.pucl,code=3,length=0)
+arrows(sears.df$year,as.numeric(sears.df$lower.all),sears.df$year,as.numeric(sears.df$upper.all),code=3,length=0)
 
 abline(mod)
 mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
