@@ -51,7 +51,7 @@ mean(as.numeric(orcasum.days.lime$daysaftmar31[orcasum.days.lime$fa=="07"]), na.
 #Make plots
   #pdf(figname,height=6, width=6)
   quartz(height=6, width=15)
- par(mfrow(c(1,3)))
+ par(mfrow=c(1,3))
 podcols<-c("AllSRpres")
 pods<-c("SRs")
 for(p in 1:length(podcols)){

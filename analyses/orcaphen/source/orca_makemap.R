@@ -8,7 +8,7 @@ if(assumeSRKW==FALSE & use3regions==TRUE){figname<-paste("analyses/figures/OrcaP
 
 if(use3regions==FALSE){
   pdf(figname,height=12, width=6)
-  #quartz(height=6, width=15)
+  #quartz(height=12, width=6)
   par(omi=c(.5,.5,.5,.5), mfrow=c(2,1))
 }
 if(use3regions==TRUE){

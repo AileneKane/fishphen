@@ -76,7 +76,7 @@ searsps<-orcasum.days.sears[orcasum.days.sears$fa!="07",]
 
   #pdf(figname,height=6, width=6)
   quartz(height=6, width=15)
- par(mfrow(c(1,3)))
+ par(mfrow=c(1,3))
 podcols<-c("AllSRpres")
 pods<-c("SRs")
 for(p in 1:length(podcols)){
