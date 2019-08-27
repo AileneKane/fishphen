@@ -72,7 +72,7 @@ mean(as.numeric(orcasum.days.sears$daysaftmar31[orcasum.days.sears$fa=="10"]), n
 #Make plots
 sears091011<-orcasum.days.sears[orcasum.days.sears$fa=="10"|orcasum.days.sears$fa=="11"|orcasum.days.sears$fa=="09",]
 searsps<-orcasum.days.sears[orcasum.days.sears$fa!="07",]
-
+unique(searsps$fa)
 
   #pdf(figname,height=6, width=6)
   quartz(height=6, width=15)
@@ -117,7 +117,9 @@ nobs.all<-c()
 firstest.all<-c()
 mean.all<-c()
 lastest.all<-c()
-
+pods.all<-c()
+lower.all<-c()
+upper.all<-c()
 for(y in 1:length(years)){
   yrdat<-searsps[searsps$orcayear==years[y],]
   years.all<-c(years.all,years[y])
@@ -125,64 +127,89 @@ for(y in 1:length(years)){
   firstest.all<-c(firstest.all,min(yrdat$daysaftmar31[yrdat$AllSRobs==1], na.rm=TRUE))
   lastest.all<-c(lastest.all,max(yrdat$daysaftmar31[yrdat$AllSRobs==1], na.rm=TRUE))
   mean.all<-c(mean.all,mean(yrdat$daysaftmar31[yrdat$AllSRobs==1], na.rm=TRUE))
+  lower.all<-c(lower.all,quantile(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]),alpha))#lower ci
+  upper.all<-c(upper.all,quantile(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]),1-alpha))#upper ci
+
+  pods.all<-c(pods.all,pods[p])
+  
 }
-df <- as.data.frame(cbind(years.all,nobs.all,firstest.all,lastest.all,mean.all))
-colnames(df)[1:2]<-c("year","nobs")
+sears.df <- as.data.frame(cbind(pods.all,years.all,nobs.all,firstest.all,lastest.all,mean.all))
+colnames(sears.df)[1:3]<-c("pod","year","nobs")
 
-plot(df$year,df$firstest.all,xlab="year",ylab="first obs doy", main="", bty="l", pch=21, bg="gray")
-mod<-lm(df$firstest.all~df$year)
-abline(mod, lty=2)
+
+#Now try for sears data
+alpha=0.10
+k=20
+pods.all.p<-c()
+regions.all.p<-c()
+years.all.p<-c()
+nobs.all.p<-c()
+firstest.all.p<-c()
+lastest.all.p<-c()
+meandiffs.all<-c()
+firstdiffs.all<-c()
+years<-unique(sears.df$year)
+p=1
+for(p in 1:length(podcols)){
+  colnum<-which(colnames(orcasum.days.lime)==podcols[p])
+  
+  regdat<-orcasum.days.sears
+  for(y in 1:length(years)){
+    yrdat<-regdat[regdat$orcayear==years[y],]
+    pods.all.p<-c(pods.all.p,pods[p])
+    years.all.p<-c(years.all.p,years[y])
+    nobs.all.p<-c(nobs.all.p,length(yrdat$day[yrdat[,colnum]==1]))
+    
+    firstest.all.p<-rbind(firstest.all.p,est.limit(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]),alpha=alpha,k=k))
+    lastest.all.p<-rbind(lastest.all.p,est.limit(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]), upper=TRUE,alpha=alpha,k=k))
+    meandiffs.all<-c(meandiffs.all,mean(diff(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]))))
+  }
+}
+
+sears.df <- cbind(sears.df,pods.all.p,years.all.p,nobs.all.p,firstest.all.p,lastest.all.p,mean.all.p)
+colnames(sears.df)[10:18]<-c("firstest.p","firstest.plcl","firstest.pucl","lastest.p","lastest.plcl","lastest.pucl","mean.p","mean.plcl","mean.pucl")
+
+sears.df$year<-as.numeric(sears.df$year)
+sears.df$firstest.all<-as.numeric(sears.df$firstest.all)
+
+quartz(height=8,width=25)
+par(mfrow=c(1,6))
+
+plot(sears.df$year,sears.df$firstest.all,xlab="year",ylab="first obs doy", main="", bty="l", pch=16, ylim=c(0,280))
+mod<-lm(sears.df$firstest.all~sears.df$year)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.1){abline(mod, lty=3)}
+mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+arrows(sears.df$year,sears.df$firstest.plcl,sears.df$year,sears.df$firstest.pucl,col="blue",code=3,length=0)
+points(sears.df$year,sears.df$firstest.p,pch=16, col = "blue",cex=1.2)
+
+points(sears.df$year,sears.df$firstest.p,pch=16, col= "blue") 
+mod<-lm(sears.df$firstest.p~sears.df$year)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="blue")}
+if(summary(mod)$coef[2,4]<.1){abline(mod, lty=3, col="blue")}
+
+
+plot(sears.df$year,sears.df$lastest.all,xlab="year",ylab="last obs doy", main="", bty="l", pch=16, ylim=c(140,365))
+mod<-lm(sears.df$lastest.all~sears.df$year)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.1){abline(mod, lty=3)}
 mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
 mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
 
-plot(df$year,df$lastest.all,xlab="year",ylab="last obs doy", main="", bty="l", pch=21, bg="gray")
-mod<-lm(df$lastest.all~df$year)
-abline(mod, lty=2)
-mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
-mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+arrows(sears.df$year,sears.df$lastest.plcl,sears.df$year,sears.df$lastest.pucl,col="blue",code=3,length=0)
+points(sears.df$year,sears.df$lastest.p,pch=16, col = "blue",cex=1.2)
+mod<-lm(sears.df$lastest.p~sears.df$year)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1,col = "blue")}
+if(summary(mod)$coef[2,4]<.1){abline(mod, lty=3,col = "blue")}
 
-plot(df$year,df$mean.all,xlab="year",ylab="mean obs doy", main="", bty="l", pch=21, bg="gray")
-mod<-lm(df$mean.all~df$year)
+
+plot(sears.df$year,sears.df$mean.all,xlab="year",ylab="mean obs doy", main="", bty="l", pch=16)
+mod<-lm(sears.df$mean.all~sears.df$year)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.1){abline(mod, lty=3)}
+arrows(sears.df$year,sears.df$mean.plcl,sears.df$year,sears.df$mean.pucl,code=3,length=0)
+
 abline(mod)
 mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
 mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
-
-
-
-
-#Create dataframe with first, last obs for each start date in each year
-pods.all<-c()
-regions.all<-c()
-years.all<-c()
-nobs.all<-c()
-#firstest.1may.all<-c()#for uss
-#firstest.1oct.all<-c()#for ps
-#lastest.31oct.all<-c()#for uss
-#lastest.31jan.all<-c()#for ps
-firstest.all<-c()
-lastest.all<-c()
-mean.all<-c()
-#p=1
-#r=1
-
-#unique(orcasum.days$orcayear)#use may 1 as start of orca year, as this will encompass min start date window that i want to try
-p=1
-for(p in 1:length(podcols)){
-  colnum<-which(colnames(searsps)==podcols[p])
- 
-    regdat<-searsps
-    for(y in 1:length(years)){
-      yrdat<-regdat[regdat$orcayear==years[y],]
-      pods.all<-c(pods.all,pods[p])
-      years.all<-c(years.all,years[y])
-      nobs.all<-c(nobs.all,length(yrdat$day[yrdat[,colnum]==1]))
-     
-      firstest.all<-c(firstest.all,min(yrdat$daysaftmar31[yrdat[,colnum]==1], na.rm=TRUE))
-      lastest.all<-c(lastest.all,max(yrdat$daysaftmar31[yrdat[,colnum]==1], na.rm=TRUE))
-      mean.all<-c(mean.all,mean(yrdat$daysaftmar31[yrdat[,colnum]==1], na.rm=TRUE))
-      
-    }
-  }
-
-df <- as.data.frame(cbind(pods.all,years.all,nobs.all,firstest.all,lastest.all,mean.all))
-colnames(df)[1:3]<-c("pod","year","nobs")

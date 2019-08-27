@@ -196,5 +196,133 @@ summary(daysfirstestmod)#later first obs in years with few whale days
 summary(dayslastestmod)#earlier last obs in years with few whale days
 #estimates are more conservative...
 
+#Relate limekiln data to chinook phenology in the Fraser river
+albchin<-read.csv("analyses/output/albionchiphen.csv", header = TRUE)
+#restrict to years that we have SRKW data for
+albchin95<-albchin[albchin$year>1993  & albchin$year<2018,]
+albchin95<-albchin95[-which(albchin95$year==2014),]
+quartz(height=8,width=25)
+par(mfrow=c(1,6))
+plot(albchin95$firstobsdate,lime.df$firstest.all,type="p",pch=16, col = "black",xlab="Chinook Arrival DOY",ylim = c(40,70),ylab="SRKW Arrival DOY", cex=1.2, bty="l")
+#what is the really late salmon year?
+#albchin95$year[which(albchin95$firstobsdate==max(albchin95$firstobsdate, na.rm=TRUE))]#2007
+mod<-lm(lime.df$firstest.all~albchin95$firstobsdate)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
+points(albchin95$firstobsdate,lime.df$firstest.p,pch=16, col = "blue",cex=1.2)
+mod<-lm(lime.df$firstest.p~albchin95$firstobsdate)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="blue")}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "blue")}
+
+#First obs of SRKW vs total run size
+plot(albchin95$alltotal,lime.df$firstest.all,type="p",pch=16, col = "black",xlab="Chinook Run Size",ylim = c(40,70),ylab="SRKW Arrival DOY", cex=1.2, bty="l")
+mod<-lm(lime.df$firstest.all~albchin95$alltotal)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.1){abline(mod, lty=3)}
+points(albchin95$alltotal,lime.df$firstest.p,pch=16, col = "blue",cex=1.2)
+mod<-lm(lime.df$firstest.p~albchin95$alltotal)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="blue")}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "blue")}
+
+
+#First obs of SRKW vs peak run date
+plot(albchin95$peakobsdate,lime.df$firstest.all,type="p",pch=16, col = "black",xlab="Chinook Peak DOY",ylim = c(40,70),ylab="SRKW Arrival DOY", cex=1.2, bty="l")
+mod<-lm(lime.df$firstest.all~albchin95$peakobsdate)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
+points(albchin95$peakobsdate,lime.df$firstest.p,pch=16, col = "blue",cex=1.2)
+mod<-lm(lime.df$firstest.p~albchin95$peakobsdate)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="blue")}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "blue")}
+
+
+#Last obs of SRKW vs last obs of salmon
+plot(albchin95$lastobsdate,lime.df$lastest.all,type="p",pch=16, col = "black",xlab="Chinook Last Obs DOY",ylab="SRKW Departure DOY", cex=1.2, bty="l")
+mod<-lm(lime.df$lastest.all~albchin95$lastobsdate)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
+points(albchin95$lastobsdate,lime.df$lastest.p,pch=16, col = "blue",cex=1.2)
+mod<-lm(lime.df$lastest.p~albchin95$lastobsdate)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="blue")}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "blue")}
+
+#Lastobs of SRKW vs total run size
+plot(albchin95$alltotal,lime.df$lastest.all,type="p",pch=16, col = "black",xlab="Chinook Run Size",ylab="SRKW Departure", cex=1.2, bty="l")
+mod<-lm(lime.df$lastest.all~albchin95$alltotal)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
+points(albchin95$alltotal,lime.df$lastest.p,pch=16, col = "blue",cex=1.2)
+mod<-lm(lime.df$lastest.p~albchin95$alltotal)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="blue")}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "blue")}
+
+#whale days vs chinook run size
+plot(albchin95$alltotal,lime.df$nobs,type="p",pch=16, col = "black",xlab="Chinook Run Size",ylab="Whale days", cex=1.2, bty="l")
+mod<-lm(lime.df$nobs~albchin95$alltotal)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
 
 #Now try for sears data
+alpha=0.10
+k=20
+pods.all.p<-c()
+regions.all.p<-c()
+years.all.p<-c()
+nobs.all.p<-c()
+firstest.all.p<-c()
+lastest.all.p<-c()
+mean.all.p<-c()
+meandiffs.all<-c()
+firstdiffs.all<-c()
+years<-unique(sears.df$years.all)
+p=1
+for(p in 1:length(podcols)){
+  colnum<-which(colnames(orcasum.days.lime)==podcols[p])
+  
+  regdat<-orcasum.days.sears
+  for(y in 1:length(years)){
+    yrdat<-regdat[regdat$orcayear==years[y],]
+    pods.all.p<-c(pods.all.p,pods[p])
+    years.all.p<-c(years.all.p,years[y])
+    nobs.all.p<-c(nobs.all.p,length(yrdat$day[yrdat[,colnum]==1]))
+    
+    firstest.all.p<-rbind(firstest.all.p,est.limit(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]),alpha=alpha,k=k))
+    lastest.all.p<-rbind(lastest.all.p,est.limit(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]), upper=TRUE,alpha=alpha,k=k))
+    mean.all.p<-rbind(mean.all.p,
+                      c(mean(yrdat$daysaftmar31[yrdat[,colnum]==1], na.rm=TRUE),#mean
+                        quantile(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]),alpha),#lower ci
+                        quantile(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]),1-alpha)))#upper ci
+    meandiffs.all<-c(meandiffs.all,mean(diff(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]))))
+    firstdiffs.all<-c(firstdiffs.all,diff(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]))[1])
+    
+  }
+}
+
+sears.df <- cbind(sears.df,pods.all.p,years.all.p,nobs.all.p,firstest.all.p,lastest.all.p,mean.all.p)
+sears.df$years.all<-as.numeric(sears.df$years.all)
+sears.df$firstest.all<-as.numeric(sears.df$firstest.all)
+quartz(height=8,width=25)
+par(mfrow=c(1,6))
+
+plot(sears.df$years.all,sears.df$firstest.all,xlab="year",ylab="first obs doy", main="", bty="l", pch=16)
+mod<-lm(sears.df$firstest.all~sears.df$years.all)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.1){abline(mod, lty=3)}
+mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+mod<-lm(lime.df$firstest.p~lime.df$year)
+if(summary(mod)$coef[2,4]<alpha){abline(mod, lty=1, col="blue")}
+if(summary(mod)$coef[2,4]>alpha){abline(mod, lty=3, col="blue")}
+
+
+plot(df$year,df$lastest.all,xlab="year",ylab="last obs doy", main="", bty="l", pch=21, bg="gray")
+mod<-lm(df$lastest.all~df$year)
+abline(mod, lty=2)
+mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+
+plot(df$year,df$mean.all,xlab="year",ylab="mean obs doy", main="", bty="l", pch=21, bg="gray")
+mod<-lm(df$mean.all~df$year)
+abline(mod)
+mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)

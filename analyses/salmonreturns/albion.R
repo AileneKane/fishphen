@@ -54,6 +54,11 @@ for(y in allyears){
   lastobsdate[which(lastobsdate=="-Inf")]<-NA
 }
 #if(length(which(is.na(firstobsdate)))<5){next}
+#Save a file with these estimates in it
+albchiphen<-cbind("ck","albion",allyears,firstobsdate,lastobsdate,peakobsdate,midobsdate,alltotal)
+
+colnames(albchiphen)[1:3]<-c("sp","site","year")
+write.csv(albchiphen,"analyses/output/albionchiphen.csv", row.names =FALSE)
 year<-as.numeric(allyears)
 #figname<-paste("analyses/figures/wdfw_returns/",types[w],species[p],sites[i],".pdf", sep="_")
 #pdf(figname,height=10, width=25)
@@ -158,3 +163,4 @@ names(allmodsums)<-c("sp","site","mn.cpue","mn.total","meanfirst.int","first.int
 
 
 write.csv(allmodsums, "analyses/output/albionreturntrends.csv", row.names = TRUE)
+head(dat)
