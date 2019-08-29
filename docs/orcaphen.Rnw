@@ -1,7 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%START PREAMBLE THAT IS THE SAME FOR ALL EXAMPLES
 \documentclass{article}
 
-%Required: You must have these
 \usepackage{Sweave}
 \usepackage{graphicx}
 \usepackage{tabularx}
@@ -10,6 +9,9 @@
 \usepackage{pdflscape}
 \usepackage{array}
 \usepackage{gensymb}
+\usepackage{amsmath}
+\usepackage{xr}
+
 %\usepackage[backend=bibtex]{biblatex}
 %Strongly recommended
   %put your figures in one place
@@ -87,10 +89,23 @@ detection of SRKWs in the two core areas: the Central Salish Sea, used primarily
 \subsection* {Analysis}
 \underline{SRKW}:
 \par To identify trends over time in phenology for SRKWs in the Central Salish Sea and in Puget Sound proper, we summarized first-, last-, and mean- observation dates from 1978 through 2017 in each region. %We also compared first and last observation dates across time periods (1978-1997 versus 1998-2018), using t-tests (Fig \ref{fig:boxplot1} and \ref{fig:boxplot2}), because relationships over time did not look linear and linear regression provided poor fit (Fig \ref{fig:reg}). %Could also break this into 4 decade-long time periods- this might capture the recent trend of later arrival to San Juan Island. 
-\par  To estimate effects of increased effort (i.e., increased numbers of sightings over time) on trends in phenology, we simulated data sets of whale presence during two seasons equivalent to those in our data set (summer, which was 1 May through 31 Sept, or 153 days, and fall, which was 1 October through 1 Feb, or 123 days). We used whale presence probabilities of 0.85 for the Central Salish Sea and 0.6 for Puget Sound (the means in our data set for each region) and kept it constant over 40 simulated years. We then created an observation data set, in which effort (the number of observations), varied. During the low effort time period (years 1-20), the number of observations had a mean of 15 per year for Puget Sound and 104 per year in the Central Salish Sea (matching the means for these regions from 1978-1997 in the OrcaMaster database).  During the high effort time period (years 21-40 in our simulated data set), the number of annual observations had a mean of 39 for Puget Sound and 133 for the Central Salish Sea (matching those in the OrcaMAster database from 1998-2017). We then calculated first- and last- observations dates for each simulated year. We ran these simulation 100 times and calculated the difference between the low effort and high effort time periods. We compared these to the mean differences first- and last-observation dates across time periods in the OrcaMaster database, for each region, to understand whether observed changes may be due to changes in effort over time, rather than changes in orca activity (Fig \ref{fig:sim}).
+%\par  To estimate effects of increased effort (i.e., increased numbers of sightings over time) on trends in phenology, we simulated data sets of whale presence during two seasons equivalent to those in our data set (summer, which was 1 May through 31 Sept, or 153 days, and fall, which was 1 October through 1 Feb, or 123 days). We used whale presence probabilities of 0.85 for the Central Salish Sea and 0.6 for Puget Sound (the means in our data set for each region) and kept it constant over 40 simulated years. We then created an observation data set, in which effort (the number of observations), varied. During the low effort time period (years 1-20), the number of observations had a mean of 15 per year for Puget Sound and 104 per year in the Central Salish Sea (matching the means for these regions from 1978-1997 in the OrcaMaster database).  During the high effort time period (years 21-40 in our simulated data set), the number of annual observations had a mean of 39 for Puget Sound and 133 for the Central Salish Sea (matching those in the OrcaMAster database from 1998-2017). We then calculated first- and last- observations dates for each simulated year. We ran these simulation 100 times and calculated the difference between the low effort and high effort time periods. We compared these to the mean differences first- and last-observation dates across time periods in the OrcaMaster database, for each region, to understand whether observed changes may be due to changes in effort over time, rather than changes in orca activity (Fig \ref{fig:sim}).
 
-\par We quantify pod-specific phenology for J, K, and L pods in the north versus south regions using occupancy models. Occupancy models (MacKenzie et al. 2002) can estimate jointly species presence or abundance and detection probability (the probability to detect at least one individual present at site). We parameterized the model with annual occupancy probabilities (i.e., we did not fit a dynamic model, but a multiseason model (Royle and Kery 2007). The distribution submodel distinguishes true presence or absence of pod,p, (z, a latent state) in marine area i in year t,( add equation here). We assumed zi,t to be a Bernoulli random variable. We modeled detection probability as a function of year and date, with detectability modeled as a semi-parametric, smooth function of date using flexible thin-plate spline regression modelling \citep{strebel2014}. 
-\par  We fit separate occupancy models within each region and season, for each pod, and estimated annual first-, last-, and peak detection dates with each model. We defined first-detection date as the first DOY within the season when detection probability exceeded 0.5; last-detection date was the latest DOY within the season when detection probability exceeded 0.5. (Using a threshold probability lowed than 0.5 did not qualitatively alter observed trends, Figure SX.)
+\par We quantify pod-specific phenology for J, K, and L pods in the north versus south regions using occupancy models. Occupancy models can estimate jointly species presence and detection probability (\emph{p},the probability of detecting at least one individual present at a site) by distinguishing true presence or absence, \emph{z} (a latent, unobservable state), from observed presence. Occupancy models are composed of a state submodel, which is the model for the ecological process of true presence or absence, and  an observation submodel, which links the observations (i.e., whether or not whales were seen) to the state model.
+\par We fit a hierarchical model in which occupancy probability (psi) was a function of day of year (i.e., we did not fit a dynamic model, but a multi-year model,Royle and Kery 2007), with year and marine area as levels. Occupancy probability was modeled as a semi-parametric, smooth function of day of year (`\emph{day}')using flexible thin-plate spline regression modelling \citep{strebel2014}. We assumed \emph{z}, to be a Bernoulli random variable for which 0 signifies absence and 1 is presence. We modeled detection probability (\emph{p}) as a year- (`\emph{yr}') and marine area- (`\emph{area}') specific probability between 0 and 1. Thus, our occupancy model can be described by the following equations:
+
+\par \underline{Observation model}
+\begin{equation} 
+y_{area,yr,day} \sim Binomial (T_{yr,day,area}, z_{yr,day} * p_{area,yr})\\
+\end{equation}
+
+\par \underline{State model}
+\begin{equation} 
+z_{yr,day} \sim Bernoulli (\mathrm{\Psi}_{yr,day})\\
+\end{equation}
+
+\par  Occupancy models were fit in JAGS, through R2jags \citep{su2015} in R version XX (cite). We fit separate occupancy models within each region (and season, since seasonal use varies by region)for each pod, and estimated annual arrival, departure, and peak occupancy dates with each model. We defined arrival date as the earliest DOY within the season when occupancy probability exceeded 0.5; departure date was the latest DOY within the season when detection probability exceeded 0.5. (Using a threshold probability lower than 0.5 did not qualitatively alter observed trends, Figure SX.)
+
 \par Add analyses of subsets of data for which effort has not changed so dramatically: Lime Kiln observations for USS; West Seattle observations for PS.
 \underline{Salmon}:
 \par We used linear regression to identify trends over time in first, median, peak, and last dates of salmon adult migration timing. 
@@ -123,7 +138,7 @@ Last-detection dates have gotten later by XX days in Puget Sound and by XX days 
 \section* {Figures}
 
 \begin{figure}[h!]
-\includegraphics{../analyses/figures/OrcaPhenPlots/srkw_phenmap.pdf} 
+\includegraphics{../analyses/figures/OrcaPhenPlots/srkw_phenmap_assumeSRKW.pdf} 
 \caption{\textbf{Southern resident killer whale activity in the Upper Salish Sea and Puget Sound varies by season}. }
  \label{fig:phenplot}
  \end{figure}
