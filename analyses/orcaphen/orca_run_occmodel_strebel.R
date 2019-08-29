@@ -70,13 +70,13 @@ dim(dat)
 #-----------------------------------------------------------------
 
 # Specify model in BUGS language
-sink("analyses/splinesSiteOccS4psi.txt")
+sink("analyses/splinesSiteOcc S4.txt")
 cat("
     model { 
-    ### Define seasonal and annual patterns in occurrence probability
+    ### Define seasonal and annual patterns in detectability
     for (m in 1:nyear) {  
     for (i in 1:n) {
-    logit(psi[m,i]) <- lp[m,i]
+    logit(p[m,i]) <- lp[m,i]
     lp[m,i] <- mfe[m,i]+mre[m,i]
     mfe[m,i] <- a[m]*X[i,1]+b[m]*X[i,2]+c[m]*X[i,3]
     mre[m,i]<-sum(n.mre[m,i,1:nknots])
@@ -100,23 +100,21 @@ cat("
     ### precision for random regression coefficients corresponding to the truncated polynomial functions
     taub~dgamma(1.0E-6,1.0E-6)      
     
-    # Specify priors for detection model
-   for (i in 1:nsite){#could add site specific detections  
-    for (y in 1:nyear) {
-    p[i,y] ~ dunif(0, 1)
+    # Specify priors
+  for (k in 1:nyear) {
+    psi[k] ~ dunif(0, 1)
     }
-    }
-    # Ecological submodel: Define state conditional on parameters
 
-    for (y in 1:nyear) {  
-    for (i in 1:n) {
-    z[y,i] ~ dbern(psi[y,i])
-    }    
+    # Ecological submodel: Define state conditional on parameters
+    for (i in 1:nsite){
+    for (k in 1:nyear){
+    z[i,k] ~ dbern(psi[k])
+    }
     }
     
     # Observation model
     for (i in 1:nobs){
-    muy[site[i],survey[i],year[i]] <- z[year[i],survey[i]]*p[site[i],year[i]]
+    muy[site[i],survey[i],year[i]] <- z[site[i],year[i]]*p[year[i],survey[i]]
     y[i] ~ dbin(muy[site[i],survey[i],year[i]], nrep[i])
     }
     
@@ -138,7 +136,7 @@ n <- length(covariate)
 nk<-round((max(dat$day)-min(dat$day)+1)/4)
 nknots<-ifelse(nk<35,nk,35)
 knots<-quantile(unique(covariate),seq(0,1,length=(nknots+2))[-c(1,(nknots+2))])
-#Note: the maximum number of knots is 35. thus, the annual model (for which nk=92 in many cases, but it is restricted to 35 by default) differs in flexibility than the seasonal model
+#Note: the maximum number of nots is 35. thus, the annual model (for which nk=92 in many cases, but it is restricted to 35 by default) differs in flexibility than the seasonal model
 #perhaps better to extract the seasonal peaks after fitting the whole year of data
 # fixed effects matrix
  X<-NULL
@@ -146,7 +144,7 @@ for (l in 0:degree) {
   X<-cbind(X,covariate^l)  
 }
 
-# random coefficients matrix 
+# random coefficients matrix
 Z_K<-(abs(outer(covariate,knots,"-")))^3
 OMEGA_all<-(abs(outer(knots,knots,"-")))^3
 svd.OMEGA_all<-svd(OMEGA_all)
@@ -160,13 +158,12 @@ dat$site <- as.integer(dat$site)
 
 site <- dat$site
 survey <- dat$day-min(dat$day)+1
-nsurveys<-length(survey)
 nobs <- length(unique(paste(dat$site,dat$day,dat$year)))
 nrep <- dat$nrep
 nsite <- length(unique(dat$site))
 nyear <- length(unique(dat$year))
 year <- as.numeric(factor(dat$year))
-zst <- array(1, dim=c(nyear,n))  
+zst <- array(1, dim=c(nsite,nyear))  
 y <- dat$ndet
 
 # Simulation parameters
@@ -179,11 +176,11 @@ jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots",
 f.inits <- function(){list(a=rep(0,nyear), b=rep(0,nyear), c=rep(0,nyear), z=zst)}
 
 # specify the parameters to be monitored
-parameters <- c("a","b","c","lp","psi","taub","p")
+parameters <- c("a","b","c","lp","psi","taub")
 
 ### Run MCMC Analysis using jags
 
-jags.out<-jags.parallel(jags.data,f.inits,parameters,"analyses/splinesSiteOccS4psi.txt",nc,ni,nb,nt)
+jags.out<-jags.parallel(jags.data,f.inits,parameters,"analyses/splinesSiteOcc S4.txt",nc,ni,nb,nt)
 names(jags.out$BUGSoutput)
 quartz()
 plot(jags.out)
@@ -264,7 +261,7 @@ r<-matrix(NA,dim(lpmax)[1],2)
 #just do lm from 1978-2017
 for (o in 1:(dim(lpmax)[1])) {
   # if(!is.na(sum(lpmax[o,]))) {
-  lm(lpmax[o,3:42]~as.numeric(colnames(lpmax))[3:42])$coefficients->r[o,]
+  lm(lpmax[o,]~as.numeric(colnames(lpmax)))$coefficients->r[o,]
   #}    
 }
 slopevec<-as.vector(r[,2])
@@ -480,8 +477,8 @@ for (o in 1:500) {
   
   #}    
 }
-clip(2008,2017, min(y), max(y))
-abline(a=intercept,b=slope,col=color,lwd=2)
+clip(1990,2017, min(y), max(y))
+abline(a=intercept,b=slope,col="black",lwd=2)
 
 dev.off()
 #

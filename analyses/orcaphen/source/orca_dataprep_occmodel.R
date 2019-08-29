@@ -14,8 +14,8 @@ library(dplyr)
 
 # 1. Choose the years, regions of interest, assumption about reports in the OrcaMaster and get the data
 includeCanada=TRUE
-firstyear=1976#probably set to 1975 or 1976 (Olson et al)
-assumeSRKW=TRUE #If true, assume that "Orcas" means SRKW unless noted otherwuse (i.e. Transients or NRKWs)
+firstyear=1978#probably set to 1975 or 1976 (Olson et al)
+assumeSRKW=FALSE #If true, assume that "Orcas" means SRKW unless noted otherwuse (i.e. Transients or NRKWs)
 use3regions=FALSE#If true, separate out the straight of Juan de Fuca as a 3rd region, distinct from CSS and PS
 d <- read.csv("data/AppendixII.csv")
 quads<-read.csv("data/QuadCentroids.csv")
@@ -108,3 +108,12 @@ write.csv(srdet,"analyses/output/allsr_dat.csv",row.names = FALSE)
 write.csv(ldet,"analyses/output/l_dat.csv",row.names = FALSE)
 write.csv(kdet,"analyses/output/k_dat.csv",row.names = FALSE)
 write.csv(jdet,"analyses/output/j_dat.csv",row.names = FALSE)
+
+dim(jdet)
+dim(ldet)
+dim(srdet)
+dim(kdet)
+head(kdet)
+head(jdet)
+head(ldet)
+head(srdet)
