@@ -14,15 +14,12 @@ setwd("~/Documents/GitHub/fishphen")
 #setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
 
 #Read in summaries of rates of change from orca occupancy model
-l2<-read.csv("analyses/output/L_2_uss.csv")
-#l1<-read.csv("analyses/output/L_1_ps.csv")
-l1<-read.csv("analyses/output/L_1sept1_ps_1997-2017.csv")
-k2<-read.csv("analyses/output/K_2_uss.csv")
-#k1<-read.csv("analyses/output/K_1_ps.csv")
-k1<-read.csv("analyses/output/K_1sept1_ps_1997-2017.csv")
-j2<-read.csv("analyses/output/J_2_uss.csv")
-#j1<-read.csv("analyses/output/J_1_ps.csv")
-j1<-read.csv("analyses/output/J_1sept1_ps_1997-2017.csv")
+l2<-read.csv("analyses/output/L_2sept1_uss1978-2017occprob.csv")
+l1<-read.csv("analyses/output/L_1sept1_ps1978-2017occprob.csv")
+k2<-read.csv("analyses/output/K_2sept1_uss1978-2017occprob.csv")
+k1<-read.csv("analyses/output/K_1sept1_ps1978-2017occprob.csv")
+j2<-read.csv("analyses/output/J_2sept1_uss1978-2017occprob.csv")
+j1<-read.csv("analyses/output/J_1sept1_ps1978-2017occprob.csv")
 
 all2<-rbind(j2,k2,l2)
 all1<-rbind(j1,k1,l1)
@@ -43,9 +40,10 @@ colnames(albionshifts)<-albion[4:28,1]
 # save plotted results as pdf
 pdf(file="analyses/figures/srkw_salmon_shifts_lm.pdf",width=16,height=6)
 
-### plot estimates of peak detectability over all years
+### plot estimates of peak occurrence prob over all years
 #quartz(width=16, height=6)
-par(mfcol=c(2,3),mai=c(.5,1,.5,0.5))
+#par(mfcol=c(2,3),mai=c(.5,1,.5,0.5))
+par(mfcol=c(2,1),mai=c(.5,1,.5,0.5))
 x<-rep(1,times=3)
 #Central salish sea first...
 plot(x,all2$slope.mn[all2$phase=="first"],pch=c(21,22,24),bg="darkblue", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,3), bty="l")
@@ -59,7 +57,7 @@ points(x+1,all2$slope.mn[all2$phase=="peak"],pch=c(21,22,24),bg="darkblue")
 points(x+2,all2$slope.mn[all2$phase=="last"],pch=c(21,22,24),bg="darkblue")
 
 axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
-mtext("SRKWs",side=3,line=0)
+mtext("SRKWs 1978-2017",side=3,line=0)
 legend("topleft",legend=c("J pod","K pod","L pod"),pch=c(21,22,24), bty="n",pt.bg="darkblue")
 #Puget sound proper
 plot(x,all1$slope.mn[all1$phase=="first"],pch=c(21,22,24),bg="salmon", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-10,7), bty="l")
@@ -73,6 +71,8 @@ points(x+1,all1$slope.mn[all1$phase=="peak"],pch=c(21,22,24),bg="salmon")
 points(x+2,all1$slope.mn[all1$phase=="last"],pch=c(21,22,24),bg="salmon")
 axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
 
+#add shifts in most recent 20 years
+
 ##Add salmon
 #Central salish sea = albion test fishery from fraser
 x<-c(1,2,3,4)
@@ -80,7 +80,7 @@ y<-c(albionshifts$first.yr,albionshifts$pk.yr,albionshifts$mid.yr,albionshifts$l
 ylci<-c(albionshifts$first.yrlci,albionshifts$pk.yrlci,albionshifts$mid.yrlci,albionshifts$last.yrlci)
 yuci<-c(albionshifts$first.yruci,albionshifts$pk.yruci,albionshifts$mid.yruci,albionshifts$last.yruci)
 
-plot(x,y,pch=23,bg="blue4",ylab= "",xaxt="n", xlab="",xlim=c(0,5),ylim=c(-3,3), bty="l", cex=log(albionshifts$mn.total)/6)
+plot(x,y,pch=23,bg="blue4",ylab= "",xaxt="n", xlab="",xlim=c(0,5), bty="l", cex=log(albionshifts$mn.total)/6)
 abline(h=0,lty=2)
 
 mtext("wild salmon",side=3,line=0)

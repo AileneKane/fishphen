@@ -46,3 +46,9 @@ jags.output/lpod out season1  >1996
 jags.output/jpod out season1 >1996
 jags.output/kpod out season1 >1996
 .Rhistory
+jags.output/jpod out season1 psi
+jags.output/kpod out season1 psi
+jags.output/kpod out season2 psi
+jags.output/jpod out season2 psi
+jags.output/lpod out season1 psi
+jags.output/lpod out season2 psi

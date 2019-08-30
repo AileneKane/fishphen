@@ -185,20 +185,10 @@ parameters <- c("a","b","c","lp","psi","taub","p")
 
 jags.out<-jags.parallel(jags.data,f.inits,parameters,"analyses/splinesSiteOccS4psi.txt",nc,ni,nb,nt)
 #names(jags.out$BUGSoutput)
-quartz()
-
-
-plot(jags.out)
+#diagnose the model
+#quartz()
+#plot(jags.out)
 #traceplot(jags.out, dig=3)#
-#For Jpod season 2: most of these chains do not look good. b.k.[14,3], b.k.[14,4]...everything in year 14  look good. These are all year 1992
-#For Jpod season 1: the following chains look good:
-#a[1-4,7,8,13,14,19]
-#b[1-4,7,8,9,10,11,13,14,19]
-#c[1-4,7,8,9,11,13,16,19]
-#lp[1-4,6,7,8,9,11,12,13,14,18,19,23,25,27,30,31,35]
-
-#Questions: why?
-
 
 
 #Look at psi
@@ -231,6 +221,11 @@ if(pod=="SR" & season=="2"){save(out,file="jags.output/allsrpods out season2 psi
 
 ### get estimated date of peak detectability based on posterior distribution
 # get date of peak detectability in each simulation
+
+if(region == "uss"){color = "darkblue"}
+if(region == "ps"){color = "salmon"}
+
+
 findmax.fn<-function(x) {
   mean(which(x==max(x)))
 }
@@ -265,6 +260,11 @@ for(y in 32:40){
 lines(doy,out$mean$psi[y,])
 }
 length(unique(dat$day))
+
+#plot mean psi across the season
+quartz(height=6,width=12)
+par(mfrow=c(1,4))
+plot(doy,colmeans(out$mean$psi[1,]), type= "l", ylim=c(0,1))
 
 # summarize estimates and look at change across the whole time series
 
@@ -348,6 +348,8 @@ for (o in 1:(dim(firstlp)[1])) {
   lm(y~as.numeric(colnames(firstlp)))$coefficients->r.first[o,]
   #}    
 }
+
+
 slopevec.first<-as.vector(r.first[,2])
 intercept.first<-mean(r.first[,1],na.rm=T)
 slope.first<-mean(r.first[,2],na.rm=T)
@@ -356,6 +358,20 @@ intercept.first.uci<-quantile(r.first[,1],c(uci),na.rm=T)
 
 slope.first.lci<-quantile(r.first[,2],c(lci),na.rm=T)
 slope.first.uci<-quantile(r.first[,2],c(uci),na.rm=T)
+r.first.recent<-matrix(NA,dim(firstlp)[1],2)
+for (o in 1:(dim(firstlp)[1])) {
+  y<-firstlp[o,13:39]
+  y[y=="Inf"]<-NA
+  lm(y~as.numeric(colnames(firstlp))[13:39])$coefficients->r.first.recent[o,]
+}
+slopevec.first.recent<-as.vector(r.first[,2])
+intercept.first.recent<-mean(r.first[,1],na.rm=T)
+slope.first.recent<-mean(r.first[,2],na.rm=T)
+intercept.first.recent.lci<-quantile(r.first[,1],c(lci),na.rm=T)
+intercept.recent.first.uci<-quantile(r.first[,1],c(uci),na.rm=T)
+
+slope.first.recent.lci<-quantile(r.first[,2],c(lci),na.rm=T)
+slope.first.recent.uci<-quantile(r.first[,2],c(uci),na.rm=T)
 
 #get last date when detectability is greater than prob
 findlast.fn<-function(x) {
