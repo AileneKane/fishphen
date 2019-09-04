@@ -164,3 +164,9 @@ names(allmodsums)<-c("sp","site","mn.cpue","mn.total","meanfirst.int","first.int
 
 write.csv(allmodsums, "analyses/output/albionreturntrends.csv", row.names = TRUE)
 head(dat)
+
+
+#Eric's suggested analysis
+library(mgcv)
+mgcv::gam(catch ~ s(calDay, by=as.factor(year)), offset = log(effort), family = "poisson")
+

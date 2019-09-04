@@ -196,17 +196,15 @@ out<-jags.out$BUGSoutput
 jags.out$BUGSoutput$mean$psi#probability of presence (annual)
 dim(jags.out$BUGSoutput$mean$psi)
 # Save model output
-if(pod=="J" & season=="1"){save(out,file="jags.output/jpod out season1 psi")}
-if(pod=="J" & season=="2"){save(out,file="jags.output/jpod out season2 psi")}
-if(pod=="K" & season=="1"){save(out,file="jags.output/kpod out season1 psi")}
-if(pod=="K" & season=="2"){save(out,file="jags.output/kpod out season2 psi")}
-if(pod=="L" & season=="1"){save(out,file="jags.output/lpod out season1 psi")}
-if(pod=="L" & season=="2"){save(out,file="jags.output/lpod out season2 psi")}
-if(pod=="SR" & season=="1"){save(out,file="jags.output/allsrpods out season1 psi")}
-if(pod=="SR" & season=="2"){save(out,file="jags.output/allsrpods out season2 psi")}
+if(pod=="J" & season=="1"){save(out,file="jags.output/jpod.season1.psi")}
+if(pod=="J" & season=="2"){save(out,file="jags.output/jpod.season2.psi")}
+if(pod=="K" & season=="1"){save(out,file="jags.output/kpod.season1.psi")}
+if(pod=="K" & season=="2"){save(out,file="jags.output/kpod.season2.psi")}
+if(pod=="L" & season=="1"){save(out,file="jags.output/lpod.season1.psi")}
+if(pod=="L" & season=="2"){save(out,file="jags.output/lpod.season2.psi")}
 
 #If you don't want to run the model:
-#if(pod=="J" & season=="1"){load(file ="jags.output/jpod out season1 psi")}
+if(pod=="J" & season=="1"){jags.out<-load(file ="jags.output/jpod out season1 psi")}
 #if(pod=="L" & season=="1"){load(file ="jags.output/lpod out season1 psi")}
 
 #Strebel paper says  "usually runs two chains over 50'000 iterations,
@@ -216,14 +214,14 @@ if(pod=="SR" & season=="2"){save(out,file="jags.output/allsrpods out season2 psi
 #-----------------------------------------------------------------
 # Codes to summarize the output
 #-----------------------------------------------------------------
-### If you want to skip running the bugs function, then load the output here:
-#load(file="out S4")
 
-### get estimated date of peak detectability based on posterior distribution
-# get date of peak detectability in each simulation
+### get estimated date of peak occurrence based on posterior distribution
+# get date of peak probability of occurrence in each simulation
 
-if(region == "uss"){color = "darkblue"}
-if(region == "ps"){color = "salmon"}
+if(region == "uss"){color = "darkblue"
+cols = c("lightblue1","lightblue2","lightblue3","lightblue4")}
+if(region == "ps"){color = "salmon"
+cols = c("lightsalmon","lightsalmon2","lightsalmon4","salmon")}
 
 
 findmax.fn<-function(x) {
@@ -261,11 +259,21 @@ lines(doy,out$mean$psi[y,])
 }
 length(unique(dat$day))
 
-#plot mean psi across the season
-quartz(height=6,width=12)
-par(mfrow=c(1,4))
-plot(doy,colmeans(out$mean$psi[1,]), type= "l", ylim=c(0,1))
+#plot mean psi across all years for the season
+pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_",pod,"_",prob,"meanoccprob.pdf", sep=""),height=6,width=8)
 
+#par(mfrow=c(1,4))
+plot(doy,colMeans(out$mean$psi[1:10,]), type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", col=cols[1])
+lines(doy,colMeans(out$mean$psi[11:20,]),col=cols[2])
+lines(doy,colMeans(out$mean$psi[21:30,]),col=cols[3])
+lines(doy,colMeans(out$mean$psi[31:40,]),col=cols[4], lwd=2)
+lines(doy,colMeans(out$mean$psi),col=color,lwd=3)
+legend("bottomleft",legend=c(paste(unique(dat$year)[1],"-",unique(dat$year)[10],sep= ""),
+                         paste(unique(dat$year)[11],"-",unique(dat$year)[20],sep= ""),
+                         paste(unique(dat$year)[21],"-",unique(dat$year)[30],sep= ""),
+                         paste(unique(dat$year)[31],"-",unique(dat$year)[40],sep= ""),
+                          paste(unique(dat$year)[1],"-",unique(dat$year)[40],sep= "")),lwd=c(1,1,1,2,3),lty=1,col=c(cols,color), bty="n")
+dev.off()
 # summarize estimates and look at change across the whole time series
 
 ann.res<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","lci","uci")))
@@ -299,10 +307,25 @@ intercept.uci<-quantile(r[,1],c(uci),na.rm=T)
 
 slope.lci<-quantile(r[,2],c(lci),na.rm=T)
 slope.uci<-quantile(r[,2],c(uci),na.rm=T)
+#look just at recent trends
+r.recent<-matrix(NA,dim(lpmax)[1],2)
+for (o in 1:(dim(lpmax)[1])) {
+  y<-lpmax[o,23:39]
+  y[y=="Inf"]<-NA
+  lm(y~as.numeric(colnames(lpmax))[23:39])$coefficients->r.recent[o,]
+}
+slopevec.recent<-as.vector(r.recent[,2])
+intercept.recent<-mean(r.recent[,1],na.rm=T)
+slope.recent<-mean(r.recent[,2],na.rm=T)
+intercept.recent.lci<-quantile(r.recent[,1],c(lci),na.rm=T)
+intercept.recent.uci<-quantile(r.recent[,1],c(uci),na.rm=T)
+
+slope.recent.lci<-quantile(r.recent[,2],c(lci),na.rm=T)
+slope.recent.uci<-quantile(r.recent[,2],c(uci),na.rm=T)
 
 
 
-#get first date when detectability is greater than some chosen probability
+#get first date when occurrenceis greater than some chosen probability
 prob<-0.5
 findfirst.fn<-function(x) {
   min(which(plogis(x)>prob), na.rm=TRUE)
@@ -358,20 +381,21 @@ intercept.first.uci<-quantile(r.first[,1],c(uci),na.rm=T)
 
 slope.first.lci<-quantile(r.first[,2],c(lci),na.rm=T)
 slope.first.uci<-quantile(r.first[,2],c(uci),na.rm=T)
+#Look at trends just in recent data
 r.first.recent<-matrix(NA,dim(firstlp)[1],2)
 for (o in 1:(dim(firstlp)[1])) {
-  y<-firstlp[o,13:39]
+  y<-firstlp[o,23:39]
   y[y=="Inf"]<-NA
-  lm(y~as.numeric(colnames(firstlp))[13:39])$coefficients->r.first.recent[o,]
+  lm(y~as.numeric(colnames(firstlp))[23:39])$coefficients->r.first.recent[o,]
 }
-slopevec.first.recent<-as.vector(r.first[,2])
-intercept.first.recent<-mean(r.first[,1],na.rm=T)
-slope.first.recent<-mean(r.first[,2],na.rm=T)
-intercept.first.recent.lci<-quantile(r.first[,1],c(lci),na.rm=T)
-intercept.recent.first.uci<-quantile(r.first[,1],c(uci),na.rm=T)
+slopevec.first.recent<-as.vector(r.first.recent[,2])
+intercept.first.recent<-mean(r.first.recent[,1],na.rm=T)
+slope.first.recent<-mean(r.first.recent[,2],na.rm=T)
+intercept.first.recent.lci<-quantile(r.first.recent[,1],c(lci),na.rm=T)
+intercept.first.recent.uci<-quantile(r.first.recent[,1],c(uci),na.rm=T)
 
-slope.first.recent.lci<-quantile(r.first[,2],c(lci),na.rm=T)
-slope.first.recent.uci<-quantile(r.first[,2],c(uci),na.rm=T)
+slope.first.recent.lci<-quantile(r.first.recent[,2],c(lci),na.rm=T)
+slope.first.recent.uci<-quantile(r.first.recent[,2],c(uci),na.rm=T)
 
 #get last date when detectability is greater than prob
 findlast.fn<-function(x) {
@@ -429,6 +453,24 @@ intercept.last.uci<-quantile(r.last[,1],c(uci),na.rm=T)
 slope.last.lci<-quantile(r.last[,2],c(lci),na.rm=T)
 slope.last.uci<-quantile(r.last[,2],c(uci),na.rm=T)
 
+r.last.recent<-matrix(NA,dim(lastlp)[1],2)
+for (o in 1:(dim(lastlp)[1])) {
+  # if(!is.na(sum(lpmax[o,]))) {
+  y<-lastlp[o,]
+  y[y=="Inf"]<-NA
+  lm(y~as.numeric(colnames(lastlp)))$coefficients->r.last.recent[o,]
+  #}    
+}
+slopevec.last.recent<-as.vector(r.last.recent[,2])
+intercept.last.recent<-mean(r.last.recent[,1],na.rm=T)
+slope.last.recent<-mean(r.last.recent[,2],na.rm=T)
+intercept.last.recent.lci<-quantile(r.last.recent[,1],c(lci),na.rm=T)
+intercept.last.recent.uci<-quantile(r.last.recent[,1],c(uci),na.rm=T)
+
+slope.last.recent.lci<-quantile(r.last.recent[,2],c(lci),na.rm=T)
+slope.last.recent.uci<-quantile(r.last.recent[,2],c(uci),na.rm=T)
+
+
 ### Write results (in console if argument file is not specified in function cat)
 if(season=="1"){
 cat(paste("summary results",pod,region,season),"\n",
@@ -478,10 +520,13 @@ if(season=="2"){
 df<-rbind(
   c(pod,region,season,"peak",round(mean(slopevec,na.rm=T),digits=2),round(quantile(slopevec,lci,na.rm=T),digits=2),round(quantile(slopevec,uci,na.rm=T),digits=2)),
   c(pod,region,season,"first",round(mean(slopevec.first,na.rm=T),digits=2),round(quantile(slopevec.first,lci,na.rm=T),digits=2),round(quantile(slopevec.first,uci,na.rm=T),digits=2)),
-  c(pod,region,season,"last",round(mean(slopevec.last,na.rm=T),digits=2),round(quantile(slopevec.last,lci,na.rm=T),digits=2),round(quantile(slopevec.last,uci,na.rm=T),digits=2))
-)
+  c(pod,region,season,"last",round(mean(slopevec.last,na.rm=T),digits=2),round(quantile(slopevec.last,lci,na.rm=T),digits=2),round(quantile(slopevec.last,uci,na.rm=T),digits=2)),
+  c(pod,region,season,"peak.20002016",round(mean(slopevec.recent,na.rm=T),digits=2),round(quantile(slopevec.recent,lci,na.rm=T),digits=2),round(quantile(slopevec,uci,na.rm=T),digits=2)),
+  c(pod,region,season,"first.20002016",round(mean(slopevec.first.recent,na.rm=T),digits=2),round(quantile(slopevec.first.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.first.recent,uci,na.rm=T),digits=2)),
+  c(pod,region,season,"last.20002016",round(mean(slopevec.last.recent,na.rm=T),digits=2),round(quantile(slopevec.last.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.last.recent,uci,na.rm=T),digits=2))
+  )
 colnames(df)<-c("pod","region","season","phase","slope.mn","slope.lci","slope.uci")
-df.name<-paste("analyses/output/",pod,"_",season,"sept1_",region,min(dat$year),"-",max(dat$year),"occprob.csv", sep="")
+df.name<-paste("analyses/output/",pod,"_",season,"sept1_",region,min(dat$year),"-",max(dat$year),"occprob_wrecent.csv", sep="")
 write.csv(df,df.name, row.names=FALSE)
 
 #save years and first-last-peak estimates

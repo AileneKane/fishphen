@@ -70,10 +70,46 @@ points(x,all1$slope.mn[all1$phase=="first"],pch=c(21,22,24),bg="salmon")
 points(x+1,all1$slope.mn[all1$phase=="peak"],pch=c(21,22,24),bg="salmon")
 points(x+2,all1$slope.mn[all1$phase=="last"],pch=c(21,22,24),bg="salmon")
 axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
+dev.off()
 
-#add shifts in most recent 20 years
+#add shifts in most recent (1990-2016)
+pdf(file="analyses/figures/srkw_salmon_recentshifts_lm.pdf",width=16,height=6)
 
+### plot estimates of peak occurrence prob over all years
+#quartz(width=16, height=6)
+#par(mfcol=c(2,3),mai=c(.5,1,.5,0.5))
+par(mfcol=c(2,1),mai=c(.5,1,.5,0.5))
+x<-rep(1,times=3)
+#Central salish sea first...
+plot(x,all2$slope.mn[all2$phase=="first.19902016"],pch=c(21,22,24),bg="darkblue", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,3), bty="l")
+abline(h=0,lty=2)
+arrows(x,all2$slope.lci[all2$phase=="first.19902016"],x,all2$slope.uci[all2$phase=="first.19902016"], code=3, length=0)
+arrows(x+1,all2$slope.lci[all2$phase=="peak.19902016"],x+1,all2$slope.uci[all2$phase=="peak.19902016"], code=3, length=0)
+arrows(x+2,all2$slope.lci[all2$phase=="last.19902016"],x+2,all2$slope.uci[all2$phase=="last.19902016"], code=3, length=0)
+
+points(x,all2$slope.mn[all2$phase=="first.19902016"],pch=c(21,22,24),bg="darkblue")
+points(x+1,all2$slope.mn[all2$phase=="peak.19902016"],pch=c(21,22,24),bg="darkblue")
+points(x+2,all2$slope.mn[all2$phase=="last.19902016"],pch=c(21,22,24),bg="darkblue")
+
+axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
+mtext("SRKWs 1990-2016",side=3,line=0)
+legend("topleft",legend=c("J pod","K pod","L pod"),pch=c(21,22,24), bty="n",pt.bg="darkblue")
+#Puget sound proper
+plot(x,all1$slope.mn[all1$phase=="first.19902016"],pch=c(21,22,24),bg="salmon", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-10,7), bty="l")
+abline(h=0,lty=2)
+arrows(x,all1$slope.lci[all1$phase=="first.19902016"],x,all1$slope.uci[all1$phase=="first.19902016"], code=3, length=0)
+arrows(x+1,all1$slope.lci[all1$phase=="peak.19902016"],x+1,all1$slope.uci[all1$phase=="peak.19902016"], code=3, length=0)
+arrows(x+2,all1$slope.lci[all1$phase=="last.19902016"],x+2,all1$slope.uci[all1$phase=="last.19902016"], code=3, length=0)
+
+points(x,all1$slope.mn[all1$phase=="first.19902016"],pch=c(21,22,24),bg="salmon")
+points(x+1,all1$slope.mn[all1$phase=="peak.19902016"],pch=c(21,22,24),bg="salmon")
+points(x+2,all1$slope.mn[all1$phase=="last.19902016"],pch=c(21,22,24),bg="salmon")
+axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
+dev.off()
 ##Add salmon
+pdf(file="analyses/figures/salmon_shifts_lm.pdf",width=16,height=6)
+par(mfcol=c(2,2),mai=c(.5,1,.5,0.5))
+
 #Central salish sea = albion test fishery from fraser
 x<-c(1,2,3,4)
 y<-c(albionshifts$first.yr,albionshifts$pk.yr,albionshifts$mid.yr,albionshifts$last.yr)
