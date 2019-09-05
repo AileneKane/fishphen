@@ -15,7 +15,7 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="J"#options= J,K,L,SR
+pod="L"#options= J,K,L,SR
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
 #Choose the credible intervals you want
@@ -204,7 +204,7 @@ if(pod=="L" & season=="1"){save(out,file="jags.output/lpod.season1.psi")}
 if(pod=="L" & season=="2"){save(out,file="jags.output/lpod.season2.psi")}
 
 #If you don't want to run the model:
-if(pod=="J" & season=="1"){jags.out<-load(file ="jags.output/jpod out season1 psi")}
+#if(pod=="J" & season=="1"){jags.out<-load(file ="jags.output/jpod out season1 psi")}
 #if(pod=="L" & season=="1"){load(file ="jags.output/lpod out season1 psi")}
 
 #Strebel paper says  "usually runs two chains over 50'000 iterations,
@@ -222,6 +222,7 @@ if(region == "uss"){color = "darkblue"
 cols = c("lightblue1","lightblue2","lightblue3","lightblue4")}
 if(region == "ps"){color = "salmon"
 cols = c("lightsalmon","lightsalmon2","lightsalmon4","salmon")}
+prob<-0.5
 
 
 findmax.fn<-function(x) {
@@ -326,7 +327,6 @@ slope.recent.uci<-quantile(r.recent[,2],c(uci),na.rm=T)
 
 
 #get first date when occurrenceis greater than some chosen probability
-prob<-0.5
 findfirst.fn<-function(x) {
   min(which(plogis(x)>prob), na.rm=TRUE)
 }
