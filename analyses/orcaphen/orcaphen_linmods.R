@@ -26,7 +26,7 @@ library(matrixStats)
 # 1. Choose the years, regions of interest, assumption about reports in the OrcaMaster and get the data
 includeCanada=TRUE
 firstyear=1976#probably set to 1975 or 1976 (Olson et al)
-assumeSRKW=TRUE #If true, assume that "Orcas" means SRKW unless noted otherwuse (i.e. Transients or NRKWs)
+assumeSRKW=FALSE #If true, assume that "Orcas" means SRKW unless noted otherwuse (i.e. Transients or NRKWs)
 use3regions=FALSE#If true, separate out the straight of Juan de Fuca as a 3rd region, distinct from CSS and PS (all code not yet working for 3 regions!)
 d <- read.csv("data/AppendixII.csv")
 quads<-read.csv("data/QuadCentroids.csv")
