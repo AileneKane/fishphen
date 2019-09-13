@@ -1,21 +1,29 @@
 #plot time series of whale days in central salish sea and ouget sound proper 
 
-pdf("analyses/figures/OrcaPhenPlots/whaledays_2regs.pdf",height= 6, width = 10)
+if(assumeSRKW==FALSE & use3regions==FALSE){pdf(paste("analyses/figures/OrcaPhenPlots/whaledays",firstyear,"2regs.pdf", sep="_"),height= 6, width = 10)}
+if(assumeSRKW==FALSE & use3regions==TRUE){pdf(paste("analyses/figures/OrcaPhenPlots/whaledays",firstyear,"3regs.pdf", sep="_"),height= 6, width = 10)}
+if(assumeSRKW==TRUE & use3regions==FALSE){pdf(paste("analyses/figures/OrcaPhenPlots/whaledays",firstyear,"assumeSRKW2regs.pdf", sep="_"),height= 6, width = 10)}
+if(assumeSRKW==TRUE & use3regions==TRUE){pdf(paste("analyses/figures/OrcaPhenPlots/whaledays",firstyear,"assumeSRKW3regs.pdf", sep="_"),height= 6, width = 10)}
+
+#quartz(height= 6, width = 10)
 plot(rownames(wdays),wdays$uss,type = "l", ylab= "Number of whale days", xlab= "Year", col = "darkblue", lwd=2,ylim= c(0,250),cex.axis=1.2,cex.lab=1.2)
 lines(rownames(wdays),wdays$ps,lwd=2,col = "salmon")
 legend("topleft",legend=c("Central Salish Sea","Puget Sound Proper"), lty= 1, col=c("darkblue","salmon"), bty="n", lwd=2)
 dev.off()
 
-pdf("analyses/figures/OrcaPhenPlots/whaledays_ps_v_uss.pdf",height= 6, width = 10)
-#pdf("analyses/figures/OrcaPhenPlots/whaledays_ps_v_uss_noline.pdf",height= 6, width = 10)
-
+if(assumeSRKW==FALSE & use3regions==FALSE){pdf(paste("analyses/figures/OrcaPhenPlots/whaledays_ps_v_uss",firstyear,"2regs.pdf", sep="_"),height= 6, width = 10)}
+if(assumeSRKW==FALSE & use3regions==TRUE){pdf(paste("analyses/figures/OrcaPhenPlots/whaledays_ps_v_uss",firstyear,"3regs.pdf", sep="_"),height= 6, width = 10)}
+if(assumeSRKW==TRUE & use3regions==FALSE){pdf(paste("analyses/figures/OrcaPhenPlots/whaledays_ps_v_uss",firstyear,"assumeSRKW2regs.pdf", sep="_"),height= 6, width = 10)}
+if(assumeSRKW==TRUE & use3regions==TRUE){pdf(paste("analyses/figures/OrcaPhenPlots/whaledays_ps_v_uss",firstyear,"assumeSRKW3regs.pdf", sep="_"),height= 6, width = 10)}
 #plot time series against eachother:
+quartz(height= 6, width = 10)
 plot(as.numeric(wdays$uss),as.numeric(wdays$ps),type = "p", pch=16,cex.axis=1.2,cex.lab=1.2,ylab= "Number of whale days in Puget Sound", xlab= "Number of whale days in the Central Salish Sea",ylim=c(0,100))
 #dev.off()
 
 mod<-lm(as.numeric(wdays$ps)~as.numeric(wdays$uss))
 mod.ci<-confint(mod,level=.8)
-abline(mod, lty= 3, lwd=2)
+if (summary(mod)$coeff[2,4]<0.05){abline(mod, lty= 1, lwd=2)}
+if (summary(mod)$coeff[2,4]>0.05 & summary(mod)$coeff[2,4]<0.1){abline(mod, lty= 3, lwd=2)}
 mtext(paste("r2 = ",round(summary(mod)$r.squared, digits =2)), side=3, adj=.9,line =-2, cex=1.2)
 #abline(a=mod.ci[1,1],b=mod.ci[2,1], lty=2)
 #abline(a=mod.ci[1,2],b=mod.ci[2,2], lty=2)
