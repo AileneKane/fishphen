@@ -176,8 +176,8 @@ z_{yr,day} \sim Bernoulli (\mathrm{\Psi}_{yr,day})\\
  
 
 \begin{figure}[p]
-\includegraphics[width=0.9\textwidth]{../analyses/figures/srkw_salmon_shifts_lm.png} 
-\caption{\textbf{Trends in first-, peak-, and last- observation dates for SRKWs and their prey.}}
+\includegraphics[width=0.8\textwidth]{../analyses/figures/salmon_shifts_lmm.pdf} 
+\caption{\textbf{Trends in first-, peak-, mid-, and last- observation dates for salmon} in the Fraser River Albion test fishery (upper panel), and across 17 different species/rivers in Puget Sound proper}
  \label{fig:shifts}
  \end{figure}
 
