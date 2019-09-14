@@ -155,3 +155,42 @@ points(m,wdays.bymonth.uss.stan,, pch=21,bg="darkblue")
 legend("topleft",legend=c("Central Salish Sea","Puget Sound Proper"), pch=21,pt.bg=c("darkblue","salmon"), bty="n")
 dev.off()
 
+#trends in whale days per month
+Jmod.ps<-lm(wdays.J$ps~as.numeric(rownames(wdays.J)))
+Jmod.uss<-lm(wdays.J$uss~as.numeric(rownames(wdays.J)))
+
+Jmod.ps.recent<-lm(wdays.J$ps[(length(wdays.J$ps)-15):(length(wdays.J$ps))]~as.numeric(rownames(wdays.J)[(length(wdays.J$ps)-15):(length(wdays.J$ps))]))
+Jmod.uss.recent<-lm(wdays.J$uss[(length(wdays.J$uss)-15):(length(wdays.J$uss))]~as.numeric(rownames(wdays.J)[(length(wdays.J$uss)-15):(length(wdays.J$uss))]))
+
+summary(Jmod.ps);summary(Jmod.ps.recent)
+summary(Jmod.uss);summary(Jmod.uss.recent)
+
+#trends in whale days per month K
+Kmod.ps<-lm(wdays.K$ps~as.numeric(rownames(wdays.K)))
+Kmod.uss<-lm(wdays.K$uss~as.numeric(rownames(wdays.K)))
+
+Kmod.ps.recent<-lm(wdays.K$ps[(length(wdays.K$ps)-15):(length(wdays.K$ps))]~as.numeric(rownames(wdays.K)[(length(wdays.K$ps)-15):(length(wdays.K$ps))]))
+Kmod.uss.recent<-lm(wdays.K$uss[(length(wdays.K$uss)-15):(length(wdays.K$uss))]~as.numeric(rownames(wdays.K)[(length(wdays.K$uss)-15):(length(wdays.K$uss))]))
+
+summary(Kmod.ps);summary(Kmod.ps.recent)
+summary(Kmod.uss);summary(Kmod.uss.recent)
+
+#trends in whale days per month L
+Lmod.ps<-lm(wdays.L$ps~as.numeric(rownames(wdays.L)))
+Lmod.uss<-lm(wdays.L$uss~as.numeric(rownames(wdays.L)))
+
+Lmod.ps.recent<-lm(wdays.L$ps[(length(wdays.L$ps)-15):(length(wdays.L$ps))]~as.numeric(rownames(wdays.L)[(length(wdays.L$ps)-15):(length(wdays.L$ps))]))
+Lmod.uss.recent<-lm(wdays.L$uss[(length(wdays.L$uss)-15):(length(wdays.L$uss))]~as.numeric(rownames(wdays.L)[(length(wdays.L$uss)-15):(length(wdays.L$uss))]))
+
+summary(Lmod.ps);summary(Lmod.ps.recent)
+summary(Lmod.uss);summary(Lmod.uss.recent)
+
+#trends in whale days per month ALL SRKW
+mod.ps<-lm(wdays$ps~as.numeric(rownames(wdays)))
+mod.uss<-lm(wdays$uss~as.numeric(rownames(wdays)))
+
+mod.ps.recent<-lm(wdays$ps[(length(wdays$ps)-15):(length(wdays$ps))]~as.numeric(rownames(wdays)[(length(wdays$ps)-15):(length(wdays$ps))]))
+mod.uss.recent<-lm(wdays$uss[(length(wdays$uss)-15):(length(wdays$uss))]~as.numeric(rownames(wdays)[(length(wdays$uss)-15):(length(wdays$uss))]))
+
+summary(mod.ps);summary(mod.ps.recent)
+summary(mod.uss);summary(mod.uss.recent)

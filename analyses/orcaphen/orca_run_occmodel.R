@@ -15,7 +15,7 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="L"#options= J,K,L,SR
+pod="J"#options= J,K,L,SR
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 
 #Choose the credible intervals you want
@@ -311,9 +311,9 @@ slope.uci<-quantile(r[,2],c(uci),na.rm=T)
 #look just at recent trends
 r.recent<-matrix(NA,dim(lpmax)[1],2)
 for (o in 1:(dim(lpmax)[1])) {
-  y<-lpmax[o,23:39]
+  y<-lpmax[o,24:39]
   y[y=="Inf"]<-NA
-  lm(y~as.numeric(colnames(lpmax))[23:39])$coefficients->r.recent[o,]
+  lm(y~as.numeric(colnames(lpmax))[24:39])$coefficients->r.recent[o,]
 }
 slopevec.recent<-as.vector(r.recent[,2])
 intercept.recent<-mean(r.recent[,1],na.rm=T)
@@ -384,9 +384,9 @@ slope.first.uci<-quantile(r.first[,2],c(uci),na.rm=T)
 #Look at trends just in recent data
 r.first.recent<-matrix(NA,dim(firstlp)[1],2)
 for (o in 1:(dim(firstlp)[1])) {
-  y<-firstlp[o,23:39]
+  y<-firstlp[o,24:39]
   y[y=="Inf"]<-NA
-  lm(y~as.numeric(colnames(firstlp))[23:39])$coefficients->r.first.recent[o,]
+  lm(y~as.numeric(colnames(firstlp))[24:39])$coefficients->r.first.recent[o,]
 }
 slopevec.first.recent<-as.vector(r.first.recent[,2])
 intercept.first.recent<-mean(r.first.recent[,1],na.rm=T)
