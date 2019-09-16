@@ -261,3 +261,105 @@ plot(albchin95$alltotal,lime.df$nobs,type="p",pch=16, col = "black",xlab="Chinoo
 mod<-lm(lime.df$nobs~albchin95$alltotal)
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
 if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
+
+#compare lime kiln phenology to whol region phenology from 2002-2017
+
+lime.df$year.cor<-lime.df$year+1
+lime2002<-lime.df[lime.df$year.cor>2001,]
+lime2002<-lime2002[lime2002$year.cor!=2018,]
+lime2002$firstest<-as.numeric(lime2002$firstest.all)+91
+lime2002$mean<-as.numeric(lime2002$mean.all)+91
+lime2002$lastest<-as.numeric(lime2002$lastest.all)+91
+lime1995<-lime.df[lime.df$year.cor>1994,]
+lime1995<-lime1995[lime1995$year.cor!=2018,]
+lime1995$firstest<-as.numeric(lime1995$firstest.all)+91
+lime1995$mean<-as.numeric(lime1995$mean.all)+91
+lime1995$lastest<-as.numeric(lime1995$lastest.all)+91
+
+j.occest<-read.csv("analyses/output/J_2sept1_uss1978-2017occprobdoy.csv", header=TRUE)
+j2002<-j.occest[j.occest$year>2001,]
+j2002<-j2002[j2002$year!=2015,]
+j1995<-j.occest[j.occest$year>1994,]
+j1995<-j1995[j1995$year!=2015,]
+
+#Plot first ests. should i use pod specific estimates to match occupancy model?
+quartz()
+par(mfcol=c(3,2))
+plot(lime2002$firstest,j2002$first.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln first obs",ylab="J pod arrival est (occmod)", cex=1.2, bty="l", main= "2002-2016")
+mod<-lm(j2002$first.psi~lime2002$firstest)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="darkblue")}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "darkblue")}
+
+plot(lime2002$mean,j2002$peak.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln mean obs doy",ylab="J pod peak est (occmod)", cex=1.2, bty="l")
+mod<-lm(j2002$peak.psi~as.numeric(lime2002$mean))
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="darkblue")}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "darkblue")}
+
+plot(lime2002$lastest,j2002$last.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln last obs doy",ylab="J pod last est (occmod)", cex=1.2, bty="l")
+mod<-lm(j2002$last.psi~as.numeric(lime2002$lastest))
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="darkblue")}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "darkblue")}
+
+plot(lime1995$firstest,j1995$first.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln first obs",ylab="J pod arrival est (occmod)", cex=1.2, bty="l", main= "1995-2016")
+mod<-lm(j1995$first.psi~lime1995$firstest)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="darkblue")}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "darkblue")}
+
+plot(lime1995$mean,j1995$peak.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln mean obs doy",ylab="J pod peak est (occmod)", cex=1.2, bty="l")
+mod<-lm(j1995$peak.psi~as.numeric(lime1995$mean))
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="darkblue")}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "darkblue")}
+
+plot(lime1995$lastest,j1995$last.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln last obs doy",ylab="J pod last est (occmod)", cex=1.2, bty="l")
+mod<-lm(j1995$last.psi~as.numeric(lime1995$lastest))
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="darkblue")}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "darkblue")}
+
+
+#Relate USS data to chinook phenology in the Fraser river
+albchin<-read.csv("analyses/output/albionchiphen.csv", header = TRUE)
+#restrict to jpod estst years that we have chinook data for
+j1980<-j.occest[j.occest$year>1979,]
+#also try restricting to after 2001
+j2002b<-j.occest[j.occest$year>2001,]
+
+albchin2002<-albchin[albchin$year>2002  & albchin$year<2018,]
+albchin1980<-albchin95[albchin$year<2018,]
+quartz(height=8,width=25)
+par(mfrow=c(1,6))
+plot(albchin1980$firstobsdate,j1980$first.psi,type="p",pch=16, col = "black",xlab="Chinook Arrival DOY",ylab="SRKW Arrival DOY (occ est)", cex=1.2, bty="l")
+#what is the really late salmon year?
+#albchin95$year[which(albchin95$firstobsdate==max(albchin95$firstobsdate, na.rm=TRUE))]#2007
+mod<-lm(j1980$first.psi~albchin1980$firstobsdate)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
+
+#Peak obs of SRKW vs first
+plot(albchin1980$firstobsdat,j1980$peak.psi,type="p",pch=16, col = "black",xlab="Chinook Arrival DOY",ylab="SRKW peak DOY (occ est)", cex=1.2, bty="l")
+mod<-lm(j1980$peak.psi~albchin1980$firstobsdat)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.1){abline(mod, lty=3)}
+
+#peak obs of SRKW vs peak run date
+plot(albchin1980$peakobsdate,j1980$peak.psi,type="p",pch=16, col = "black",xlab="Chinook Peak DOY",ylab="SRKW peak DOY (occ est)", cex=1.2, bty="l")
+mod<-lm(j1980$peak.psi~albchin1980$peakobsdate)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
+
+#Last obs of SRKW vs last obs of salmon
+plot(albchin1980$lastobsdate,j1980$last.psi,type="p",pch=16, col = "black",xlab="Chinook Last Obs DOY",ylab="SRKW Departure DOY (occ est)", cex=1.2, bty="l")
+mod<-lm(j1980$first.psi~albchin1980$lastobsdate)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
+
+#firstobs vs chinook run size
+plot(albchin1980$alltotal,j1980$first.psi,type="p",pch=16, col = "black",xlab="Chinook Run Size",ylab="SRKW Arrival DOY (occ est)", cex=1.2, bty="l")
+mod<-lm(j1980$first.psi~albchin1980$alltotal)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
+
+#Lastobs of SRKW vs total run size
+plot(albchin1980$alltotal,j1980$last.psi,type="p",pch=16, col = "black",xlab="Chinook Run Size",ylab="SRKW Departure (occ est)", cex=1.2, bty="l")
+mod<-lm(j1980$last.psi~albchin1980$alltotal)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}

@@ -104,16 +104,19 @@ colnames(srdet)[2]<-colnames(jdet)[2]<-colnames(kdet)[2]<-colnames(ldet)[2]<-"nd
 colnames(srdet)[5]<-colnames(jdet)[5]<-colnames(kdet)[5]<-colnames(ldet)[5]<-"year"
 
 
-write.csv(srdet,"analyses/output/allsr_dat.csv",row.names = FALSE)
-write.csv(ldet,"analyses/output/l_dat.csv",row.names = FALSE)
-write.csv(kdet,"analyses/output/k_dat.csv",row.names = FALSE)
-write.csv(jdet,"analyses/output/j_dat.csv",row.names = FALSE)
+if(assumeSRKW==FALSE){
+  write.csv(srdet,"analyses/output/allsr_dat.csv",row.names = FALSE)
+  write.csv(ldet,"analyses/output/l_dat.csv",row.names = FALSE)
+  write.csv(kdet,"analyses/output/k_dat.csv",row.names = FALSE)
+  write.csv(jdet,"analyses/output/j_dat.csv",row.names = FALSE)
+}
+if(assumeSRKW==TRUE){
+  write.csv(srdet,"analyses/output/allsr_dat_assumeSRKW.csv",row.names = FALSE)
+  write.csv(ldet,"analyses/output/l_dat_assumeSRKW.csv",row.names = FALSE)
+  write.csv(kdet,"analyses/output/k_dat_assumeSRKW.csv",row.names = FALSE)
+  write.csv(jdet,"analyses/output/j_dat_assumeSRKW.csv",row.names = FALSE)
+}
+#
 
-dim(jdet)
-dim(ldet)
-dim(srdet)
-dim(kdet)
-head(kdet)
-head(jdet)
-head(ldet)
-head(srdet)
+#nrep   ndet 
+#101974  54444 

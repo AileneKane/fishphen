@@ -7,6 +7,11 @@
 # Start Date:	November 27, 2018
 # Title:	orca_run_occ_model
 ##################################################################
+#housekeeping
+
+rm(list=ls()) 
+options(stringsAsFactors = FALSE)
+
 # Set working directory
 setwd("~/Documents/GitHub/fishphen")
 
@@ -16,24 +21,31 @@ library(scales)
 
 # Choose the data you want:
 pod="J"#options= J,K,L,SR
-region="ps"#options=upper salish sea (uss) or puget sound (ps)
-
+region="uss"#options=upper salish sea (uss) or puget sound (ps)
+wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
+assumeSRKW=TRUE
 #Choose the credible intervals you want
 lci<-0.10
 uci<-0.90
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
-
-if(pod=="J"){dat<-read.csv("analyses/output/j_dat.csv",header=T)}
-if(pod=="K"){dat<-read.csv("analyses/output/k_dat.csv",header=T)}
-if(pod=="L"){dat<-read.csv("analyses/output/l_dat.csv",header=T)}
-if(pod=="SR"){dat<-read.csv("analyses/output/allsr_dat.csv",header=T)}
-
+if(assumeSRKW==FALSE){
+  if(pod=="J"){dat<-read.csv("analyses/output/j_dat.csv",header=T)}
+  if(pod=="K"){dat<-read.csv("analyses/output/k_dat.csv",header=T)}
+  if(pod=="L"){dat<-read.csv("analyses/output/l_dat.csv",header=T)}
+  if(pod=="SR"){dat<-read.csv("analyses/output/allsr_dat.csv",header=T)}
+}
+if(assumeSRKW==TRUE){
+  if(pod=="J"){dat<-read.csv("analyses/output/j_dat_assumeSRKW.csv",header=T)}
+  if(pod=="K"){dat<-read.csv("analyses/output/k_dat_assumeSRKW.csv",header=T)}
+  if(pod=="L"){dat<-read.csv("analyses/output/l_dat_assumeSRKW.csv",header=T)}
+  if(pod=="SR"){dat<-read.csv("analyses/output/allsr_dat_assumeSRKW.csv",header=T)}
+}
 #choose region
 dat<-dat[dat$region==region,]
 #Add a column for "season" and restrict data to season that is appropriate to the region
 #use may 1 for uss season, oct 1 for ps season as start dates
 #use oct 31 for uss season, jan31 for ps season, as end dates
-if(region == "ps"){
+if(wholeyear==FALSE & region == "ps"){
   season="1"#winter
   dat$season<-NA
   dat$season[dat$day>182]<-1#winter (July 1-Dec 31 = >182#should extend this to Jan 31
@@ -46,15 +58,20 @@ if(region == "ps"){
 #dat$daysaftsept30[which(dat$day>273 & dat$day<367)]<-dat$day[which(dat$day>273 & dat$day<367)]-273
 #dat$daysaftsept30[which(dat$day<274)]<-dat$day[which(dat$day<274)]+93#this should actually vary depending on whether or not it is a leap year
 
-if(region == "uss"){
+if(wholeyear==FALSE & region == "uss"){
   season="2"#summer
   dat$season<-NA
   dat$season[dat$day>91 & dat$day<304]<-2#summer (April 1-Oct 31)
 }
+if(wholeyear==TRUE ){
+  season="3"#season 3 = whole year
+  dat$season<-3
+  }
+
 dat<-dat[dat$season==season,]
 dat <- dat[apply(dat, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
 
-#if winter  (season 1), then days= days ater sept 30
+#if winter  (season 1), then days= days after sept 30
 #if(season=="1"){
 #  dat<-subset(dat,select=c(nrep,ndet,site, daysaftsept30,year,season,region))
 #colnames(dat)[4]<-"day"
@@ -171,7 +188,7 @@ y <- dat$ndet
 
 # Simulation parameters
 #ni=15000; nc=2; nb=0; nt=10
-ni=7000; nc=2; nb=2500; nt=1
+ni=3000; nc=2; nb=2500; nt=1
 # List input data
 jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots","n","X","Z","nc", "nb", "ni", "nt","zst","y")
 
@@ -195,17 +212,15 @@ jags.out<-jags.parallel(jags.data,f.inits,parameters,"analyses/splinesSiteOccS4p
 out<-jags.out$BUGSoutput
 jags.out$BUGSoutput$mean$psi#probability of presence (annual)
 dim(jags.out$BUGSoutput$mean$psi)
+meanpsi<-rowMeans(jags.out$BUGSoutput$mean$psi)
+names(meanpsi)<-seq(min(dat$year),max(dat$year), by=1)
 # Save model output
-if(pod=="J" & season=="1"){save(out,file="jags.output/jpod.season1.psi")}
-if(pod=="J" & season=="2"){save(out,file="jags.output/jpod.season2.psi")}
-if(pod=="K" & season=="1"){save(out,file="jags.output/kpod.season1.psi")}
-if(pod=="K" & season=="2"){save(out,file="jags.output/kpod.season2.psi")}
-if(pod=="L" & season=="1"){save(out,file="jags.output/lpod.season1.psi")}
-if(pod=="L" & season=="2"){save(out,file="jags.output/lpod.season2.psi")}
-
-#If you don't want to run the model:
-#if(pod=="J" & season=="1"){jags.out<-load(file ="jags.output/jpod out season1 psi")}
-#if(pod=="L" & season=="1"){load(file ="jags.output/lpod out season1 psi")}
+#if(pod=="J" & season=="1"){save(out,file="jags.output/jpod.season1.psi")}
+#if(pod=="J" & season=="2"){save(out,file="jags.output/jpod.season2.psi")}
+#if(pod=="K" & season=="1"){save(out,file="jags.output/kpod.season1.psi")}
+#if(pod=="K" & season=="2"){save(out,file="jags.output/kpod.season2.psi")}
+#if(pod=="L" & season=="1"){save(out,file="jags.output/lpod.season1.psi")}
+#if(pod=="L" & season=="2"){save(out,file="jags.output/lpod.season2.psi")}
 
 #Strebel paper says  "usually runs two chains over 50'000 iterations,
 #Usually convergence is reached within the first 10'000; set burnin to 25'000"
@@ -261,19 +276,20 @@ lines(doy,out$mean$psi[y,])
 length(unique(dat$day))
 
 #plot mean psi across all years for the season
-pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_",pod,"_",prob,"meanoccprob.pdf", sep=""),height=6,width=8)
+if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"meanoccprob_assumeSRKW.pdf", sep=""),height=6,width=8)}
+if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"meanoccprob.pdf", sep=""),height=6,width=8)}
 
-#par(mfrow=c(1,4))
-plot(doy,colMeans(out$mean$psi[1:10,]), type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", col=cols[1])
-lines(doy,colMeans(out$mean$psi[11:20,]),col=cols[2])
-lines(doy,colMeans(out$mean$psi[21:30,]),col=cols[3])
-lines(doy,colMeans(out$mean$psi[31:40,]),col=cols[4], lwd=2)
-lines(doy,colMeans(out$mean$psi),col=color,lwd=3)
-legend("bottomleft",legend=c(paste(unique(dat$year)[1],"-",unique(dat$year)[10],sep= ""),
-                         paste(unique(dat$year)[11],"-",unique(dat$year)[20],sep= ""),
-                         paste(unique(dat$year)[21],"-",unique(dat$year)[30],sep= ""),
-                         paste(unique(dat$year)[31],"-",unique(dat$year)[40],sep= ""),
-                          paste(unique(dat$year)[1],"-",unique(dat$year)[40],sep= "")),lwd=c(1,1,1,2,3),lty=1,col=c(cols,color), bty="n")
+#quartz(height=6,width=8)
+plot(doy,colMeans(out$mean$psi[31:40,]), type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", col=cols[3], lwd=2)
+#lines(doy,colMeans(out$mean$psi[11:20,]),col=cols[4])
+lines(doy,colMeans(out$mean$psi[21:30,]),col=cols[2], lwd=2)
+#lines(doy,colMeans(out$mean$psi[1:10,]),col=cols[1], lwd=2)
+#lines(doy,colMeans(out$mean$psi[1:30,]),col=color,lwd=3)
+legend("topleft",legend=c(paste(unique(dat$year)[31],"-",unique(dat$year)[40],sep= ""),
+                         #paste(unique(dat$year)[11],"-",unique(dat$year)[20],sep= ""),
+                         #paste(unique(dat$year)[21],"-",unique(dat$year)[30],sep= ""),
+                         #paste(unique(dat$year)[1],"-",unique(dat$year)[10],sep= ""),
+                          paste(unique(dat$year)[21],"-",unique(dat$year)[30],sep= "")),lwd=c(2,2),lty=1,col=c(cols[3],cols[2]), bty="n")
 dev.off()
 # summarize estimates and look at change across the whole time series
 
@@ -308,12 +324,12 @@ intercept.uci<-quantile(r[,1],c(uci),na.rm=T)
 
 slope.lci<-quantile(r[,2],c(lci),na.rm=T)
 slope.uci<-quantile(r[,2],c(uci),na.rm=T)
-#look just at recent trends
+#look just at recent trends from 2002-present
 r.recent<-matrix(NA,dim(lpmax)[1],2)
 for (o in 1:(dim(lpmax)[1])) {
-  y<-lpmax[o,24:39]
+  y<-lpmax[o,25:40]
   y[y=="Inf"]<-NA
-  lm(y~as.numeric(colnames(lpmax))[24:39])$coefficients->r.recent[o,]
+  lm(y~as.numeric(colnames(lpmax))[25:40])$coefficients->r.recent[o,]
 }
 slopevec.recent<-as.vector(r.recent[,2])
 intercept.recent<-mean(r.recent[,1],na.rm=T)
@@ -384,9 +400,9 @@ slope.first.uci<-quantile(r.first[,2],c(uci),na.rm=T)
 #Look at trends just in recent data
 r.first.recent<-matrix(NA,dim(firstlp)[1],2)
 for (o in 1:(dim(firstlp)[1])) {
-  y<-firstlp[o,24:39]
+  y<-firstlp[o,25:40]
   y[y=="Inf"]<-NA
-  lm(y~as.numeric(colnames(firstlp))[24:39])$coefficients->r.first.recent[o,]
+  lm(y~as.numeric(colnames(firstlp))[25:40])$coefficients->r.first.recent[o,]
 }
 slopevec.first.recent<-as.vector(r.first.recent[,2])
 intercept.first.recent<-mean(r.first.recent[,1],na.rm=T)
@@ -456,9 +472,9 @@ slope.last.uci<-quantile(r.last[,2],c(uci),na.rm=T)
 r.last.recent<-matrix(NA,dim(lastlp)[1],2)
 for (o in 1:(dim(lastlp)[1])) {
   # if(!is.na(sum(lpmax[o,]))) {
-  y<-lastlp[o,]
+  y<-lastlp[o,25:40]
   y[y=="Inf"]<-NA
-  lm(y~as.numeric(colnames(lastlp)))$coefficients->r.last.recent[o,]
+  lm(y~as.numeric(colnames(lastlp)[25:40]))$coefficients->r.last.recent[o,]
   #}    
 }
 slopevec.last.recent<-as.vector(r.last.recent[,2])
@@ -478,9 +494,7 @@ cat(paste("summary results",pod,region,season),"\n",
     paste("confidence interval from", round(quantile(slopevec,lci,na.rm=T),digits=2),
           "to",round(quantile(slopevec,uci,na.rm=T),digits=2)),
     "\n","mean estimate of activity peak","as date",
-    #as.character(as.Date(x=c(ann.res[,colnames(ann.res)=="mean"]),origin=c(paste(row.names(ann.res),"-03-31",sep="")))),"\n",
-    #sep="\n","as days after mar 31",
-    as.character(as.Date(x=c(ann.res[,colnames(ann.res)=="mean"]),origin=c(paste(row.names(ann.res),"-01-01",sep="")))),"\n",
+        as.character(as.Date(x=c(ann.res[,colnames(ann.res)=="mean"]),origin=c(paste(row.names(ann.res),"-01-01",sep="")))),"\n",
     sep="\n","as day of year",
     paste(rownames(ann.res),round(ann.res[,"mean"])))   
   
@@ -491,9 +505,7 @@ cat(paste("summary results",pod,region,season),"\n",
       "\n","mean estimate of first activity doy","as date",
       as.character(as.Date(x=c(ann.first[,colnames(ann.first)=="mean"]),origin=c(paste(row.names(ann.first),"-01-01",sep="")))),"\n",
       sep="\n","as day of year",
-      #as.character(as.Date(x=c(ann.first[,colnames(ann.first)=="mean"]),origin=c(paste(row.names(ann.first),"-03-31",sep="")))),"\n",
-      #sep="\n","as days after mar 31",
-      paste(rownames(ann.first),round(ann.first[,"mean"])))
+          paste(rownames(ann.first),round(ann.first[,"mean"])))
   
   cat(paste("summary results",pod,region,season),"\n",
       paste("annual change of last activity doy:", round(mean(slopevec.last,na.rm=T),digits=2),"days"),
@@ -501,10 +513,7 @@ cat(paste("summary results",pod,region,season),"\n",
             "to",round(quantile(slopevec.last,uci,na.rm=T),digits=2)),
       "\n","mean estimate of last activity doy","as date",
       as.character(as.Date(x=c(ann.res[,colnames(ann.res)=="mean"]),origin=c(paste(row.names(ann.res),"-01-01",sep="")))),"\n",
-      sep="\n","as day of year",
-      #as.character(as.Date(x=c(ann.last[,colnames(ann.last)=="mean"]),origin=c(paste(row.names(ann.last),"-03-31",sep="")))),"\n",
-      #sep="\n","as days after mar 31",
-      paste(rownames(ann.last),round(ann.last[,"mean"])))
+         paste(rownames(ann.last),round(ann.last[,"mean"])))
   }
 if(season=="2"){
   cat(paste("summary results",pod,region,season),"\n",
@@ -521,20 +530,24 @@ df<-rbind(
   c(pod,region,season,"peak",round(mean(slopevec,na.rm=T),digits=2),round(quantile(slopevec,lci,na.rm=T),digits=2),round(quantile(slopevec,uci,na.rm=T),digits=2)),
   c(pod,region,season,"first",round(mean(slopevec.first,na.rm=T),digits=2),round(quantile(slopevec.first,lci,na.rm=T),digits=2),round(quantile(slopevec.first,uci,na.rm=T),digits=2)),
   c(pod,region,season,"last",round(mean(slopevec.last,na.rm=T),digits=2),round(quantile(slopevec.last,lci,na.rm=T),digits=2),round(quantile(slopevec.last,uci,na.rm=T),digits=2)),
-  c(pod,region,season,"peak.20022016",round(mean(slopevec.recent,na.rm=T),digits=2),round(quantile(slopevec.recent,lci,na.rm=T),digits=2),round(quantile(slopevec,uci,na.rm=T),digits=2)),
+  c(pod,region,season,"peak.20022016",round(mean(slopevec.recent,na.rm=T),digits=2),round(quantile(slopevec.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.recent,uci,na.rm=T),digits=2)),
   c(pod,region,season,"first.20022016",round(mean(slopevec.first.recent,na.rm=T),digits=2),round(quantile(slopevec.first.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.first.recent,uci,na.rm=T),digits=2)),
   c(pod,region,season,"last.20022016",round(mean(slopevec.last.recent,na.rm=T),digits=2),round(quantile(slopevec.last.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.last.recent,uci,na.rm=T),digits=2))
   )
 colnames(df)<-c("pod","region","season","phase","slope.mn","slope.lci","slope.uci")
-df.name<-paste("analyses/output/",pod,"_",season,"sept1_",region,min(dat$year),"-",max(dat$year),"occprob_wrecent.csv", sep="")
+if(assumeSRKW==TRUE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"occprob_wrecent_assumeSRKW.csv", sep="")}
+if(assumeSRKW==FALSE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"occprob_wrecent_assumeSRKW.csv", sep="")}
+
 write.csv(df,df.name, row.names=FALSE)
 
 #save years and first-last-peak estimates
 phen<-cbind(pod,region,season,rownames(ann.res),round(ann.res[,"mean"]),round(ann.res[,"lci"]),round(ann.res[,"uci"]),
             round(ann.first[,"mean"]),round(ann.first[,"lci"]),round(ann.first[,"uci"]),
-            round(ann.last[,"mean"]),round(ann.last[,"lci"]),round(ann.last[,"uci"]))
-colnames(phen)<-c("pod","region","season","year","peak.psi","peak.lcl","peak.ucl","first.psi","first.lcl","first.ucl","last.psi","last.lcl","last.ucl")
-phen.name<-paste("analyses/output/",pod,"_",season,"sept1_",region,min(dat$year),"-",max(dat$year),"occprobdoy.csv", sep="")
+            round(ann.last[,"mean"]),round(ann.last[,"lci"]),round(ann.last[,"uci"]),round(meanpsi, digits=2))
+colnames(phen)<-c("pod","region","season","year","peak.psi","peak.lcl","peak.ucl","first.psi","first.lcl","first.ucl","last.psi","last.lcl","last.ucl", "mean.psi")
+if(assumeSRKW==TRUE){phen.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"assumeSRKWoccprobdoy.csv", sep="")}
+if(assumeSRKW==FALSE){phen.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"occprobdoy.csv", sep="")}
+
 write.csv(phen,phen.name, row.names=FALSE)
 
 #-----------------------------------------------------------------
@@ -544,7 +557,9 @@ if(region == "uss"){color = "darkblue"}
 if(region == "ps"){color = "salmon"}
 
 # save plotted results as pdf
-pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_",pod,"_",prob,"peakoccprob.pdf", sep=""),width=7,height=7)
+if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"assumeSRKWpeakoccprob.pdf", sep=""),width=7,height=7)}
+
+if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"peakoccprob.pdf", sep=""),width=7,height=7)}
 
 ### plot estimates of peak detectability over all years
 #quartz(width=7, height=6)
@@ -566,6 +581,11 @@ if(season==1){
   axis(side=2,at=c(182,213,244,274,305,335,366),
        labels=c("1Jul","1Aug","1Sept","1Oct","1Nov","1Dec","1Jan"))}
 
+if(season ==3){
+  axis(side=2,at=c(1,92,183,274,365),
+       labels=c("1Jan","1Apr","1Jul","1Oct","31Dec"))
+  
+}
 #for (o in 1:500) {
    #if(!is.na(sum(lpmax[o,]))) {
 #  mod<-lm(lpmax[o,]~as.numeric(colnames(lpmax)))$coefficients->r[o,]
@@ -583,7 +603,8 @@ dev.off()
 # Plot first date detectability > selected prob  
 #-----------------------------------------------------------------
 # save plotted results as pdf
-pdf(file=paste("analyses/figures/",pod,"/orcaphen",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_",pod,"_first_",prob,"occprob.pdf", sep=""),width=7,height=7)
+if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_first_",prob,"assumeSRKWoccprob.pdf", sep=""),width=7,height=7)}
+if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_first_",prob,"occprob.pdf", sep=""),width=7,height=7)}
 
 ### plot estimates of first det.prob > XX over all years
 #quartz(width=7, height=6)
@@ -604,6 +625,10 @@ if(season==1){
   axis(side=2,at=c(182,213,244,274,305,335,366),
        labels=c("1Jul","1Aug","1Sept","1Oct","1Nov","1Dec","1Jan"))
 }
+if(season==3){
+  axis(side=2,at=c(1,92,183,274,365),
+       labels=c("1Jan","1Apr","1Jul","1Oct","31Dec"))
+}
 
 #for (o in 1:500) {
 #  #if(!is.na(sum(lpmax[o,]))) {
@@ -618,7 +643,8 @@ if(season==2){abline(a=intercept.first,b=slope.first,col="midnightblue",lwd=2)}
 dev.off()
 
 # save plotted results as pdf
-pdf(file=paste("analyses/figures/",pod,"/orcaphen",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_",pod,"last_",prob,"occprob.pdf", sep=""),width=7,height=7)
+if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"last_",prob,"assumeSRKWoccprob.pdf", sep=""),width=7,height=7)}
+if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"last_",prob,"occprob.pdf", sep=""),width=7,height=7)}
 
 ### plot estimates of last detectability > selected prob over all years
 #quartz(width=7, height=6)
@@ -639,6 +665,10 @@ if(season==1){
   axis(side=2,at=c(182,213,244,274,305,335,366),
        labels=c("1Jul","1Aug","1Sept","1Oct","1Nov","1Dec","1Jan"))
 }
+if(season==3){
+  axis(side=2,at=c(1,92,183,274,365),
+       labels=c("1Jan","1Apr","1Jul","1Oct","31Dec"))
+}
 
 #for (o in 1:500) {
 #  #if(!is.na(sum(lpmax[o,]))) {
@@ -658,7 +688,7 @@ dev.off()
 ### Plot annual detectability pattern
 # loop over all years
 years<-sort(unique(as.numeric((dat$year))))
-seasonname<-c("winter","summer")
+seasonname<-c("winter","summer","wholeyear")
 for (xj in 1:length(years)) {
   j<-years[xj]
   
@@ -686,7 +716,9 @@ for (xj in 1:length(years)) {
   # plot bars
   #for seasonal values...    
   figpath<- paste("analyses/figures/",pod,sep="")
-  figname<-paste("orcaphen",j,region,seasonname[as.numeric(season)],pod,".pdf",sep="_")
+  if(assumeSRKW==TRUE){figname<-paste("orcaphen",j,region,seasonname[as.numeric(season)],"doy",min(dat$day),"-",max(dat$day),"_",pod,"assumeSRKW.pdf",sep="_")}
+  if(assumeSRKW==FALSE){figname<-paste("orcaphen",j,region,seasonname[as.numeric(season)],"doy",min(dat$day),"-",max(dat$day),"_",pod,".pdf",sep="_")}
+  
   pdf(file.path(figpath, figname), width = 9, height = 6)
   
   #quartz()
@@ -702,14 +734,19 @@ for (xj in 1:length(years)) {
   lines(res[2,],lty=1,col=1,lwd=2) # median
   lines(res[1,],lty=3,col=1,lwd=2.5) # upper bound of the 90% CI
   axis(2)
-  if(season==2){
-  axis(side=1,at=c(92-92,122-92,152-92,183-92,214-92,244-92,274-92,303-92),
-       labels=c("1Apr","1May","1Jun","1Jul","1Aug","1Sept","1Oct","1Nov"))
-  }
-  if(season==1){
+   if(season==1){
     axis(side=1,at=c(183-183,213-183,244-183,274-183,305-183,335-183,366-183),
          labels=c("1Jul","1Aug","1Sept","1Oct","1Nov","1Dec","1Jan"))
-    }
+   }
+  if(season==2){
+    axis(side=1,at=c(92-92,122-92,152-92,183-92,214-92,244-92,274-92,303-92),
+         labels=c("1Apr","1May","1Jun","1Jul","1Aug","1Sept","1Oct","1Nov"))
+  }
+  
+  if(season==3){
+    axis(side=1,at=c(1,92,183,274,365),
+         labels=c("1Jan","1Apr","1Jul","1Oct","31Dec"))
+  }
   dev.off()
   }
 
