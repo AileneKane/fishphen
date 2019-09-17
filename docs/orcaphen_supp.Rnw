@@ -68,7 +68,7 @@
 \section* {Supplemental Tables}
 \par Table comparing estimates of shifts
 <<label=occmodsums,echo=FALSE,results=tex>>=
-librar(xtable)
+library(xtable)
 modsumfiles<-dir("../analyses/output")[grep("occprob_wrecent",dir("../analyses/output"))]
 allsums<-c()
 for (i in 1:length(modsumfiles)){
@@ -78,14 +78,32 @@ for (i in 1:length(modsumfiles)){
   modsumwide<-cbind(modsumold,modsumnew[,5:7])
   allsums<-rbind(allsums,modsumwide)
 }
+allsums$Region[allsums$region=="ps"]<-"Puget Sound"
+allsums$Region[allsums$region=="uss"]<-"Central Salish Sea"
+allsums$Season[allsums$season=="1"]<-"Fall"
+allsums$Season[allsums$season=="2"]<-"Summer"
+allsums$Season[allsums$season=="3"]<-"Full Year"
 
 colnames(allsums)[8:10]<-c("slope.recent","slope.lci.recent","slope.uci.recent")
 allsums$slope.all<-paste(allsums$slope.mn," (",allsums$slope.lci," - ",allsums$slope.uci,")", sep="")
 allsums$slope.all.recent<-paste(allsums$slope.recent," (",allsums$slope.lci.recent," - ",allsums$slope.uci.recent,")", sep="")
 
-modsumtab<-subset(allsums, select=c(pod,region,season,phase,slope.all,slope.all.recent))
-colnames(modsumtab)[5:6]<-c("1978-2017 trend","2002-2017 trend")
-modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper and the central Salish Sea, from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5.")
+modsumtab<-subset(allsums, select=c(pod,Region,Season,phase,slope.all,slope.all.recent))
+#modsumtab$region[modsumtab$region=="ps"]<-"puget"
+#modsumtab$region[modsumtab$region=="uss"]<-"central"
+
+colnames(modsumtab)[1:6]<-c("Pod","Region","Season","Phase","1978-2017 trend","2002-2017 trend")
+modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper and the central Salish Sea, from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5.",
+            label="tab:modsz",align=c(
+              "|p{0.01\\textwidth}", 
+              "|p{0.04\\textwidth}",
+               "|p{0.20\\textwidth}",
+               "|p{0.1\\textwidth}",
+               "|p{0.08\\textwidth}",
+               "|p{0.20\\textwidth}",
+               "|p{0.20\\textwidth}|"))
+
+print(modsum.table, include.rownames=FALSE, hline.after = c(-1,0,12,15,18),caption.placement="top",size="\\footnotesize")
 @
 \section* {SupplementalFigures}
 
