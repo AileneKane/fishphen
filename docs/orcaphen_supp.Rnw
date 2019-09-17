@@ -103,7 +103,7 @@ modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in pe
                "|p{0.20\\textwidth}",
                "|p{0.20\\textwidth}|"))
 
-print(modsum.table, include.rownames=FALSE, hline.after = c(-1,0,12,15,18),caption.placement="top",size="\\footnotesize")
+print(modsum.table, include.rownames=FALSE, hline.after = c(-1,0,12,15,18,21),caption.placement="top",size="\\footnotesize")
 @
 \section* {SupplementalFigures}
 
