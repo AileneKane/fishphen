@@ -1,0 +1,94 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%START PREAMBLE THAT IS THE SAME FOR ALL EXAMPLES
+\documentclass{article}
+
+\usepackage{Sweave}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{pdflscape}
+\usepackage{array}
+\usepackage{gensymb}
+\usepackage{amsmath}
+
+\usepackage{xr}
+
+%\usepackage[backend=bibtex]{biblatex}
+%Strongly recommended
+%put your figures in one place
+%\SweaveOpts{prefix.string=figures/, eps=FALSE} 
+%you'll want these for pretty captioning
+\usepackage[small]{caption}
+
+\setkeys{Gin}{width=0.8\textwidth}  %make the figs 50 perc textwidth
+\setlength{\captionmargin}{30pt}
+\setlength{\abovecaptionskip}{10pt}
+\setlength{\belowcaptionskip}{10pt}
+% manual for caption  http://www.dd.chalmers.se/latex/Docs/PDF/caption.pdf
+
+%Optional: I like to muck with my margins and spacing in ways that LaTeX frowns on
+%Here's how to do that
+\topmargin -1.5cm        
+\oddsidemargin -0.04cm   
+\evensidemargin -0.04cm  % same as oddsidemargin but for left-hand pages
+\textwidth 16.59cm
+\textheight 21.94cm 
+
+\pagestyle{empty}       
+% Uncomment if don't want page numbers
+\parskip 7.2pt           % sets spacing between paragraphs
+%\renewcommand{\baselinestretch}{1.5} 	% Uncomment for 1.5 spacing between lines
+\parindent 0pt% sets leading space for paragraphs
+\usepackage{setspace}
+%\doublespacing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%END PREAMBLE THAT IS THE SAME FOR ALL EXAMPLES
+
+%Start of the document
+\begin{document}
+\SweaveOpts{concordance=FALSE}
+%\SweaveOpts{concordance=TRUE}
+
+\bibliographystyle{../refs/bibstyles/amnat.bst}
+
+\title{Supplemental methods for Shifts in Southern Resident Killer Whale Phenology in the Salish Sea}
+\date{\today}
+\maketitle
+\author{A.K. Ettinger, C. Harvey, J. Samhouri, B. Hanson, C. Emmons, J. Olson, E. Ward}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section* {Supplemental Methods}
+\par Expected phenological change due to change in effort alone (simulations)
+
+\section* {Supplemental Results}
+\par Expected phenological change due to change in effort alone (simulations)- do this for the recent time span as well?
+
+\par Time series of peak prob. occurence for K and L pods
+\par Time series for first- and last- dates when occurrence probabilty is greater than 0.5 for J,K,L pods
+\section* {Supplemental Tables}
+\par Table comparing estimates of shifts
+<<label=occmodsums,echo=FALSE,results=tex>>=
+librar(xtable)
+modsumfiles<-dir("../analyses/output")[grep("occprob_wrecent",dir("../analyses/output"))]
+allsums<-c()
+for (i in 1:length(modsumfiles)){
+  modsum<-read.csv(paste("../analyses/output/",modsumfiles[i],sep=""), header=TRUE)
+  modsumold<-modsum[1:3,]
+  modsumnew<-modsum[4:6,]
+  modsumwide<-cbind(modsumold,modsumnew[,5:7])
+  allsums<-rbind(allsums,modsumwide)
+}
+
+colnames(allsums)[8:10]<-c("slope.recent","slope.lci.recent","slope.uci.recent")
+allsums$slope.all<-paste(allsums$slope.mn," (",allsums$slope.lci," - ",allsums$slope.uci,")", sep="")
+allsums$slope.all.recent<-paste(allsums$slope.recent," (",allsums$slope.lci.recent," - ",allsums$slope.uci.recent,")", sep="")
+
+modsumtab<-subset(allsums, select=c(pod,region,season,phase,slope.all,slope.all.recent))
+colnames(modsumtab)[5:6]<-c("1978-2017 trend","2002-2017 trend")
+modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper and the central Salish Sea, from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5.")
+@
+\section* {SupplementalFigures}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -52,7 +52,7 @@
 \SweaveOpts{concordance=FALSE}
 %\SweaveOpts{concordance=TRUE}
 
-\bibliographystyle{../refs/bibstyles/amnat.bst}% i moved a style file into the ospree git repo. feel free to add whatever style you like and update, lizzie! I don't have besjournals
+\bibliographystyle{../refs/bibstyles/amnat.bst}
 \title{Shifts in Southern Resident Killer Whale Phenology in the Salish Sea}
 \date{\today}
 \maketitle
@@ -147,8 +147,10 @@ z_{yr,day} \sim Bernoulli (\mathrm{\Psi}_{yr,day})\\
 \section*{To Do}
 \begin{enumerate}
 \item Write Discussion (for 9/24/2019)
+\item Get feedback
 \item Supplemental Materials:
 \begin{enumerate}
+\item Table comparing estimates of shifts
 \item Time series of peak prob. occurence for K and L pods
 \item Time series for first- and last- dates when occurrence probabilty is greater than 0.5 for J,K,L pods
 \item Expected phenological change due to change in effort alone (simulations)- do this for the recent time span as well?
@@ -191,5 +193,6 @@ z_{yr,day} \sim Bernoulli (\mathrm{\Psi}_{yr,day})\\
 \caption{\textbf{SRKW phenology is related to estimated chinook phenology (A) and run size (B,C)}, for Lime Kiln State Park, a SRKW observation site in the central Salish Sea with a consistent data collection effort from 1994-2017 (from May through October,A). Chinook phenology and run size was estimated from the Fraser River Albion test fishery data. Phenology of the Central Salish Sea region as a whole appear to be less related to the patterns of this particular test fishery data, for many possible reasons (see Supplemental Materials for details).}
  \label{fig:shifts}
  \end{figure}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
