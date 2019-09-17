@@ -187,7 +187,7 @@ z_{yr,day} \sim Bernoulli (\mathrm{\Psi}_{yr,day})\\
 
 \begin{figure}[p]
 \includegraphics[width=0.8\textwidth]{../analyses/figures/limekilnalbion.pdf} 
-\caption{\textbf{SRKW phenology is related to estimated chinook phenology and run size}, for one SRKW observation site in the central Salish Sea with a consistent data collection effort from 1995-2017, May through October  (upper panel), and using chinook phenology estimated from Fraser River Albion test fishery data. Phenology for the broader Central Salish Sea region appear to be less-related to the patterns of this particular test fishery data, for many possible reasons (see Supplemental Materials for details).}
+\caption{\textbf{SRKW phenology is related to estimated chinook phenology (A) and run size (B,C)}, for Lime Kiln State Park, a SRKW observation site in the central Salish Sea with a consistent data collection effort from 1994-2017 (from May through October,A). Chinook phenology and run size was estimated from the Fraser River Albion test fishery data. Phenology of the Central Salish Sea region as a whole appear to be less related to the patterns of this particular test fishery data, for many possible reasons (see Supplemental Materials for details).}
  \label{fig:shifts}
  \end{figure}
 
