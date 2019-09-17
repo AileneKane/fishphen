@@ -124,8 +124,9 @@ z_{yr,day} \sim Bernoulli (\mathrm{\Psi}_{yr,day})\\
 
 \par Phenological shifts observed in SRKWs may be attributable to changes in their prey. Summarize changes in salmon abundance and phenology on the west coast. Our results are consistent with this...The timing of adult salmon returns has also shifted. Populations in the central Salish Sea are arriving later, whereas many populations in Puget Sound proper, especially hatchery-origin fish, are arriving earlier. Compare rates of change
 %\par The timing of SRKW activity in central Salish Sea and in Puget Sound proper appears to be shifting in a manner that differs from shifts in salmon timing. This difference may lead to a mismatch between predator and prey that causes additional stress on SRKW populations, since the timing of resource availability can be as important as the amount of the resource \citep[Brianna's work,][]{hipfner2008}
-\par Observer effort has shifted over time. Its great that so many people are outside looking for whales! Recommend collecting absence data too. This would allow for more robust analyses of whale distributions. Challenge is increased time/money required for database maintenance with this extra data.
-\par social reasons for shifts
+\par Social reasons for shifts
+\par Other global change factors: increased vessel traffic and other disturbances. increased fishing?
+\par Absence data are valuable! Observer effort has shifted over time. Its great that so many people are outside looking for whales! Recommend collecting absence data too. This would allow for more robust analyses of whale distributions. Challenge is increased time/money required for database maintenance with this extra data.
 
 \section*{Conclusion}
 
