@@ -21,7 +21,7 @@ library(scales)
 
 # Choose the data you want:
 pod="L"#options= J,K,L,SR
-region="ps"#options=upper salish sea (uss) or puget sound (ps)
+region="uss"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=TRUE
 #Choose the credible intervals you want
