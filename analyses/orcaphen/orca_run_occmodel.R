@@ -20,9 +20,9 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="K"#options= J,K,L,SR
-region="uss"#options=upper salish sea (uss) or puget sound (ps)
-wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
+pod="L"#options= J,K,L,SR
+region="ps"#options=upper salish sea (uss) or puget sound (ps)
+wholeyear=TRUE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=TRUE
 #Choose the credible intervals you want
 lci<-0.10
@@ -281,8 +281,21 @@ if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(da
 
 #quartz(height=6,width=8)
 plot(doy,colMeans(out$mean$psi[31:40,]), type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", col=cols[3], lwd=2)
+names(out)
+psi.uci<-out$summary[grep("psi",rownames(out$summary)),4]
+psi.lci<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.25)
+lines(doy,psi.lci,col=cols[2], lwd=2)
+lines(doy,psi.uci,col="blue", lwd=2)
+psi.uci<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.5)
+
+polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(cols[3],0.2),lty=0)
+
 #lines(doy,colMeans(out$mean$psi[11:20,]),col=cols[4])
-lines(doy,colMeans(out$mean$psi[21:30,]),col=cols[2], lwd=2)
+lines(doy,colMeans(out$median$psi[21:30,]),col=cols[2], lwd=2)
+psi.uci<-apply(out$sims.list$psi[,21:30,],c(3),quantile,probs=uci,na.rm=T)
+psi.lci<-apply(out$sims.list$psi[,21:30,],c(3),quantile,probs=lci,na.rm=T)
+polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(cols[2],0.2),lty=0)
+
 #lines(doy,colMeans(out$mean$psi[1:10,]),col=cols[1], lwd=2)
 #lines(doy,colMeans(out$mean$psi[1:30,]),col=color,lwd=3)
 legend("topleft",legend=c(paste(unique(dat$year)[31],"-",unique(dat$year)[40],sep= ""),
@@ -297,6 +310,15 @@ ann.res<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(da
 res<-apply(lpmax,c(2),mean,na.rm=T)
 ann.res[names(res),"mean"]<-res
 res<-apply(lpmax,c(2),quantile,probs=lci,na.rm=T)
+ann.res[names(res),"lci"]<-res
+res<-apply(lpmax,c(2),quantile,probs=uci,na.rm=T)
+ann.res[names(res),"uci"]<-res
+
+
+psi.ann<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","lci","uci")))
+psi<-apply(out$sims.list$psi,c(2),mean,na.rm=T)
+psi.res[names(res),"mean"]<-res
+psi<-apply(lpmax,c(2),quantile,probs=lci,na.rm=T)
 ann.res[names(res),"lci"]<-res
 res<-apply(lpmax,c(2),quantile,probs=uci,na.rm=T)
 ann.res[names(res),"uci"]<-res
