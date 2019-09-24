@@ -228,11 +228,12 @@ if(w==2){write.csv(allmodsums[allmodsums$type=="hatch",], "analyses/output/salmo
 allphen<-as.data.frame(cbind(type2,sp2,site2,yearsall,alltotalall,firstobsdateall,lastobsdateall,
                              midobsdateall, peakobsdateall))
 
-dim(allphen)
 allphen <- allphen[apply(allphen, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
+dim(allphen)
 
 allphen$group<-paste(allphen$site2,allphen$sp2,allphen$type, sep=".")#this will be grouping factor/random effect
 allphen$group<-as.factor(allphen$group)
+unique(allphen$group)
 allphen$yearsall<-as.numeric(allphen$yearsall)
 allphen$firstobsdateall<-as.integer(allphen$firstobsdateall)
 allphen$lastobsdateall<-as.numeric(allphen$lastobsdateall)
@@ -240,6 +241,8 @@ allphen$peakobsdateall<-as.numeric(allphen$peakobsdateall)
 allphen$midobsdateall<-as.numeric(allphen$midobsdateall)
 
 firstmod<-lmer(firstobsdateall~yearsall+(1|group), data=allphen)
+firstmod2<-lmer(firstobsdateall~yearsall+(yearsall|group), data=allphen)
+
 lastmod<-lmer(lastobsdateall~yearsall+(1|group), data=allphen)
 peakmod<-lmer(peakobsdateall~yearsall+(1|group), data=allphen)
 midmod<-lmer(midobsdateall~yearsall+(1|group), data=allphen)
