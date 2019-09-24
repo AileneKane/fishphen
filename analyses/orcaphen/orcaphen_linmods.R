@@ -80,6 +80,7 @@ source("analyses/orcaphen/source/orca_runlinmods.R")
 
 #9. Fit some basic linear models to lime kiln data only
 limed<-d[d$Source=="TWM-Otis",]
+limed<-limed[which(!is.na(limed$SightDate)),]
 source("analyses/orcaphen/source/orca_runlinmods_lime.R")
 
 #10. Fit some basic linear models to west seattle only
@@ -206,8 +207,31 @@ albchin<-read.csv("analyses/output/albionchiphen.csv", header = TRUE)
 #restrict to years that we have SRKW data for
 albchin95<-albchin[albchin$year>1993  & albchin$year<2018,]
 albchin95<-albchin95[-which(albchin95$year==2014),]
+
+#alternate version of the above with binned chinook arrival dates
+albchin95$firstobsbin<-NA
+lower<-quantile(albchin95$firstobsdate,prob=0.25, na.rm=TRUE)
+upper<-quantile(albchin95$firstobsdate,prob=0.75, na.rm=TRUE)
+albchin95$firstobsbin[albchin95$firstobsdate<=lower]<-"1"
+
+albchin95$firstobsbin[albchin95$firstobsdate>lower]<-"2"
+albchin95$firstobsbin[albchin95$firstobsdate>upper]<-"3"
 albchin95$firstobsbin<-as.numeric(albchin95$firstobsbin)
-lime.df$firstest.all<-as.numeric(lime.df$firstest.all)
+
+#add 90 days to limekiln doy columns to make comparable to chinook
+
+
+#lime.df$year.cor<-lime.df$year+1
+lime2002<-lime.df[lime.df$year.cor>2001,]
+lime2002<-lime2002[lime2002$year.cor!=2018,]
+lime2002$firstest<-as.numeric(lime2002$firstest.all)+90
+lime2002$mean<-as.numeric(lime2002$mean.all)+90
+lime2002$lastest<-as.numeric(lime2002$lastest.all)+90
+lime1995<-lime.df[lime.df$year.cor>1994,]
+lime1995<-lime1995[lime1995$year.cor!=2018,]
+lime1995$firstest<-as.numeric(lime1995$firstest.all)+90
+lime1995$mean<-as.numeric(lime1995$mean.all)+90
+lime1995$lastest<-as.numeric(lime1995$lastest.all)+90
 
 #quartz(height=4,width=12)
 pdf(file="analyses/orcaphen/figures/lime_albchin.pdf",height=4,width=12)
@@ -215,7 +239,7 @@ myPalette <- colorRampPalette(brewer.pal(length(unique(albchin95$year)), "Blues"
 cols = rev(myPalette(length(unique(albchin95$year))))
 
 par(mfrow=c(1,3))
-plot(albchin95$firstobsdate,lime.df$firstest.all,type="p",pch=21, cex.axis=1.3,cex.lab=1.3,bg = cols[factor(albchin95$year)],xlab="Chinook Arrival (doy)",ylim = c(40,70),ylab="SRKW Arrival (doy)", cex=1.2, bty="l")
+plot(albchin95$firstobsdate,lime.df$firstest.all,type="p",pch=21, cex.axis=1.3,cex.lab=1.3,bg = cols[factor(albchin95$year)],xlab="Chinook Arrival (doy)",ylab="SRKW Arrival (doy)", cex=1.2, bty="l")
 #what is the really late salmon year?
 #albchin95$year[which(albchin95$firstobsdate==max(albchin95$firstobsdate, na.rm=TRUE))]#2007
 points(albchin95$firstobsdate,lime.df$firstest.all,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
@@ -223,10 +247,10 @@ legend("topleft",legend=c("1994","2017"), pch=21, pt.bg=c(cols[1], cols[length(c
 mod<-lm(lime.df$firstest.all~albchin95$firstobsdate)
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
 if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
-#points(albchin95$firstobsdate,lime.df$firstest.p,pch=16, col = "blue",cex=1.2)
-#mod<-lm(lime.df$firstest.p~albchin95$firstobsdate)
-#if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="blue")}
-#if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "blue")}
+points(albchin95$firstobsdate,lime.df$firstest.p,pch=16, col = "blue",cex=1.2)
+mod<-lm(lime.df$firstest.p~albchin95$firstobsdate)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="blue")}
+if(summary(mod)$coef[2,4]<.10){abline(mod, lty=3, col = "blue")}
 
 #First obs of SRKW vs total run size
 # plot(albchin95$alltotal,lime.df$firstest.all,type="p",pch=16, col = "black",xlab="Chinook Run Size",ylim = c(40,70),ylab="SRKW Arrival DOY", cex=1.2, bty="l")
@@ -283,14 +307,6 @@ if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,lw
 # if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "blue")}
 dev.off()
 
-#alternate version of the above with binned chinook arrival dates
-albchin95$firstobsbin<-NA
-lower<-quantile(albchin95$firstobsdate,prob=0.25, na.rm=TRUE)
-upper<-quantile(albchin95$firstobsdate,prob=0.75, na.rm=TRUE)
-albchin95$firstobsbin[albchin95$firstobsdate<=lower]<-"1"
-
-albchin95$firstobsbin[albchin95$firstobsdate>lower]<-"2"
-albchin95$firstobsbin[albchin95$firstobsdate>upper]<-"3"
 #quartz(height=4,width=12)
 pdf(file="analyses/orcaphen/figures/lime_albchin_bin.pdf",height=4,width=12)
 
@@ -326,19 +342,6 @@ if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,lw
 # if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "blue")}
 dev.off()
 
-
-
-lime.df$year.cor<-lime.df$year+1
-lime2002<-lime.df[lime.df$year.cor>2001,]
-lime2002<-lime2002[lime2002$year.cor!=2018,]
-lime2002$firstest<-as.numeric(lime2002$firstest.all)+91
-lime2002$mean<-as.numeric(lime2002$mean.all)+91
-lime2002$lastest<-as.numeric(lime2002$lastest.all)+91
-lime1995<-lime.df[lime.df$year.cor>1994,]
-lime1995<-lime1995[lime1995$year.cor!=2018,]
-lime1995$firstest<-as.numeric(lime1995$firstest.all)+91
-lime1995$mean<-as.numeric(lime1995$mean.all)+91
-lime1995$lastest<-as.numeric(lime1995$lastest.all)+91
 
 j.occest<-read.csv("analyses/output/J_2sept1_uss1978-2017occprobdoy.csv", header=TRUE)
 j2002<-j.occest[j.occest$year>2001,]
@@ -427,3 +430,29 @@ plot(albchin1980$alltotal,j1980$last.psi,type="p",pch=16, col = "black",xlab="Ch
 mod<-lm(j1980$last.psi~albchin1980$alltotal)
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
 if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
+
+
+#plot time series of peak adjacent to each other
+quartz()
+plot(lime.df$year,lime.df$firstest.all, type="l", bty="u", lwd=2, ylab="Day of year (orcas)", xlab="Year", ylim=c(120,180))
+par(new = TRUE)
+plot(albchin95$year,albchin95$firstobsdate, type="l", bty="u",col="salmon", lwd=2, lty=2, yaxt="n", ylab="", xlab="", xaxt="n")
+#plot curves of whales vs salmon curves
+axis(side = 4)
+
+limed<-limed[which(!is.na(limed$SightDate)),]
+limed95<-limed[limed$Year>1994,]
+alb<-read.csv("analyses/output/albionddat.csv", header=TRUE)
+alb95<-alb[alb$year>1994,]
+
+years<-unique(limed95$Year)
+for(i in 1:length(years)){
+  dat<-limed95[limed95$Year==years[i],]
+  dat$day<-as.numeric(dat$day)
+  mndoy<-mean(dat$day, na.rm=TRUE)
+  sddoy<-sd(dat$day)
+  y<-rnorm(100,mndoy,sddoy)
+ hist(y)
+ 
+}
+

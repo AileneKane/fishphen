@@ -9,7 +9,7 @@ if(assumeSRKW==FALSE & use3regions==TRUE){figname<-paste("analyses/figures/OrcaP
 if(use3regions==FALSE){
   pdf(figname,height=12, width=6)
   #quartz(height=12, width=6)
-  par(omi=c(.5,.5,.5,.5), mfrow=c(2,1))
+  par(omi=c(.5,.5,.5,.5), mfrow=c(2,2))
 }
 if(use3regions==TRUE){
   pdf(figname,height=6, width=20)
@@ -80,7 +80,7 @@ colnames(meannumdays)<-c("lat","lon","region","mnnumdays")
 
 newmap <- getMap(resolution = "low")
 
-#quartz(height=12, width=6)
+#quartz(height=17, width=6)
 if(assumeSRKW==TRUE & use3regions==FALSE){mapname<-paste("analyses/figures/OrcaPhenPlots/srkw_justmap_assumeSRKW_April1.pdf")
     pdf(mapname,height=12, width=6)
 }
@@ -109,14 +109,16 @@ plot(newmap, xlim = c(-126, -120), ylim = c(48.2, 51), asp = 1)
 #points(d$Long[d$FishArea=="20C"],d$Lat[d$FishArea=="20C"], type="p",col="pink")
 #points(d$Long[d$FishArea=="21C"],d$Lat[d$FishArea=="21C"], type="p",col="purple")
 
-points(meannumdays$lon[meannumdays$region=="ps"],meannumdays$lat[meannumdays$region=="ps"],type="p",pch=16, col="salmon",cex=log(meannumdays$mnnumdays, base=10))
-points(meannumdays$lon[meannumdays$region=="uss"],meannumdays$lat[meannumdays$region=="uss"],type="p",pch=16, col="darkblue",cex=log(meannumdays$mnnumdays, base=10))
+points(meannumdays$lon[meannumdays$region=="ps"],meannumdays$lat[meannumdays$region=="ps"],type="p",pch=16, col=adjustcolor("salmon",alpha.f=0.6),cex=log(meannumdays$mnnumdays, base=10))
+points(meannumdays$lon[meannumdays$region=="uss"],meannumdays$lat[meannumdays$region=="uss"],type="p",pch=16, col=adjustcolor("darkblue",alpha.f=0.4),cex=log(meannumdays$mnnumdays, base=10))
 points(meannumdays$lon[meannumdays$region=="jf"],meannumdays$lat[meannumdays$region=="jf"],type="p",pch=16, col="darkgreen",cex=log(meannumdays$mnnumdays, base=10))
 
-legend(-122.3,47,legend=c("Central Salish Sea","Puget Sound proper","# days per year= 2","# days per year= 80"),
-       pch=16, col=c("darkblue","salmon","darkblue","darkblue"), pt.cex=c(log(7, base=10),log(7, base=10),log(2, base=10), log(80, base=10)))
+legend(-122.3,52,legend=c("Central Salish Sea","Puget Sound proper","# days per year= 2","# days per year= 80", "Lime Kiln", "Albion Test Fishery"),
+       pch=c(16,16,16,16,8,17), col=c(adjustcolor("darkblue",alpha.f=0.4),adjustcolor("salmon",alpha.f=0.6),adjustcolor("darkblue",alpha.f=0.4),adjustcolor("darkblue",alpha.f=0.4),"black","black"), pt.cex=c(log(7, base=10),log(7, base=10),log(2, base=10), log(80, base=10),1,1))
 #add  lime kiln
-points(123.1510,48.5160,pch=4 )
+points(-123.1510,48.5160,pch=8,col="black" )
+points(-122.62275,49.2104,pch=17,col="black" )
+
 dev.off()
 
 
