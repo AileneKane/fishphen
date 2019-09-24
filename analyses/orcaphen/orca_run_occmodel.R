@@ -20,10 +20,10 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="J"#options= J,K,L,SR
+pod="K"#options= J,K,L,SR
 region="uss"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
-assumeSRKW=TRUE
+assumeSRKW=FALSE
 #Choose the credible intervals you want
 lci<-0.10
 uci<-0.90
@@ -188,7 +188,7 @@ y <- dat$ndet
 
 # Simulation parameters
 #ni=15000; nc=2; nb=0; nt=10
-ni=5000; nc=2; nb=2500; nt=1
+ni=7500; nc=2; nb=2500; nt=1
 # List input data
 jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots","n","X","Z","nc", "nb", "ni", "nt","zst","y")
 
@@ -626,7 +626,7 @@ if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_","2002-"
 
 if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_","2002-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"peakoccprob.pdf", sep=""),width=7,height=7)}
 
-### plot estimates of peak detectability over all years
+### plot estimates of peak occurence over only recent years
 #quartz(width=7, height=6)
 par(mfrow=c(1,1),mai=c(1,1,1,0.5))
 x=rownames(ann.res)[25:length(rownames(ann.res))]
@@ -659,8 +659,8 @@ if(season ==3){
 #}    
 #}
 #clip(2008,2017, min(y), max(y))
-if(season==1){abline(a=intercept,b=slope,col="darkred",lwd=2)}
-if(season==2){abline(a=intercept,b=slope,col="midnightblue",lwd=2)}
+if(season==1){abline(a=intercept.recent,b=slope.recent,col="darkred",lwd=2)}
+if(season==2){abline(a=intercept.recent,b=slope.recent,col="midnightblue",lwd=2)}
 
 dev.off()
 
