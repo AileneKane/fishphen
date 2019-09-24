@@ -21,8 +21,8 @@ library(scales)
 
 # Choose the data you want:
 pod="J"#options= J,K,L,SR
-region="ps"#options=upper salish sea (uss) or puget sound (ps)
-wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
+region="uss"#options=upper salish sea (uss) or puget sound (ps)
+wholeyear=TRUE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
 #Choose the credible intervals you want
 lci<-0.10
@@ -188,7 +188,7 @@ y <- dat$ndet
 
 # Simulation parameters
 #ni=15000; nc=2; nb=0; nt=10
-ni=7500; nc=2; nb=2500; nt=1
+ni=5000; nc=2; nb=2500; nt=1
 # List input data
 jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots","n","X","Z","nc", "nb", "ni", "nt","zst","y")
 
