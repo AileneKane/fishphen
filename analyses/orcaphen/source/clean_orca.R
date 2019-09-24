@@ -166,6 +166,12 @@ d$Long[d$Long=="" & d$Quadrant=="167"]<-quads$Long[quads$Quad==167]
 d$Lat[d$Lat=="" & d$Quadrant=="412"]<-quads$Lat[quads$Quad==412]
 d$Long[d$Long=="" & d$Quadrant=="412"]<-quads$Long[quads$Quad==412]
 
+d$Lat[d$Lat=="0" & d$Quadrant=="169"]<-quads$Lat[quads$Quad==169]
+d$Long[d$Long=="0" & d$Quadrant=="169"]<-quads$Long[quads$Quad==169]
+
+d$Long[d$Long=="0" & d$Quadrant=="184"]<-quads$Long[quads$Quad==184]
+
+d$Long[d$Long=="0" & d$Quadrant=="231"]<-quads$Long[quads$Quad==231]
 
 #7. #Create a new column that combines Pod and Likely Pod columna and removes spaces
 d$Pod.cl<-d$Pod
@@ -182,7 +188,7 @@ d<-d[-which(is.na(d$day)),]
 #clean the Latitude and  longitude columns- replace with ActLat and ActLong columns when these are present
 d$Lat[which(!is.na(d$ActLat))]<-d$ActLat[which(!is.na(d$ActLat))]
 d$Long[which(!is.na(d$ActLong))]<-d$ActLong[which(!is.na(d$ActLong))]
-
+d$Long[which(as.numeric(d$Long)>0)]<- -1* as.numeric(d$Long[which(as.numeric(d$Long)>0)])
 #9. Create a new cleaned datafile
 write.csv(d,"analyses/output/AppendixII_cleaned.csv")
 

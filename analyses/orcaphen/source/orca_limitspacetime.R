@@ -28,12 +28,9 @@ if(includeCanada==TRUE & use3regions==TRUE){
 
 d<-d[d$Year>=firstyear,]
 
-#4. set seasons for PS and CSS (used in mapping)
 
-ps.start<-182#July 1 = 182
-uss.start<-91#April 1 = 91, 
-
-
+#4. On4ly keep sites in Washington state
+d<-d[as.numeric(d$Lat)>46.9,]
 ##check that this lines up with olson et al numbers
 #tapply(d$SightDate[d$Year>1975 & d$Year<2015],d$Source[d$Year>1975 & d$Year<2015],length)
 #to get their Lime Kiln Station sightings data (the below is after limitspacetime):
@@ -46,6 +43,6 @@ uss.start<-91#April 1 = 91,
 #1          1          2 
 #I think some of the difference in whale days is due to this part- throw out some data without fishing area when i should
 #be able to include it! with lat/longs. Olson et al use the Quadrants...
-##d$year.doy<-paste(d$Year,d$day,sep=".")
+##d$year.doy<-pa  ste(d$Year,d$day,sep=".")
 #length(unique(d$year.doy))#8447
 

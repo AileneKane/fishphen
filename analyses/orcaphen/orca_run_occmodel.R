@@ -20,9 +20,9 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="L"#options= J,K,L,SR
-region="ps"#options=upper salish sea (uss) or puget sound (ps)
-wholeyear=TRUE #if FALSE then resitrct to assigned seasons for uss and ps
+pod="J"#options= J,K,L,SR
+region="uss"#options=upper salish sea (uss) or puget sound (ps)
+wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=TRUE
 #Choose the credible intervals you want
 lci<-0.10
@@ -188,7 +188,7 @@ y <- dat$ndet
 
 # Simulation parameters
 #ni=15000; nc=2; nb=0; nt=10
-ni=3000; nc=2; nb=2500; nt=1
+ni=5000; nc=2; nb=2500; nt=1
 # List input data
 jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots","n","X","Z","nc", "nb", "ni", "nt","zst","y")
 
@@ -282,19 +282,19 @@ if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(da
 #quartz(height=6,width=8)
 plot(doy,colMeans(out$mean$psi[31:40,]), type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", col=cols[3], lwd=2)
 names(out)
-psi.uci<-out$summary[grep("psi",rownames(out$summary)),4]
+psi.uci<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.75)
 psi.lci<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.25)
-lines(doy,psi.lci,col=cols[2], lwd=2)
-lines(doy,psi.uci,col="blue", lwd=2)
-psi.uci<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.5)
+#lines(doy,psi.lci,col=cols[2], lwd=2)
+#lines(doy,psi.uci,col=cols[2], lwd=2)
+#psi<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.5)
 
-polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(cols[3],0.2),lty=0)
+#polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(cols[3],0.2),lty=0)
 
 #lines(doy,colMeans(out$mean$psi[11:20,]),col=cols[4])
 lines(doy,colMeans(out$median$psi[21:30,]),col=cols[2], lwd=2)
-psi.uci<-apply(out$sims.list$psi[,21:30,],c(3),quantile,probs=uci,na.rm=T)
-psi.lci<-apply(out$sims.list$psi[,21:30,],c(3),quantile,probs=lci,na.rm=T)
-polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(cols[2],0.2),lty=0)
+psi.uci<-apply(out$sims.list$psi[,21:30,],c(3),quantile,probs=.75)
+psi.lci<-apply(out$sims.list$psi[,21:30,],c(3),quantile,probs=.25)
+#polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(cols[2],0.2),lty=0)
 
 #lines(doy,colMeans(out$mean$psi[1:10,]),col=cols[1], lwd=2)
 #lines(doy,colMeans(out$mean$psi[1:30,]),col=color,lwd=3)
@@ -317,11 +317,11 @@ ann.res[names(res),"uci"]<-res
 
 psi.ann<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","lci","uci")))
 psi<-apply(out$sims.list$psi,c(2),mean,na.rm=T)
-psi.res[names(res),"mean"]<-res
-psi<-apply(lpmax,c(2),quantile,probs=lci,na.rm=T)
-ann.res[names(res),"lci"]<-res
-res<-apply(lpmax,c(2),quantile,probs=uci,na.rm=T)
-ann.res[names(res),"uci"]<-res
+psi.ann[names(res),"mean"]<-psi
+psi<-apply(out$sims.list$psi,c(2),quantile,probs=lci,na.rm=T)
+psi.ann[names(res),"lci"]<-psi
+psi<-apply(out$sims.list$psi,c(2),quantile,probs=uci,na.rm=T)
+psi.ann[names(res),"uci"]<-psi
 
 # look at change only since
 
@@ -620,7 +620,52 @@ if(season==1){abline(a=intercept,b=slope,col="darkred",lwd=2)}
 if(season==2){abline(a=intercept,b=slope,col="midnightblue",lwd=2)}
 
 dev.off()
-#
+#plot only recent years
+# save plotted results as pdf
+if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_","2002-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"assumeSRKWpeakoccprob.pdf", sep=""),width=7,height=7)}
+
+if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_","2002-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"peakoccprob.pdf", sep=""),width=7,height=7)}
+
+### plot estimates of peak detectability over all years
+#quartz(width=7, height=6)
+par(mfrow=c(1,1),mai=c(1,1,1,0.5))
+x=rownames(ann.res)[25:length(rownames(ann.res))]
+y=ann.res[,"mean"][25:length(rownames(ann.res))]
+seasname<-c("winter","summer")
+
+plot(x,y,xlab="",ylab="",axes=F,main=paste("Date of Peak Occurence Probability","\n",pod," Pod",seasname[as.numeric(season)],region),
+     ylim=range(dat$day),pch=16,type="l", lwd=1.5,col=color)
+polygon(c(rev(x),x),c(rev(ann.res[,"uci"][25:length(rownames(ann.res))]),ann.res[,"lci"][25:length(rownames(ann.res))]),col=alpha(color,0.2),lty=0)
+
+axis(side=1,at=x)
+if(season==2){
+  axis(side=2,at=c(92,122,152,183,214,244,274,303),
+       labels=c("1Apr","1May","1Jun","1Jul","1Aug","1Sept","1Oct","1Nov"))
+}
+if(season==1){
+  axis(side=2,at=c(182,213,244,274,305,335,366),
+       labels=c("1Jul","1Aug","1Sept","1Oct","1Nov","1Dec","1Jan"))}
+
+if(season ==3){
+  axis(side=2,at=c(1,92,183,274,365),
+       labels=c("1Jan","1Apr","1Jul","1Oct","31Dec"))
+  
+}
+#for (o in 1:500) {
+#if(!is.na(sum(lpmax[o,]))) {
+#  mod<-lm(lpmax[o,]~as.numeric(colnames(lpmax)))$coefficients->r[o,]
+#  abline(mod,col=alpha("salmon",0.2),lwd=2)
+
+#}    
+#}
+#clip(2008,2017, min(y), max(y))
+if(season==1){abline(a=intercept,b=slope,col="darkred",lwd=2)}
+if(season==2){abline(a=intercept,b=slope,col="midnightblue",lwd=2)}
+
+dev.off()
+
+
+
 #-----------------------------------------------------------------
 # Plot first date detectability > selected prob  
 #-----------------------------------------------------------------

@@ -110,9 +110,10 @@ points(meannumdays$lon[meannumdays$region=="ps"],meannumdays$lat[meannumdays$reg
 points(meannumdays$lon[meannumdays$region=="uss"],meannumdays$lat[meannumdays$region=="uss"],type="p",pch=16, col="darkblue",cex=log(meannumdays$mnnumdays, base=10))
 points(meannumdays$lon[meannumdays$region=="jf"],meannumdays$lat[meannumdays$region=="jf"],type="p",pch=16, col="darkgreen",cex=log(meannumdays$mnnumdays, base=10))
 
-legend(-122.3,47,legend=c("# days per year= 2","# days per year= 80"),
-       pch=21, pt.bg=c("darkblue","darkblue"), pt.cex=c(log(2, base=10), log(80, base=10)))
-
+legend(-122.3,47,legend=c("Central Salish Sea","Puget Sound proper","# days per year= 2","# days per year= 80"),
+       pch=21, pt.bg=c("darkblue","salmon","darkblue","darkblue"), pt.cex=c(log(5, base=10),log(5, base=10),log(2, base=10), log(80, base=10)))
+#add  lime kiln
+points(123.1510,48.5160,pch=4 )
 dev.off()
 
 
@@ -215,6 +216,22 @@ legend(-123.5,46,legend=c("# days per year= 2","# days per year= 80"),
 
 dev.off()
 
+#make a map that shows mean number of whale days by lat long in each region
+newmap <- getMap(resolution = "low")
+
+#quartz(height=12, width=6)
+if(assumeSRKW==FALSE & use3regions==FALSE){mapname<-paste("analyses/figures/OrcaPhenPlots/srkw_justmap_April1.pdf")
+pdf(mapname,height=12, width=6)
+}
+plot(newmap, xlim = c(-126, -120), ylim = c(49.2, 51), asp = 1)
+points(meannumdays$lon[meannumdays$region=="ps"],meannumdays$lat[meannumdays$region=="ps"],type="p",pch=16, col=adjustcolor("salmon", alpha.f=0.1),cex=log(meannumdays$mnnumdays, base=10))
+points(meannumdays$lon[meannumdays$region=="uss"],meannumdays$lat[meannumdays$region=="uss"],type="p",pch=16, col=adjustcolor("darkblue", alpha.f=0.1),cex=log(meannumdays$mnnumdays, base=10))
+legend(-122.3,47,legend=c("Central Salish Sea","Puget Sound proper","# days per year= 2","# days per year= 80"),
+       pch=21, pt.bg=adjustcolor(c("darkblue","salmon","darkblue","darkblue"), alpha.f=.1), pt.cex=c(log(5, base=10),log(5, base=10),log(2, base=10), log(80, base=10)))
+#add  lime kiln
+points(-123.1510,48.5160,pch=4,cex=2 )
+
+dev.off()#adjustcolor(col,alpha.f=0.2)
 
 #Make box plots of data across all years
 
