@@ -20,8 +20,8 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="L"#options= J,K,L,SR
-region="uss"#options=upper salish sea (uss) or puget sound (ps)
+pod="J"#options= J,K,L,SR
+region="ps"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
 #Choose the credible intervals you want
@@ -279,22 +279,27 @@ length(unique(dat$day))
 if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"meanoccprob_assumeSRKW.pdf", sep=""),height=6,width=8)}
 if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"meanoccprob.pdf", sep=""),height=6,width=8)}
 
+
 #quartz(height=6,width=8)
-plot(doy,colMeans(out$mean$psi[31:40,]), type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", col=cols[3], lwd=2)
+psi.med<-apply(out$sims.list$psi[,31:40,],c(3),median)
+plot(doy,psi.med, type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", lty=2,col=color, lwd=2)
 names(out)
+#lines(doy,psi.med)
 psi.uci<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.75)
 psi.lci<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.25)
 #lines(doy,psi.lci,col=cols[2], lwd=2)
 #lines(doy,psi.uci,col=cols[2], lwd=2)
 #psi<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.5)
 
-#polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(cols[3],0.2),lty=0)
-
+polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(color,0.2),lty=0)
+psi.med<-apply(out$sims.list$psi[,21:30,],c(3),median)
 #lines(doy,colMeans(out$mean$psi[11:20,]),col=cols[4])
-lines(doy,colMeans(out$median$psi[21:30,]),col=cols[2], lwd=2)
+lines(doy,psi.med,col=color, lwd=2)
 psi.uci<-apply(out$sims.list$psi[,21:30,],c(3),quantile,probs=.75)
+#lines(doy,psi.uci)
 psi.lci<-apply(out$sims.list$psi[,21:30,],c(3),quantile,probs=.25)
-#polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(cols[2],0.2),lty=0)
+#lines(doy,psi.lci)
+polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(color,0.2),lty=0)
 
 #lines(doy,colMeans(out$mean$psi[1:10,]),col=cols[1], lwd=2)
 #lines(doy,colMeans(out$mean$psi[1:30,]),col=color,lwd=3)
@@ -302,7 +307,7 @@ legend("topleft",legend=c(paste(unique(dat$year)[31],"-",unique(dat$year)[40],se
                          #paste(unique(dat$year)[11],"-",unique(dat$year)[20],sep= ""),
                          #paste(unique(dat$year)[21],"-",unique(dat$year)[30],sep= ""),
                          #paste(unique(dat$year)[1],"-",unique(dat$year)[10],sep= ""),
-                          paste(unique(dat$year)[21],"-",unique(dat$year)[30],sep= "")),lwd=c(2,2),lty=1,col=c(cols[3],cols[2]), bty="n")
+                          paste(unique(dat$year)[21],"-",unique(dat$year)[30],sep= "")),lwd=c(2,2),lty=c(2,1),col=color, bty="n")
 dev.off()
 # summarize estimates and look at change across the whole time series
 
