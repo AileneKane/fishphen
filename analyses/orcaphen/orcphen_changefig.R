@@ -81,7 +81,7 @@ pdf(file="analyses/figures/srkw_salmon_recentshifts_lm.pdf",width=16,height=6)
 par(mfcol=c(2,1),mai=c(.5,1,.5,0.5))
 x<-rep(1,times=3)
 #Central salish sea first...
-plot(x,all2$slope.mn[all2$phase=="first.20022016"],pch=c(21,22,24),bg="darkblue", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,3), bty="l")
+plot(x,all2$slope.mn[all2$phase=="first.20022016"],pch=c(21,22,24),bg="darkblue", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,6), bty="l")
 abline(h=0,lty=2)
 arrows(x,all2$slope.lci[all2$phase=="first.20022016"],x,all2$slope.uci[all2$phase=="first.20022016"], code=3, length=0)
 arrows(x+1,all2$slope.lci[all2$phase=="peak.20022016"],x+1,all2$slope.uci[all2$phase=="peak.20022016"], code=3, length=0)
@@ -92,7 +92,7 @@ points(x+1,all2$slope.mn[all2$phase=="peak.20022016"],pch=c(21,22,24),bg="darkbl
 points(x+2,all2$slope.mn[all2$phase=="last.20022016"],pch=c(21,22,24),bg="darkblue")
 
 axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
-mtext("SRKWs 1990-2016",side=3,line=0)
+mtext("SRKWs 2002-2016",side=3,line=0)
 legend("topleft",legend=c("J pod","K pod","L pod"),pch=c(21,22,24), bty="n",pt.bg="darkblue")
 #Puget sound proper
 plot(x,all1$slope.mn[all1$phase=="first.20022016"],pch=c(21,22,24),bg="salmon", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-10,7), bty="l")
