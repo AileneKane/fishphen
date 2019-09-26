@@ -22,7 +22,7 @@ library(scales)
 # Choose the data you want:
 pod="J"#options= J,K,L,SR
 region="uss"#options=upper salish sea (uss) or puget sound (ps)
-wholeyear=TRUE #if FALSE then resitrct to assigned seasons for uss and ps
+wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
 #Choose the credible intervals you want
 lci<-0.10
@@ -118,7 +118,7 @@ cat("
     taub~dgamma(1.0E-6,1.0E-6)      
     
     # Specify priors for detection model
-   for (i in 1:nsite){#could add site specific detections  
+   for (i in 1:nsite){# 
     for (y in 1:nyear) {
     p[i,y] ~ dunif(0, 1)
     }

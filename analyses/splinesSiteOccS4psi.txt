@@ -28,7 +28,7 @@
     taub~dgamma(1.0E-6,1.0E-6)      
     
     # Specify priors for detection model
-   for (i in 1:nsite){#could add site specific detections  
+   for (i in 1:nsite){# 
     for (y in 1:nyear) {
     p[i,y] ~ dunif(0, 1)
     }
