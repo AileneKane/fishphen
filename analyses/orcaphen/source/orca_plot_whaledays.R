@@ -77,17 +77,17 @@ wdays.monthsd.uss<-colSds(as.matrix(wdays.bymonth.uss), na.rm=TRUE)
 
 wdays.bymonth.ps.stan<-wdays.monthmean.ps-mean(wdays.monthmean.ps)
 wdays.bymonth.uss.stan<-wdays.monthmean.uss-mean(wdays.monthmean.uss)
-#most recent 10 years only
-wdays.monthmean.uss.recent<-colMeans(wdays.bymonth.uss[(dim(wdays.bymonth.uss)[1]-9):(dim(wdays.bymonth.uss)[1]),], na.rm=TRUE)
-wdays.monthsd.uss.recent<-colSds(as.matrix(wdays.bymonth.uss[(dim(wdays.bymonth.uss)[1]-9):(dim(wdays.bymonth.uss)[1]),], na.rm=TRUE))
-wdays.monthmean.ps.recent<-colMeans(wdays.bymonth.ps[(dim(wdays.bymonth.ps)[1]-9):(dim(wdays.bymonth.ps)[1]),], na.rm=TRUE)
-wdays.monthsd.ps.recent<-colSds(as.matrix(wdays.bymonth.ps[(dim(wdays.bymonth.ps)[1]-9):(dim(wdays.bymonth.ps)[1]),]), na.rm=TRUE)
+#most recent 8 years only
+wdays.monthmean.uss.recent<-colMeans(wdays.bymonth.uss[(dim(wdays.bymonth.uss)[1]-8):(dim(wdays.bymonth.uss)[1]),], na.rm=TRUE)
+wdays.monthsd.uss.recent<-colSds(as.matrix(wdays.bymonth.uss[(dim(wdays.bymonth.uss)[1]-8):(dim(wdays.bymonth.uss)[1]),], na.rm=TRUE))
+wdays.monthmean.ps.recent<-colMeans(wdays.bymonth.ps[(dim(wdays.bymonth.ps)[1]-7):(dim(wdays.bymonth.ps)[1]),], na.rm=TRUE)
+wdays.monthsd.ps.recent<-colSds(as.matrix(wdays.bymonth.ps[(dim(wdays.bymonth.ps)[1]-8):(dim(wdays.bymonth.ps)[1]),]), na.rm=TRUE)
 
-#early years only (everything EXCEPT the most recent 10 years)
-wdays.monthmean.uss.old<-colMeans(wdays.bymonth.uss[1:(dim(wdays.bymonth.uss)[1]-10),], na.rm=TRUE)
-wdays.monthsd.uss.old<-colSds(as.matrix(wdays.bymonth.uss[1:(dim(wdays.bymonth.uss)[1]-10),]), na.rm=TRUE)
-wdays.monthmean.ps.old<-colMeans(wdays.bymonth.ps[1:(dim(wdays.bymonth.ps)[1]-10),], na.rm=TRUE)
-wdays.monthsd.ps.old<-colSds(as.matrix(wdays.bymonth.ps[1:(dim(wdays.bymonth.ps)[1]-10),]), na.rm=TRUE)
+#8 years prior to most recent 8 years (everything EXCEPT the most recent 10 years)
+wdays.monthmean.uss.old<-colMeans(wdays.bymonth.uss[(dim(wdays.bymonth.uss)[1]-16):(dim(wdays.bymonth.uss)[1]-9),], na.rm=TRUE)
+wdays.monthsd.uss.old<-colSds(as.matrix(wdays.bymonth.uss[(dim(wdays.bymonth.uss)[1]-16):(dim(wdays.bymonth.uss)[1]-9),]), na.rm=TRUE)
+wdays.monthmean.ps.old<-colMeans(wdays.bymonth.ps[(dim(wdays.bymonth.ps)[1]-16):(dim(wdays.bymonth.ps)[1]-9),], na.rm=TRUE)
+wdays.monthsd.ps.old<-colSds(as.matrix(wdays.bymonth.ps[(dim(wdays.bymonth.ps)[1]-16):(dim(wdays.bymonth.ps)[1]-9),]), na.rm=TRUE)
 
 
 if(assumeSRKW==FALSE & use3regions==FALSE){pdf(paste("analyses/figures/OrcaPhenPlots/wdays_bymonth",firstyear,"2regs.pdf", sep="_"),height= 12, width = 6)}
@@ -115,29 +115,31 @@ for(i in 1:12){
 #legend("topleft",legend=c("","Puget Sound Proper"), pch=21,pt.bg=c("darkblue","salmon"), bty="n")
 dev.off()
 
-if(assumeSRKW==FALSE & use3regions==FALSE){pdf(paste("analyses/figures/OrcaPhenPlots/wdays_bymonth_earlylate",firstyear,"2regs.pdf", sep="_"),height= 12, width = 6)}
-if(assumeSRKW==FALSE & use3regions==TRUE){pdf(paste("analyses/figures/OrcaPhenPlots/wdays_bymonth_earlylate",firstyear,"3regs.pdf", sep="_"),height= 12, width = 6)}
-if(assumeSRKW==TRUE & use3regions==FALSE){pdf(paste("analyses/figures/OrcaPhenPlots/wdays_bymonth_earlylate",firstyear,"assumeSRKW2regs.pdf", sep="_"),height= 12, width = 6)}
-if(assumeSRKW==TRUE & use3regions==TRUE){pdf(paste("analyses/figures/OrcaPhenPlots/wdays_bymonth_earlylate",firstyear,"assumeSRKW3regs.pdf", sep="_"),height= 12, width = 6)}
+if(assumeSRKW==FALSE & use3regions==FALSE){pdf(paste("analyses/figures/OrcaPhenPlots/wdays_bymonth_earlylate",firstyear,"2regs.pdf", sep="_"),height= 12, width = 8)}
+if(assumeSRKW==FALSE & use3regions==TRUE){pdf(paste("analyses/figures/OrcaPhenPlots/wdays_bymonth_earlylate",firstyear,"3regs.pdf", sep="_"),height= 12, width = 8)}
+if(assumeSRKW==TRUE & use3regions==FALSE){pdf(paste("analyses/figures/OrcaPhenPlots/wdays_bymonth_earlylate",firstyear,"assumeSRKW2regs.pdf", sep="_"),height= 12, width = 8)}
+if(assumeSRKW==TRUE & use3regions==TRUE){pdf(paste("analyses/figures/OrcaPhenPlots/wdays_bymonth_earlylate",firstyear,"assumeSRKW3regs.pdf", sep="_"),height= 12, width = 8)}
 
 #quartz(height=10, width=5)
 par(mfrow=c(2,1))
 m<-c(seq(1:12))
-plot(m,wdays.monthmean.uss.old,ylab= "Number of Whale Days", xlab= "Month", type="l",col= "darkblue",ylim= c(0,35),cex.axis=1.2,cex.lab=1.2, main= "Central Salish Sea", lwd=2)
-polygon(c(rev(m),m),c(rev(wdays.monthmean.uss.old+ wdays.monthsd.uss.old),wdays.monthmean.uss.old- wdays.monthsd.uss.old),col=alpha("darkblue",0.1),lty=0)
-lines(m,wdays.monthmean.uss.recent, col="darkblue", lty=2, lwd=2)
-#polygon(c(rev(m),m),c(rev(wdays.monthmean.uss.recent+ wdays.monthsd.uss.recent),wdays.monthmean.uss.recent- wdays.monthsd.uss.recent),col=alpha("darkblue",0.1),lty=0)
+plot(m,wdays.monthmean.uss.old,ylab= "Number of Whale Days", xlab= "Month", type="l",col= "royalblue",ylim= c(0,35),cex.axis=1.2,cex.lab=1.2, main= "Central Salish Sea", lwd=2, lty=2)
+polygon(c(rev(m),m),c(rev(wdays.monthmean.uss.old+ wdays.monthsd.uss.old),wdays.monthmean.uss.old- wdays.monthsd.uss.old),col=alpha("royalblue",0.1),lty=0)
+lines(m,wdays.monthmean.uss.recent, col="darkblue", lty=1, lwd=2)
+polygon(c(rev(m),m),c(rev(wdays.monthmean.uss.recent+ wdays.monthsd.uss.recent),wdays.monthmean.uss.recent- wdays.monthsd.uss.recent),col=alpha("darkblue",0.1),lty=0)
 legend("topleft",
-       legend=c(paste(row.names(wdays.bymonth.uss)[1],"-",row.names(wdays.bymonth.uss)[dim(wdays.bymonth.uss)[1]-10]),
-                paste(row.names(wdays.bymonth.uss)[dim(wdays.bymonth.uss)[1]-9],"-",row.names(wdays.bymonth.uss)[dim(wdays.bymonth.uss)[1]])), lty=c(1,2),col="darkblue", bty="n", lwd=2, cex=0.9)
+       legend=c(paste(row.names(wdays.bymonth.uss)[dim(wdays.bymonth.uss)[1]-8],"-",row.names(wdays.bymonth.uss)[dim(wdays.bymonth.uss)[1]]),
+                paste(row.names(wdays.bymonth.uss)[dim(wdays.bymonth.uss)[1]-16],"-",row.names(wdays.bymonth.uss)[dim(wdays.bymonth.uss)[1]-9])),
+                 lty=c(1,2),col=c("darkblue","royalblue"), bty="n", lwd=2, cex=0.9)
 
-plot(m,wdays.monthmean.ps.old,ylab= "Number of Whale Days", xlab= "Month", type="l",col= "salmon",ylim= c(0,15),cex.axis=1.2,cex.lab=1.2, main= "Puget Sound", lwd=2)
-polygon(c(rev(m),m),c(rev(wdays.monthmean.ps.old+ wdays.monthsd.ps.old),wdays.monthmean.ps.old- wdays.monthsd.ps.old),col=alpha("salmon",0.1),lty=0)
-lines(m,wdays.monthmean.ps.recent, col="salmon", lty=2, lwd=2)
-#polygon(c(rev(m),m),c(rev(wdays.monthmean.uss.recent+ wdays.monthsd.uss.recent),wdays.monthmean.uss.recent- wdays.monthsd.uss.recent),col=alpha("darkblue",0.1),lty=0)
+plot(m,wdays.monthmean.ps.old,ylab= "Number of Whale Days", xlab= "Month", type="l",col= "lightsalmon4",ylim= c(0,15),cex.axis=1.2,cex.lab=1.2, main= "Puget Sound", lwd=2, lty=2)
+polygon(c(rev(m),m),c(rev(wdays.monthmean.ps.old+ wdays.monthsd.ps.old),wdays.monthmean.ps.old- wdays.monthsd.ps.old),col=alpha("lightsalmon4",0.1),lty=0)
+lines(m,wdays.monthmean.ps.recent, col="salmon", lty=1, lwd=2)
+polygon(c(rev(m),m),c(rev(wdays.monthmean.ps.recent+ wdays.monthsd.ps.recent),wdays.monthmean.ps.recent- wdays.monthsd.ps.recent),col=alpha("salmon",0.1),lty=0)
 legend("topleft",
-       legend=c(paste(row.names(wdays.bymonth.ps)[1],"-",row.names(wdays.bymonth.ps)[dim(wdays.bymonth.ps)[1]-10]),
-                paste(row.names(wdays.bymonth.ps)[dim(wdays.bymonth.ps)[1]-9],"-",row.names(wdays.bymonth.ps)[dim(wdays.bymonth.ps)[1]])), lty=c(1,2),col="salmon", bty="n", lwd=2, cex=0.9)
+       legend=c(paste(row.names(wdays.bymonth.ps)[dim(wdays.bymonth.uss)[1]-8],"-",row.names(wdays.bymonth.uss)[dim(wdays.bymonth.uss)[1]]),
+                paste(row.names(wdays.bymonth.ps)[dim(wdays.bymonth.uss)[1]-16],"-",row.names(wdays.bymonth.uss)[dim(wdays.bymonth.uss)[1]-9])),
+                , lty=c(1,2),col=c("salmon","lightsalmon4"), bty="n", lwd=2, cex=0.9)
 dev.off()
 
 pdf("analyses/figures/OrcaPhenPlots/wdays_bymonth_stan.pdf",height= 6, width = 10)

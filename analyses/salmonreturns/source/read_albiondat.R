@@ -32,5 +32,7 @@ dall$calDay<-strftime(strptime(paste(dall$year,dall$month,dall$day,sep="-"), for
 colnames(dall)[5:9]<-c("net.length","catch","sets","effort","cpue")
 d<-subset(dall,select=c(month,day,year,calDay,net.length,catch,sets,effort,cpue))
 d$calDay<-as.integer(d$calDay)
+d1$calDay[which(is.na(d1$calDay))]<-strftime(strptime(paste(d1$year[which(is.na(d1$calDay))],d1$month[which(is.na(d1$calDay))],d1$day[which(is.na(d1$calDay))],sep="-"), format = "%Y-%m-%d"),format = "%j") 
+
 d<-rbind(d1,d)
 write.csv(d,"analyses/output/albionddat.csv",row.names = FALSE)

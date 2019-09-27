@@ -343,31 +343,31 @@ if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,lw
 dev.off()
 
 
-j.occest<-read.csv("analyses/output/J_2sept1_uss1978-2017occprobdoy.csv", header=TRUE)
+j.occest<-read.csv("analyses/output/J_2uss_doy92-303_1978-2017occprobdoy.csv", header=TRUE)
 j2002<-j.occest[j.occest$year>2001,]
 j2002<-j2002[j2002$year!=2015,]
 j1995<-j.occest[j.occest$year>1994,]
 j1995<-j1995[j1995$year!=2015,]
-
+lime2002<-lime.df[lime.df$year>2001,]
 #Plot first ests. should i use pod specific estimates to match occupancy model?
 quartz()
 par(mfcol=c(3,2))
-plot(lime2002$firstest,j2002$first.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln first obs",ylab="J pod arrival est (occmod)", cex=1.2, bty="l", main= "2002-2016")
-mod<-lm(j2002$first.psi~lime2002$firstest)
+plot(lime2002$firstest.all,j2002$first.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln first obs",ylab="J pod arrival est (occmod)", cex=1.2, bty="l", main= "2002-2016")
+mod<-lm(j2002$first.psi~lime2002$firstest.all)
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="darkblue")}
 if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "darkblue")}
 
-plot(lime2002$mean,j2002$peak.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln mean obs doy",ylab="J pod peak est (occmod)", cex=1.2, bty="l")
+plot(lime2002$mean.all,j2002$peak.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln mean obs doy",ylab="J pod peak est (occmod)", cex=1.2, bty="l")
 mod<-lm(j2002$peak.psi~as.numeric(lime2002$mean))
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="darkblue")}
 if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "darkblue")}
 
-plot(lime2002$lastest,j2002$last.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln last obs doy",ylab="J pod last est (occmod)", cex=1.2, bty="l")
+plot(lime2002$lastest.all,j2002$last.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln last obs doy",ylab="J pod last est (occmod)", cex=1.2, bty="l")
 mod<-lm(j2002$last.psi~as.numeric(lime2002$lastest))
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="darkblue")}
 if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "darkblue")}
 
-plot(lime1995$firstest,j1995$first.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln first obs",ylab="J pod arrival est (occmod)", cex=1.2, bty="l", main= "1995-2016")
+plot(lime1995$firstest.all,j1995$first.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln first obs",ylab="J pod arrival est (occmod)", cex=1.2, bty="l", main= "1995-2016")
 mod<-lm(j1995$first.psi~lime1995$firstest)
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="darkblue")}
 if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "darkblue")}
@@ -434,7 +434,7 @@ if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
 
 #plot time series of peak adjacent to each other
 quartz()
-plot(lime.df$year,lime.df$firstest.all, type="l", bty="u", lwd=2, ylab="Day of year (orcas)", xlab="Year", ylim=c(120,180))
+plot(lime.df$year,lime.df$firstest.all+90, type="l", bty="u", lwd=2, ylab="Day of year (orcas)", xlab="Year", ylim=c(120,180))
 par(new = TRUE)
 plot(albchin95$year,albchin95$firstobsdate, type="l", bty="u",col="salmon", lwd=2, lty=2, yaxt="n", ylab="", xlab="", xaxt="n")
 #plot curves of whales vs salmon curves
