@@ -20,8 +20,8 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="K"#options= J,K,L,SR
-region="ps"#options=upper salish sea (uss) or puget sound (ps)
+pod="J"#options= J,K,L,SR
+region="uss"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
 #Choose the credible intervals you want
@@ -234,7 +234,7 @@ names(meanpsi)<-seq(min(dat$year),max(dat$year), by=1)
 # get date of peak probability of occurrence in each simulation
 
 if(region == "uss"){color = "darkblue"
-cols = c("darkblue","lightblue1")}
+cols = c("darkblue","royalblue")}
 if(region == "ps"){color = "salmon"
 cols = c("salmon","lightsalmon4")}
 prob<-0.5
