@@ -28,13 +28,13 @@
     taub~dgamma(1.0E-6,1.0E-6)      
     
     # Specify priors for detection model
-   for (i in 1:nsite){# 
+    for (i in 1:nsite){# 
     for (y in 1:nyear) {
     p[i,y] ~ dunif(0, 1)
     }
     }
     # Ecological submodel: Define state conditional on parameters
-
+    
     for (y in 1:nyear) {  
     for (i in 1:n) {
     z[y,i] ~ dbern(psi[y,i])

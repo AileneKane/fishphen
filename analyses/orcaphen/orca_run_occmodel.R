@@ -20,8 +20,8 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="J"#options= J,K,L,SR
-region="uss"#options=upper salish sea (uss) or puget sound (ps)
+pod="K"#options= J,K,L,SR
+region="ps"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
 #Choose the credible intervals you want
@@ -118,13 +118,13 @@ cat("
     taub~dgamma(1.0E-6,1.0E-6)      
     
     # Specify priors for detection model
-   for (i in 1:nsite){# 
+    for (i in 1:nsite){# 
     for (y in 1:nyear) {
     p[i,y] ~ dunif(0, 1)
     }
     }
     # Ecological submodel: Define state conditional on parameters
-
+    
     for (y in 1:nyear) {  
     for (i in 1:n) {
     z[y,i] ~ dbern(psi[y,i])
@@ -188,7 +188,7 @@ y <- dat$ndet
 
 # Simulation parameters
 #ni=15000; nc=2; nb=0; nt=10
-ni=5000; nc=2; nb=2500; nt=1
+ni=7500; nc=2; nb=2500; nt=1
 # List input data
 jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots","n","X","Z","nc", "nb", "ni", "nt","zst","y")
 
@@ -234,9 +234,9 @@ names(meanpsi)<-seq(min(dat$year),max(dat$year), by=1)
 # get date of peak probability of occurrence in each simulation
 
 if(region == "uss"){color = "darkblue"
-cols = c("lightblue1","lightblue2","lightblue3","lightblue4")}
+cols = c("darkblue","lightblue1")}
 if(region == "ps"){color = "salmon"
-cols = c("lightsalmon","lightsalmon2","lightsalmon4","salmon")}
+cols = c("salmon","lightsalmon4")}
 prob<-0.5
 
 
@@ -281,33 +281,33 @@ if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(da
 
 
 #quartz(height=6,width=8)
-psi.med<-apply(out$sims.list$psi[,31:40,],c(3),median)
-plot(doy,psi.med, type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", lty=2,col=color, lwd=2)
+psi.med<-apply(out$sims.list$psi[,32:40,],c(3),median)
+plot(doy,psi.med, type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", lty=1,col=color, lwd=2)
 names(out)
 #lines(doy,psi.med)
-psi.uci<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.75)
-psi.lci<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.25)
+psi.uci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=.75)
+psi.lci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=.25)
 #lines(doy,psi.lci,col=cols[2], lwd=2)
 #lines(doy,psi.uci,col=cols[2], lwd=2)
 #psi<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.5)
 
 polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(color,0.2),lty=0)
-psi.med<-apply(out$sims.list$psi[,21:30,],c(3),median)
+psi.med<-apply(out$sims.list$psi[,24:31,],c(3),median)
 #lines(doy,colMeans(out$mean$psi[11:20,]),col=cols[4])
-lines(doy,psi.med,col=color, lwd=2)
-psi.uci<-apply(out$sims.list$psi[,21:30,],c(3),quantile,probs=.75)
+lines(doy,psi.med,col=cols[2], lwd=2, lty=2)
+psi.uci<-apply(out$sims.list$psi[,24:31,],c(3),quantile,probs=.75)
 #lines(doy,psi.uci)
-psi.lci<-apply(out$sims.list$psi[,21:30,],c(3),quantile,probs=.25)
+psi.lci<-apply(out$sims.list$psi[,24:31,],c(3),quantile,probs=.25)
 #lines(doy,psi.lci)
-polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(color,0.2),lty=0)
+polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(cols[2],0.2),lty=0)
 
 #lines(doy,colMeans(out$mean$psi[1:10,]),col=cols[1], lwd=2)
 #lines(doy,colMeans(out$mean$psi[1:30,]),col=color,lwd=3)
-legend("topleft",legend=c(paste(unique(dat$year)[31],"-",unique(dat$year)[40],sep= ""),
+legend("topleft",legend=c(paste(unique(dat$year)[32],"-",unique(dat$year)[40],sep= ""),
                          #paste(unique(dat$year)[11],"-",unique(dat$year)[20],sep= ""),
                          #paste(unique(dat$year)[21],"-",unique(dat$year)[30],sep= ""),
                          #paste(unique(dat$year)[1],"-",unique(dat$year)[10],sep= ""),
-                          paste(unique(dat$year)[21],"-",unique(dat$year)[30],sep= "")),lwd=c(2,2),lty=c(2,1),col=color, bty="n")
+                          paste(unique(dat$year)[24],"-",unique(dat$year)[31],sep= "")),lwd=c(2,2),lty=c(1,2),col=c(color,cols[2]), bty="n")
 dev.off()
 # summarize estimates and look at change across the whole time series
 
@@ -351,12 +351,12 @@ intercept.uci<-quantile(r[,1],c(uci),na.rm=T)
 
 slope.lci<-quantile(r[,2],c(lci),na.rm=T)
 slope.uci<-quantile(r[,2],c(uci),na.rm=T)
-#look just at recent trends from 2002-present
+#look just at recent trends from 2001-present
 r.recent<-matrix(NA,dim(lpmax)[1],2)
 for (o in 1:(dim(lpmax)[1])) {
-  y<-lpmax[o,25:40]
+  y<-lpmax[o,24:40]
   y[y=="Inf"]<-NA
-  lm(y~as.numeric(colnames(lpmax))[25:40])$coefficients->r.recent[o,]
+  lm(y~as.numeric(colnames(lpmax))[24:40])$coefficients->r.recent[o,]
 }
 slopevec.recent<-as.vector(r.recent[,2])
 intercept.recent<-mean(r.recent[,1],na.rm=T)
@@ -427,9 +427,9 @@ slope.first.uci<-quantile(r.first[,2],c(uci),na.rm=T)
 #Look at trends just in recent data
 r.first.recent<-matrix(NA,dim(firstlp)[1],2)
 for (o in 1:(dim(firstlp)[1])) {
-  y<-firstlp[o,25:40]
+  y<-firstlp[o,24:40]
   y[y=="Inf"]<-NA
-  lm(y~as.numeric(colnames(firstlp))[25:40])$coefficients->r.first.recent[o,]
+  lm(y~as.numeric(colnames(firstlp))[24:40])$coefficients->r.first.recent[o,]
 }
 slopevec.first.recent<-as.vector(r.first.recent[,2])
 intercept.first.recent<-mean(r.first.recent[,1],na.rm=T)
@@ -499,9 +499,9 @@ slope.last.uci<-quantile(r.last[,2],c(uci),na.rm=T)
 r.last.recent<-matrix(NA,dim(lastlp)[1],2)
 for (o in 1:(dim(lastlp)[1])) {
   # if(!is.na(sum(lpmax[o,]))) {
-  y<-lastlp[o,25:40]
+  y<-lastlp[o,24:40]
   y[y=="Inf"]<-NA
-  lm(y~as.numeric(colnames(lastlp)[25:40]))$coefficients->r.last.recent[o,]
+  lm(y~as.numeric(colnames(lastlp)[24:40]))$coefficients->r.last.recent[o,]
   #}    
 }
 slopevec.last.recent<-as.vector(r.last.recent[,2])
@@ -557,9 +557,9 @@ df<-rbind(
   c(pod,region,season,"peak",round(mean(slopevec,na.rm=T),digits=2),round(quantile(slopevec,lci,na.rm=T),digits=2),round(quantile(slopevec,uci,na.rm=T),digits=2)),
   c(pod,region,season,"first",round(mean(slopevec.first,na.rm=T),digits=2),round(quantile(slopevec.first,lci,na.rm=T),digits=2),round(quantile(slopevec.first,uci,na.rm=T),digits=2)),
   c(pod,region,season,"last",round(mean(slopevec.last,na.rm=T),digits=2),round(quantile(slopevec.last,lci,na.rm=T),digits=2),round(quantile(slopevec.last,uci,na.rm=T),digits=2)),
-  c(pod,region,season,"peak.20022016",round(mean(slopevec.recent,na.rm=T),digits=2),round(quantile(slopevec.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.recent,uci,na.rm=T),digits=2)),
-  c(pod,region,season,"first.20022016",round(mean(slopevec.first.recent,na.rm=T),digits=2),round(quantile(slopevec.first.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.first.recent,uci,na.rm=T),digits=2)),
-  c(pod,region,season,"last.20022016",round(mean(slopevec.last.recent,na.rm=T),digits=2),round(quantile(slopevec.last.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.last.recent,uci,na.rm=T),digits=2))
+  c(pod,region,season,"peak.20012016",round(mean(slopevec.recent,na.rm=T),digits=2),round(quantile(slopevec.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.recent,uci,na.rm=T),digits=2)),
+  c(pod,region,season,"first.20012016",round(mean(slopevec.first.recent,na.rm=T),digits=2),round(quantile(slopevec.first.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.first.recent,uci,na.rm=T),digits=2)),
+  c(pod,region,season,"last.20012016",round(mean(slopevec.last.recent,na.rm=T),digits=2),round(quantile(slopevec.last.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.last.recent,uci,na.rm=T),digits=2))
   )
 colnames(df)<-c("pod","region","season","phase","slope.mn","slope.lci","slope.uci")
 if(assumeSRKW==TRUE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"occprob_wrecent_assumeSRKW.csv", sep="")}
@@ -627,20 +627,20 @@ if(season==2){abline(a=intercept,b=slope,col="midnightblue",lwd=2)}
 dev.off()
 #plot only recent years
 # save plotted results as pdf
-if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_","2002-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"assumeSRKWpeakoccprob.pdf", sep=""),width=7,height=7)}
+if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_","2001-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"assumeSRKWpeakoccprob.pdf", sep=""),width=7,height=7)}
 
-if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_","2002-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"peakoccprob.pdf", sep=""),width=7,height=7)}
+if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_","2001-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"peakoccprob.pdf", sep=""),width=7,height=7)}
 
 ### plot estimates of peak occurence over only recent years
 #quartz(width=7, height=6)
 par(mfrow=c(1,1),mai=c(1,1,1,0.5))
-x=rownames(ann.res)[25:length(rownames(ann.res))]
-y=ann.res[,"mean"][25:length(rownames(ann.res))]
+x=rownames(ann.res)[24:length(rownames(ann.res))]
+y=ann.res[,"mean"][24:length(rownames(ann.res))]
 seasname<-c("winter","summer")
 
 plot(x,y,xlab="",ylab="",axes=F,main=paste("Date of Peak Occurence Probability","\n",pod," Pod",seasname[as.numeric(season)],region),
      ylim=range(dat$day),pch=16,type="l", lwd=1.5,col=color)
-polygon(c(rev(x),x),c(rev(ann.res[,"uci"][25:length(rownames(ann.res))]),ann.res[,"lci"][25:length(rownames(ann.res))]),col=alpha(color,0.2),lty=0)
+polygon(c(rev(x),x),c(rev(ann.res[,"uci"][24:length(rownames(ann.res))]),ann.res[,"lci"][24:length(rownames(ann.res))]),col=alpha(color,0.2),lty=0)
 
 axis(side=1,at=x)
 if(season==2){
