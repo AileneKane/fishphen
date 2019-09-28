@@ -247,6 +247,16 @@ lastmod<-lmer(lastobsdateall~yearsall+(1|group), data=allphen)
 peakmod<-lmer(peakobsdateall~yearsall+(1|group), data=allphen)
 midmod<-lmer(midobsdateall~yearsall+(1|group), data=allphen)
 
+#make a big table of model output
+allmodsums<-as.data.frame(cbind(c(fixef(firstmod)[1],confint(firstmod, level = 0.50)[3,1:2],fixef(firstmod)[2],confint(firstmod, level = 0.50)[4,1:2]),
+                                c(fixef(lastmod)[1],confint(lastmod, level = 0.50)[3,1:2],fixef(lastmod)[2],confint(lastmod, level = 0.50)[4,1:2]),
+                                c(fixef(midmod)[1],confint(midmod,level=0.5)[3,1:2],fixef(midmod)[2],confint(midmod,level=0.5)[4,1:2]),
+                              c(fixef(peakmod)[1], confint(peakmod,level=0.5)[3,1:2],fixef(peakmod)[2], confint(peakmod,level=0.5)[4,1:2])))
+
+colnames(allmodsums)<-c("first","last","mid","pk")
+rownames(allmodsums)<-c("int","int.25","int.75","yrs","yrs.25","yrs.75")
+write.csv(allmodsums, "analyses/output/salmonreturntrends_pslmm.csv", row.names = FALSE)
+
 #quartz()
 
 #Central salish sea = albion test fishery from fraser
