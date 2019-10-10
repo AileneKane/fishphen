@@ -173,6 +173,7 @@ Z<-t(solve(sqrt.OMEGA_all,t(Z_K)))
 # Input data
 dat$site <- factor(dat$site)#
 dat$site <- droplevels(dat$site)
+fas<-sort(unique(dat$site))
 dat$site <- as.integer(dat$site)
 
 site <- dat$site
@@ -210,10 +211,14 @@ jags.out<-jags.parallel(jags.data,f.inits,parameters,"analyses/splinesSiteOccS4p
 
 #Look at psi
 out<-jags.out$BUGSoutput
-jags.out$BUGSoutput$mean$psi#probability of presence (annual)
+jags.out$BUGSoutput$mean$psi#probability of presence (daily, across 40 years)
 dim(jags.out$BUGSoutput$mean$psi)
-meanpsi<-rowMeans(jags.out$BUGSoutput$mean$psi)
+meanpsi<-rowMeans(jags.out$BUGSoutput$mean$psi)#meanannual mean prob occurrence
 names(meanpsi)<-seq(min(dat$year),max(dat$year), by=1)
+
+meanp<-jags.out$BUGSoutput$mean$p
+rownames(meanp)<-fas
+colnames(meanp)<-seq(min(dat$year),max(dat$year), by=1)
 # Save model output
 #if(pod=="J" & season=="1"){save(out,file="jags.output/jpod.season1.psi")}
 #if(pod=="J" & season=="2"){save(out,file="jags.output/jpod.season2.psi")}
@@ -577,6 +582,19 @@ if(assumeSRKW==FALSE){phen.name<-paste("analyses/output/",pod,"_",season,region,
 
 write.csv(phen,phen.name, row.names=FALSE)
 
+if(assumeSRKW==TRUE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"assumeSRKWdetprob.csv", sep="")}
+if(assumeSRKW==FALSE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"detprob.csv", sep="")}
+
+write.csv(meanp, p.name, row.names=TRUE)
+if(assumeSRKW==TRUE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"assumeSRKWdetprob.csv", sep="")}
+if(assumeSRKW==FALSE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"detprob.csv", sep="")}
+
+mean.psi.allyears<-jags.out$BUGSoutput$mean$psi
+if(assumeSRKW==TRUE){psi.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"assumeSRKWmeanoccprob_all.csv", sep="")}
+if(assumeSRKW==FALSE){psi.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"meanoccprob_all.csv", sep="")}
+
+write.csv(mean.psi.allyears, psi.name, row.names=TRUE)
+
 #-----------------------------------------------------------------
 # Plot output
 #-----------------------------------------------------------------
@@ -588,7 +606,7 @@ if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat
 
 if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"peakoccprob.pdf", sep=""),width=7,height=7)}
 
-### plot estimates of peak detectability over all years
+### plot estimates of peak prob of occurrence over all years
 #quartz(width=7, height=6)
 par(mfrow=c(1,1),mai=c(1,1,1,0.5))
 x=rownames(ann.res)

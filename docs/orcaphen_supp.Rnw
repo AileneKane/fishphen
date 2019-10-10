@@ -93,7 +93,7 @@ modsumtab<-subset(allsums, select=c(pod,Region,Season,phase,slope.all,slope.all.
 #modsumtab$region[modsumtab$region=="uss"]<-"central"
 
 colnames(modsumtab)[1:6]<-c("Pod","Region","Season","Phase","1978-2017 trend","2002-2017 trend")
-modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper and the central Salish Sea, from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5.",
+modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper and the central Salish Sea, from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent credible intervals are in parantheses.",
             label="tab:modsz",align=c(
               "|p{0.01\\textwidth}", 
               "|p{0.04\\textwidth}",
@@ -105,7 +105,7 @@ modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in pe
 
 print(modsum.table, include.rownames=FALSE, hline.after = c(-1,0,12,15,18,21,24),caption.placement="top",size="\\footnotesize")
 @
-\section* {SupplementalFigures}
+\section* {Supplemental Figures}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \end{document}

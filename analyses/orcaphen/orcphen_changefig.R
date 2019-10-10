@@ -32,7 +32,10 @@ hatchshifts<-read.csv( "analyses/output/salmonreturntrends_hatch.csv",header=TRU
 
 #hatchshifts<-hatchshifts[hatchshifts$type=="hatch",]
 albion<-read.csv("analyses/output/albionreturntrends.csv",header=TRUE)
-colnames(albion)<-c("name","value")
+albionsp<-read.csv("analyses/output/albionreturntrends_springsum.csv",header=TRUE)
+albionfa<-read.csv("analyses/output/albionreturntrends_fall.csv",header=TRUE)
+
+colnames(albion)<-colnames(albionsp)<-colnames(albionfa)<-c("name","value")
 albionshifts<-as.data.frame(t(as.numeric(albion[4:28,2])))
 psshifts<-read.csv("analyses/output/salmonreturntrends_pslmm.csv", header=TRUE)
 
@@ -40,7 +43,7 @@ colnames(albionshifts)<-albion[4:28,1]
 
 # save plotted results as pdf
 pdf(file="analyses/figures/srkw_salmon_shifts_lm.pdf",width=16,height=6)
-
+quartz()
 ### plot estimates of peak occurrence prob over all years
 #quartz(width=16, height=6)
 #par(mfcol=c(2,3),mai=c(.5,1,.5,0.5))
@@ -76,7 +79,7 @@ dev.off()
 #add shifts in most recent (1990-2016)
 pdf(file="analyses/figures/srkw_salmon_recentshifts_lm.pdf",width=12,height=10)
 
-### plot estimates of peak occurrence prob over all years
+###dev.off() plot estimates of peak occurrence prob over all years
 #quartz(width=12, height=10)
 #par(mfcol=c(2,3),mai=c(.5,1,.5,0.5))
 par(mfcol=c(2,2),mai=c(.5,1,.5,0.5))
@@ -108,7 +111,7 @@ points(x+2,all1$slope.mn[all1$phase=="last.20012016"],pch=c(21,22,24),bg="salmon
 axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
 #dev.off()
 x<-c(1,2,3,4)
-y<-c(albionshifts$first.yr,albionshifts$pk.yr,albionshifts$mid.yr,albionshifts$last.yr)
+y<-c(albionshifts$first.yr,albionshifts$mid.yr,albionshifts$pk.yr,albionshifts$last.yr)
 ylci<-c(albionshifts$first.yrlci,albionshifts$pk.yrlci,albionshifts$mid.yrlci,albionshifts$last.yrlci)
 yuci<-c(albionshifts$first.yruci,albionshifts$pk.yruci,albionshifts$mid.yruci,albionshifts$last.yruci)
 
@@ -116,6 +119,9 @@ plot(x,y,pch=23,bg="darkblue",ylab= "",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,
 abline(h=0,lty=2)
 
 arrows(x,ylci,x,yuci, code=3, length=0)
+points(x,y,cex=2,bg="darkblue",pch=23)
+
+y<-c(albionfa$first.yr,albionfa$mid.yr,albionfa$pk.yr,albionfa$last.yr)
 points(x,y,cex=2,bg="darkblue",pch=23)
 
 psshifts
@@ -130,7 +136,7 @@ points(x,y,cex=2,bg="salmon",pch=23)
 
 axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
 
-
+dev.off()
 ##Separate salmon figure
 pdf(file="analyses/figures/salmon_shifts_lm.pdf",width=16,height=6)
 par(mfcol=c(2,2),mai=c(.5,1,.5,0.5))

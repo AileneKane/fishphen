@@ -54,7 +54,7 @@ hatch<-left_join(hatch,latlon,rep=TRUE)
 #Map the wild vs hatchery sites to see where they are
 
 #Make a map with names by species, to help me decide which sites to use for looking at trends in return dates
-quartz(height=8, width=25)
+#quartz(height=8, width=25)
 par(mfrow=c(1,3), oma=c(1,1,1,1))
 newmap <- getMap(resolution = "low")
 sp<-unique(wild$sp)
@@ -67,7 +67,7 @@ for(s in 1:length(sp)){
 }
 
 #now hatchery salmon
-quartz(height=8, width=25)
+#quartz(height=8, width=25)
 par(mfrow=c(1,3), oma=c(1,1,1,1))
 newmap <- getMap(resolution = "low")
 sp<-unique(hatch$sp)
