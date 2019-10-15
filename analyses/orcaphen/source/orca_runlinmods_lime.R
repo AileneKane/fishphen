@@ -150,9 +150,9 @@ for(p in 1:length(podcols)){
       years.all<-c(years.all,years[y])
       nobs.all<-c(nobs.all,length(yrdat$day[yrdat[,colnum]==1]))
      
-      firstest.all<-c(firstest.all,min(yrdat$daysaftmar31[yrdat[,colnum]==1], na.rm=TRUE))
-      lastest.all<-c(lastest.all,max(yrdat$daysaftmar31[yrdat[,colnum]==1], na.rm=TRUE))
-      mean.all<-c(mean.all,mean(yrdat$daysaftmar31[yrdat[,colnum]==1], na.rm=TRUE))
+      firstest.all<-c(firstest.all,min(yrdat$day[yrdat[,colnum]==1], na.rm=TRUE))
+      lastest.all<-c(lastest.all,max(yrdat$day[yrdat[,colnum]==1], na.rm=TRUE))
+      mean.all<-c(mean.all,mean(yrdat$day[yrdat[,colnum]==1], na.rm=TRUE))
       
     }
   }

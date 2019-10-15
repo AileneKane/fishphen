@@ -18,7 +18,7 @@ dim(d)#6148
 unique(d$calDay)
 d$calDay<-as.integer(as.character(d$calDay))
 allyears<-unique(d$year)
-dat<-d[as.numeric(d$year)>2000,]
+dat<-d
 season="allyear"#choices are "springsum" or "fall" or "allyear
 firstobsdate<-c()
 lastobsdate<-c()
@@ -172,7 +172,7 @@ names(allmodsums)<-c("sp","site","mn.cpue","mn.total","meanfirst.int","first.int
 
 
 
-if(season=="springsum"){write.csv(allmodsums, "analyses/output/albionreturntrends_springsum.csv", row.names = TRUE)}
+if(season=="springsum"){write.csv(allmodsums, "analyses/output/albionreturntrends_springsum_.csv", row.names = TRUE)}
 if(season=="fall"){write.csv(allmodsums, "analyses/output/albionreturntrends_fall.csv", row.names = TRUE)}
 if(season=="allyear"){write.csv(allmodsums, "analyses/output/albionreturntrends_allyear.csv", row.names = TRUE)}
 
@@ -190,6 +190,7 @@ year<-as.factor(dat$year)
 cpue<-as.numeric(dat$cpue)
 cpue.dat<-as.data.frame(cbind(y,year,cpue)) 
 #fit<-sme(cpue,doy,year,lambda.mu=40,lambda.v=40)
+
 fit<-sme(cpue,doy,year,criteria="AIC")
 quartz()
 plot(fit,type="diagnostic")
@@ -265,7 +266,7 @@ for(y in allyears){
   }
   print(y);print(first);print(last);print(total); print(mid)
   years<-c(years,y)
-  allseasons<-c(allseasons,season[s])
+  #allseasons<-c(allseasons,season[s])
   firstobsdate<-c(firstobsdate,first)
   lastobsdate<-c(lastobsdate,last)
   midobsdate<-c(midobsdate,mid)
