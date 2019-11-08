@@ -68,6 +68,7 @@ d$FishArea[d$FishArea=="121A"]<-"121C"
 d$Long[which(as.numeric(d$Long)>0)]<-as.numeric(d$Long[which(as.numeric(d$Long)>0)])*-1
 
 quads<-quads[,1:6]
+colnames(quads)[1]<-"Quad"
 #format "quads" to match orcamaster database above
 
 quads$Fish.Area[quads$Fish.Area==5.0]<-"05"

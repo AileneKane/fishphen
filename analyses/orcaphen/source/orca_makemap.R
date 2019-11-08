@@ -117,11 +117,16 @@ legend(-122.3,52,legend=c("Central Salish Sea","Puget Sound proper","# days per 
        pch=c(16,16,16,16,8,17), col=c(adjustcolor("darkblue",alpha.f=0.4),adjustcolor("salmon",alpha.f=0.6),adjustcolor("darkblue",alpha.f=0.4),adjustcolor("darkblue",alpha.f=0.4),"black","black"), pt.cex=c(log(7, base=10),log(7, base=10),log(2, base=10), log(80, base=10),1,1))
 #add  lime kiln
 points(-123.1510,48.5160,pch=8,col="black" )
+#add  albion test fishery
+
 points(-122.62275,49.2104,pch=17,col="black" )
 
 dev.off()
+limekiln<-c(48.5160,-123.1510,"Lime Kiln Point State Park","NA")
+albion<-c(49.2104,-122.62275,"Albion Test Fishery","NA")
 
-
+mapdatfile<-rbind(limekiln,albion,meannumdays)
+write.csv(mapdatfile,"analyses/output/srkw_mapdatfile.csv", row.names = FALSE)
 #Try boxplots
 if(assumeSRKW==TRUE & use3regions==FALSE){figname<-paste("analyses/figures/OrcaPhenPlots/srkw_phenmap_assumeSRKW_April1box.pdf")}
 if(assumeSRKW==FALSE & use3regions==FALSE){figname<-paste("analyses/figures/OrcaPhenPlots/srkw_phenmap_April1box.pdf")}
