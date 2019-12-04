@@ -10,7 +10,7 @@
 #housekeeping
 
 rm(list=ls()) 
-options(stringsAsFactors = FALSE)
+options(stringsAsFactorwants = FALSE)
 
 # Set working directory
 setwd("~/Documents/GitHub/fishphen")
@@ -24,7 +24,7 @@ pod="J"#options= J,K,L,SR
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
-#Choose the credible intervals you want
+#Choose the credible intervals you 
 lci<-0.25
 uci<-0.75
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)

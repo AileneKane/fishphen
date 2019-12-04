@@ -35,7 +35,7 @@ uss.start<-91#April 1 = 91,
 
 d <- read.csv("data/AppendixII.csv")
 quads<-read.csv("data/QuadCentroids.csv")
-dim(d)#105339  18 on Nov 08, 2019
+dim(d)#105344  18 on Nov 08, 2019
 
 # 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
 source("analyses/orcaphen/source/clean_orca.R")

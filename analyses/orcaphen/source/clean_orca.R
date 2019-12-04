@@ -63,7 +63,8 @@ d$FishArea[d$FishArea=="20"]<-"20C"
 d$FishArea[d$FishArea=="28"]<-"28C"
 d$FishArea[d$FishArea=="29"]<-"29C"
 d$FishArea[d$FishArea=="121A"]<-"121C"
-
+d$FishArea[d$FishArea=="1-Aug"]<-"81"
+d$FishArea[d$FishArea=="2-Aug"]<-"82"
 #6. Clean Long and Convert quad data to FishArea and Lat Long
 d$Long[which(as.numeric(d$Long)>0)]<-as.numeric(d$Long[which(as.numeric(d$Long)>0)])*-1
 
@@ -190,6 +191,29 @@ d<-d[-which(is.na(d$day)),]
 d$Lat[which(!is.na(d$ActLat))]<-d$ActLat[which(!is.na(d$ActLat))]
 d$Long[which(!is.na(d$ActLong))]<-d$ActLong[which(!is.na(d$ActLong))]
 d$Long[which(as.numeric(d$Long)>0)]<- -1* as.numeric(d$Long[which(as.numeric(d$Long)>0)])
+
+#Now the fishing area is incorrect for some of these lat longs
+ d$FishArea[d$Lat=="47.9538"]<-"82"
+ d$FishArea[d$Lat=="47.9548"]<-"82"
+ d$FishArea[d$Lat=="47.9053"]<-"9"
+ d$FishArea[d$Lat=="47.8161"]<-"10"
+ d$FishArea[d$Lat=="47.783"]<-"10"
+ d$FishArea[d$Lat=="47.8026"]<-"9"
+ d$FishArea[d$Lat=="47.6768"]<-"10"
+ d$FishArea[d$Lat=="47.881"]<-"9"
+ d$FishArea[d$Lat=="47.5249"]<-"10"
+ #d$FishArea[d$Lat=="48.0443"]#already correct
+ #d$FishArea[d$Lat=="48.1084"]#already correct
+ #d$FishArea[d$Lat=="48.1278"]#already correct
+ #d$FishArea[d$Lat=="48.1122"]#already correct
+ #d$FishArea[d$Lat=="48.1222"]#already correct
+ #d$FishArea[d$Lat=="48.1196"]#already correct
+ d$FishArea[d$Lat=="46.9275"]<-"02"
+ d$FishArea[d$Lat=="47.1517"]<-"02"
+ d$FishArea[d$Lat=="47.1007"]<-"02"
+ d$FishArea[d$Lat=="46.9448"]<-"02"
+ d$FishArea[d$Lat=="47.9043"]<-"04"
+ d$FishArea[d$Lat=="47.5829"]<-"04"
 #9. Create a new cleaned datafile
 write.csv(d,"analyses/output/AppendixII_cleaned.csv")
 
