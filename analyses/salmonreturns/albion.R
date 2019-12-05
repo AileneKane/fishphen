@@ -179,7 +179,7 @@ if(season=="allyear"){write.csv(allmodsums, "analyses/output/albionreturntrends_
 head(dat)
 
 
-#Eric's suggested analysis
+#now fit splines suggested analysis
 library(sme)
 dat$effort<-as.numeric(dat$effort)
 dat$year<-as.factor(dat$year)
