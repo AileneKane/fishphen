@@ -81,14 +81,13 @@ colnames(meannumdays)<-c("lat","lon","region","mnnumdays")
 newmap <- getMap(resolution = "low")
 
 #quartz(height=17, width=6)
-#windows(height=10, width=10)
 if(assumeSRKW==TRUE & use3regions==FALSE){mapname<-paste("analyses/figures/OrcaPhenPlots/srkw_justmap_assumeSRKW_April1.pdf")
     pdf(mapname,height=12, width=6)
 }
 if(assumeSRKW==FALSE & use3regions==FALSE){mapname<-paste("analyses/figures/OrcaPhenPlots/srkw_justmap_April1.pdf")
 pdf(mapname,height=12, width=6)
 }
-plot(newmap, xlim = c(-126, -120), ylim = c(47.2, 51), asp = 1)
+plot(newmap, xlim = c(-126, -120), ylim = c(48.2, 51), asp = 1)
 #d$Lat<-as.numeric(d$Lat);d$Long<-as.numeric(d$Long)
 #points(d$Long[d$FishArea=="07"],d$Lat[d$FishArea=="07"], type="p",och=16, col="green")
 #points(d$Long[d$FishArea=="06"],d$Lat[d$FishArea=="06"], type="p", col="blue")
@@ -118,19 +117,9 @@ legend(-122.3,52,legend=c("Central Salish Sea","Puget Sound proper","# days per 
        pch=c(16,16,16,16,8,17), col=c(adjustcolor("darkblue",alpha.f=0.4),adjustcolor("salmon",alpha.f=0.6),adjustcolor("darkblue",alpha.f=0.4),adjustcolor("darkblue",alpha.f=0.4),"black","black"), pt.cex=c(log(7, base=10),log(7, base=10),log(2, base=10), log(80, base=10),1,1))
 #add  lime kiln
 points(-123.1510,48.5160,pch=8,col="black" )
-#add  albion test fishery
-
 points(-122.62275,49.2104,pch=17,col="black" )
 
 dev.off()
-limekiln<-c(48.5160,-123.1510,"Lime Kiln Point State Park","NA","NA")
-albion<-c(49.2104,-122.62275,"Albion Test Fishery","NA","NA")
-meannumdays$logdays<-log(meannumdays$mnnumdays, base=10)
-mapdatfile<-rbind(limekiln,albion,meannumdays)
-mapdatfile<-mapdatfile[mapdatfile$region!="oc",]
-write.csv(mapdatfile,"analyses/output/srkw_mapdatfile.csv", row.names = FALSE)
-#check that dat file does not have the erronesou lats from uss
-sort(unique(mapdatfile$lat[mapdatfile$region=="USS"]))
 
 
 #Try boxplots

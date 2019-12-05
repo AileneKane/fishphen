@@ -10,21 +10,21 @@
 #housekeeping
 
 rm(list=ls()) 
-options(stringsAsFactorwants = FALSE)
+options(stringsAsFactors = FALSE)
 
 # Set working directory
-setwd("~/GitHub/fishphen")
+setwd("~/Documents/GitHub/fishphen")
 
 # Load libraries
 library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="L"#options= J,K,L,SR
+pod="J"#options= J,K,L,SR
 region="ps"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
-#Choose the credible intervals you 
+#Choose the credible intervals you want
 lci<-0.25
 uci<-0.75
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
@@ -567,9 +567,8 @@ df<-rbind(
   c(pod,region,season,"last.20012016",round(mean(slopevec.last.recent,na.rm=T),digits=2),round(quantile(slopevec.last.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.last.recent,uci,na.rm=T),digits=2))
   )
 colnames(df)<-c("pod","region","season","phase","slope.mn","slope.lci","slope.uci")
-cis<-uci-lci
-if(assumeSRKW==TRUE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"_ci",cis,"occprob_wrecent_assumeSRKW.csv", sep="")}
-if(assumeSRKW==FALSE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"_ci",cis,"occprob_wrecent_assumeSRKW.csv", sep="")}
+if(assumeSRKW==TRUE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"occprob_wrecent_assumeSRKW.csv", sep="")}
+if(assumeSRKW==FALSE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"occprob_wrecent_assumeSRKW.csv", sep="")}
 
 write.csv(df,df.name, row.names=FALSE)
 
