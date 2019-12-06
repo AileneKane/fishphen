@@ -23,6 +23,8 @@ library(RColorBrewer)
 library(rworldmap)
 library(scales)
 library(matrixStats)
+
+library(igraph)
 # 1. Choose the years, regions of interest, assumption about reports in the OrcaMaster and get the data
 includeCanada=TRUE
 firstyear=1976#probably set to 1975 or 1976 (Olson et al)
@@ -406,7 +408,7 @@ limeabs<-cbind(years,days,abs)
 alllimeabs<-rbind(alllimeabs,limeabs)
 }
 alllimeabs<-as.data.frame(alllimeabs)
-limewdayspres<-subset(orcasum.days.lime, select=c(year,day,AllSRpres))
+limewdayspres<-subset(orcasum.days.lime, select=c(year,day,AllSRpres,Jpres,Kpres,Lpres))
 colnames(alllimeabs)[1:2]<-colnames(limewdayspres)[1:2]
 alllimeabs$day<-as.numeric(alllimeabs$day)
 alllimeabs$abs<-as.numeric(alllimeabs$abs)
@@ -414,29 +416,66 @@ alllimeabs$abs<-as.numeric(alllimeabs$abs)
 limewdaysabs<-left_join(alllimeabs,limewdayspres)
 #replace NAs with 0
 limewdaysabs$AllSRpres[which(is.na(limewdaysabs$AllSRpres))]<-0
+limewdaysabs$Jpres[which(is.na(limewdaysabs$Jpres))]<-0
+limewdaysabs$Kpres[which(is.na(limewdaysabs$Kpres))]<-0
+limewdaysabs$Lpres[which(is.na(limewdaysabs$Lpres))]<-0
 
 #fit gams of srkw prob of presence
 #source(orca_rungams_lime.R)#take a long time
 limegests<-read.csv("analyses/output/limekiln.srkw.gamests.csv", header=TRUE)
-peakoc.doy<-c()
-peakoc<-c()
-firstprob<-c()
-lastprob<-c()
-years<-c()
+
+get.gests<-function(limegests,occprobs){
+  peakoc.doy<-c()
+  peakoc<-c()
+  firstprob<-c()
+  lastprob<-c()
+  meanprobs<-c()
+  prob.lc<-c()
+  prob.uc<-c()
+  years<-c()
 for(y in unique(limegests$year)){
   yeardat<-limegests[limegests$year==y,]
-  yrpeakoc<-max(yeardat$prob.occ)
-  yrpeakoc.doy<-yeardat$doy[which(yeardat$prob.occ==yrpeakoc)]
-  yrfirst.doy<-yeardat$doy[min(which(yeardat$prob.occ>0.1))]
-  yrlast.doy<-yeardat$doy[max(which(yeardat$prob.occ>0.1))]
+  occprobcol<-yeardat[,which(colnames(yeardat)==occprobs)]
+  yrpeakoc<-max(occprobcol)
+  yrpeakoc.doy<-yeardat$doy[which(occprobcol==yrpeakoc)]
+  yrfirst.doy<-yeardat$doy[min(which(occprobcol>0.1))]
+  yrlast.doy<-yeardat$doy[max(which(occprobcol>0.1))]
+  meanprob<-mean(occprobcol)
+  lprob<-quantile(occprobcol,0.25)
+  uprob<-quantile(occprobcol,0.75)
   peakoc<-c(peakoc,yrpeakoc)
   peakoc.doy<-c(peakoc.doy,yrpeakoc.doy)
   firstprob<-c(firstprob,yrfirst.doy)
   lastprob<-c(lastprob,yrlast.doy)
+  meanprobs<-c(meanprobs,meanprob)
+  prob.lc<-c(prob.lc,lprob)
+  prob.uc<-c(prob.uc,uprob)
   years<-c(years,y)
 }
-gests<-as.data.frame(cbind(years,peakoc,peakoc.doy,firstprob,lastprob))
-row.names(gests)<-NULL
+  gests<-as.data.frame(cbind(years,peakoc,peakoc.doy,firstprob,lastprob,meanprobs,prob.lc,prob.uc))
+  row.names(gests)<-NULL
+  return(gests)
+}
+gests<-get.gests(limegests,"prob.occ")
+jgests<-get.gests(limegests,"jprob.occ")
+kgests<-get.gests(limegests,"kprob.occ")
+lgests<-get.gests(limegests,"lprob.occ")
+
+meanmod<-summary(lm(gests$meanprobs~gests$year))#trend is getting lower
+summary(lm(jgests$meanprobs~jgests$year))#not getting lower
+summary(lm(kgests$meanprobs~kgests$year))#getting lower
+summary(lm(lgests$meanprobs~lgests$year))#getting lower
+
+
+peakmod<-summary(lm(gests$peakoc.doy~gests$year))#trend is getting later
+confint(lm(gests$peakoc.doy~gests$year),level= .90)
+summary(lm(jgests$peakoc.doy~jgests$year))# getting later
+summary(lm(kgests$peakoc.doy~kgests$year))# getting later
+summary(lm(lgests$peakoc.doy~lgests$year))#not getting later
+
+confint(lm(gests$lastprob~gests$year),level= .90)
+confint(lm(gests$firstprob~gests$year), level=.90)
+
 orcasum.days.lime1<-limegests[limegests$year>1993 & limegests$year<2006,]
 orcasum.days.lime2<-limegests[limegests$year>=2006 & limegests$year<2018,]
 
@@ -447,7 +486,6 @@ colnames(wdays.old)<-colnames(wdays.rec)<-c("doy","meanocc","sdocc","n")
 wdays.old$seocc<-wdays.old$sdocc/sqrt(wdays.old$n)
 wdays.rec$seocc<-wdays.rec$sdocc/sqrt(wdays.rec$n)
 
-library(igraph)
 #quartz(height=6, width=12)
 pdf("analyses/orcaphen/figures/orcachinphenoverlap.pdf",height=6, width=12)
 #png("analyses/orcaphen/figures/orcachinphenoverlap.png",height=6, width=12)
