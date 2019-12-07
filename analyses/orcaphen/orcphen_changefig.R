@@ -31,19 +31,21 @@ wildshifts<-read.csv("analyses/output/salmonreturntrends_wild.csv",header=TRUE)
 hatchshifts<-read.csv( "analyses/output/salmonreturntrends_hatch.csv",header=TRUE)
 
 #hatchshifts<-hatchshifts[hatchshifts$type=="hatch",]
-albion<-read.csv("analyses/output/albionreturntrends.csv",header=TRUE)
-albionsp<-read.csv("analyses/output/albionreturntrends_springsum.csv",header=TRUE)
-albionfa<-read.csv("analyses/output/albionreturntrends_fall.csv",header=TRUE)
+albion<-read.csv("analyses/output/albionreturntrends_linmodyrs.csv",header=TRUE)
+#albionsp<-read.csv("analyses/output/albionreturntrends_springsum.csv",header=TRUE)
+#albionfa<-read.csv("analyses/output/albionreturntrends_fall.csv",header=TRUE)
 
-colnames(albion)<-colnames(albionsp)<-colnames(albionfa)<-c("name","value")
-albionshifts<-as.data.frame(t(as.numeric(albion[4:28,2])))
+#colnames(albion)<-colnames(albionsp)<-colnames(albionfa)<-c("name","value")
+#albionshifts<-as.data.frame(t(as.numeric(albion[4:28,2])))
+colnames(albion)[1]<-"coef"
 psshifts<-read.csv("analyses/output/salmonreturntrends_pslmm.csv", header=TRUE)
+psshifts<-psshifts[,-2]
 
-colnames(albionshifts)<-albion[4:28,1]
-
+#colnames(albionshifts)<-albion[4:28,1]
+albionshifts<-albion
 # save plotted results as pdf
-pdf(file="analyses/figures/srkw_salmon_shifts_lm.pdf",width=16,height=6)
-quartz()
+pdf(file="analyses/figures/srkw_salmon_shifts_lm_1978_2017.pdf",width=16,height=6)
+#quartz()
 ### plot estimates of peak occurrence prob over all years
 #quartz(width=16, height=6)
 #par(mfcol=c(2,3),mai=c(.5,1,.5,0.5))
@@ -70,7 +72,7 @@ arrows(x,all1$slope.lci[all1$phase=="first"],x,all1$slope.uci[all1$phase=="first
 arrows(x+1,all1$slope.lci[all1$phase=="peak"],x+1,all1$slope.uci[all1$phase=="peak"], code=3, length=0)
 arrows(x+2,all1$slope.lci[all1$phase=="last"],x+2,all1$slope.uci[all1$phase=="last"], code=3, length=0)
 
-points(x,all1$slope.mn[all1$phase=="first"],pch=c(21,22,24),bg="salmon")
+points(x,all1$slope.mn[all1$phase=="first"],pch=c(21,22,24),bg="yellow")
 points(x+1,all1$slope.mn[all1$phase=="peak"],pch=c(21,22,24),bg="salmon")
 points(x+2,all1$slope.mn[all1$phase=="last"],pch=c(21,22,24),bg="salmon")
 axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
@@ -96,43 +98,47 @@ points(x+1,all2$slope.mn[all2$phase=="peak.20012016"],pch=c(21,22,24),bg="darkbl
 points(x+2,all2$slope.mn[all2$phase=="last.20012016"],pch=c(21,22,24),bg="darkblue", cex=2)
 
 axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
-mtext("SRKWs 2001-2016",side=3,line=0)
+#mtext("SRKWs 2001-2016",side=3,line=0)
 legend("topleft",legend=c("J pod","K pod","L pod"),pch=c(21,22,24), bty="n",pt.bg="darkblue")
+mtext("A)",side=3,line=0, adj=0)
+
 #Puget sound proper
-plot(x,all1$slope.mn[all1$phase=="first.20012016"],pch=c(21,22,24),bg="salmon", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,7), bty="l", cex=2)
+plot(x,all1$slope.mn[all1$phase=="first.20012016"],pch=c(21,22,24),bg="goldenrod", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,7), bty="l", cex=2)
 abline(h=0,lty=2)
 arrows(x,all1$slope.lci[all1$phase=="first.20012016"],x,all1$slope.uci[all1$phase=="first.20012016"], code=3, length=0)
 arrows(x+1,all1$slope.lci[all1$phase=="peak.20012016"],x+1,all1$slope.uci[all1$phase=="peak.20012016"], code=3, length=0)
 arrows(x+2,all1$slope.lci[all1$phase=="last.20012016"],x+2,all1$slope.uci[all1$phase=="last.20012016"], code=3, length=0)
 
-points(x,all1$slope.mn[all1$phase=="first.20012016"],pch=c(21,22,24),bg="salmon", cex=2)
-points(x+1,all1$slope.mn[all1$phase=="peak.20012016"],pch=c(21,22,24),bg="salmon", cex=2)
-points(x+2,all1$slope.mn[all1$phase=="last.20012016"],pch=c(21,22,24),bg="salmon", cex=2)
+points(x,all1$slope.mn[all1$phase=="first.20012016"],pch=c(21,22,24),bg="goldenrod", cex=2)
+points(x+1,all1$slope.mn[all1$phase=="peak.20012016"],pch=c(21,22,24),bg="goldenrod", cex=2)
+points(x+2,all1$slope.mn[all1$phase=="last.20012016"],pch=c(21,22,24),bg="goldenrod", cex=2)
 axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
 #dev.off()
-x<-c(1,2,3,4)
-y<-c(albionshifts$first.yr,albionshifts$mid.yr,albionshifts$pk.yr,albionshifts$last.yr)
-ylci<-c(albionshifts$first.yrlci,albionshifts$pk.yrlci,albionshifts$mid.yrlci,albionshifts$last.yrlci)
-yuci<-c(albionshifts$first.yruci,albionshifts$pk.yruci,albionshifts$mid.yruci,albionshifts$last.yruci)
+x<-c(1,2,3)
+y<-c(albionshifts$est[2],albionshifts$est[6],albionshifts$est[4])
+ylci<-c(albionshifts$ci25[2],albionshifts$ci25[6],albionshifts$ci25[4])
+yuci<-c(albionshifts$ci75[2],albionshifts$ci75[6],albionshifts$ci75[4])
+mtext("B)",side=3,line=0, adj=0)
 
-plot(x,y,pch=23,bg="darkblue",ylab= "",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,7),bty="l", cex=2)
-abline(h=0,lty=2)
-
-arrows(x,ylci,x,yuci, code=3, length=0)
-points(x,y,cex=2,bg="darkblue",pch=23)
-
-y<-c(albionfa$first.yr,albionfa$mid.yr,albionfa$pk.yr,albionfa$last.yr)
-points(x,y,cex=2,bg="darkblue",pch=23)
-
-psshifts
-y<-c(psshifts[4,])
-ylci<-psshifts[5,]
-yuci<-psshifts[6,]
 plot(x,y,pch=23,bg="salmon",ylab= "",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,7),bty="l", cex=2)
 abline(h=0,lty=2)
 
 arrows(x,ylci,x,yuci, code=3, length=0)
 points(x,y,cex=2,bg="salmon",pch=23)
+mtext("C)",side=3,line=0, adj=0)
+
+#y<-c(albionfa$first.yr,albionfa$mid.yr,albionfa$pk.yr,albionfa$last.yr)
+#points(x,y,cex=2,bg="darkblue",pch=23)
+
+y<-c(psshifts[4,])
+ylci<-c(as.numeric(psshifts[5,]))
+yuci<-c(as.numeric(psshifts[6,]))
+plot(x,y,pch=23,bg="salmon",ylab= "",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,7),bty="l", cex=2)
+abline(h=0,lty=2)
+
+arrows(x,ylci,x,yuci, code=3, length=0)
+points(x,y,cex=2,bg="salmon",pch=23)
+mtext("D)",side=3,line=0, adj=0)
 
 axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
 

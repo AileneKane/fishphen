@@ -288,3 +288,35 @@ albchiphenest<-cbind("ck","albion",years,firstobsdate,lastobsdate,peakobsdate,pe
 
 colnames(albchiphenest)[1:3]<-c("sp","site","year")
 write.csv(albchiphenest,"analyses/output/albionchiphenest.csv", row.names =FALSE)
+
+#Now estimate trends in phenology from gamests rather than those above calculated frmo raw data
+albchiphenest<-read.csv("analyses/output/albionchiphenest.csv", header=TRUE)
+#restrict to time frame consistent with orcas
+albchiphenest<-albchiphenest[albchiphenest$year>1995,]
+albchiphenest<-albchiphenest[albchiphenest$year<2018,]
+firstmod<-lm(firstobsdate~year, data=albchiphenest)
+  firstcoefs<-coef(firstmod)
+  firstcoefs.50ci<-confint(firstmod,level = 0.50)
+  firstcoefs.95ci<-confint(firstmod,level = 0.95)
+  lastmod<-lm(lastobsdate~year, data=albchiphenest)
+  lastcoefs<-coef(lastmod)
+  lastcoefs.50ci<-confint(lastmod,level = 0.50)
+  lastcoefs.95ci<-confint(lastmod,level = 0.95)
+  peakmod<-lm(peakobsdate~year, data=albchiphenest)
+  peakcoefs<-coef(peakmod)
+  peakcoefs.50ci<-confint(peakmod,level = 0.50)
+  peakcoefs.95ci<-confint(peakmod,level = 0.95)
+  abundmod<-lm(alltotal~year, data=albchiphenest)
+  abundcoefs<-coef(abundmod)
+  abundcoefs.50ci<-confint(abundmod,level = 0.50)
+  abundcoefs.95ci<-confint(abundmod,level = 0.95)
+  
+
+allmodsums<-c(round(firstcoefs, digits=3),round(lastcoefs, digits=3),round(peakcoefs, digits=3))
+allmodsums.50ci<-rbind(round(firstcoefs.50ci, digits=3),round(lastcoefs.50ci, digits=3),round(peakcoefs.50ci, digits=3))
+allmodsums.95ci<-rbind(round(firstcoefs.95ci, digits=3),round(lastcoefs.95ci, digits=3),round(peakcoefs.95ci, digits=3))
+phen<-c("first","first","last","last","peak","peak")
+sums<-cbind("ck","albion",phen,allmodsums,allmodsums.50ci,allmodsums.95ci)
+colnames(sums)<-c("sp","site","phen","est","ci25","ci75","ci2.5","ci97.5")
+
+write.csv(sums, "analyses/output/albionreturntrends_linmodyrs.csv", row.names = TRUE)
