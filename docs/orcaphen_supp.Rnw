@@ -64,10 +64,10 @@ To better understand how increased effort across the time-series (i.e., increase
 \par Estimted shift in recent time period along = 
 \par The large increase in effort has likely affected trends, especially across the full time series.  However, the expected change due to increased effort opposes the patterns we observed in recent years for the Central Salish Sea (i.e., we would expect earlier arrival, later departure, and increased occurrence probability;  see Supplemental Materials for details, especially Fig. SX). 
 
-
+\par Changing the breakpoint to 2007 or 2008 did not qualitatively alter results (Fig. SX)
 
 \section* {Supplemental Tables}
-\par Table 1: Salmon runs included in puget sound and central salish sea analyses (or a map?)
+\par Table 1: Salmon runs included in puget sound and central salish sea analyses 
 \par Table of trends in different phenophases for salmon (or perhaps combine with above table?)
 \par Pod-specific shifts at lime kiln
 
@@ -167,6 +167,11 @@ Add to supplemental Materials:
 (e) model stats- demonstrate that the models work/make sense 
 (f) Expected phenological change due to change in effort alone (simulations)- do this for the recent time span as well?
 
+\begin{figure}[p]
+\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/limekilntrends_dat.pdf} 
+\caption{\textbf{SRKW phenology at Lime Kiln State Park is shifting}, which the day of year of first sighting getting later (A) and the day of year of last sighting getting earlier frmo 1994-2017. These trends are associated with a decrease in the amount of time SRKWs are spending near Lime Kiln: the number of days on which SRKWs were observed ("whale days") is has declined since 1994. }
+ \label{fig:limetime}
+ \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \end{document}
