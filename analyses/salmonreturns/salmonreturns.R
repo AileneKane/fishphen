@@ -43,6 +43,21 @@ source("analyses/salmonreturns/source/salmonreturns_choosesites.R")
 
 wild.d<-left_join(wild,d)
 hatch.d<-left_join(hatch,d)
+wild.d$Name.Sp<-paste(wild.d$Facility_Short_Name,wild.d$SPECIES_Code, sep=".")
+hatch.d$Name.Sp<-paste(hatch.d$Facility_Short_Name,hatch.d$SPECIES_Code, sep=".")
+
+#create a table of the sites, lat/long, 
+wildtab<- wild.d %>% # start with the data frame
+  distinct(Name.Sp, .keep_all = TRUE) %>% # establishing grouping variables
+  #filter(continent == 'europe' & year >= 1950) %>%#select out europe#this removes all rows with  field sample date=2013-10-22, even though some are in europe
+  dplyr::select(Facility_Short_Name,SPECIES_Code,ORIGIN_TYPE_Code,Lat,Lon)
+hatchtab<- hatch.d %>% # start with the data frame
+  distinct(Name.Sp, .keep_all = TRUE) %>% # establishing grouping variables
+  #filter(continent == 'europe' & year >= 1950) %>%#select out europe#this removes all rows with  field sample date=2013-10-22, even though some are in europe
+  dplyr::select(Facility_Short_Name,SPECIES_Code,ORIGIN_TYPE_Code,Lat,Lon)
+salmontab<-rbind(wildtab,hatchtab)
+salmontab<-salmontab[order(salmontab$Facility_Short_Name,salmontab$SPECIES_Code),]
+write.csv(salmontab,"analyses/output/salmonlatlon.csv", row.names = FALSE)
 types<-c("wild","hatch")
 sp<-site<-type<-firstcoefsall<-lastcoefsall<-midcoefsall<-peakcoefsall<-meantotalall<-c()
 sp2<-site2<-type2<-yearsall<-firstobsdateall<-lastobsdateall<-alltotalall<-peakobsdateall<-midobsdateall<-c()
@@ -245,92 +260,98 @@ allphen$midobsdateall<-as.numeric(allphen$midobsdateall)
 allphen$yearsall<-as.integer(allphen$yearsall)
 
 firstmod<-lmer(firstobsdateall~yearsall+(1|group), data=allphen, REML=FALSE)
-firstmod2<-lmer(firstobsdateall~yearsall+(yearsall|group), data=allphen, REML=FALSE)
+#firstmod2<-lmer(firstobsdateall~yearsall+(yearsall|group), data=allphen, REML=FALSE)
 
 lastmod<-lmer(lastobsdateall~yearsall+(1|group), data=allphen, REML=FALSE)
-lastmod2<-lmer(lastobsdateall~yearsall+(yearsall|group), data=allphen, REML=FALSE)
+#lastmod2<-lmer(lastobsdateall~yearsall+(yearsall|group), data=allphen, REML=FALSE)
 
 peakmod<-lmer(peakobsdateall~yearsall+(1|group), data=allphen, REML=FALSE)
-peakmod2<-lmer(peakobsdateall~yearsall+(yearsall|group), data=allphen, REML=FALSE)
+#peakmod2<-lmer(peakobsdateall~yearsall+(yearsall|group), data=allphen, REML=FALSE)
 
 midmod<-lmer(midobsdateall~yearsall+(1|group), data=allphen, REML=FALSE)
-midmod2<-lmer(midobsdateall~yearsall+(yearsall|group), data=allphen, REML=FALSE)
-summary(peakmod2)
+#midmod2<-lmer(midobsdateall~yearsall+(yearsall|group), data=allphen, REML=FALSE)
+#summary(peakmod2)
 #make a big table of model output
-allmodsums<-as.data.frame(cbind(c(fixef(firstmod2)[1],confint(firstmod, level = 0.50)[3,1:2],fixef(firstmod)[2],confint(firstmod, level = 0.50)[4,1:2]),
-                                c(fixef(midmod2)[1],confint(midmod,level=0.5)[3,1:2],fixef(midmod)[2],confint(midmod,level=0.5)[4,1:2]),
-                              c(fixef(peakmod2)[1], confint(peakmod,level=0.5)[3,1:2],fixef(peakmod)[2], confint(peakmod,level=0.5)[4,1:2]),
-                              c(fixef(lastmod2)[1],confint(lastmod, level = 0.50)[3,1:2],fixef(lastmod)[2],confint(lastmod, level = 0.50)[4,1:2])))
+allmodsums<-as.data.frame(cbind(c(fixef(firstmod)[1],confint(firstmod, level = 0.50)[3,1:2],confint(firstmod, level = 0.95)[3,1:2],
+                                  fixef(firstmod)[2],confint(firstmod, level = 0.50)[4,1:2],confint(firstmod, level = 0.95)[4,1:2]),
+                                c(fixef(midmod)[1],confint(midmod,level=0.5)[3,1:2],confint(midmod,level=0.95)[3,1:2],
+                                  fixef(midmod)[2],confint(midmod,level=0.5)[4,1:2],confint(midmod,level=0.95)[4,1:2]),
+                              c(fixef(peakmod)[1], confint(peakmod,level=0.5)[3,1:2],confint(peakmod,level=0.95)[3,1:2],
+                                fixef(peakmod)[2], confint(peakmod,level=0.5)[4,1:2],confint(peakmod,level=0.95)[4,1:2]),
+                              c(fixef(lastmod)[1],confint(lastmod, level = 0.50)[3,1:2],confint(lastmod, level = 0.95)[3,1:2],
+                                fixef(lastmod)[2],confint(lastmod, level = 0.50)[4,1:2],confint(lastmod, level = 0.95)[4,1:2])))
 
 colnames(allmodsums)<-c("first","mid","pk","last")
-rownames(allmodsums)<-c("int","int.25","int.75","yrs","yrs.25","yrs.75")
+rownames(allmodsums)<-c("int","int.25","int.75","int.05","int.95","yrs","yrs.25","yrs.75","yrs.025","yrs.975")
 write.csv(allmodsums, "analyses/output/salmonreturntrends_pslmm.csv", row.names = FALSE)
 
-#quartz()
-albion.fa<-read.csv("analyses/output/albionreturntrends_fall.csv", header=TRUE, skip=1)
-albion.sp<-read.csv("analyses/output/albionreturntrends_springsum.csv", header=TRUE, skip=1)
+#I don't think the below gets used for anything...should delete
 
-colnames(albion)<-c("name","value")
-albionshifts<-as.data.frame(t(as.numeric(albion[4:27,2])))
-colnames(albionshifts)<-albion[4:27,1]
-
-#Central salish sea = albion test fishery from fraser
-pdf(file="analyses/figures/srkw_salmon_shifts_lmm.pdf",width=12,height=6)
-#quartz(width=12,height=6)
-par(mfcol=c(2,2),mai=c(.5,1,.5,0.5))
-
-x<-rep(1,times=3)
-add<-c(-.1,0,.1)
-x<-x+add
-#Central salish sea first...
-plot(x,all2$slope.mn[all2$phase=="first.20012016"],pch=c(21,22,24),bg="darkblue", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,7), bty="l", cex=2)
-abline(h=0,lty=2)
-arrows(x,all2$slope.lci[all2$phase=="first.20012016"],x,all2$slope.uci[all2$phase=="first.20012016"], code=3, length=0)
-arrows(x+1,all2$slope.lci[all2$phase=="peak.20012016"],x+1,all2$slope.uci[all2$phase=="peak.20012016"], code=3, length=0)
-arrows(x+2,all2$slope.lci[all2$phase=="last.20012016"],x+2,all2$slope.uci[all2$phase=="last.20012016"], code=3, length=0)
-
-points(x,all2$slope.mn[all2$phase=="first.20012016"],pch=c(21,22,24),bg="darkblue", cex=2)
-points(x+1,all2$slope.mn[all2$phase=="peak.20012016"],pch=c(21,22,24),bg="darkblue", cex=2)
-points(x+2,all2$slope.mn[all2$phase=="last.20012016"],pch=c(21,22,24),bg="darkblue", cex=2)
-
-axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
-mtext("SRKWs 2001-2016",side=3,line=0)
-legend("topleft",legend=c("J pod","K pod","L pod"),pch=c(21,22,24), bty="n",pt.bg="darkblue")
-#Puget sound proper
-plot(x,all1$slope.mn[all1$phase=="first.20012016"],pch=c(21,22,24),bg="salmon", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,7), bty="l", cex=2)
-abline(h=0,lty=2)
-arrows(x,all1$slope.lci[all1$phase=="first.20012016"],x,all1$slope.uci[all1$phase=="first.20012016"], code=3, length=0)
-arrows(x+1,all1$slope.lci[all1$phase=="peak.20012016"],x+1,all1$slope.uci[all1$phase=="peak.20012016"], code=3, length=0)
-arrows(x+2,all1$slope.lci[all1$phase=="last.20012016"],x+2,all1$slope.uci[all1$phase=="last.20012016"], code=3, length=0)
-
-points(x,all1$slope.mn[all1$phase=="first.20012016"],pch=c(21,22,24),bg="salmon", cex=2)
-points(x+1,all1$slope.mn[all1$phase=="peak.20012016"],pch=c(21,22,24),bg="salmon", cex=2)
-points(x+2,all1$slope.mn[all1$phase=="last.20012016"],pch=c(21,22,24),bg="salmon", cex=2)
-axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
-#dev.off()
-x<-c(1,2,3,4)
-y<-c(albionshifts$first.yr,albionshifts$mid.yr,albionshifts$pk.yr,albionshifts$last.yr)
-ylci<-c(albionshifts$first.yrlci,albionshifts$mid.yrlci,albionshifts$pk.yrlci,albionshifts$last.yrlci)
-yuci<-c(albionshifts$first.yruci,albionshifts$mid.yruci,albionshifts$pk.yruci,albionshifts$last.yruci)
-
-plot(x,y,pch=23,bg="darkblue",ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,12),bty="l", cex=2)
-abline(h=0,lty=2)
-
-arrows(x,ylci,x,yuci, code=3, length=0)
-points(x,y,cex=2,bg="darkblue",pch=23)
-axis(side=1,labels=c("First","Peak","Mid","Last"), at = c(1,2,3,4))
-
-psshifts<-read.csv("analyses/output/salmonreturntrends_pslmm.csv", header=TRUE)
-psshifts<-as.matrix(psshifts)
-y<-c(psshifts[4,])
-ylci<-psshifts[5,]
-yuci<-psshifts[6,]
-plot(x,y,pch=23,bg="salmon",ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,12),bty="l", cex=2)
-abline(h=0,lty=2)
-
-arrows(x,ylci,x,yuci, code=3, length=0)
-points(x,y,cex=2,bg="salmon",pch=23)
-
-axis(side=1,labels=c("First","Mid","Peak","Last"), at = c(1,2,3,4))
-
-dev.off()
+# #quartz()
+# albion.fa<-read.csv("analyses/output/albionreturntrends_fall.csv", header=TRUE, skip=1)
+# albion.sp<-read.csv("analyses/output/albionreturntrends_springsum.csv", header=TRUE, skip=1)
+# 
+# colnames(albion)<-c("name","value")
+# albionshifts<-as.data.frame(t(as.numeric(albion[4:27,2])))
+# colnames(albionshifts)<-albion[4:27,1]
+# 
+# #Central salish sea = albion test fishery from fraser
+# pdf(file="analyses/figures/srkw_salmon_shifts_lmm.pdf",width=12,height=6)
+# #quartz(width=12,height=6)
+# par(mfcol=c(2,2),mai=c(.5,1,.5,0.5))
+# 
+# x<-rep(1,times=3)
+# add<-c(-.1,0,.1)
+# x<-x+add
+# #Central salish sea first...
+# plot(x,all2$slope.mn[all2$phase=="first.20012016"],pch=c(21,22,24),bg="darkblue", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,7), bty="l", cex=2)
+# abline(h=0,lty=2)
+# arrows(x,all2$slope.lci[all2$phase=="first.20012016"],x,all2$slope.uci[all2$phase=="first.20012016"], code=3, length=0)
+# arrows(x+1,all2$slope.lci[all2$phase=="peak.20012016"],x+1,all2$slope.uci[all2$phase=="peak.20012016"], code=3, length=0)
+# arrows(x+2,all2$slope.lci[all2$phase=="last.20012016"],x+2,all2$slope.uci[all2$phase=="last.20012016"], code=3, length=0)
+# 
+# points(x,all2$slope.mn[all2$phase=="first.20012016"],pch=c(21,22,24),bg="darkblue", cex=2)
+# points(x+1,all2$slope.mn[all2$phase=="peak.20012016"],pch=c(21,22,24),bg="darkblue", cex=2)
+# points(x+2,all2$slope.mn[all2$phase=="last.20012016"],pch=c(21,22,24),bg="darkblue", cex=2)
+# 
+# axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
+# mtext("SRKWs 2001-2016",side=3,line=0)
+# legend("topleft",legend=c("J pod","K pod","L pod"),pch=c(21,22,24), bty="n",pt.bg="darkblue")
+# #Puget sound proper
+# plot(x,all1$slope.mn[all1$phase=="first.20012016"],pch=c(21,22,24),bg="salmon", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,7), bty="l", cex=2)
+# abline(h=0,lty=2)
+# arrows(x,all1$slope.lci[all1$phase=="first.20012016"],x,all1$slope.uci[all1$phase=="first.20012016"], code=3, length=0)
+# arrows(x+1,all1$slope.lci[all1$phase=="peak.20012016"],x+1,all1$slope.uci[all1$phase=="peak.20012016"], code=3, length=0)
+# arrows(x+2,all1$slope.lci[all1$phase=="last.20012016"],x+2,all1$slope.uci[all1$phase=="last.20012016"], code=3, length=0)
+# 
+# points(x,all1$slope.mn[all1$phase=="first.20012016"],pch=c(21,22,24),bg="salmon", cex=2)
+# points(x+1,all1$slope.mn[all1$phase=="peak.20012016"],pch=c(21,22,24),bg="salmon", cex=2)
+# points(x+2,all1$slope.mn[all1$phase=="last.20012016"],pch=c(21,22,24),bg="salmon", cex=2)
+# axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
+# #dev.off()
+# x<-c(1,2,3,4)
+# y<-c(albionshifts$first.yr,albionshifts$mid.yr,albionshifts$pk.yr,albionshifts$last.yr)
+# ylci<-c(albionshifts$first.yrlci,albionshifts$mid.yrlci,albionshifts$pk.yrlci,albionshifts$last.yrlci)
+# yuci<-c(albionshifts$first.yruci,albionshifts$mid.yruci,albionshifts$pk.yruci,albionshifts$last.yruci)
+# 
+# plot(x,y,pch=23,bg="darkblue",ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,12),bty="l", cex=2)
+# abline(h=0,lty=2)
+# 
+# arrows(x,ylci,x,yuci, code=3, length=0)
+# points(x,y,cex=2,bg="darkblue",pch=23)
+# axis(side=1,labels=c("First","Peak","Mid","Last"), at = c(1,2,3,4))
+# 
+# psshifts<-read.csv("analyses/output/salmonreturntrends_pslmm.csv", header=TRUE)
+# psshifts<-as.matrix(psshifts)
+# y<-c(psshifts[4,])
+# ylci<-psshifts[5,]
+# yuci<-psshifts[6,]
+# plot(x,y,pch=23,bg="salmon",ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,12),bty="l", cex=2)
+# abline(h=0,lty=2)
+# 
+# arrows(x,ylci,x,yuci, code=3, length=0)
+# points(x,y,cex=2,bg="salmon",pch=23)
+# 
+# axis(side=1,labels=c("First","Mid","Peak","Last"), at = c(1,2,3,4))
+# 
+# dev.off()

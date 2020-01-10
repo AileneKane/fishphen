@@ -48,28 +48,71 @@
 
 \bibliographystyle{../refs/bibstyles/amnat.bst}
 
-\title{Supplemental methods for Shifting phenology of an endangered apex predator tracks changes in its favored prey}
+\title{Supplemental materials for `Shifting phenology of an endangered apex predator tracks changes in its favored prey'}
 \date{\today}
 \maketitle
-\author{A.K. Ettinger, C. Harvey, J. Samhouri, B. Hanson, C. Emmons, J. Olson, E. Ward}
+\author{A.K. Ettinger, C. Harvey, B. Hanson, C. Emmons, J. Olson, E. Ward,J. Samhouri}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section* {Effects of changes in effort on estimated phenological change (simulations)}
 To better understand how increased effort across the time-series (i.e., increased numbers of sightings over time) may affect estimates of trends in phenology, we simulated data sets of whale presence during two seasons equivalent to those in our data set (spring/summer, which was 1 May through 31 Sept, or 153 days, and fall/winter, which was 1 October through 1 Feb, or 123 days). We used whale presence probabilities of 0.85 for the Central Salish Sea and 0.6 for Puget Sound (the means in our data set for each region, from 1978-2017) and kept them constant over 40 simulated years. We then created an observation data set, in which effort (the number of observations) varied. During the low effort time period (years 1-20), the number of observations had a mean of 15 per year for Puget Sound and 104 per year in the Central Salish Sea (matching the means for these regions from 1978-1997 in the OrcaMaster database). During the high effort time period (years 21-40 in our simulated data set), the number of annual observations had a mean of 39 for Puget Sound and 133 for the Central Salish Sea (matching those in the OrcaMaster database from 1998-2017). We then calculated first- and last- observations dates for each simulated year. We ran these simulations 100 times and calculated the difference between the low effort and high effort time periods. We compared these to the mean differences in first- and last-observation dates across time periods in the OrcaMaster database, for each region, to understand whether observed changes may be due to changes in effort over time, rather than changes in killer whale activity. 
 
-\par Estimted change across the full time series = 
-\par Estimted shift in recent time period along = 
+\par Estimated change across the full time series = 
+\par Estimated shift in recent time period alone = 
 \par The large increase in effort has likely affected trends, especially across the full time series.  However, the expected change due to increased effort opposes the patterns we observed in recent years for the Central Salish Sea (i.e., we would expect earlier arrival, later departure, and increased occurrence probability;  see Supplemental Materials for details, especially Fig. SX). 
 
-\par Changing the breakpoint to 2007 or 2008 did not qualitatively alter results (Fig. SX)
+\section* {Southern Resident Killer Whales and their prey at Lime Killn Point State Park}
+\par Using a threshold probability lower than 0.5 did not quanliatatively alter results
+\par Changing the breakpoint to 2007 or 2008 did not qualitatively alter results 
 
 \section* {Supplemental Tables}
-\par Table 1: Salmon runs included in puget sound and central salish sea analyses 
-\par Table of trends in different phenophases for salmon (or perhaps combine with above table?)
-\par Pod-specific shifts at lime kiln
+<<label=salmontab,echo=FALSE,results=tex>>=
+library(xtable)
+salmontab<-read.csv("../analyses/output/salmonlatlon.csv",header=TRUE)
+salmontab$region<-"Puget Sound Proper"  
+salmontab$origin<-"hatchery"
+salmontab$origin[salmontab$ORIGIN_TYPE_Code=="W"]<-"wild"
+salmontab$species<-"chum"
+salmontab$species[salmontab$SPECIES_Code=="CK"]<-"Chinook"
+salmontab$species[salmontab$SPECIES_Code=="CO"]<-"coho"
+colnames(salmontab)[1]<-"facility"
+salmtab<-subset(salmontab, select=c(region,facility,species,origin,Lat,Lon))
+fraser<-c("Central Salish Sea","ALBION TEST FISHERY","Chinook","wild/hatchery","49.2104","-122.6228")
+salmtab$facility<-as.character(salmtab$facility)
+salmtab<-rbind(fraser,salmtab)
+colnames(salmtab)[1:6]<-c("Region","Location","Species","Origin","Latitude", "Longitude")
+
+salm.table<-xtable(salmtab,caption = "\\textbf{Salmon runs in Central Salish Sea and Puget Sound Proper} included in our analyses.",
+            label="tab:salmon",align=c(
+              "|p{0.01\\textwidth}", 
+              "|p{0.16\\textwidth}",
+               "|p{0.3\\textwidth}",
+               "|p{0.06\\textwidth}",
+               "|p{0.1\\textwidth}",
+              "|p{0.06\\textwidth}",
+               "|p{0.08\\textwidth}|"))
+
+print(salm.table, include.rownames=FALSE, hline.after = c(-1,0,1,17),caption.placement="top",size="\\footnotesize")
+@
+
+<<label=limetab,echo=FALSE,results=tex>>=
+limetab<-read.csv("../analyses/output/limephen.csv",header=TRUE)
+#table of estimates of shifts over time with different threshold probabilitiesand different breakpoints
+lime.table<-xtable(limetab,caption = "\\textbf{Estimated shifts with varying breakpoints and threshold probabilities for estimating phenology} i.",
+            label="tab:salmon",align=c(
+              "|p{0.01\\textwidth}", 
+              "|p{0.16\\textwidth}",
+               "|p{0.3\\textwidth}",
+               "|p{0.06\\textwidth}",
+               "|p{0.1\\textwidth}",
+              "|p{0.06\\textwidth}",
+               "|p{0.08\\textwidth}|"))
+
+print(lime.table, include.rownames=FALSE, hline.after = c(-1,0,1,17),caption.placement="top",size="\\footnotesize")
+@
+
 
 <<label=occmodsums,echo=FALSE,results=tex>>=
-library(xtable)
 modsumfiles<-dir("../analyses/output")[grep("occprob_wrecent",dir("../analyses/output"))]
 allsums<-c()
 for (i in 1:length(modsumfiles)){
@@ -100,7 +143,7 @@ addtorow <- list()
 #modsumtab$region[modsumtab$region=="ps"]<-"puget"
 #modsumtab$region[modsumtab$region=="uss"]<-"central"
 
-modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper and the central Salish Sea, from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent credible intervals are in parantheses.",
+modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper and the central Salish Sea, from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent and 95 percent uncertainty intervals are shown.",
             label="tab:salmon",align=c(
               "|p{0.01\\textwidth}", 
               "|p{0.04\\textwidth}",
@@ -117,9 +160,11 @@ modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in pe
 print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.placement="top",size="\\footnotesize",sanitize.rownames.function=identity,add.to.row=addtorow)
 @
 
-\par Table comparing estimates of shifts
+\par Table of trends in different phenophases for salmon
+
+\par Pod-specific shifts at lime kiln
+
 <<label=occmodsums,echo=FALSE,results=tex>>=
-library(xtable)
 modsumfiles<-dir("../analyses/output")[grep("occprob_wrecent",dir("../analyses/output"))]
 allsums<-c()
 for (i in 1:length(modsumfiles)){
@@ -133,29 +178,40 @@ allsums$Region[allsums$region=="ps"]<-"Puget Sound"
 allsums$Region[allsums$region=="uss"]<-"Central Salish Sea"
 allsums$Season[allsums$season=="1"]<-"Fall"
 allsums$Season[allsums$season=="2"]<-"Summer"
-allsums$Season[allsums$season=="3"]<-"Full Year"
+#allsums$Season[allsums$season=="3"]<-"Full Year"
+#allsums<-allsums[-which(allsums$season=="3"),]
 
 colnames(allsums)[8:10]<-c("slope.recent","slope.lci.recent","slope.uci.recent")
-allsums$slope.all<-paste(allsums$slope.mn," (",allsums$slope.lci," - ",allsums$slope.uci,")", sep="")
-allsums$slope.all.recent<-paste(allsums$slope.recent," (",allsums$slope.lci.recent," - ",allsums$slope.uci.recent,")", sep="")
 
-modsumtab<-subset(allsums, select=c(pod,Region,Season,phase,slope.all,slope.all.recent))
+#allsums$slope.all<-paste(allsums$slope.mn," (",allsums$slope.lci," - ",allsums$slope.uci,")", sep="")
+#allsums$slope.all.recent<-paste(allsums$slope.recent," (",allsums$slope.lci.recent," - ",allsums$slope.uci.recent,")", sep="")
+
+modsumtab<-subset(allsums, select=c(pod,Region,Season,phase,slope.mn,slope.lci,slope.uci,slope.recent,slope.lci.recent,slope.uci.recent))
+colnames(modsumtab)[1:10]<-c("Pod","Region","Season","Phase","mean","25%", "75%","mean","25%", "75%")
+addtorow <- list()
+  addtorow$pos <- list(-1)
+  addtorow$command <- c("\\hline & & & & \\multicolumn{3}{c |}{1978-2017 trend} &\\multicolumn{3}{c |}{2002-2017 trend}\\\\\n ")
+
 #modsumtab$region[modsumtab$region=="ps"]<-"puget"
 #modsumtab$region[modsumtab$region=="uss"]<-"central"
 
-colnames(modsumtab)[1:6]<-c("Pod","Region","Season","Phase","1978-2017 trend","2002-2017 trend")
-modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper and the central Salish Sea, from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent credible intervals are in parantheses.",
-            label="tab:modsz",align=c(
+modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper and the central Salish Sea, from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent and 95 percent uncertainty intervals are shown.",
+            label="tab:salmon",align=c(
               "|p{0.01\\textwidth}", 
               "|p{0.04\\textwidth}",
                "|p{0.20\\textwidth}",
                "|p{0.1\\textwidth}",
                "|p{0.08\\textwidth}",
-               "|p{0.20\\textwidth}",
-               "|p{0.20\\textwidth}|"))
+              "|p{0.05\\textwidth}",
+              "p{0.05\\textwidth}", 
+              "p{0.05\\textwidth}",
+              "|p{0.05\\textwidth}",
+              "p{0.05\\textwidth}",
+               "p{0.05\\textwidth}|"))
 
-print(modsum.table, include.rownames=FALSE, hline.after = c(-1,0,12),caption.placement="top",size="\\footnotesize")
+print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.placement="top",size="\\footnotesize",sanitize.rownames.function=identity,add.to.row=addtorow)
 @
+
 
 
 
@@ -170,7 +226,6 @@ Coincident with these phenological trends, the number of whale days has also cha
 \par To Do 
 Add to supplemental Materials: 
 (a) Table S1. Details on salmon runs used to quantify phenology (annual run size, species, source)
-(b) Table S2. comparing estimates of shifts 
 (b) Figure S1. Time series of peak prob. occurrence for K and L pods 
 (c) Time series for first- and last- dates when occurrence probability is greater than 0.5 for J,K,L pods 
 (d) show relationship between lime kiln, and central salish sea phenology

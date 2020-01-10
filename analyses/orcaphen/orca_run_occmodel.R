@@ -20,13 +20,14 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="L"#options= J,K,L,SR
-region="ps"#options=upper salish sea (uss) or puget sound (ps)
+pod="K"#options= J,K,L,SR
+region="uss"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
 #Choose the credible intervals you 
 lci<-0.25
 uci<-0.75
+prob<-0.5
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
 if(assumeSRKW==FALSE){
   if(pod=="J"){dat<-read.csv("analyses/output/j_dat.csv",header=T)}
@@ -242,7 +243,7 @@ if(region == "uss"){color = "darkblue"
 cols = c("darkblue","royalblue")}
 if(region == "ps"){color = "salmon"
 cols = c("salmon","lightsalmon4")}
-prob<-0.5
+
 
 
 findmax.fn<-function(x) {
@@ -290,8 +291,8 @@ psi.med<-apply(out$sims.list$psi[,32:40,],c(3),median)
 plot(doy,psi.med, type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", lty=1,col=color, lwd=2)
 names(out)
 #lines(doy,psi.med)
-psi.uci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=.75)
-psi.lci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=.25)
+psi.uci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=uci)
+psi.lci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=lci)
 #lines(doy,psi.lci,col=cols[2], lwd=2)
 #lines(doy,psi.uci,col=cols[2], lwd=2)
 #psi<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.5)
@@ -300,9 +301,9 @@ polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(color,0.2),lty=0)
 psi.med<-apply(out$sims.list$psi[,24:31,],c(3),median)
 #lines(doy,colMeans(out$mean$psi[11:20,]),col=cols[4])
 lines(doy,psi.med,col=cols[2], lwd=2, lty=2)
-psi.uci<-apply(out$sims.list$psi[,24:31,],c(3),quantile,probs=.75)
+psi.uci<-apply(out$sims.list$psi[,24:31,],c(3),quantile,probs=uci)
 #lines(doy,psi.uci)
-psi.lci<-apply(out$sims.list$psi[,24:31,],c(3),quantile,probs=.25)
+psi.lci<-apply(out$sims.list$psi[,24:31,],c(3),quantile,probs=lci)
 #lines(doy,psi.lci)
 polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(cols[2],0.2),lty=0)
 
@@ -578,17 +579,17 @@ phen<-cbind(pod,region,season,rownames(ann.res),round(ann.res[,"mean"]),round(an
             round(ann.first[,"mean"]),round(ann.first[,"lci"]),round(ann.first[,"uci"]),
             round(ann.last[,"mean"]),round(ann.last[,"lci"]),round(ann.last[,"uci"]),round(meanpsi, digits=2))
 colnames(phen)<-c("pod","region","season","year","peak.psi","peak.lcl","peak.ucl","first.psi","first.lcl","first.ucl","last.psi","last.lcl","last.ucl", "mean.psi")
-if(assumeSRKW==TRUE){phen.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"assumeSRKWoccprobdoy.csv", sep="")}
-if(assumeSRKW==FALSE){phen.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"occprobdoy.csv", sep="")}
+if(assumeSRKW==TRUE){phen.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"_assumeSRKWoccprobdoy.csv", sep="")}
+if(assumeSRKW==FALSE){phen.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"_occprobdoy.csv", sep="")}
 
 write.csv(phen,phen.name, row.names=FALSE)
 
-if(assumeSRKW==TRUE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"assumeSRKWdetprob.csv", sep="")}
-if(assumeSRKW==FALSE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"detprob.csv", sep="")}
+if(assumeSRKW==TRUE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"assumeSRKWdetprob.csv", sep="")}
+if(assumeSRKW==FALSE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"detprob.csv", sep="")}
 
 write.csv(meanp, p.name, row.names=TRUE)
-if(assumeSRKW==TRUE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"assumeSRKWdetprob.csv", sep="")}
-if(assumeSRKW==FALSE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"detprob.csv", sep="")}
+if(assumeSRKW==TRUE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"assumeSRKWdetprob.csv", sep="")}
+if(assumeSRKW==FALSE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"detprob.csv", sep="")}
 
 mean.psi.allyears<-jags.out$BUGSoutput$mean$psi
 if(assumeSRKW==TRUE){psi.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"assumeSRKWmeanoccprob_all.csv", sep="")}
@@ -785,7 +786,7 @@ for (xj in 1:length(years)) {
   
   # Get BUGS estimates
   res.chains<-out$sims.array[,,paste("lp[",xj[1],",",1:(max(dat$day)-min(dat$day)+1),"]",sep="")]
-  res=plogis(apply(res.chains,MARGIN=c(length(dim(res.chains))),quantile,probs=c(.10,.5,.90)))
+  res=plogis(apply(res.chains,MARGIN=c(length(dim(res.chains))),quantile,probs=c(.05,.5,.95)))
   
   ### Plot "naive" estimate of occurence
   # prepare bars to compare barplot of observation data (bars) with estimates (line); barheight represents weekly proportion of detection events divided by all surveys
@@ -807,8 +808,8 @@ for (xj in 1:length(years)) {
   # plot bars
   #for seasonal values...    
   figpath<- paste("analyses/figures/",pod,sep="")
-  if(assumeSRKW==TRUE){figname<-paste("orcaphen",j,region,seasonname[as.numeric(season)],"doy",min(dat$day),"-",max(dat$day),"_",pod,"assumeSRKW.pdf",sep="_")}
-  if(assumeSRKW==FALSE){figname<-paste("orcaphen",j,region,seasonname[as.numeric(season)],"doy",min(dat$day),"-",max(dat$day),"_",pod,".pdf",sep="_")}
+  if(assumeSRKW==TRUE){figname<-paste("orcaphen",j,region,seasonname[as.numeric(season)],"doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob, "assumeSRKW.pdf",sep="_")}
+  if(assumeSRKW==FALSE){figname<-paste("orcaphen",j,region,seasonname[as.numeric(season)],"doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob, ".pdf",sep="_")}
   
   pdf(file.path(figpath, figname), width = 9, height = 6)
   

@@ -10,7 +10,7 @@ options(stringsAsFactors = FALSE)
 #library(lme4)
 # Set working directory: 
 setwd("~/Documents/GitHub/fishphen")
-#or from laptop:
+#or from work laptop:
 #setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
 
 #Read in summaries of rates of change from orca occupancy model
