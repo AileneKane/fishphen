@@ -21,13 +21,13 @@ library(scales)
 
 # Choose the data you want:
 pod="K"#options= J,K,L,SR
-region="uss"#options=upper salish sea (uss) or puget sound (ps)
+region="ps"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
 #Choose the credible intervals you 
-lci<-0.25
-uci<-0.75
-prob<-0.5
+lci<-0.05
+uci<-0.95
+prob<-0.9
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
 if(assumeSRKW==FALSE){
   if(pod=="J"){dat<-read.csv("analyses/output/j_dat.csv",header=T)}
