@@ -1,52 +1,3 @@
-obs.days.lime = aggregate(Orcas ~yrdayfa, data = limed,sum)
-js.days.lime = aggregate(J ~yrdayfa, data = limed,sum)
-ks.days.lime = aggregate(K~yrdayfa, data = limed,sum)
-ls.days.lime = aggregate(L~yrdayfa, data = limed,sum)
-srs.days.lime = aggregate(SRKW~yrdayfa, data = limed,sum)
-orcasum.days.lime<-cbind(js.days.lime,ks.days.lime[,2],ls.days.lime[,2],srs.days.lime[,2],obs.days.lime[2])
-
-colnames(orcasum.days.lime)[2:6]<-c("Jobs","Kobs","Lobs","AllSRobs","AllOrcas")
-orcasum.days.lime$year<-substr(orcasum.days.lime$yrdayfa,1,4)
-orcasum.days.lime$day<-substr(orcasum.days.lime$yrdayfa,6,8)
-orcasum.days.lime$fa<-substr(orcasum.days.lime$yrdayfa,10,nchar(orcasum.days.lime$yrdayfa))
-orcasum.days.lime$Jpres<-orcasum.days.lime$Jobs
-orcasum.days.lime$Jpres[orcasum.days.lime$Jobs>0]<-1
-orcasum.days.lime$Kpres<-orcasum.days.lime$Kobs
-orcasum.days.lime$Kpres[orcasum.days.lime$Kobs>0]<-1
-orcasum.days.lime$Lpres<-orcasum.days.lime$Lobs
-orcasum.days.lime$Lpres[orcasum.days.lime$Lobs>0]<-1
-orcasum.days.lime$AllSRpres<-orcasum.days.lime$AllSRobs
-orcasum.days.lime$AllSRpres[orcasum.days.lime$AllSRobs>0]<-1
-
-orcasum.days.lime$date<-as.Date(orcasum.days.lime$day, format="%j",origin = paste(as.numeric(orcasum.days.lime$year)-1,"12-31", sep="-"))
-#orcasum.days.lime$date[orcasum.days.lime$day==366]<-as.Date(paste(as.numeric(orcasum.days.lime$year[orcasum.days.lime$day==366]),"12-31", sep="-"))
-#for some reason this gets the year wrong- replaces with current year
-orcasum.days.lime$date<-paste(orcasum.days.lime$year,substr(orcasum.days.lime$date, 6,10), sep="-")
-
-orcasum.days.lime$mon<-substr(orcasum.days.lime$date,6,7)
-
-#Add days after March 31:
-orcasum.days.lime$day<-as.numeric(orcasum.days.lime$day)
-
-orcasum.days.lime$daysaftmar31<-difftime(as.Date(orcasum.days.lime$date), as.Date(paste(orcasum.days.lime$year,"03-31", sep="-")),units=c("days")) 
-
-#orcasum.days.lime$daysaftmar31[which(as.numeric(orcasum.days.lime$daysaftmar31)<0)]<-difftime(as.Date(orcasum.days.lime$date[which(as.numeric(orcasum.days.lime$daysaftmar31)<0)]), as.Date(paste(as.numeric(orcasum.days.lime$year[which(as.numeric(orcasum.days.lime$daysaftmar31)<0)])-1,"03-31", sep="-")),units=c("days")) 
-
-#add an "orca year" which runs apr1-mar 31
-orcasum.days.lime$orcayear<-orcasum.days.lime$year
-orcasum.days.lime$orcayear[which(orcasum.days.lime$day>90)]<-as.numeric(orcasum.days.lime$year[which(orcasum.days.lime$day>90)])-1
-#leap years are 1976, 1980, 1984, 1992, 2000, 2004, 2008, 2012, 2016
-#=120.6905
-
-#orcasum.days.lime$daysaftmar31[which(orcasum.days.lime$daysaftmar31=="0")]<-366
-
-
-#check that daysaftermar31 is working
-presapr1<-tapply(orcasum.days.lime$AllSRpres,list(orcasum.days.lime$fa, orcasum.days.lime$orcayear),sum)
-
-#Check:
-#hist(as.numeric(orcasum.days.lime$daysaftmar31[orcasum.days.lime$fa=="07"]))
-#mean(as.numeric(orcasum.days.lime$daysaftmar31[orcasum.days.lime$fa=="07"]), na.rm=TRUE)
 
 #Make plots
   #pdf(figname,height=6, width=6)
@@ -103,15 +54,15 @@ for(y in 1:length(years)){
 df <- as.data.frame(cbind(years.all,nobs.all,firstest.all,lastest.all,mean.all))
 colnames(df)[1:2]<-c("year","nobs")
 df$year<-as.numeric(df$year)
-plot(df$year[!lime.df$year==1990],df$firstest.all[!lime.df$year==1990],xlab="year",ylab="Day of Year", bty="l", pch=21, bg="darkblue", cex=1.1, main = "First observation day")
-mod<-lm(df$firstest.all[!lime.df$year==1990]~df$year[!lime.df$year==1990])
+plot(df$year[!df$year==1990],df$firstest.all[!df$year==1990],xlab="year",ylab="Day of Year", bty="l", pch=21, bg="darkblue", cex=1.1, main = "First observation day")
+mod<-lm(df$firstest.all[!df$year==1990]~df$year[!df$year==1990])
 if(summary(mod)$coef[2,4]<alpha){abline(mod, lty=1)}
 if(summary(mod)$coef[2,4]>alpha){abline(mod, lty=3)}
 mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
 mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
 
-plot(df$year[!lime.df$year==1990],df$lastest.all[!lime.df$year==1990],xlab="year",ylab="Day of year", bty="l", pch=21, bg="darkblue", cex=1.1, main = "Last observation")
-mod<-lm(df$lastest.all[!lime.df$year==1990]~df$year[!lime.df$year==1990])
+plot(df$year[!df$year==1990],df$lastest.all[!df$year==1990],xlab="year",ylab="Day of year", bty="l", pch=21, bg="darkblue", cex=1.1, main = "Last observation")
+mod<-lm(df$lastest.all[!df$year==1990]~df$year[!df$year==1990])
 if(summary(mod)$coef[2,4]<alpha){abline(mod, lty=1)}
 if(summary(mod)$coef[2,4]>alpha){abline(mod, lty=3)}
 mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
@@ -211,6 +162,6 @@ mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, a
 
 dev.off()
 wdays.start<-lime.df$nobs[lime.df$year==1994]
-wdays.end<-lime.df$nobs[lime.df$year==2016]
+wdays.end<-lime.df$nobs[lime.df$year==2017]
 #calculate percent change:
 (wdays.start-wdays.end)/wdays.start

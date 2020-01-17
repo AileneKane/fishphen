@@ -11,7 +11,7 @@ options(stringsAsFactors = FALSE)
 
 
 # Set working directory: 
-setwd("~/Documents/GitHub/fishphen")#setwd("~/GitHub/fishphen")
+#setwd("~/GitHub/fishphen")
 #or from laptop:
 #setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
 
@@ -60,7 +60,7 @@ wdays.L<-as.data.frame(tapply(orcasum.days$Lpres,list(orcasum.days$year,orcasum.
 source("analyses/orcaphen/source/orca_plot_whaledays.R")
 
 #6. if you want to do some other basic plots of the data. This includes proportion of days in a week in which whales were observed up by week and decade
-#source("analyses/orcaphen/source/orca_plotdata.R")
+source("analyses/orcaphen/source/orca_plotdata.R")
 
 #7. Make a map of the SRKW sightings in ps and uss
 source("analyses/orcaphen/source/orca_makemap.R")
@@ -74,10 +74,10 @@ source("analyses/orcaphen/source/orca_makemap.R")
 #use apr 1 for uss season, aug 1 for ps season as start dates
 #use oct 31 for uss season, jan31 for ps season, as end dates
 
-#8. Fit some basic linear models to all srkw data
-regions=unique(orcasum.days$region)
-podcols<-c("Jpres","Kpres","Lpres","AllSRpres")
-pods<-c("J", "K","L","SRs")
+#8a. Prep the lime kiln only sdata for either gams or linear models
+source("orca_get_whaledays_lime.R")
+ 
+#8b. Fit some basic linear models to all srkw data
 source("analyses/orcaphen/source/orca_runlinmods.R")
 
 #9. Fit some basic linear models to lime kiln data only
@@ -113,14 +113,14 @@ albchinest95<-albchinest[albchinest$year>1993  & albchinest$year<2018,]
 albchinest95<-albchinest95[-which(albchinest95$year==2014),]
 
 #alternate version of the above with binned chinook arrival dates
-albchin95$firstobsbin<-NA
-lower<-quantile(albchin95$firstobsdate,prob=0.25, na.rm=TRUE)
-upper<-quantile(albchin95$firstobsdate,prob=0.75, na.rm=TRUE)
-albchin95$firstobsbin[albchin95$firstobsdate<=lower]<-"1"
+#albchin95$firstobsbin<-NA
+#lower<-quantile(albchin95$firstobsdate,prob=0.25, na.rm=TRUE)
+#upper<-quantile(albchin95$firstobsdate,prob=0.75, na.rm=TRUE)
+#albchin95$firstobsbin[albchin95$firstobsdate<=lower]<-"1"
 
-albchin95$firstobsbin[albchin95$firstobsdate>lower]<-"2"
-albchin95$firstobsbin[albchin95$firstobsdate>upper]<-"3"
-albchin95$firstobsbin<-as.numeric(albchin95$firstobsbin)
+#albchin95$firstobsbin[albchin95$firstobsdate>lower]<-"2"
+#albchin95$firstobsbin[albchin95$firstobsdate>upper]<-"3"
+#albchin95$firstobsbin<-as.numeric(albchin95$firstobsbin)
 
 #add 90 days to limekiln doy columns to make comparable to chinook
 
