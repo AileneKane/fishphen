@@ -25,6 +25,7 @@ library(scales)
 library(matrixStats)
 library(plotfunctions)
 library(igraph)
+library(brms)
 # 1. Choose the years, regions of interest, assumption about reports in the OrcaMaster and get the data
 includeCanada=TRUE
 firstyear=1976#probably set to 1975 or 1976 (Olson et al)
@@ -64,18 +65,13 @@ source("analyses/orcaphen/source/orca_plotdata.R")
 
 #7. Make a map of the SRKW sightings in ps and uss
 source("analyses/orcaphen/source/orca_makemap.R")
-#Take home from the above plots: Seasonality is hard to see in the figure with a separate line for each decade. I also plotted them with a single line showing the mean across all decades, and I standardized the proportions by substracting the means and dividing by the standard deviation. 
-#I did this to try to make seasonal patterns more obvious. It only sort of made them more obvious. Here's what I take away from these figures:
-#1) There is a very clear seasonal pattern in the SRKW use of the upper salish sea. This season ranges roughly from week 20 (mid May) through week 40 (early October).
-#2) The seasonal pattern in the SRKW use is less obvious for Puget Sound, because the maximum proportion is lower over all. However, the season during which the proportion is consistently above the mean probability
-#ranges from week 40 (early October) through week 2 (early January)
 
 #use these for whale seasons to investigate shifts over time
-#use apr 1 for uss season, aug 1 for ps season as start dates
+#use apr 1 for uss season, jul 1 for ps season as start dates
 #use oct 31 for uss season, jan31 for ps season, as end dates
 
 #8a. Prep the lime kiln only sdata for either gams or linear models
-source("orca_get_whaledays_lime.R")
+source("analyses/orcaphen/source/orca_get_whaledays_lime.R")
  
 #8b. Fit some basic linear models to all srkw data
 source("analyses/orcaphen/source/orca_runlinmods.R")

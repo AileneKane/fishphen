@@ -11,7 +11,7 @@ doy<-limewdaysabs$day
 limewdaysabs$year<-as.factor(limewdaysabs$year)
 
 #try fitting gams in brms!
-library(brms)
+
 m1 <- brm(AllSRpres ~ s(day) + (1|year),
           data=limewdaysabs,
           family =bernoulli(), cores = 4,
