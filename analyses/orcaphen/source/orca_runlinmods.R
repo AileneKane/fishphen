@@ -97,7 +97,7 @@ pod.df$firstest.all<-as.numeric(pod.df$firstest.all)
 pod.df$lastest.all<-as.numeric(pod.df$lastest.all)
 
 pod.df$year<-as.numeric(pod.df$year)
-quartz(height=6,width=7)
+windows(height=6,width=7)
 par(mfrow=c(2,2))
 for(r in 1:2){
   reg.df<-pod.df[pod.df$region==regions[r],]
@@ -134,7 +134,7 @@ pod.df$decade[pod.df$year>2006]<-"2007-2016"
 pod.df$period<-"1978-1997"
 pod.df$period[pod.df$year>1997]<-"1998-2017"
 
-quartz()
+windows()
 par(mfrow=c(1,2))
 #First obs
 boxplot(as.numeric(pod.df$firstest[pod.df$region=="ps"])~as.factor(pod.df$period[pod.df$region=="ps"]), xlab="Period", ylab="Estimate of first obs (doy) in PS", main="First obs")
@@ -152,7 +152,7 @@ firstdifp.ps<-first.t.ps$p.value
 lastdif.ps<-last.t.ps$estimate[2]-last.t.ps$estimate[1]
 lastdifp.ps<-last.t.ps$p.value
 
-quartz()
+windows()
 par(mfrow=c(1,2))
 #First obs
 boxplot(as.numeric(pod.df$firstest[pod.df$region=="uss"])~as.factor(pod.df$period[pod.df$region=="uss"]), xlab="Period", ylab="Estimate of first obs (doy) in USS", main="First obs")

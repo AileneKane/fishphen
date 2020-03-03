@@ -81,8 +81,6 @@ source("orca_get_whaledays_lime.R")
 source("analyses/orcaphen/source/orca_runlinmods.R")
 
 #9. Fit some basic linear models to lime kiln data only
-limed<-d[d$Source=="TWM-Otis",]
-limed<-limed[which(!is.na(limed$SightDate)),]
 source("analyses/orcaphen/source/orca_runlinmods_lime.R")
 
 
@@ -477,29 +475,6 @@ chinab.rec<-chinab[chinab$year>=2006 & chinab$year<2018,]
 cpue.old<-cbind(aggregate(chinab.old$cpue,by=list(chinab.old$doy),mean), aggregate(chinab.old$cpue,by=list(chinab.old$doy),sd)$x)
 cpue.rec<-cbind(aggregate(chinab.rec$cpue,by=list(chinab.rec$doy),mean),aggregate(chinab.rec$cpue,by=list(chinab.rec$doy),sd)$x)
 colnames(cpue.old)<-colnames(cpue.rec)<-c("doy","cpue.mean","cpue.sd")
-#aggregate whale days
-#first add zeros
-limeyears<-unique(orcasum.days.lime$year)
-alllimeabs<-c()
-for(y in limeyears){
-days<-seq(from=min(orcasum.days.lime$day), to = max(orcasum.days.lime$day), by=1)
-abs<-rep(0,times=length(days))
-years<-rep(y, times=length(days))
-limeabs<-cbind(years,days,abs)
-alllimeabs<-rbind(alllimeabs,limeabs)
-}
-alllimeabs<-as.data.frame(alllimeabs)
-limewdayspres<-subset(orcasum.days.lime, select=c(year,day,AllSRpres,Jpres,Kpres,Lpres))
-colnames(alllimeabs)[1:2]<-colnames(limewdayspres)[1:2]
-alllimeabs$day<-as.numeric(alllimeabs$day)
-alllimeabs$abs<-as.numeric(alllimeabs$abs)
-
-limewdaysabs<-left_join(alllimeabs,limewdayspres)
-#replace NAs with 0
-limewdaysabs$AllSRpres[which(is.na(limewdaysabs$AllSRpres))]<-0
-limewdaysabs$Jpres[which(is.na(limewdaysabs$Jpres))]<-0
-limewdaysabs$Kpres[which(is.na(limewdaysabs$Kpres))]<-0
-limewdaysabs$Lpres[which(is.na(limewdaysabs$Lpres))]<-0
 
 #fit gams of srkw prob of presence
 #source(orca_rungams_lime.R)#take a long time

@@ -1,5 +1,5 @@
 
- quartz()
+windows()
  par(mai=c(1,1,1,1.5))
  #start with uss, all SRKWs
  plot(rownames(wdays),wdays$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="All SRKW sightings, 1978-2017", ylim=c(0,300))
@@ -26,7 +26,7 @@
  mtext(paste((round(m.ps$coef[2], digits=2)*10),"days/dec"), line=-20.5, adj=1.3,cex=0.9)
  mtext(paste((round(m.oc$coef[2], digits=2)*10),"days/dec"), line=-23.5, adj=1.3,cex=0.9)
 
- quartz()
+ windows()
  par(mfrow=c(3,1))#par(mfrow)
  #J pod
  plot(rownames(wdays.J),wdays.J$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="J sightings, 1978-2017", ylim=c(0,200), col="blue")
