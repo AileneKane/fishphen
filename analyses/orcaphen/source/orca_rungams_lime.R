@@ -57,16 +57,16 @@ colnames(prob.occ.90)<-c("year","doy", paste("SRprob",colnames(fitted(m2,probs=c
                          paste("Jprob",colnames(fitted(j2,probs=c(0.05,0.95))),sep="."),
                          paste("Kprob",colnames(fitted(k2,probs=c(0.05,0.95))),sep="."),
                          paste("Lprob",colnames(fitted(l2,probs=c(0.05,0.95))),sep="."))
-prob.occ.50<-cbind(limewdaysabs$year,limewdaysabs$day,fitted(m2,probs=c(0.25,0.75)),fitted(j2,probs=c(0.25,0.75)),fitted(k2,probs=c(0.25,0.75)),fitted(l2,probs=c(0.05,0.95)))
+prob.occ.50<-cbind(limewdaysabs$year,limewdaysabs$day,fitted(m2,probs=c(0.25,0.75)),fitted(j2,probs=c(0.25,0.75)),fitted(k2,probs=c(0.25,0.75)),fitted(l2,probs=c(0.25,0.75)))
 
 colnames(prob.occ.50)<-c("year","doy", paste("SRprob",colnames(fitted(m2,probs=c(0.25,0.75))),sep="."),
                          paste("Jprob",colnames(fitted(j2,probs=c(0.25,0.75))),sep="."),
                          paste("Kprob",colnames(fitted(k2,probs=c(0.25,0.75))),sep="."),
                          paste("Lprob",colnames(fitted(l2,probs=c(0.25,0.75))),sep="."))
 
-write.csv(prob.occ.95,"analyses/output/J_lime_prob.occ.95.csv", row.names = FALSE)
-write.csv(prob.occ.90,"analyses/output/J_lime_prob.occ.90.csv", row.names = FALSE)
-write.csv(prob.occ.50,"analyses/output/J_lime_prob.occ.50.csv", row.names = FALSE)
+write.csv(prob.occ.95,"analyses/output/lime_prob.occ.95.csv", row.names = FALSE)
+write.csv(prob.occ.90,"analyses/output/lime_prob.occ.90.csv", row.names = FALSE)
+write.csv(prob.occ.50,"analyses/output/lime_prob.occ.50.csv", row.names = FALSE)
 
           
           
