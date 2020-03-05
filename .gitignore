@@ -57,3 +57,6 @@ analyses/.DS_Store
 docs/srkw_phenology_nrc.pptx
 analyses/.DS_Store
 analyses/figures/.DS_Store
+analyses/output/albionchibrms.Rda
+analyses/output/j.brms.Rda
+*.Rda
