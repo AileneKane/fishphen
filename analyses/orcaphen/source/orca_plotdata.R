@@ -52,7 +52,7 @@ windows()
 podcols<-c("Jpres", "Kpres", "Lpres", "AllSRpres")
 pods<-c("J","K","L","SRs")
 for(p in 1:length(podcols)){
-  quartz(width=16,height=6)
+  windows(width=16,height=6)
   par(omi=c(.5,2,.5,.5), mfrow=c(1,3))
   colnum<-which(colnames(orcasum.days)==podcols[p])
   regions=unique(orcasum.days$region)

@@ -1,0 +1,192 @@
+#Code to analyse the fraser river test fishery data to get estimates of first, last, median dates of spring chinook runs
+#housekeeping
+
+rm(list=ls()) 
+options(stringsAsFactors = FALSE)
+
+
+# Set working directory: 
+setwd("~/Documents/GitHub/fishphen")
+#or from laptop:
+#setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
+
+# Load libraries
+library(dplyr)
+library(brms)
+# 1. Read in the datafiles
+source("analyses/salmonreturns/source/read_albiondat.R")
+dim(d)#6148
+unique(d$calDay)
+d$calDay<-as.integer(as.character(d$calDay))
+allyears<-unique(d$year)
+dat<-d
+season="allyear"#choices are "springsum" or "fall" or "allyear
+head(dat)
+
+
+#now fit splines suggested analysis
+
+dat$effort<-as.numeric(dat$effort)
+dat$year<-as.factor(dat$year)
+dat$calDay<-as.numeric(dat$calDay)
+dat$catch<-as.numeric(dat$catch)
+
+m1 <- brm(cpue ~ s(calDay) + (1|year),
+          data=dat,
+          family =gaussian(), cores = 4,
+          iter = 4000, warmup = 1000, thin = 10,
+          control = list(adapt_delta = 0.99))
+
+summary(m1)
+windows()
+
+m2 <- brm(cpue~ s(calDay) + (calDay|year),
+          data=dat,
+          family =gaussian(), cores = 4,
+          iter = 4000, warmup = 1000, thin = 10,
+          control = list(adapt_delta = 0.99, max_treedepth=15))
+
+
+
+#Look at model results          
+windows()
+conditional_effects(m1, surface = TRUE)
+
+
+windows()
+conditional_effects(m2, surface = TRUE)
+
+
+albgam<-cbind(dat$year,dat$calDay,fitted(m2),fitted(m2,probs=c(0.05,0.95)),fitted(m2,probs=c(0.25,0.75)))
+
+write.csv(albgam,"analyses/output/albionchiphenbrms.csv", row.names = FALSE)
+
+save(m2, file="analyses/output/albionchibrms.Rda")
+
+
+
+
+
+
+#old code using sme
+
+fit<-sme(cpue,doy,year,criteria="AIC")
+quartz()
+plot(fit,type="diagnostic")
+fit$info
+quartz()
+plot(fit,type="model",xlab="doy",ylab="cpue")
+length(fit$fitted)
+summary(fit)
+#this fitting takes a while
+plot(fit,type="raw",showModelFits=TRUE,xlab="doy",ylab="cpue")
+#next extract peak doy around doy 100 and around doy 150 from model predictions
+summary(fit)
+preds<-as.data.frame(fit$fitted)
+preds$year<-substr(rownames(preds),1,4)
+#preds$n<-substr(rownames(preds),5,length(rownames(preds)))
+preds$doy<-dat$calDay
+
+colnames(preds)[1]<-"cpue.est"
+preds$cpue.est[preds$cpue.est<0]<-0
+tail(preds)
+write.csv(preds,"analyses/output/albiongamests.csv", row.names=FALSE)
+
+allyears<-unique(preds$year)
+
+seasons<-c("springsum","fall","allyear")
+years<-c()
+allseasons<-c()
+firstobsdate<-c()
+lastobsdate<-c()
+midobsdate<-c()
+peakobsdate<-c()
+peakobsdate.sp<-c()
+peakobsdate.fa<-c()
+alltotal<-c()
+alltotal.sp<-c()
+alltotal.fa<-c()
+
+for(y in allyears){
+  datyr<-preds[preds$year==y,]
+  if (dim(datyr)[1]<=1){
+    first<-last<-mid<-peak<-NA
+    total<-NA
+  }
+  if (dim(datyr)[1]>0){
+    cpue<-datyr$cpue.est
+    cpuesp<-datyr$cpue.est[datyr$doy<213]#213= aug 1
+    cpuefa<-datyr$cpue.est[datyr$doy>=213]
+    #plot(datyr$doy,count, pch=21, bg="gray", main=paste(y))
+    #if(y==min(allyears)){mtext(paste(sites[i], species[p]),side=3, line=3)}
+    datdoy<-datyr
+    datdoysp<-datyr[datyr$doy<213,]
+    datdoyfa<-datyr[datyr$doy>=213,]
+    first<-min(datdoy$doy[which(cpue>0)])
+    last<-max(datdoy$doy[which(cpue>0)])
+    total<-sum(cpue,na.rm=TRUE)
+    totalsp<-sum(cpuesp,na.rm=TRUE)
+    totalfa<-sum(cpuefa,na.rm=TRUE)
+    
+    mid<-datdoy$doy[min(which(cumsum(cpue)>(total/2)))]#date at which half of fish have arrived
+    peak<-min(datdoy$doy[which(cpue==max(cpue, na.rm=TRUE))])#date of peak number of fish observed, if multiple dates with same number, choose first of these
+    peaksp<-min(datdoysp$doy[which(cpuesp==max(cpuesp, na.rm=TRUE))])#date of peak number of fish observed, if multiple dates with same number, choose first of these
+    peakfa<-min(datdoyfa$doy[which(cpuefa==max(cpuefa, na.rm=TRUE))])#date of peak number of fish observed, if multiple dates with same number, choose first of these
+    #print(peak)
+  }
+  print(y);print(first);print(last);print(total); print(mid)
+  years<-c(years,y)
+  #allseasons<-c(allseasons,season[s])
+  firstobsdate<-c(firstobsdate,first)
+  lastobsdate<-c(lastobsdate,last)
+  midobsdate<-c(midobsdate,mid)
+  peakobsdate<-c(peakobsdate,peak)
+  peakobsdate.fa<-c(peakobsdate.fa,peakfa)
+  peakobsdate.sp<-c(peakobsdate.sp,peaksp)
+  alltotal<-c(alltotal,total)
+  alltotal.fa<-c(alltotal.fa,totalfa)
+  alltotal.sp<-c(alltotal.sp,totalsp)
+  
+  #firstobsdate[which(firstobsdate=="Inf")]<-NA
+  #peakobsdate[which(peakobsdate=="Inf")]<-NA
+  #lastobsdate[which(lastobsdate=="-Inf")]<-NA
+  }
+
+#if(length(which(is.na(firstobsdate)))<5){next}
+#Save a file with these estimates in it
+albchiphenest<-cbind("ck","albion",years,firstobsdate,lastobsdate,peakobsdate,peakobsdate.sp,peakobsdate.fa,midobsdate,alltotal,alltotal.sp,alltotal.fa)
+
+colnames(albchiphenest)[1:3]<-c("sp","site","year")
+write.csv(albchiphenest,"analyses/output/albionchiphenest.csv", row.names =FALSE)
+
+#Now estimate trends in phenology from gamests rather than those above calculated frmo raw data
+albchiphenest<-read.csv("analyses/output/albionchiphenest.csv", header=TRUE)
+#restrict to time frame consistent with orcas
+albchiphenest<-albchiphenest[albchiphenest$year>1995,]
+albchiphenest<-albchiphenest[albchiphenest$year<2018,]
+firstmod<-lm(firstobsdate~year, data=albchiphenest)
+  firstcoefs<-coef(firstmod)
+  firstcoefs.50ci<-confint(firstmod,level = 0.50)
+  firstcoefs.95ci<-confint(firstmod,level = 0.95)
+  lastmod<-lm(lastobsdate~year, data=albchiphenest)
+  lastcoefs<-coef(lastmod)
+  lastcoefs.50ci<-confint(lastmod,level = 0.50)
+  lastcoefs.95ci<-confint(lastmod,level = 0.95)
+  peakmod<-lm(peakobsdate~year, data=albchiphenest)
+  peakcoefs<-coef(peakmod)
+  peakcoefs.50ci<-confint(peakmod,level = 0.50)
+  peakcoefs.95ci<-confint(peakmod,level = 0.95)
+  abundmod<-lm(alltotal~year, data=albchiphenest)
+  abundcoefs<-coef(abundmod)
+  abundcoefs.50ci<-confint(abundmod,level = 0.50)
+  abundcoefs.95ci<-confint(abundmod,level = 0.95)
+  
+
+allmodsums<-c(round(firstcoefs, digits=3),round(lastcoefs, digits=3),round(peakcoefs, digits=3))
+allmodsums.50ci<-rbind(round(firstcoefs.50ci, digits=3),round(lastcoefs.50ci, digits=3),round(peakcoefs.50ci, digits=3))
+allmodsums.95ci<-rbind(round(firstcoefs.95ci, digits=3),round(lastcoefs.95ci, digits=3),round(peakcoefs.95ci, digits=3))
+phen<-c("first","first","last","last","peak","peak")
+sums<-cbind("ck","albion",phen,allmodsums,allmodsums.50ci,allmodsums.95ci)
+colnames(sums)<-c("sp","site","phen","est","ci25","ci75","ci2.5","ci97.5")
+
+write.csv(sums, "analyses/output/albionreturntrends_linmodyrs.csv", row.names = TRUE)

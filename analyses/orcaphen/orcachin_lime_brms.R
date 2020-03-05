@@ -1,19 +1,15 @@
-
-#Only use fishing areas that have atleast 4 years with >20 observations:
-#Look at some basic stats about orca observations
-#Started with orca_dataprep_occmodel.R code
-#4 February 2019
-
+# Code for Phenology of SRKWs and their prey
+# SRKW data from lime-kiln; Prey data = albion test fishery data
+# Ailene Ettinger
+# ailene.ettinger@tnc.org
+# Updated March 2020
 #housekeeping
 
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
 
-
 # Set working directory: 
-#setwd("~/GitHub/fishphen")
-#or from laptop:
-#setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
+setwd("~/GitHub/fishphen")
 
 # Load libraries
 library(dplyr)
@@ -73,35 +69,15 @@ source("analyses/orcaphen/source/orca_makemap.R")
 #use apr 1 for uss season, jul 1 for ps season as start dates
 #use oct 31 for uss season, jan31 for ps season, as end dates
 
-#8a. Prep the lime kiln only data for either gams or linear models
+#8. Prep the lime kiln only data for either gams or linear models
 source("analyses/orcaphen/source/orca_get_whaledays_lime.R")
- 
-#8b. Fit some basic linear models to all srkw data
-source("analyses/orcaphen/source/orca_runlinmods.R")
-#the above code also includes simulated data- check this and add to supplement!
 
-#9. Fit some basic linear models to lime kiln data only
-#source("analyses/orcaphen/source/orca_runlinmods_lime.R")
-#To do: review above and see if it is necessary or useful. fix errors
+#9. Fit gams in brms to limekiln data 
+#source("analyses/orcaphen/source/orca_rungams_lime.R")
+#this takes a while, so just read in the relevant data from this:
 
-#10. Fit some basic linear models to west seattle only
-#searsd<-read.csv("data/SearsCompiled.csv")
-#first clean the data and get in same format as orcamaster
-#source("analyses/orcaphen/source/clean_sears.R")
-
-#source("analyses/orcaphen/source/orca_runlinmods_sears.R")
-
-#11.Try the pearse approach to compare to using data at face-value for estimating first/last events
-#lime.df contains first, last, mean dates from data face value
-#orcasum.days.lime contains whale days
-#unique(orcasum.days.lime$AllSRpres)#all presence
-source("analyses/orcaphen/source/pearse_fxns.R")
-alpha=0.10
-k=20
-source("analyses/orcaphen/source/orca_runlinmods_lime_pearse.R")
-
-#12. Relate limekiln data to chinook phenology in the Fraser river
-albchin<-read.csv("analyses/output/albionchiphen_allyear.csv", header = TRUE)
+#10. Read in model results from albion test fishery gams (in albion.brms.R)
+#albchin<-read.csv("analyses/output/albionchiphen_allyear.csv", header = TRUE)
 albchinest<-read.csv("analyses/output/albionchiphenbrms.csv", header = TRUE)
 
 #restrict to years that we have SRKW data for
@@ -112,8 +88,10 @@ albchinest95<-albchinest[albchinest$year>1993  & albchinest$year<2018,]
 albchinest95<-albchinest95[-which(albchinest95$year==2014),]
 
 
-#add 90 days to limekiln doy columns to make comparable to chinook
+#choose pod to use for whale data
 
+#
+#add 90 days to limekiln doy columns to make comparable to chinook
 lime2002<-lime.df[lime.df$year>2001,]
 lime2002<-lime2002[lime2002$year!=2018,]
 lime2002$firstest<-as.numeric(lime2002$firstest.all)+90
@@ -124,6 +102,7 @@ lime1995<-lime1995[lime1995$year!=2018,]
 lime1995$firstest<-as.numeric(lime1995$firstest.all)+90
 lime1995$mean<-as.numeric(lime1995$mean.all)+90
 lime1995$lastest<-as.numeric(lime1995$lastest.all)+90
+
 
 #quartz(height=4,width=12)
 pdf(file="analyses/orcaphen/figures/lime_albchin.pdf",height=4,width=12)
@@ -561,72 +540,4 @@ legend(115,.85,legend=c("SRKW","salmon"),lty=1,lwd=2,col=c("black","salmon"), bt
 dev.off()
 gests95<-gests[gests$years>1993,]
 gests95<-gests95[gests95$years!=2014,]
-#not running mean
-#quartz(height=4,width=12)
-par(mfrow=c(1,4))
-albchinest95<-albchinest95[albchinest95$year<2018,]
-plot(albchinest95$firstobsdate,gests95$firstprob,type="p",pch=21, cex.axis=1.3,cex.lab=1.3,bg = cols[factor(albchin95$year)],xlab="Chinook Arrival (doy)",ylab="SRKW Arrival (doy)", cex=1.2, bty="l")
-#what is the really late salmon year?
-#albchin95$year[which(albchin95$firstobsdate==max(albchin95$firstobsdate, na.rm=TRUE))]#2007
-#points(albchin95$firstobsdate,lime.df$firstest.all,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
-legend("topleft",legend=c("1994","2017"), pch=21, pt.bg=c(cols[1], cols[length(cols)]), bty="n", cex=1.4)
-mod<-lm(gests95$firstprob~albchinest95$firstobsdate)
-if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
-if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
-
-
-plot(albchin95$firstobsdate,gests95$peakoc.doy,type="p",pch=21, cex.axis=1.3,cex.lab=1.3,bg = cols[factor(albchin95$year)],xlab="Chinook Arrival (doy)",ylab="SRKW Peak Occupancy prob (doy)", cex=1.2, bty="l")
-#what is the really late salmon year?
-#albchin95$year[which(albchin95$firstobsdate==max(albchin95$firstobsdate, na.rm=TRUE))]#2007
-points(albchin95$firstobsdate,lime.df$firstest.all,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
-legend("topleft",legend=c("1994","2017"), pch=21, pt.bg=c(cols[1], cols[length(cols)]), bty="n", cex=1.4)
-mod<-lm(lime.df$firstest.all~albchin95$firstobsdate)
-if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
-if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
-
-
-#whale days vs chinook run size
-plot(albchin95$alltotal,lime.df$nobs,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="Whale days", cex=1.2, bty="l")
-points(albchin95$alltotal,lime.df$nobs,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
-
-mod<-lm(lime.df$nobs~albchin95$alltotal)
-if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
-if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3, lwd=2)}
-mod<-lm(lime.df$nobs[8:23]~lime.df$year[8:23])
-summary(mod)
-confint(mod)
-#compare lime kiln phenology to whol region phenology from 2002-2017
-#Lastobs of SRKW vs total run size###Could add this
-plot(albchin95$alltotal,lime.df$lastest.all,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="SRKW Departure (doy)", cex=1.2, bty="l")
-points(albchin95$alltotal,lime.df$lastest.all,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
-
-mod<-lm(lime.df$lastest.all~albchin95$alltotal)
-if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1,lwd=2)}
-if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,lwd=2)}
-# points(albchin95$alltotal,lime.df$lastest.p,pch=16, col = "blue",cex=1.2)
-# mod<-lm(lime.df$lastest.p~albchin95$alltotal)
-# if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="blue")}
-# if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "blue")}
-dev.off()
-
-#Now calculate Eric's new whale days metric:
-limewhaledays.prob<-aggregate(limegests$prob.occ, by=list(limegests$year), sum)
-colnames(limewhaledays.prob)<-c("year","whdays.prob")
-limewhaledays.prob<-limewhaledays.prob[limewhaledays.prob$year>1993,]
-quartz()
-par(mfrow=c(1,2))
-plot(albchin95$alltotal,lime1995$nobs,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="Whale days", cex=1.2, bty="l")
-points(albchin95$alltotal,lime1995$nobs,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
-
-mod<-lm(lime1995$nobs~albchin95$alltotal)
-if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
-if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3, lwd=2)}
-
-plot(albchin95$alltotal,limewhaledays.prob$whdays.prob,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="Whale days prob", cex=1.2, bty="l")
-points(albchin95$alltotal,limewhaledays.prob$whdays.prob,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
-
-mod<-lm(limewhaledays.prob$whdays.prob~albchin95$alltotal)
-if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
-if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3, lwd=2)}
-
 

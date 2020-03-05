@@ -84,3 +84,15 @@ limewdaysabs$Kpres[which(is.na(limewdaysabs$Kpres))]<-0
 limewdaysabs$Lpres[which(is.na(limewdaysabs$Lpres))]<-0
 
 write.csv(limewdaysabs,"analyses/output/limedat.csv", row.names = FALSE)
+#Make a plot of lime kiln whale days by year
+png(file="analyses/orcaphen/figures/whaledays_lime.png",height=6,width=8)
+#quartz(height=6,width=8)
+psi.med<-apply(out$sims.list$psi[,32:40,],c(3),median)
+plot(doy,psi.med, type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", lty=1,col=color, lwd=2)
+names(out)
+#lines(doy,psi.med)
+psi.uci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=uci)
+psi.lci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=lci)
+paste(unique(dat$year)[24],"-",unique(dat$year)[31],sep= "")),lwd=c(2,2),lty=c(1,2),col=c(color,cols[2]), bty="n")
+dev.off()
+
