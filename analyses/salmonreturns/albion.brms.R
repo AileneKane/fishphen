@@ -27,11 +27,11 @@ head(dat)
 #now fit splines suggested analysis
 
 dat$effort<-as.numeric(dat$effort)
-dat$year<-as.factor(dat$year)
+dat$year2<-as.factor(dat$year)
 dat$calDay<-as.numeric(dat$calDay)
 dat$catch<-as.numeric(dat$catch)
-
-m1 <- brm(cpue ~ s(calDay) + (1|year),
+dat$logcpue<-log(dat$cpue)
+m1 <- brm(cpue ~ s(calDay) + (1|year2),
           data=dat,
           family =gaussian(), cores = 4,
           iter = 4000, warmup = 1000, thin = 10,
@@ -40,7 +40,7 @@ m1 <- brm(cpue ~ s(calDay) + (1|year),
 summary(m1)
 windows()
 
-m2 <- brm(cpue~ s(calDay) + (calDay|year),
+m2 <- brm(cpue~ s(calDay) + (calDay|year2),
           data=dat,
           family =gaussian(), cores = 4,
           iter = 4000, warmup = 1000, thin = 10,
@@ -58,10 +58,33 @@ conditional_effects(m2, surface = TRUE)
 
 
 albgam<-cbind(dat$year,dat$calDay,fitted(m2),fitted(m2,probs=c(0.05,0.95)),fitted(m2,probs=c(0.25,0.75)))
-
+colnames(albgam)[1:3]<-c("year","doy", "cpue")
 write.csv(albgam,"analyses/output/albionchiphenbrms.csv", row.names = FALSE)
 
 save(m2, file="analyses/output/albionchibrms.Rda")
+
+#poisson models
+dat$effort<-as.integer(dat$effort)
+dat$year2<-as.factor(dat$year)
+dat$calDay<-as.numeric(dat$calDay)
+dat$catch<-as.integer(dat$catch)
+dat$effort<-as.integer(dat$effort)
+
+m1 <- brm(catch ~ s(calDay) + offset(effort) + (1|year2),
+          data=dat,
+          family =poisson(), cores = 4,
+          iter = 4000, warmup = 1000, thin = 10,
+          control = list(adapt_delta = 0.99))
+
+summary(m1)
+windows()alDay
+
+m2 <- brm(catch~ s(calDay)  + offset(effort) + (c|year2),
+          data=dat,
+          family =poisson(), cores = 4,
+          iter = 4000, warmup = 1000, thin = 10,
+          control = list(adapt_delta = 0.99, max_treedepth=15))
+
 
 
 

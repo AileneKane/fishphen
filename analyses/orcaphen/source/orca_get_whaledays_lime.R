@@ -85,14 +85,24 @@ limewdaysabs$Lpres[which(is.na(limewdaysabs$Lpres))]<-0
 
 write.csv(limewdaysabs,"analyses/output/limedat.csv", row.names = FALSE)
 #Make a plot of lime kiln whale days by year
-png(file="analyses/orcaphen/figures/whaledays_lime.png",height=6,width=8)
-#quartz(height=6,width=8)
-psi.med<-apply(out$sims.list$psi[,32:40,],c(3),median)
-plot(doy,psi.med, type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", lty=1,col=color, lwd=2)
-names(out)
-#lines(doy,psi.med)
-psi.uci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=uci)
-psi.lci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=lci)
-paste(unique(dat$year)[24],"-",unique(dat$year)[31],sep= "")),lwd=c(2,2),lty=c(1,2),col=c(color,cols[2]), bty="n")
+yearsum<-aggregate(limewdaysabs$AllSRpres,by=list(limewdaysabs$year),sum)
+jsum<-aggregate(limewdaysabs$Jpres,by=list(limewdaysabs$year),sum)
+ksum<-aggregate(limewdaysabs$Kpres,by=list(limewdaysabs$year),sum)
+lsum<-aggregate(limewdaysabs$Lpres,by=list(limewdaysabs$year),sum)
+colnames(yearsum)<-colnames(jsum)<-colnames(ksum)<-colnames(lsum)<-c("year","wdays")
+png(filename="analyses/orcaphen/figures/whaledays_lime.png",height=480,width=960)
+#windows(height=6,width=12)
+par(mfrow=c(1,4))
+plot(as.numeric(yearsum$year),yearsum$wdays,ylab= "Year", xlab= "Number of Whale Days", bty="l", type="l", col="darkblue",lwd=2,main = "All Pods")
+mtext("A)", side = 3, line = 1, adj=0)
+plot(as.numeric(jsum$year),jsum$wdays,ylab= "Year", xlab= "Number of Whale Days", bty="l", type="l", col="darkblue",lwd=2, main = "J Pod")
+mtext("B)", side = 3, line = 1, adj=0)
+
+plot(as.numeric(ksum$year),ksum$wdays,ylab= "Year", xlab= "Number of Whale Days", bty="l", type="l", col="darkblue",lwd=2, main = "K Pod")
+mtext("C)", side = 3, line = 1, adj=0)
+
+plot(as.numeric(lsum$year),lsum$wdays,ylab= "Year", xlab= "Number of Whale Days", bty="l", type="l", col="darkblue",lwd=2, main = "L Pod")
+mtext("D)", side = 3, line = 1, adj=0)
+
 dev.off()
 

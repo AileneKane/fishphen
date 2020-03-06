@@ -35,4 +35,6 @@ d$calDay<-as.integer(d$calDay)
 d1$calDay[which(is.na(d1$calDay))]<-strftime(strptime(paste(d1$year[which(is.na(d1$calDay))],d1$month[which(is.na(d1$calDay))],d1$day[which(is.na(d1$calDay))],sep="-"), format = "%Y-%m-%d"),format = "%j") 
 
 d<-rbind(d1,d)
+#some rows have NA for effort, even though there is CPUE. We can back-calculate effort from this
+d$effort[which(is.na(as.numeric(d$effort)))]<- as.numeric(gsub(",","",d$effort[which(is.na(as.numeric(d$effort)))]))
 write.csv(d,"analyses/output/albionddat.csv",row.names = FALSE)

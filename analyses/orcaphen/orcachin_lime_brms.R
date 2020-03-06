@@ -74,7 +74,11 @@ source("analyses/orcaphen/source/orca_get_whaledays_lime.R")
 
 #9. Fit gams in brms to limekiln data 
 #source("analyses/orcaphen/source/orca_rungams_lime.R")
-#this takes a while, so just read in the relevant data from this:
+#this takes a while, so just read in the relevant data from this below
+#choose pod to use for SRKW data
+pod = "SR"#choices are "SR" "J" "K" "L"
+
+
 
 #10. Read in model results from albion test fishery gams (in albion.brms.R)
 #albchin<-read.csv("analyses/output/albionchiphen_allyear.csv", header = TRUE)
@@ -88,9 +92,13 @@ albchinest95<-albchinest[albchinest$year>1993  & albchinest$year<2018,]
 albchinest95<-albchinest95[-which(albchinest95$year==2014),]
 
 
-#choose pod to use for whale data
 
-#
+
+#function to make plots and fit linear models correlating phenology of SRKW to prey
+
+#function to make plot of phenological overlap of SRKWs and prey
+
+
 #add 90 days to limekiln doy columns to make comparable to chinook
 lime2002<-lime.df[lime.df$year>2001,]
 lime2002<-lime2002[lime2002$year!=2018,]
@@ -506,12 +514,6 @@ orcasum.days.lime2<-limegests[limegests$year>=2006 & limegests$year<2018,]
 
 wdays.old<-cbind(aggregate(orcasum.days.lime1$prob.occ,by=list(orcasum.days.lime1$doy),mean),aggregate(orcasum.days.lime1$prob.occ,by=list(orcasum.days.lime1$doy),sd)$x,aggregate(orcasum.days.lime1$prob.occ,by=list(orcasum.days.lime1$doy),length)$x)
 wdays.rec<-cbind(aggregate(orcasum.days.lime2$prob.occ,by=list(orcasum.days.lime2$doy),mean),aggregate(orcasum.days.lime2$prob.occ,by=list(orcasum.days.lime2$doy),sd)$x,aggregate(orcasum.days.lime2$prob.occ,by=list(orcasum.days.lime2$doy),length)$x)
-
-colnames(wdays.old)<-colnames(wdays.rec)<-c("doy","meanocc","sdocc","n")
-wdays.old$seocc<-wdays.old$sdocc/sqrt(wdays.old$n)
-wdays.rec$seocc<-wdays.rec$sdocc/sqrt(wdays.rec$n)
-
-#quartz(height=6, width=12)
 pdf("analyses/orcaphen/figures/orcachinphenoverlap.pdf",height=6, width=12)
 #png("analyses/orcaphen/figures/orcachinphenoverlap.png",height=6, width=12)
 
@@ -538,6 +540,12 @@ legend(115,1,legend=c("1994-2005","2006-2017"),lty=c(2,1),lwd=2,col="black", bty
 legend(115,.85,legend=c("SRKW","salmon"),lty=1,lwd=2,col=c("black","salmon"), bty="n")
 
 dev.off()
+
+colnames(wdays.old)<-colnames(wdays.rec)<-c("doy","meanocc","sdocc","n")
+wdays.old$seocc<-wdays.old$sdocc/sqrt(wdays.old$n)
+wdays.rec$seocc<-wdays.rec$sdocc/sqrt(wdays.rec$n)
+
+#quartz(height=6, width=12)
 gests95<-gests[gests$years>1993,]
 gests95<-gests95[gests95$years!=2014,]
 
