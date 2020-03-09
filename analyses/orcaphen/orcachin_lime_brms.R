@@ -74,29 +74,29 @@ source("analyses/orcaphen/source/orca_get_whaledays_lime.R")
 
 #9. Fit gams in brms to limekiln data 
 #source("analyses/orcaphen/source/orca_rungams_lime.R")
+
 #this takes a while, so just read in the relevant data from this below
-#choose pod to use for SRKW data
-pod = "SR"#choices are "SR" "J" "K" "L"
-
-
-
+  
 #10. Read in model results from albion test fishery gams (in albion.brms.R)
 #albchin<-read.csv("analyses/output/albionchiphen_allyear.csv", header = TRUE)
-albchinest<-read.csv("analyses/output/albionchiphenbrms.csv", header = TRUE)
+#albchinest<-read.csv("analyses/output/albionchiphenbrmslog.csv", header = TRUE)
+ albchinest<-read.csv("analyses/output/albionchiphenest.csv", header = TRUE)
 
 #restrict to years that we have SRKW data for
 
-albchin95<-albchin[albchin$year>1993  & albchin$year<2018,]
+albchin95<-albchinest[albchin$year>1993  & albchin$year<2018,]
 albchin95<-albchin95[-which(albchin95$year==2014),]
 albchinest95<-albchinest[albchinest$year>1993  & albchinest$year<2018,]
 albchinest95<-albchinest95[-which(albchinest95$year==2014),]
 
 
-
-
 #function to make plots and fit linear models correlating phenology of SRKW to prey
+#choose pod to use for SRKW data
+pod = "L"#choices are "SR" "J" "K" "L"
+brkyr = 2007#try 2005, 2006, 2007, 2008
 
-#function to make plot of phenological overlap of SRKWs and prey
+
+source("analyses/orcaphen/source/makeplots_srchinoverlap.R")
 
 
 #add 90 days to limekiln doy columns to make comparable to chinook

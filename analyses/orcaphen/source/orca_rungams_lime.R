@@ -68,6 +68,33 @@ write.csv(prob.occ.95,"analyses/output/lime_prob.occ.95.csv", row.names = FALSE)
 write.csv(prob.occ.90,"analyses/output/lime_prob.occ.90.csv", row.names = FALSE)
 write.csv(prob.occ.50,"analyses/output/lime_prob.occ.50.csv", row.names = FALSE)
 
+
+#Make figures of model estimated whale days
+limedays<-read.csv("analyses/output/lime_prob.occ.50.csv", header=TRUE)
+limedays$year<-as.numeric(limewdaysabs$year)
+
+yearsum<-aggregate(limedays$SRprob.Estimate,by=list(limedays$year),sum)
+jsum<-aggregate(limedays$Jprob.Estimate,by=list(limedays$year),sum)
+ksum<-aggregate(limedays$Kprob.Estimate,by=list(limedays$year),sum)
+lsum<-aggregate(limedays$Lprob.Estimate,by=list(limedays$year),sum)
+colnames(yearsum)<-colnames(jsum)<-colnames(ksum)<-colnames(lsum)<-c("year","wdays")
+png(filename="analyses/orcaphen/figures/modwhaledays_lime.png",height=480,width=960)
+#windows(height=6,width=12)
+par(mfrow=c(1,4))
+plot(as.numeric(yearsum$year),yearsum$wdays,ylab= "Year", xlab= "Number of Modeled Whale Days", bty="l", type="l", col="darkblue",lwd=2,main = "All Pods")
+mtext("A)", side = 3, line = 1, adj=0)
+plot(as.numeric(jsum$year),jsum$wdays,ylab= "Year", xlab= "Number of Modeled Whale Days", bty="l", type="l", col="darkblue",lwd=2, main = "J Pod")
+mtext("B)", side = 3, line = 1, adj=0)
+
+plot(as.numeric(ksum$year),ksum$wdays,ylab= "Year", xlab= "Number of Modeled Whale Days", bty="l", type="l", col="darkblue",lwd=2, main = "K Pod")
+mtext("C)", side = 3, line = 1, adj=0)
+
+plot(as.numeric(lsum$year),lsum$wdays,ylab= "Year", xlab= "Number of Modeled Whale Days", bty="l", type="l", col="darkblue",lwd=2, main = "L Pod")
+mtext("D)", side = 3, line = 1, adj=0)
+
+dev.off()
+
+
 #Look at model results          
 # windows()
 # conditional_effects(m2, surface = TRUE)

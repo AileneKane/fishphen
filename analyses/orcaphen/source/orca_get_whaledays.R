@@ -132,6 +132,12 @@ orcasum.days$daysaftmar31[which(orcasum.days$daysaftmar31=="0")]<-366
 #check that daysaftermar31 is working
 presapr1<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$orcayear),sum)
 
+regions=unique(orcasum.days$region)
+podcols<-c("Jpres","Kpres","Lpres","AllSRpres")
+pods<-c("J", "K","L","SRs")
+
+#aggregate whale days
+
 #Add decade
 
 orcasum.days$week<-strftime(strptime(orcasum.days$date,format= "%Y-%m-%d"), format = "%V")#new weeks start on mondays

@@ -1,5 +1,5 @@
 #Run simple linear models on srkw data
-years<-seq(1978,2017, by=1)#restrict to these years for orcayears
+years<-seq(styr,2017, by=1)#restrict to these years for orcayears
 #Look at trends in SRKW phenology across all years, for all pods
 years.all<-c()
 nobs.all<-c()
@@ -15,13 +15,13 @@ for(y in 1:length(years)){
 }
 df <- as.data.frame(cbind(years.all,nobs.all,firstest.all,lastest.all))
 colnames(df)[1:2]<-c("year","nobs")
-
+windows()
 plot(df$year,df$firstest.all,xlab="year",ylab="first obs doy", main="", bty="l", pch=21, bg="gray")
 mod<-lm(df$firstest.all~df$year)
 abline(mod)
 mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
 mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
-
+windows()
 plot(df$year,df$lastest.all,xlab="year",ylab="last obs doy", main="", bty="l", pch=21, bg="gray")
 mod<-lm(df$lastest.all~df$year)
 abline(mod)
@@ -44,7 +44,7 @@ lastest.all<-c()
 #r=1
 
 #unique(orcasum.days$orcayear)#use may 1 as start of orca year, as this will encompass min start date window that i want to try
-
+podcols<-c("Jobs","Kobs", "Lobs","AllSRobs")
 for(p in 1:length(podcols)){
   colnum<-which(colnames(orcasum.days)==podcols[p])
   for(r in 1:2){
@@ -131,8 +131,17 @@ pod.df$decade<-"1977-1986"
 pod.df$decade[pod.df$year>1986]<-"1987-1996"
 pod.df$decade[pod.df$year>1996]<-"1997-2006"
 pod.df$decade[pod.df$year>2006]<-"2007-2016"
-pod.df$period<-"1978-1997"
-pod.df$period[pod.df$year>1997]<-"1998-2017"
+if(styr==1978){
+  pod.df$period<-"1978-1997"
+  pod.df$period[pod.df$year>1997]<-"1998-2017"}
+
+if(styr==2001){
+  pod.df$period<-"2001-2009"
+  pod.df$period[pod.df$year>2009]<-"2010-2017"
+  }
+
+
+
 
 windows()
 par(mfrow=c(1,2))
@@ -152,16 +161,14 @@ firstdifp.ps<-first.t.ps$p.value
 lastdif.ps<-last.t.ps$estimate[2]-last.t.ps$estimate[1]
 lastdifp.ps<-last.t.ps$p.value
 
-windows()
 par(mfrow=c(1,2))
 #First obs
 boxplot(as.numeric(pod.df$firstest[pod.df$region=="uss"])~as.factor(pod.df$period[pod.df$region=="uss"]), xlab="Period", ylab="Estimate of first obs (doy) in USS", main="First obs")
-first.t.uss<-t.test(as.numeric(pod.df$firstest[pod.df$region=="uss"])~pod.df$period[pod.df$region=="uss"], paired = FALSE, var.equal = FALSE,conf.level=0.95)
+first.t.uss<-t.test(as.numeric(pod.df$firstest[pod.df$region=="uss"])~pod.df$period[pod.df$region=="uss"], paired = FALSE, var.equal = FALSE,conf.level=0.5)
 #mtext(paste("Change=",-1*round(t$estimate[1]-t$estimate[2], digits=1),"(",-1*round(t$conf.int[1],digits=1),",",-1*round(t$conf.int[2],digits=1),")", sep=""),side=3,line=-3, adj=1)
-
 #Last obs
 boxplot(as.numeric(pod.df$lastest[pod.df$region=="uss"])~as.factor(pod.df$period[pod.df$region=="uss"]), xlab="Period", ylab="Estimate of last obs (doy) in USS", main="Last obs")
-last.t.uss<-t.test(as.numeric(pod.df$lastest[pod.df$region=="uss"])~as.factor(pod.df$period[pod.df$region=="uss"]), conf.level=0.95)
+last.t.uss<-t.test(as.numeric(pod.df$lastest[pod.df$region=="uss"])~as.factor(pod.df$period[pod.df$region=="uss"]), conf.level=0.5)
 #mtext(paste("Change=",-1*round(t$estimate[1]-t$estimate[2], digits=1),"(",-1*round(t$conf.int[1],digits=1),",",-1*round(t$conf.int[2],digits=1),")", sep=""),side=1,line=-3, adj=1)
 
 #create a vector with the differences, like in the simulation code:
@@ -170,7 +177,7 @@ firstdifp.uss<-first.t.uss$p.value
 lastdif.uss<-last.t.uss$estimate[2]-last.t.uss$estimate[1]
 lastdifp.uss<-last.t.uss$p.value
 
-change.df<-as.data.frame(rbind(c("SRs","ps",mean(as.numeric(pod.df$nobs[pod.df$region=="ps"], na.rm=TRUE)),NA,firstdif.ps,firstdifp.ps,lastdif.ps,lastdifp.ps),
-                               c("SRs","uss",mean(as.numeric(pod.df$nobs[pod.df$region=="uss"], na.rm=TRUE)),NA,firstdif.uss,firstdifp.uss,lastdif.uss,lastdifp.uss)))
-colnames(change.df)<-c("pod","region","nobs","prob","first.dif","first.p","last.dif","last.p")
+change.df<-as.data.frame(rbind(c("SRs","ps",mean(as.numeric(pod.df$nobs[pod.df$region=="ps"], na.rm=TRUE)),NA,firstdif.ps, first.t.ps$conf.int[1], first.t.ps$conf.int[2],lastdif.ps,last.t.ps$conf.int[1], last.t.ps$conf.int[2]),
+                               c("SRs","uss",mean(as.numeric(pod.df$nobs[pod.df$region=="uss"], na.rm=TRUE)),NA,firstdif.uss, first.t.uss$conf.int[1], first.t.uss$conf.int[2],lastdif.uss, last.t.uss$conf.int[1], last.t.uss$conf.int[2])))
+colnames(change.df)<-c("pod","region","nobs","prob","first.dif","first.lci","first.uci","last.dif","last.lci","last.uci")
 

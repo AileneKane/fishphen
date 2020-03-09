@@ -14,7 +14,7 @@ options(stringsAsFactors = FALSE)
 
 
 # Set working directory: 
-setwd("~/Documents/GitHub/fishphen")
+setwd("~/GitHub/fishphen")
 #or from laptop:
 #setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
 
@@ -23,10 +23,42 @@ library(dplyr)
 library(mgcv)
 library(scales)
 library(RColorBrewer)
-# 1. Get the observation data together and plot it, do linear models and t-tests with the data
-source("analyses/orcaphen/orca_phen_linmods.R")
+# 1. Choose the years, regions of interest, assumption about reports in the OrcaMaster and get the data
+includeCanada=TRUE
+firstyear= 1976#probably set to 1975 or 1976 (Olson et al)
+assumeSRKW=FALSE #If true, assume that "Orcas" means SRKW unless noted otherwuse (i.e. Transients or NRKWs)
+use3regions=FALSE#If true, separate out the straight of Juan de Fuca as a 3rd region, distinct from CSS and PS (all code not yet working for 3 regions!)
+#Set start of seasons
+ps.start<-182#July 1 = 182
+uss.start<-91#April 1 = 91, 
 
-#2. Summarize changes in effort over time
+
+d <- read.csv("data/AppendixII.csv")
+quads<-read.csv("data/QuadCentroids.csv")
+dim(d)#105344  18 on Nov 08, 2019
+
+# 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
+source("analyses/orcaphen/source/clean_orca.R")
+dim(d)#105339     21 on Nov 8, 2019
+
+
+# 3. Limit space and time to firstyear or later and Salish Sea, Puget Sound, Washington Outer Coast 
+source("analyses/orcaphen/source/orca_limitspacetime.R")
+dim(d)#103121      22
+#table(d$FishArea,d$region)#check regions are correct
+
+#4. Get data in terms of number of observations per day and "whale days": days on which whales were seen (presence/absence for each day)
+source("analyses/orcaphen/source/orca_get_whaledays.R")
+
+
+#5. Fit some basic linear models to all srkw data
+styr = 1978#choose 1978 or 2001 to coincide with our ms
+if(styr == 2001){bkyr = 2009}
+if(styr == 1978){bkyr = 1997}
+source("analyses/orcaphen/source/orca_runlinmods.R")
+#the above code also includes simulated data- check this and add to supplement!
+
+#6. Summarize changes in effort over time
 pres<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$year),sum)
 #summary of the number of days whales with rows of data (observed or not) in each region, by year:
 totobs<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$year),length)#this is change in effort
@@ -41,8 +73,12 @@ totobs.doy<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days
 prob.doy<-pres.doy/totobs.doy
 #calculation mean probability by season 
 orcasum.days$season<-"summer"#(May 1 through Sept 30)
-orcasum.days$season[orcasum.days$daysaftapr30>=154]<-"fall"#oct 1 through jan 31)
-orcasum.days$season[orcasum.days$daysaftapr30>=277]<-"spring"#(feb 1 through april 30)
+orcasum.days$season[orcasum.days$daysaftmar31>=154]<-"fall"#oct 1 through jan 31)
+orcasum.days$season[orcasum.days$daysaftmar31>=277]<-"spring"#(feb 1 through april 30)
+
+#limit to start year
+orcasum.days<-orcasum.days[orcasum.days$year>=styr,]
+
 #get probabilities by season
 
 pres.seas<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region, orcasum.days$season),sum)
@@ -56,6 +92,8 @@ totobs.dec<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region,orcasum.days$
 #summary of effort (the number of days whales with rows of data (observed or not)) in each region, by period (first two decades versus last two decades):
 totobs.pd<-tapply(orcasum.days$AllSRpres,list(orcasum.days$region,orcasum.days$period,orcasum.days$season),length)#this is change in effort
 reg=c(TRUE,FALSE)
+
+
 for (r in 1:length(reg)){
 uss=reg[r]#TRUE for uss (upper salish sea), peak prob season is 1 May through 30 sept, and prob obs prob.all[3] (~.76)
        #FALSE  for ps (puget sound), season is 1 Oct through 31 Jan, and prob obs prob.all[2] (~.52)
@@ -69,29 +107,30 @@ wholeyear=FALSE#look at each region seasonally (not the whole year)
 #probability of seeing a whale depends on day of year
 #for days 1:180, probability is low (0.10); for days 181-260, proability is higher (0.75); and for days 261-366, probabilty is quite low again
 if(uss==TRUE){
-  springprob<-0.5
-  summerprob<-0.85
-  fallprob<-0.5}
+  springprob<-prob.seas[which(row.names(prob.seas)=="uss"),2]
+  summerprob<-prob.seas[which(row.names(prob.seas)=="uss"),3]
+  fallprob<-prob.seas[which(row.names(prob.seas)=="uss"),1]}
 if(uss==FALSE){
-  springprob<-0.3
-  summerprob<-0.5
-  fallprob<-0.6}
-  
+  springprob<-prob.seas[which(row.names(prob.seas)=="ps"),2]
+  summerprob<-prob.seas[which(row.names(prob.seas)=="ps"),3]
+  fallprob<-prob.seas[which(row.names(prob.seas)=="ps"),1]}
+
 springdays<-seq(277,366, by=1)
 summerdays<-seq(1,153, by=1)
 falldays<-seq(154,276, by=1)
 
 #Look at effect of increasing effort on estimate of first observation and estimate of last observation
 nreps<-20#e.g. number of years
+early<-which(colnames(pres)==styr)
 
 if(uss==TRUE & wholeyear==FALSE){
-  lowobs<-104#mean whales days/year during the summer first 20 years: uss=104.4
-  highobs<-133#mean whales days during the summer last 10 years: uss=132.9
+  lowobs<-as.integer(mean(pres[3,which(colnames(pres)==styr):which(colnames(pres)==bkyr)]))#104#mean whales days/year during the summer first 20 years: uss=104.4
+  highobs<-as.integer(mean(pres[3,which(colnames(pres)==bkyr+1):length(colnames(pres))]))##mean whales days during the summer last 10 years: uss=132.9
 }
 
 if(uss==FALSE & wholeyear==FALSE){
-  lowobs<-15#mean whales days during the fall first 10 years: ps=15.3
-  highobs<-39#mean whales days last 10 years: ps=39.25
+  lowobs<-as.integer(mean(pres[2,which(colnames(pres)==styr):which(colnames(pres)==bkyr)]))#104#mean whales days/year during the summer first 20 years: uss=104.4
+  highobs<-as.integer(mean(pres[2,which(colnames(pres)==bkyr+1):length(colnames(pres))]))##mean whales days during the summer last 10 years: uss=132.9
 }
 
 effort<-c(rep(lowobs,nreps),rep(highobs,nreps))
@@ -141,14 +180,13 @@ for (i in 1:length(effort)){
   }
  #print(df)
  
- #quartz()
  par(mfrow=c(1,2))
  #First obs)
  boxplot(df$firstest~as.factor(df$numobs), xlab="Number of days observed", ylab="Estimate of first obs (doy)", main=paste("First obs"))
- first.t<-t.test(df$firstest~as.factor(df$numobs), conf.level=0.95) 
+ first.t<-t.test(df$firstest~as.factor(df$numobs), conf.level=0.5) 
  #Last obs
  boxplot(df$lastest~as.factor(df$numobs), xlab="Number of days observed", ylab="Estimate of last obs (doy)", main="Last obs")
- last.t<-t.test(df$lastest~as.factor(df$numobs), conf.level=0.95)
+ last.t<-t.test(df$lastest~as.factor(df$numobs), conf.level=0.5)
  sum.df$lowobs<-lowobs
  sum.df$hiobs<-highobs
  if(uss==FALSE & wholeyear==FALSE){
@@ -174,61 +212,36 @@ if(uss==FALSE & wholeyear==FALSE){
   }
 }
 
-
-      
-      x<-c(1,2,4,5)
-      quartz()
-      plot(x,as.numeric(c(change.df$first.dif[1],change.df$last.dif[1],change.df$first.dif[2],change.df$last.dif[2])),pch=16,col="black",ylim=c(-20,20), xlim=c(0,6), typ="p", bty="l", cex=1.5, xlab="", xaxt="n", ylab="Change in day of year")
-      arrows(x,c(quantile(pssum.df$firstdif,.9),quantile(pssum.df$lastdif,.9),quantile(usssum.df$firstdif,.9),quantile(usssum.df$lastdif,.9)),
-              x,c(quantile(pssum.df$firstdif,.1),quantile(pssum.df$lastdif,.1),quantile(usssum.df$firstdif,.1),quantile(usssum.df$lastdif,.1)),length=0, col="gray", lwd=10)
-           
-
-      
-      points(x,as.numeric(c(change.df$first.dif[1],change.df$last.dif[1],change.df$first.dif[2],change.df$last.dif[2])),pch=16,col="black", cex=1.5)
-      
-      abline(h=0)
-      
-      axis(side=1, at=c(1,2,4,5), labels=c("first obs","last obs","first obs","last obs"))   
-      
-      axis(side=1, at=c(1.5,4.5), labels=c("Puget Sound","Upper Salish Sea"),line=1, lty=0)
-
-      
-      
-      ##Alterntsive version
-      
       #plot simulations and data together
       x<-c(1,2)
       y<-c(mean(pssum.df$firstdif),mean(pssum.df$lastdif))
-      quartz()
-      plot(x,y,pch=16,col="gray",ylim=c(-20,20), xlim=c(0,5), typ="p", bty="l", cex=1.5, xlab="", xaxt="n", ylab="Change in day of year")
-      ysd<-c(sd(pssum.df$firstdif),mean(pssum.df$lastdif))
+      png(paste("analyses/orcaphen/figures/simeffort",styr,"-2017.png",sep=""),height=480, width=480)
+      #first ps
+      plot(x,y,pch=16,col="gray",ylim=c(-30,30), xlim=c(0,5), typ="p", bty="l", cex=1.5, xlab="", xaxt="n", ylab="Change in day of year", main = paste(styr,"-2017",sep=""))
+      ylci<-c(quantile(pssum.df$firstdif,probs=0.25),quantile(pssum.df$lastdif, probs = 0.25))
+      yuci<-c(quantile(pssum.df$firstdif, probs = 0.75),quantile(pssum.df$lastdif, probs = 0.75))
       
-      arrows(x,y+ysd,x,y-ysd, length=0, col="gray", lwd=2)
+      arrows(x,yuci,x,ylci, length=0, col="gray", lwd=2)
       y<-c(mean(usssum.df$firstdif),mean(usssum.df$lastdif))
       points(x+2,y,pch=16,col="gray", cex=1.5)
-      ysd<-c(sd(usssum.df$firstdif),mean(usssum.df$lastdif))
-      arrows(x+2,y+ysd,x+2,y-ysd, length=0, col="gray", lwd=2)
+      ylci<-c(quantile(usssum.df$firstdif,probs=0.25),quantile(usssum.df$lastdif, probs = 0.25))
+      yuci<-c(quantile(usssum.df$firstdif, probs = 0.75),quantile(usssum.df$lastdif, probs = 0.75))
+      
+      arrows(x+2,yuci,x+2,ylci, length=0, col="gray", lwd=2)
       x.dat<-c(change.df$first.dif[1],change.df$last.dif[1]) 
+      #ps
       points(x,as.numeric(c(change.df$first.dif[1],change.df$last.dif[1])),pch=16,col="black", cex=1.5) 
+      arrows(x,as.numeric(c(change.df$first.uci[1],change.df$last.uci[1])),x,as.numeric(c(change.df$first.lci[1],change.df$last.lci[1])), length=0, col="black", lwd=1)
+      #uss
       points(x+2,as.numeric(c(change.df$first.dif[2],change.df$last.dif[2])),pch=16,col="black", cex=1.5) 
+      arrows(x+2,as.numeric(c(change.df$first.uci[2],change.df$last.uci[2])),x+2,as.numeric(c(change.df$first.lci[2],change.df$last.lci[2])), length=0, col="black", lwd=1)
+
       abline(h=0)
       
       axis(side=1, at=c(1,2,3,4), labels=c("first obs","last obs","first obs","last obs"))   
       
       axis(side=1, at=c(1.5,3.5), labels=c("Puget Sound","Upper Salish Sea"),line=1, lty=0)
-      legend("topleft",legend=c("Expected change, given change in effort", "Observed change"),col=c("gray","black"),pch=16)
-  
-      
-      #Make a plot of expected shift due to change in effort alone
-      x<-c(1,3,7,9)
-      y<-c(mean(uss.sim$firstdif),mean(ps.sim$firstdif),mean(uss.sim$lastdif),mean(ps.sim$lastdif))
-      quartz(height=5,width=7)
-      plot(x,y,type="p", pch=21, bg="gray", bty="l", xlab="",ylab="Change in day of year", cex=1.5, ylim=c(-10,10))
-      sd<-c(sd(uss.sim$firstdif),sd(ps.sim$firstdif),sd(uss.sim$lastdif),sd(ps.sim$lastdif))
-      abline(h=0, lty=2)
-      for(i in 1:length(y)){
-        arrows(x[i],y[i]+sd[i],x[i],y[i]-sd[i], length=0.01, angle=90, code=3)
-      }
-      points(x,y, pch=21, bg="gray",cex=1.5, )
-      #now add points of observed with error
+      legend("topleft",legend=c("Expected change due to change in effort alone", "Observed change"),col=c("gray","black"),pch=16)
+      dev.off()
+       
       

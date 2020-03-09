@@ -39,10 +39,12 @@ m1 <- brm(cpue ~ s(calDay) + (1|year2),
 
 summary(m1)
 windows()
+#add a very small number to cpue to use lognormal distribution
 
-m2 <- brm(cpue~ s(calDay) + (calDay|year2),
+dat$cpue<-dat$cpue+.0000000000001
+m2log <- brm(cpue~ s(calDay) + (calDay|year2),
           data=dat,
-          family =gaussian(), cores = 4,
+          family =lognormal(), cores = 4,
           iter = 4000, warmup = 1000, thin = 10,
           control = list(adapt_delta = 0.99, max_treedepth=15))
 
@@ -61,7 +63,13 @@ albgam<-cbind(dat$year,dat$calDay,fitted(m2),fitted(m2,probs=c(0.05,0.95)),fitte
 colnames(albgam)[1:3]<-c("year","doy", "cpue")
 write.csv(albgam,"analyses/output/albionchiphenbrms.csv", row.names = FALSE)
 
+
+albgamlog<-cbind(dat$year,dat$calDay,fitted(m2log),fitted(m2log,probs=c(0.05,0.95)),fitted(m2log,probs=c(0.25,0.75)))
+colnames(albgamlog)[1:3]<-c("year","doy", "cpue")
+write.csv(albgamlog,"analyses/output/albionchiphenbrmslog.csv", row.names = FALSE)
+
 save(m2, file="analyses/output/albionchibrms.Rda")
+save(m2log, file="analyses/output/albionchibrmslog.Rda")
 
 #poisson models
 dat$effort<-as.integer(dat$effort)
