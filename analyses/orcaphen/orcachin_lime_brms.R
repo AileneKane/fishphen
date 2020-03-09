@@ -74,6 +74,7 @@ source("analyses/orcaphen/source/orca_get_whaledays_lime.R")
 
 #9. Fit gams in brms to limekiln data 
 #source("analyses/orcaphen/source/orca_rungams_lime.R")
+
 #this takes a while, so just read in the relevant data from this below
   
 #10. Read in model results from albion test fishery gams (in albion.brms.R)
@@ -91,8 +92,8 @@ albchinest95<-albchinest95[-which(albchinest95$year==2014),]
 
 #function to make plots and fit linear models correlating phenology of SRKW to prey
 #choose pod to use for SRKW data
-pod = "SR"#choices are "SR" "J" "K" "L"
-brkyr = 2007 #try 2005, 2006, 2007, 2008
+pod = "L"#choices are "SR" "J" "K" "L"
+brkyr = 2007#try 2005, 2006, 2007, 2008
 
 
 source("analyses/orcaphen/source/makeplots_srchinoverlap.R")
