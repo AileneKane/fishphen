@@ -77,6 +77,7 @@ source("analyses/orcaphen/source/orca_makemap.R")
 source("analyses/orcaphen/source/orca_get_whaledays_lime.R")
  
 #8b. Fit some basic linear models to all srkw data
+styr=1978#or 2001
 source("analyses/orcaphen/source/orca_runlinmods.R")
 #the above code also includes simulated data- check this and add to supplement!
 
@@ -321,7 +322,7 @@ j1995<-j.occest[j.occest$year>1994,]
 j1995<-j1995[j1995$year!=2015,]
 lime2002<-lime.df[lime.df$year>2001,]
 #Plot first ests. should i use pod specific estimates to match occupancy model?
-quartz()
+windows()
 par(mfcol=c(3,2))
 plot(lime2002$firstest.all,j2002$first.psi,type="p",pch=16, col = "darkblue", xlab="Lime Kiln first obs",ylab="J pod arrival est (occmod)", cex=1.2, bty="l", main= "2002-2016")
 mod<-lm(j2002$first.psi~lime2002$firstest.all)
