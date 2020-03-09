@@ -156,9 +156,9 @@ last.t.ps<-t.test(as.numeric(pod.df$lastest[pod.df$region=="ps"])~as.factor(pod.
 #mtext(paste("Change=",-1*round(t$estimate[1]-t$estimate[2], digits=1),"(",-1*round(t$conf.int[1],digits=1),",",-1*round(t$conf.int[2],digits=1),")", sep=""),side=1,line=-3, adj=1)
 
 #create a vector with the differences, like in the simulation code:
-firstdif.ps<-first.t.ps$estimate[2]-first.t.ps$estimate[1]
+firstdif.ps<-first.t.ps$estimate[1]-first.t.ps$estimate[2]
 firstdifp.ps<-first.t.ps$p.value
-lastdif.ps<-last.t.ps$estimate[2]-last.t.ps$estimate[1]
+lastdif.ps<-last.t.ps$estimate[1]-last.t.ps$estimate[2]
 lastdifp.ps<-last.t.ps$p.value
 
 par(mfrow=c(1,2))
@@ -172,9 +172,9 @@ last.t.uss<-t.test(as.numeric(pod.df$lastest[pod.df$region=="uss"])~as.factor(po
 #mtext(paste("Change=",-1*round(t$estimate[1]-t$estimate[2], digits=1),"(",-1*round(t$conf.int[1],digits=1),",",-1*round(t$conf.int[2],digits=1),")", sep=""),side=1,line=-3, adj=1)
 
 #create a vector with the differences, like in the simulation code:
-firstdif.uss<-first.t.uss$estimate[2]-first.t.uss$estimate[1]
+firstdif.uss<-first.t.uss$estimate[1]-first.t.uss$estimate[2]
 firstdifp.uss<-first.t.uss$p.value
-lastdif.uss<-last.t.uss$estimate[2]-last.t.uss$estimate[1]
+lastdif.uss<-last.t.uss$estimate[1]-last.t.uss$estimate[2]
 lastdifp.uss<-last.t.uss$p.value
 
 change.df<-as.data.frame(rbind(c("SRs","ps",mean(as.numeric(pod.df$nobs[pod.df$region=="ps"], na.rm=TRUE)),NA,firstdif.ps, first.t.ps$conf.int[1], first.t.ps$conf.int[2],lastdif.ps,last.t.ps$conf.int[1], last.t.ps$conf.int[2]),
