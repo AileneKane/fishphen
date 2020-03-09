@@ -39,8 +39,8 @@ cpue.rec<-cbind(aggregate(chinab.rec$cpue,by=list(chinab.rec$doy),mean),aggregat
 colnames(cpue.old)<-colnames(cpue.rec)<-c("doy","cpue.mean","cpue.sd")
 
 
-pdf(paste("analyses/orcaphen/figures/orcachinphenoverlap",pod,brkyr,".pdf",sep=""),height=6, width=12)
-#png("analyses/orcaphen/figures/orcachinphenoverlap.png",height=6, width=12)
+#pdf(paste("analyses/orcaphen/figures/orcachinphenoverlap",pod,brkyr,".pdf",sep=""),height=6, width=12)
+png(paste("analyses/orcaphen/figures/orcachinphenoverlap",pod,brkyr,".png",sep=""),height=480, width=960)
 
 # to figure out how much to shift the salmon curve earlier- because they are measured at ft. langely on the frasier river, but we are interested in when they are at lime kiln
 # lime  kiln is ~160 km from lime kiln "as the fish swims" and fish swim about 70 km per day! only need to shift by 2-3 days?
