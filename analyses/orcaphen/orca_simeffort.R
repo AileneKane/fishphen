@@ -179,7 +179,6 @@ for (i in 1:length(effort)){
   #look at difference between first and last doy in 2 time periods
   }
  #print(df)
- 
  par(mfrow=c(1,2))
  #First obs)
  boxplot(df$firstest~as.factor(df$numobs), xlab="Number of days observed", ylab="Estimate of first obs (doy)", main=paste("First obs"))

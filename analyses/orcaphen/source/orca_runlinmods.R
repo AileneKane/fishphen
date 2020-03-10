@@ -147,18 +147,18 @@ windows()
 par(mfrow=c(1,2))
 #First obs
 boxplot(as.numeric(pod.df$firstest[pod.df$region=="ps"])~as.factor(pod.df$period[pod.df$region=="ps"]), xlab="Period", ylab="Estimate of first obs (doy) in PS", main="First obs")
-first.t.ps<-t.test(as.numeric(pod.df$firstest[pod.df$region=="ps"])~pod.df$period[pod.df$region=="ps"], paired = FALSE, var.equal = FALSE,conf.level=0.95)
+first.t.ps<-t.test(as.numeric(pod.df$firstest[pod.df$region=="ps"])~as.factor(pod.df$period[pod.df$region=="ps"]), paired = FALSE, var.equal = FALSE,conf.level=0.5)
 #mtext(paste("Change=",-1*round(t$estimate[1]-t$estimate[2], digits=1),"(",-1*round(t$conf.int[1],digits=1),",",-1*round(t$conf.int[2],digits=1),")", sep=""),side=3,line=-3, adj=1)
 
 #Last obs
 boxplot(as.numeric(pod.df$lastest[pod.df$region=="ps"])~as.factor(pod.df$period[pod.df$region=="ps"]), xlab="Period", ylab="Estimate of last obs (doy) in PS", main="Last obs")
-last.t.ps<-t.test(as.numeric(pod.df$lastest[pod.df$region=="ps"])~as.factor(pod.df$period[pod.df$region=="ps"]), conf.level=0.95)
+last.t.ps<-t.test(as.numeric(pod.df$lastest[pod.df$region=="ps"])~as.factor(pod.df$period[pod.df$region=="ps"]), conf.level=0.5)
 #mtext(paste("Change=",-1*round(t$estimate[1]-t$estimate[2], digits=1),"(",-1*round(t$conf.int[1],digits=1),",",-1*round(t$conf.int[2],digits=1),")", sep=""),side=1,line=-3, adj=1)
 
 #create a vector with the differences, like in the simulation code:
-firstdif.ps<-first.t.ps$estimate[1]-first.t.ps$estimate[2]
+firstdif.ps<-first.t.ps$estimate[2]-first.t.ps$estimate[1]
 firstdifp.ps<-first.t.ps$p.value
-lastdif.ps<-last.t.ps$estimate[1]-last.t.ps$estimate[2]
+lastdif.ps<-last.t.ps$estimate[2]-last.t.ps$estimate[1]
 lastdifp.ps<-last.t.ps$p.value
 
 par(mfrow=c(1,2))
@@ -172,12 +172,12 @@ last.t.uss<-t.test(as.numeric(pod.df$lastest[pod.df$region=="uss"])~as.factor(po
 #mtext(paste("Change=",-1*round(t$estimate[1]-t$estimate[2], digits=1),"(",-1*round(t$conf.int[1],digits=1),",",-1*round(t$conf.int[2],digits=1),")", sep=""),side=1,line=-3, adj=1)
 
 #create a vector with the differences, like in the simulation code:
-firstdif.uss<-first.t.uss$estimate[1]-first.t.uss$estimate[2]
+firstdif.uss<-first.t.uss$estimate[2]-first.t.uss$estimate[1]
 firstdifp.uss<-first.t.uss$p.value
-lastdif.uss<-last.t.uss$estimate[1]-last.t.uss$estimate[2]
+lastdif.uss<-last.t.uss$estimate[2]-last.t.uss$estimate[1]
 lastdifp.uss<-last.t.uss$p.value
 
-change.df<-as.data.frame(rbind(c("SRs","ps",mean(as.numeric(pod.df$nobs[pod.df$region=="ps"], na.rm=TRUE)),NA,firstdif.ps, first.t.ps$conf.int[1], first.t.ps$conf.int[2],lastdif.ps,last.t.ps$conf.int[1], last.t.ps$conf.int[2]),
-                               c("SRs","uss",mean(as.numeric(pod.df$nobs[pod.df$region=="uss"], na.rm=TRUE)),NA,firstdif.uss, first.t.uss$conf.int[1], first.t.uss$conf.int[2],lastdif.uss, last.t.uss$conf.int[1], last.t.uss$conf.int[2])))
+change.df<-as.data.frame(rbind(c("SRs","ps",mean(as.numeric(pod.df$nobs[pod.df$region=="ps"], na.rm=TRUE)),NA,firstdif.ps, -first.t.ps$conf.int[1], -first.t.ps$conf.int[2],lastdif.ps,-last.t.ps$conf.int[1], -last.t.ps$conf.int[2]),
+                               c("SRs","uss",mean(as.numeric(pod.df$nobs[pod.df$region=="uss"], na.rm=TRUE)),NA,firstdif.uss, -first.t.uss$conf.int[1], -first.t.uss$conf.int[2],lastdif.uss, -last.t.uss$conf.int[1], -last.t.uss$conf.int[2])))
 colnames(change.df)<-c("pod","region","nobs","prob","first.dif","first.lci","first.uci","last.dif","last.lci","last.uci")
 
