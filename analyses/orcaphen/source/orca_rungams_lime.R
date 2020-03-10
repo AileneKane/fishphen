@@ -72,8 +72,10 @@ write.csv(prob.occ.50,"analyses/output/lime_prob.occ.50.csv", row.names = FALSE)
 #Make figures of model estimated whale days
 limedays<-read.csv("analyses/output/lime_prob.occ.50.csv", header=TRUE)
 limedays$year<-as.numeric(limewdaysabs$year)
+limedays<-limedays[limedays$year>1991,]
 
 yearsum<-aggregate(limedays$SRprob.Estimate,by=list(limedays$year),sum)
+
 jsum<-aggregate(limedays$Jprob.Estimate,by=list(limedays$year),sum)
 ksum<-aggregate(limedays$Kprob.Estimate,by=list(limedays$year),sum)
 lsum<-aggregate(limedays$Lprob.Estimate,by=list(limedays$year),sum)

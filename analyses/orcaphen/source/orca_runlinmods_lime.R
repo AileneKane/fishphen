@@ -92,7 +92,7 @@ mean.all<-c()
 #r=1
 
 #unique(orcasum.days$orcayear)#use may 1 as start of orca year, as this will encompass min start date window that i want to try
-p=1
+#p=1
 for(p in 1:length(podcols)){
   colnum<-which(colnames(orcasum.days.lime)==podcols[p])
  
@@ -125,7 +125,7 @@ mean.all.p<-c()
 meandiffs.all<-c()
 firstdiffs.all<-c()
 years<-unique(orcasum.days.lime$orcayear)
-p=1
+
 for(p in 1:length(podcols)){
   colnum<-which(colnames(orcasum.days.lime)==podcols[p])
   
@@ -150,7 +150,7 @@ for(p in 1:length(podcols)){
 
 lime.df <- cbind(lime.df,pods.all.p,years.all.p,nobs.all.p,firstest.all.p,lastest.all.p,mean.all.p)
 
-
+windows()
 plot(lime.df$year[!lime.df$year==1990],lime.df$nobs[!lime.df$year==1990],type="p",pch=21, bg = "darkblue",xlab="Year",ylab="Number of days", cex=1.2, bty="l", ylim=c(1,70), main = "Whale Days")
 lime.df$nobs<-as.numeric(lime.df$nobs)
 lime.df$year<-as.numeric(lime.df$year)
@@ -160,8 +160,73 @@ if(summary(mod)$coef[2,4]>alph){abline(mod, lty=3)}
 mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
 mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
 
-dev.off()
 wdays.start<-lime.df$nobs[lime.df$year==1994]
 wdays.end<-lime.df$nobs[lime.df$year==2017]
 #calculate percent change:
 (wdays.start-wdays.end)/wdays.start
+
+#function to plot whale days
+png(filename="analyses/orcaphen/figures/whaledays_lime.png",height=480,width=960)
+#windows(height=6,width=12)
+par(mfrow=c(1,4))
+ps<-c("SRs","J","K","L")
+lets<-c("A)","B)","C)","D)")
+mains<-c("All Pods","J Pod","K Pod","L Pod")
+for(i in 1:length(ps)){
+  poddat<-lime.df[lime.df$pod==ps[i],]
+  plot(poddat$year,poddat$nobs,ylab= "Year", xlab= "Number of Whale Days", bty="l", type="l", col="darkblue",lwd=2,main = paste(mains[i]))
+  mtext(paste(lets[i]), side = 3, line = 1, adj=0)
+}
+dev.off()
+
+#Plot trends in phenology over time at Lime Kiln
+png(filename="analyses/orcaphen/figures/phentrends_lime.png",height=960,width=1280)
+#windows(height=6,width=12)
+par(mfcol=c(2,4))
+ps<-c("SRs","J","K","L")
+lets<-c("A)","B)","C)","D)","E)","F)","G)","H)")
+mains<-c("All Pods","J Pod","K Pod","L Pod")
+
+for(i in 1:length(ps)){
+  poddat<-lime.df[lime.df$pod==ps[i],]
+  plot(poddat$year,poddat$firstest.all,ylab= "Year", xlab= "Arrival Day Of Year", pch=21, bty="l",cex=1.5,bg="darkblue",main = paste(mains[i]))
+  mtext(paste(lets[i]), side = 3, line = 1, adj=0)
+  mod<-lm(poddat$firstest.all~poddat$year)
+  if(summary(mod)$coef[2,4]<1-alph){abline(mod, lty=1, lwd=2)}
+  mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+  mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+  
+  plot(poddat$year,poddat$lastest.all,ylab= "Year", xlab= "Departure Day of Year", pch=21, bty="l",cex=1.5,bg="darkblue")
+  mtext(paste(lets[i+3]), side = 3, line = 1, adj=0)
+  mod<-lm(poddat$lastest.all~poddat$year)
+  if(summary(mod)$coef[2,4]<1-alph){abline(mod, lty=1, lwd=2)}
+  mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+  mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+  
+}
+dev.off()
+png(filename="analyses/orcaphen/figures/phentrends_lime_2panels.png",height=480,width=720)
+#windows(height=6,width=12)
+par(mfcol=c(1,2))
+ps<-c("SRs")
+lets<-c("A)","B)")
+mains<-c("All Pods","All Pod")
+
+for(i in 1:length(ps)){
+  poddat<-lime.df[lime.df$pod==ps[i],]
+  plot(poddat$year,poddat$firstest.all,ylab= "Year", xlab= "Arrival Day Of Year", pch=21, bty="l",cex=1.5,bg="darkblue",main = paste(mains[i]))
+  mtext(paste(lets[i]), side = 3, line = 1, adj=0)
+  mod<-lm(poddat$firstest.all~poddat$year)
+  if(summary(mod)$coef[2,4]<1-alph){abline(mod, lty=1, lwd=2)}
+  mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+  mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+  
+  plot(poddat$year,poddat$lastest.all,ylab= "Year", xlab= "Departure Day of Year", pch=21, bty="l",cex=1.5,bg="darkblue",main = paste(mains[i]))
+  mtext(paste(lets[i+3]), side = 3, line = 1, adj=0)
+  mod<-lm(poddat$lastest.all~poddat$year)
+  if(summary(mod)$coef[2,4]<1-alph){abline(mod, lty=1, lwd=2)}
+  mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
+  mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+  
+}
+dev.off()

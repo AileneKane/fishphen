@@ -354,6 +354,8 @@ mod<-lm(j1995$last.psi~as.numeric(lime1995$lastest))
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="darkblue")}
 if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "darkblue")}
 
+#Plot trends in limekiln data over time (by pod)
+ 
 
 # #Relate USS data to chinook phenology in the Fraser river
 # albchin<-read.csv("analyses/output/albionchiphen.csv", header = TRUE)
