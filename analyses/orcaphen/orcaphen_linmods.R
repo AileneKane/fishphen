@@ -96,10 +96,10 @@ source("analyses/orcaphen/source/orca_runlinmods.R")
 #lime.df contains first, last, mean dates from data face value
 #orcasum.days.lime contains whale days
 #unique(orcasum.days.lime$AllSRpres)#all presence
-source("analyses/orcaphen/source/pearse_fxns.R")
-alpha=0.10
-k=20
-source("analyses/orcaphen/source/orca_runlinmods_lime_pearse.R")
+# source("analyses/orcaphen/source/pearse_fxns.R")
+# alpha=0.10
+# k=20
+# source("analyses/orcaphen/source/orca_runlinmods_lime_pearse.R")
 
 #12. Relate limekiln data to chinook phenology in the Fraser river
 albchin<-read.csv("analyses/output/albionchiphen_allyear.csv", header = TRUE)
@@ -469,9 +469,11 @@ colnames(cpue.old)<-colnames(cpue.rec)<-c("doy","cpue.mean","cpue.sd")
 
 #fit gams of srkw prob of presence
 #source(orca_rungams_lime.R)#take a long time so just read in model ests
+#Belowneeds work!
 limegests<-read.csv("analyses/output/lime_prob.occ.50.csv", header=TRUE)#also 0.90 and 0.95
-
-get.gests<-function(limegests,occprobs){
+pod = "SR"#choices are S,J.K,L
+minprob = 0.
+get.gests<-function(limegests,pod){
   peakoc.doy<-c()
   peakoc<-c()
   firstprob<-c()
@@ -482,14 +484,14 @@ get.gests<-function(limegests,occprobs){
   years<-c()
 for(y in unique(limegests$year)){
   yeardat<-limegests[limegests$year==y,]
-  occprobcol<-yeardat[,which(colnames(yeardat)==occprobs)]
-  yrpeakoc<-max(occprobcol)
-  yrpeakoc.doy<-yeardat$doy[which(occprobcol==yrpeakoc)]
-  yrfirst.doy<-yeardat$doy[min(which(occprobcol>0.1))]
-  yrlast.doy<-yeardat$doy[max(which(occprobcol>0.1))]
-  meanprob<-mean(occprobcol)
-  lprob<-quantile(occprobcol,0.25)
-  uprob<-quantile(occprobcol,0.75)
+  podcol<-yeardat[,which(colnames(yeardat)==paste(pod,"prob.Estimate",sep=""))]
+  yrpeakoc<-max(podcol)
+  yrpeakoc.doy<-yeardat$doy[which(podcol==yrpeakoc)]
+  yrfirst.doy<-yeardat$doy[min(which(podcol>minprob))]
+  yrlast.doy<-yeardat$doy[max(which(podcol>minprob))]
+  meanprob<-mean(podcol)
+  lprob<-quantile(podcol,0.25)
+  uprob<-quantile(podcol,0.75)
   peakoc<-c(peakoc,yrpeakoc)
   peakoc.doy<-c(peakoc.doy,yrpeakoc.doy)
   firstprob<-c(firstprob,yrfirst.doy)

@@ -56,15 +56,15 @@ colnames(df)[1:2]<-c("year","nobs")
 df$year<-as.numeric(df$year)
 plot(df$year[!df$year==1990],df$firstest.all[!df$year==1990],xlab="year",ylab="Day of Year", bty="l", pch=21, bg="darkblue", cex=1.1, main = "First observation day")
 mod<-lm(df$firstest.all[!df$year==1990]~df$year[!df$year==1990])
-if(summary(mod)$coef[2,4]<alpha){abline(mod, lty=1)}
-if(summary(mod)$coef[2,4]>alpha){abline(mod, lty=3)}
+if(summary(mod)$coef[2,4]<alph){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]>alph){abline(mod, lty=3)}
 mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
 mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
 
 plot(df$year[!df$year==1990],df$lastest.all[!df$year==1990],xlab="year",ylab="Day of year", bty="l", pch=21, bg="darkblue", cex=1.1, main = "Last observation")
 mod<-lm(df$lastest.all[!df$year==1990]~df$year[!df$year==1990])
-if(summary(mod)$coef[2,4]<alpha){abline(mod, lty=1)}
-if(summary(mod)$coef[2,4]>alpha){abline(mod, lty=3)}
+if(summary(mod)$coef[2,4]<alph){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]>alph){abline(mod, lty=3)}
 mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
 mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
 
@@ -140,8 +140,8 @@ for(p in 1:length(podcols)){
     lastest.all.p<-rbind(lastest.all.p,est.limit(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]), upper=TRUE,alpha=alpha,k=k))
     mean.all.p<-rbind(mean.all.p,
                       c(mean(yrdat$daysaftmar31[yrdat[,colnum]==1], na.rm=TRUE),#mean
-                        quantile(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]),alpha),#lower ci
-                        quantile(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]),1-alpha)))#upper ci
+                        quantile(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]),alph),#lower ci
+                        quantile(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]),1-alph)))#upper ci
     meandiffs.all<-c(meandiffs.all,mean(diff(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]))))
     firstdiffs.all<-c(firstdiffs.all,diff(as.integer(yrdat$daysaftmar31[yrdat[,colnum]==1]))[1])
     
@@ -155,8 +155,8 @@ plot(lime.df$year[!lime.df$year==1990],lime.df$nobs[!lime.df$year==1990],type="p
 lime.df$nobs<-as.numeric(lime.df$nobs)
 lime.df$year<-as.numeric(lime.df$year)
 mod<-lm(lime.df$nobs[!lime.df$year==1990]~lime.df$year[!lime.df$year==1990])
-if(summary(mod)$coef[2,4]<alpha){abline(mod, lty=1)}
-if(summary(mod)$coef[2,4]>alpha){abline(mod, lty=3)}
+if(summary(mod)$coef[2,4]<alph){abline(mod, lty=1)}
+if(summary(mod)$coef[2,4]>alph){abline(mod, lty=3)}
 mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
 mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
 

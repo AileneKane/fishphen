@@ -52,7 +52,7 @@ source("analyses/orcaphen/source/orca_get_whaledays.R")
 
 
 #5. Fit some basic linear models to all srkw data
-styr = 1978#choose 1978 or 2001 to coincide with our ms
+styr = 2001#choose 1978 or 2001 to coincide with our ms
 if(styr == 2001){bkyr = 2009}
 if(styr == 1978){bkyr = 1997}
 source("analyses/orcaphen/source/orca_runlinmods.R")
