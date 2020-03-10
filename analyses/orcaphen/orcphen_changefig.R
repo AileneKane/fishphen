@@ -79,7 +79,8 @@ axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
 dev.off()
 
 #add shifts in most recent (1990-2016)
-pdf(file="analyses/figures/srkw_salmon_recentshifts_lm.pdf",width=12,height=10)
+#pdf(file="analyses/figures/srkw_salmon_recentshifts_lm.pdf",width=12,height=10)
+png(file="analyses/figures/srkw_salmon_recentshifts_lm.png",width=600,height=500)
 
 ###dev.off() plot estimates of peak occurrence prob over all years
 #quartz(width=12, height=10)
@@ -134,11 +135,11 @@ legend("topleft",legend=c("Fraser River Chinook","Multiple Puget Sound Runs"),pc
 y<-c(psshifts[1,2],psshifts[1,4],psshifts[1,6])
 ylci<-c(psshifts[2,2],psshifts[2,4],psshifts[2,6])
 yuci<-c(psshifts[3,2],psshifts[3,4],psshifts[3,6])
-plot(x,y,pch=23,bg="salmon",ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,7),bty="l", cex=2)
+plot(x,y,pch=25,bg="salmon",ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,7),bty="l", cex=2)
 abline(h=0,lty=2)
 
 arrows(x,ylci,x,yuci, code=3, length=0)
-points(x,y,cex=2,bg="salmon",pch=23)
+points(x,y,cex=2,bg="salmon",pch=25)
 mtext("D)",side=3,line=0, adj=0)
 
 axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
