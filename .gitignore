@@ -60,3 +60,5 @@ analyses/figures/.DS_Store
 analyses/output/albionchibrms.Rda
 analyses/output/j.brms.Rda
 *.Rda
+analyses/docs/srkw_phenology_Wolkovichmeeting.pdf
+analyses/docs/srkw_phenology_Wolkovichmeeting.pptx
