@@ -1,5 +1,3 @@
-
-#Only use fishing areas that have atleast 4 years with >20 observations:
 #Look at some basic stats about orca observations
 #Started with orca_dataprep_occmodel.R code
 #4 February 2019
@@ -62,7 +60,7 @@ source("analyses/orcaphen/source/orca_plot_whaledays.R")
 
 #6. if you want to do some other basic plots of the data. This includes proportion of days in a week in which whales were observed up by week and decade
 source("analyses/orcaphen/source/orca_plotdata.R")
-#To fix in above: remove all quartz()
+#To fix in above: remove all quartz() and windwos() commands
 
 
 #7. Make a map of the SRKW sightings in ps and uss
@@ -82,7 +80,7 @@ source("analyses/orcaphen/source/orca_runlinmods.R")
 #the above code also includes simulated data- check this and add to supplement!
 
 #9. Fit some basic linear models to lime kiln data only
-#source("analyses/orcaphen/source/orca_runlinmods_lime.R")
+#alph = 0.95
 #To do: review above and see if it is necessary or useful. fix errors
 
 #10. Fit some basic linear models to west seattle only
@@ -96,11 +94,13 @@ source("analyses/orcaphen/source/orca_runlinmods.R")
 #lime.df contains first, last, mean dates from data face value
 #orcasum.days.lime contains whale days
 #unique(orcasum.days.lime$AllSRpres)#all presence
-# source("analyses/orcaphen/source/pearse_fxns.R")
-# alpha=0.10
-# k=20
-# source("analyses/orcaphen/source/orca_runlinmods_lime_pearse.R")
+source("analyses/orcaphen/source/pearse_fxns.R")
+ alpha=0.10
 
+ k=20
+ source("analyses/orcaphen/source/orca_runlinmods_lime_pearse.R")
+ source("analyses/orcaphen/source/orca_runlinmods_lime.R")
+ 
 #12. Relate limekiln data to chinook phenology in the Fraser river
 albchin<-read.csv("analyses/output/albionchiphen_allyear.csv", header = TRUE)
 albchinest<-read.csv("analyses/output/albionchiphenbrms.csv", header = TRUE)

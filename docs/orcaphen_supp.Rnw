@@ -57,89 +57,18 @@
 \renewcommand{\thefigure}{S\arabic{figure}}
 
 \section* {Comparing observed and modeled estimates of `Whale Days' at Lime Kiln}
-\par We fit occupancy models to estimate daily and annual probabilities of presence for southern resident killer whales (SRKWs) at Lime Kiln Point State Park, where a consistently collected observation dataset suggests that SRKWs have shifted the timing of their activity in the area (Fig.\ref{fig:limetime}. We calculated annual total whale days quantified from the data directly (i.e., a whale-day was counted as a day on which whales were observed) and quantified from model-estimated probabilities of whale presence (i.e., each days probability of whale presence was summed across the year). The two calculations both reveal declines in SRKW abunandace in recent years, across all three pods (Fig. \ref{fig:limewdays} \& \ref{fig:mlimewdays}).
+\par We fit occupancy models to estimate daily and annual probabilities of presence for Southern Resident Killer Whales (SRKWs) at Lime Kiln Point State Park, where a consistently collected observation dataset suggests that SRKWs have shifted the timing of their activity in the area (Fig.\ref{fig:limetime}. We calculated annual total whale days quantified from the data directly (i.e., a whale-day was counted as a day on which whales were observed) and quantified from model-estimated probabilities of whale presence (i.e., each days probability of whale presence was summed across the year). The two calculations both reveal declines in SRKW abunandace in recent years, across all three pods (Fig. \ref{fig:limewdays} \& \ref{fig:mlimewdays}). 
 \section* {Effects of changes in effort on estimated phenological change}
-The number of observers contributing to the OrcaMaster Database has increased since its inception (Fig.\ref{fig:sights}). This shift in effort complicates interpretations of trends in the number of whale days over time (Fig. \ref{fig:wdays}) because an increase in the number of whale on which SRKWs were observed could be due to increased observer effort in a region, rather than due to increased whale activity in the region. To better understand how increased effort across the time-series (i.e., increased numbers of sightings over time) may affect estimates of trends in phenology, we simulated data sets of whale presence during two seasons equivalent to those in our data set (spring/summer, which was 1 May through 31 Sept, or 153 days, and fall/winter, which was 1 October through 1 Feb, or 123 days). We used whale presence probabilities that matched the mean observed probabilities for the Central Salish Sea and Puget Sound regions, separately, from 1978-2017 (Table S1). We kept them constant over 40 simulated years, respectively. We then created an observation data set, in which effort (the number of observations) varied. During the low effort time period (years 1-20), the number of observations had a mean of 15 per year for Puget Sound and 104 per year in the Central Salish Sea (matching the means for these regions from 1978-1997 in the OrcaMaster database). During the high effort time period (years 21-40 in our simulated data set), the number of annual observations had a mean of 39 for Puget Sound and 133 for the Central Salish Sea (matching those in the OrcaMaster database from 1998-2017). We then calculated first- and last- observations dates for each simulated year. We ran these simulations 100 times and calculated the difference between the low effort and high effort time periods. We compared these to the mean differences in first- and last-observation dates across time periods in the OrcaMaster database, for each region, to understand whether observed changes may be due to changes in effort over time, rather than changes in killer whale activity. We conducted the same analysis across the recent time frame (2001-2017), as well, using region-specific estimates of presence probabilities and observer effort obtained from this time-period.
+With increasing public awareness of SRKWs near urban areas (e.g. the Salish Sea), the number of public reports of whales and people contributing to sightings networks such as the OrcaMaster Database have increased since its inception (Fig.\ref{fig:sights}). This shift in effort complicates interpretations of trends in the number of whale days over time (Fig. \ref{fig:wdays}) because an increase in the number of whale on which SRKWs were observed could be due to increased observer effort in a region, rather than due to increased whale activity in the region. To better understand how increased effort across the time-series (i.e., increased numbers of sightings over time) may affect estimates of trends in phenology, we simulated data sets of whale presence during two seasons equivalent to those in our data set (spring/summer, which was 1 May through 31 Sept, or 153 days, and fall/winter, which was 1 October through 1 Feb, or 123 days). We used whale presence probabilities that matched the mean observed probabilities for the Central Salish Sea and Puget Sound regions, separately, from 1978-2017 (Table S1). We kept them constant over 40 simulated years, respectively. We then created an observation data set, in which effort (the number of observations) varied. During the low effort time period (years 1-20), the number of observations had a mean of 15 per year for Puget Sound and 104 per year in the Central Salish Sea (matching the means for these regions from 1978-1997 in the OrcaMaster database). During the high effort time period (years 21-40 in our simulated data set), the number of annual observations had a mean of 39 for Puget Sound and 133 for the Central Salish Sea (matching those in the OrcaMaster database from 1998-2017). We then calculated first- and last- observations dates for each simulated year. We ran these simulations 100 times and calculated the difference between the low effort and high effort time periods. We compared these to the mean differences in first- and last-observation dates across time periods in the OrcaMaster database, for each region, to understand whether observed changes may be due to changes in effort over time, rather than changes in killer whale activity. We conducted the same analysis across the recent time frame (2001-2017), as well, using region-specific estimates of presence probabilities and observer effort obtained from this time-period.
 
 \par Our simulations indicate that, if SRKW activity did not change and only effort changed across the two time-periods, the first observation would be expected to shift earlier from 1978-2017, especially in Puget Sound (Fig.\ref{fig:simeffort}A), perhaps because the number of sightings was very low early in the time-series. Thus, the large increase in effort across this time period may affected trends in phenological shifts.  However, the expected change due to increased effort opposes the patterns we observed in for the Central Salish Sea (i.e., we would expect earlier arrival and later departure). Further, focusing on 2001-2017 only, effects of changes in effort are likely to be minimal (Fig.\ref{fig:simeffort}B). Due to the presence only nature of the OrcaMaster Database, it is difficult to fully separate an absence of whales from an absence of observers. We therefore focus our intepretation on the recent time-period (2001-2017).
 
-\par Changing the breakpoint to 2007 or 2008 did not qualitatively alter results 
-Add Figures with Changing the breakpoint of 2006 in Figure 3 to 2007 or 2008 did not qualitatively alter results?
+\par \underline{Things to consider adding}:
+
 \par Table S4. Add table demonstrating that using a threshold probability lower than 0.5 did not qualitatively alter results (i.e., trends in first and last are consistent)
 
-\par Coincident with these phenological trends, the number of whale days has also changed across the time-series (Fig. SX). Since 2001, the number of whale days has decreased in the Central Salish Sea, across all pods, whereas in Puget Sound proper the number of whale days did not show a consistent trend (Fig. SX). From 1978 to 2017, the number of whale days increased in both regions (and for all pods). 
+%\par Coincident with these phenological trends, the number of whale days has also changed across the time-series (Fig. SX). Since 2001, the number of whale days has decreased in the Central Salish Sea, across all pods, whereas in Puget Sound proper the number of whale days did not show a consistent trend (Fig. SX). From 1978 to 2017, the number of whale days increased in both regions (and for all pods). 
 
-
-\pagebreak
-
-\section* {Supplemental Figures}
-
-%\par To Do 
-%(d) show relationship between lime kiln, and central salish sea phenology?
-
-\begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/phentrends_lime_2panels.png} 
-\caption{\textbf{SRKW phenology at Lime Kiln State Park is shifting}, with the day of year of first sighting getting later (A) and the day of year of last sighting getting earlier (B),from 1994-2017. These trends are associated with a decrease in the amount of time SRKWs are spending near Lime Kiln (i.e., the number of days on which SRKWs were observed ("whale days") has declined since 1994 (Figs \ref{fig:mlimewdays}). }
-\label{fig:limetime}
-\end{figure}
-
-\begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/whaledays_lime.png} 
-\caption{\textbf{Number of whale days at Lime Kiln State Park} has declined in recent years across all pods (A), J pod (B), K pod (C), and L pod (D). }
-\label{fig:limewdays}
-\end{figure}
-\begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/modwhaledays_lime.png} 
-\caption{\textbf{Number of modeled whale days at Lime Kiln State Park} has declined in recent years across all pods (A), J pod (B), K pod (C), and L pod (D). }
-\label{fig:mlimewdays}
-\end{figure}
-
-\begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.pdf} 
-\caption{\textbf{Sightings of SRKWs from the OrcaMaster Database}, from 1978-2017. }
-\label{fig:sights}
-\end{figure}
-
-\begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.pdf} 
-\caption{\textbf{Number of whale days from the OrcaMaster Database}, from 1978-2017. }
-\label{fig:wdays}
-\end{figure}
-
-
-\begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/simeffortonly2panels.png} 
-\caption{\textbf{Expected change in phenology due to changes in effort alone, across Puget Sound and the Central Salish Sea regions}, from 1978-2017 (A) and from 2001-2017 (B). }
-\label{fig:simeffort}
-\end{figure}
-
-
-\begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/figures/proboccK_4panels.png} 
-\caption{\textbf{K-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C).} This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 50\% credible intervals (95\% credible intervals in Table SX). 
-}
-\label{fig:Kprobs}
-\end{figure}
-
-
-\begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/figures/proboccL_4panels.png} 
-\caption{\textbf{L-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C)}. This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 50\% credible intervals (95\% credible intervals in Table SX). 
-}
-\label{fig:Lprobs}
-\end{figure}
-
-%Ailene’s To Do List
-%Check #s and be consistent about CIs (95% in text,  50% in figures, both in supp)
-%Notes for Discussion (possible points to add, from Meeting with Jameal and Chris):
-%Phenology matters to killer whales in one region but not in other. Where it matters, things that modify timing should be included. Indirect to think about how hatchery timing could affect that. 
-%Could reference atlantic modelling or scaling up to ecosystem level by referencing Isaac’s papers. Cite Lacey paper. On the other hand, you could regulate all the fishing and vessel traffic could still inhibit prey capture for SRKWs.
-%Add a sentence for cumulative impacts on recovering prey . Try to think of other similar examples- perhaps on lands. Great barrier reef- taken one conservation action but another limiting factor in play. 
-%Engage cumulative impacts, EBME literature to be broader. It's widely acknowledged %that cumulative impacts are threatening SRKWs. Timing is less often considered. %Will Satherwaite paper on salmon. Forecasting with SRKWs- managing 
-%Disproportionate importance of some timing- Are there particular times of year  %when SRKWs are more sensitive to starvation (e.g. due to birth)? 
-%Overall abundance is still important for prey.  But its not the whole story. %Phenology is not the whole story either.
-%Fisheries are more direct way of managing prey than hatcheries.
-\pagebreak
 
 \section* {Supplemental Tables}
 <<label=salmontab,echo=FALSE,results=tex>>=
@@ -198,10 +127,8 @@ print(salmtrends.table, include.rownames=FALSE, hline.after = c(-1,0,2,4,6),capt
 @
 
 
-
-
 <<label=occmodsums,echo=FALSE,results=tex>>=
-modsumfiles<-dir("../analyses/output")[grep("occprob_wrecent",dir("../analyses/output"))]
+modsumfiles<-dir("../analyses/output")[grep("ci0.5occprob_wrecent",dir("../analyses/output"))]
 allsums<-c()
 for (i in 1:length(modsumfiles)){
   modsum<-read.csv(paste("../analyses/output/",modsumfiles[i],sep=""), header=TRUE)
@@ -245,8 +172,95 @@ modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in pe
               "p{0.05\\textwidth}",
                "p{0.05\\textwidth}|"))
 
-print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18,24,30,36),caption.placement="top",size="\\footnotesize",sanitize.rownames.function=identity,add.to.row=addtorow)
+print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.placement="top",size="\\footnotesize",sanitize.rownames.function=identity,add.to.row=addtorow)
 @
+. \newline
+
+
+\newpage
+
+\section* {Supplemental Figures}
+
+%\par To Do 
+%(d) show relationship between lime kiln, and central salish sea phenology?
+
+\begin{figure}[p]
+\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/phentrends_lime_2panels.png} 
+\caption{\textbf{SRKW phenology at Lime Kiln State Park is shifting}, with the day of year of first sighting getting later (A) and the day of year of last sighting getting earlier (B),from 1994-2017. These trends are associated with a decrease in the amount of time SRKWs are spending near Lime Kiln (i.e., the number of days on which SRKWs were observed ("whale days") has declined since 1994 (Figs \ref{fig:mlimewdays}).}
+\label{fig:limetime}
+\end{figure}
+
+\begin{figure}[p]
+\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/whaledays_lime.png} 
+\caption{\textbf{Number of whale days at Lime Kiln State Park} has declined in recent years across all pods (A), J pod (B), K pod (C), and L pod (D). }
+\label{fig:limewdays}
+\end{figure}
+\begin{figure}[p]
+\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/modwhaledays_lime.png} 
+\caption{\textbf{Number of modeled whale days at Lime Kiln State Park} has declined in recent years across all pods (A), J pod (B), K pod (C), and L pod (D). ERIC SUGGESTS OVERLAYING MODELED AND EMPIRCAL WHALE DAYS ON THE SAME FIG. ALSO ADD UNCERTAINTY TO THIS.}
+\label{fig:mlimewdays}
+\end{figure}
+\newpage
+\begin{figure}[p]
+\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/orcachinphenoverlapKL2005.png}
+\caption{\textbf{SRKW phenology has shifted, in concert with shifts in Fraser River Chinook Salmon at one site with consistent observations in the Central Salish Sea}. K- and L-pod phenology (blue lines) is quantified from Lime Kiln Point State Park; adult Fraser River Chinook salmon (pink lines) phenology and SRKW phenology have shifted, with peak arrival dates delaying in recent (solid lines) compared with earlier (dashed lines) years. We show patterns for all pods together (A), K-pod (B), and L-Pod (C). Compare to Fig. 3 of the main text, which shows J-pod. }
+\label{fig:KLchin}
+\end{figure}
+
+\newpage
+\begin{figure}[p]
+\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/orcachinphenoverlapJ20052007.png}
+\caption{\textbf{SRKW phenology has shifted, in concert with shifts in Fraser River Chinook Salmon}. Altering the breakpoint between early and recent time-periods frmo 2006, as show in Fig. 3 in the main text (A) to 2007 (B) or 2005 (C) did not qualitatively alter results.  Adult Fraser River Chinook salmon (pink lines) phenology and SRKW phenology have shifted, with peak arrival dates delaying in recent (solid lines) compared with earlier (dashed lines) years. We show patterns for J-pod here, to be consistent with Fig. 4 \& 5. }
+\label{fig:KLchin}
+\end{figure}
+\newpage
+
+\begin{figure}[p]
+\includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.pdf} 
+\caption{\textbf{Sightings of SRKWs from the OrcaMaster Database}, from 1978-2017. }
+\label{fig:sights}
+\end{figure}
+
+\begin{figure}[p]
+\includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.pdf} 
+\caption{\textbf{Number of whale days from the OrcaMaster Database}, from 1978-2017. }
+\label{fig:wdays}
+\end{figure}
+
+
+\begin{figure}[p]
+\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/simeffortonly2panels.png} 
+\caption{\textbf{Expected change in phenology due to changes in effort alone, across Puget Sound and the Central Salish Sea regions}, from 1978-2017 (A) and from 2001-2017 (B). }
+\label{fig:simeffort}
+\end{figure}
+
+
+\begin{figure}[p]
+\includegraphics[width=0.8\textwidth]{../analyses/figures/proboccK_4panels.png} 
+\caption{\textbf{K-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C).} This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 50\% credible intervals (95\% credible intervals in Table SX). 
+}
+\label{fig:Kprobs}
+\end{figure}
+
+
+\begin{figure}[p]
+\includegraphics[width=0.8\textwidth]{../analyses/figures/proboccL_4panels.png} 
+\caption{\textbf{L-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C)}. This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 50\% credible intervals (95\% credible intervals in Table SX). 
+}
+\label{fig:Lprobs}
+\end{figure}
+
+%Ailene’s To Do List
+%Check #s and be consistent about CIs (95% in text,  50% in figures, both in supp)
+%Notes for Discussion (possible points to add, from Meeting with Jameal and Chris):
+%Phenology matters to killer whales in one region but not in other. Where it matters, things that modify timing should be included. Indirect to think about how hatchery timing could affect that. 
+%Could reference atlantic modelling or scaling up to ecosystem level by referencing Isaac’s papers. Cite Lacey paper. On the other hand, you could regulate all the fishing and vessel traffic could still inhibit prey capture for SRKWs.
+%Add a sentence for cumulative impacts on recovering prey . Try to think of other similar examples- perhaps on lands. Great barrier reef- taken one conservation action but another limiting factor in play. 
+%Engage cumulative impacts, EBME literature to be broader. It's widely acknowledged %that cumulative impacts are threatening SRKWs. Timing is less often considered. %Will Satherwaite paper on salmon. Forecasting with SRKWs- managing 
+%Disproportionate importance of some timing- Are there particular times of year  %when SRKWs are more sensitive to starvation (e.g. due to birth)? 
+%Overall abundance is still important for prey.  But its not the whole story. %Phenology is not the whole story either.
+%Fisheries are more direct way of managing prey than hatcheries.
+\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \end{document}

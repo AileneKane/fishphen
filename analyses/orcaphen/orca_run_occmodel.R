@@ -27,7 +27,7 @@ assumeSRKW=FALSE
 #Choose the credible intervals you 
 lci<-0.05
 uci<-0.95
-prob<-0.9
+prob<-0.5
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
 if(assumeSRKW==FALSE){
   if(pod=="J"){dat<-read.csv("analyses/output/j_dat.csv",header=T)}
