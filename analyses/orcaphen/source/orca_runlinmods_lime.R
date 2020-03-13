@@ -211,17 +211,20 @@ par(mfcol=c(1,2))
 ps<-c("SRs")
 lets<-c("A)","B)")
 mains<-c("All Pods","All Pod")
-
+alph=0.95
 for(i in 1:length(ps)){
   poddat<-lime.df[lime.df$pod==ps[i],]
-  plot(poddat$year,poddat$firstest.all,ylab= "Year", xlab= "Arrival Day Of Year", pch=21, bty="l",cex=1.5,bg="darkblue",main = paste(mains[i]))
+  poddat$year<-as.numeric(poddat$year)
+  poddat$firstest.all<-as.numeric(poddat$firstest.all)
+  poddat$lastest.all<-as.numeric(poddat$lastest.all)
+  plot(poddat$year,poddat$firstest.all,xlab= "Year", ylab= "Arrival Day Of Year", pch=21, bty="l",cex=1.5,bg="darkblue",main = paste(mains[i]))
   mtext(paste(lets[i]), side = 3, line = 1, adj=0)
   mod<-lm(poddat$firstest.all~poddat$year)
   if(summary(mod)$coef[2,4]<1-alph){abline(mod, lty=1, lwd=2)}
   mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
   mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
   
-  plot(poddat$year,poddat$lastest.all,ylab= "Year", xlab= "Departure Day of Year", pch=21, bty="l",cex=1.5,bg="darkblue",main = paste(mains[i]))
+  plot(poddat$year,poddat$lastest.all,xlab= "Year", ylab= "Departure Day of Year", pch=21, bty="l",cex=1.5,bg="darkblue",main = paste(mains[i]))
   mtext(paste(lets[i+3]), side = 3, line = 1, adj=0)
   mod<-lm(poddat$lastest.all~poddat$year)
   if(summary(mod)$coef[2,4]<1-alph){abline(mod, lty=1, lwd=2)}

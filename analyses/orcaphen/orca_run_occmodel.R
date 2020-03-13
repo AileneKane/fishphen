@@ -27,6 +27,7 @@ assumeSRKW=FALSE
 #Choose the credible intervals you 
 lci<-0.25
 uci<-0.75
+
 prob<-0.5
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
 if(assumeSRKW==FALSE){
