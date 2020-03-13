@@ -25,9 +25,9 @@ region="ps"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
 #Choose the credible intervals you 
-lci<-0.05
-uci<-0.95
-prob<-0.9
+lci<-0.25
+uci<-0.75
+prob<-0.5
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
 if(assumeSRKW==FALSE){
   if(pod=="J"){dat<-read.csv("analyses/output/j_dat.csv",header=T)}
@@ -190,7 +190,7 @@ y <- dat$ndet
 
 # Simulation parameters
 #ni=15000; nc=2; nb=0; nt=10
-ni=7500; nc=2; nb=2500; nt=1
+ni=15000; nc=2; nb=5000; nt=1
 # List input data
 jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots","n","X","Z","nc", "nb", "ni", "nt","zst","y")
 
@@ -560,20 +560,20 @@ if(season=="2"){
 }
 #save a dataframe of trends in all three phenophases
 df<-rbind(
-  c(pod,region,season,"peak",round(mean(slopevec,na.rm=T),digits=2),round(quantile(slopevec,lci,na.rm=T),digits=2),round(quantile(slopevec,uci,na.rm=T),digits=2)),
-  c(pod,region,season,"first",round(mean(slopevec.first,na.rm=T),digits=2),round(quantile(slopevec.first,lci,na.rm=T),digits=2),round(quantile(slopevec.first,uci,na.rm=T),digits=2)),
-  c(pod,region,season,"last",round(mean(slopevec.last,na.rm=T),digits=2),round(quantile(slopevec.last,lci,na.rm=T),digits=2),round(quantile(slopevec.last,uci,na.rm=T),digits=2)),
-  c(pod,region,season,"peak.20012016",round(mean(slopevec.recent,na.rm=T),digits=2),round(quantile(slopevec.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.recent,uci,na.rm=T),digits=2)),
-  c(pod,region,season,"first.20012016",round(mean(slopevec.first.recent,na.rm=T),digits=2),round(quantile(slopevec.first.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.first.recent,uci,na.rm=T),digits=2)),
-  c(pod,region,season,"last.20012016",round(mean(slopevec.last.recent,na.rm=T),digits=2),round(quantile(slopevec.last.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.last.recent,uci,na.rm=T),digits=2))
+  c(pod,region,season,"peak",round(mean(slopevec,na.rm=T),digits=2),round(quantile(slopevec,lci,na.rm=T),digits=2),round(quantile(slopevec,uci,na.rm=T),digits=2),round(quantile(slopevec,.025,na.rm=T),digits=2),round(quantile(slopevec,.975,na.rm=T),digits=2)),
+  c(pod,region,season,"first",round(mean(slopevec.first,na.rm=T),digits=2),round(quantile(slopevec.first,lci,na.rm=T),digits=2),round(quantile(slopevec.first,uci,na.rm=T),digits=2),round(quantile(slopevec.first,.025,na.rm=T),digits=2),round(quantile(slopevec.first,.975,na.rm=T),digits=2)),
+  c(pod,region,season,"last",round(mean(slopevec.last,na.rm=T),digits=2),round(quantile(slopevec.last,lci,na.rm=T),digits=2),round(quantile(slopevec.last,uci,na.rm=T),digits=2),round(quantile(slopevec.last,.025,na.rm=T),digits=2),round(quantile(slopevec.last,.975,na.rm=T),digits=2)),
+  c(pod,region,season,"peak.20012016",round(mean(slopevec.recent,na.rm=T),digits=2),round(quantile(slopevec.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.recent,uci,na.rm=T),digits=2),round(quantile(slopevec.recent,.025,na.rm=T),digits=2),round(quantile(slopevec.recent,.975,na.rm=T),digits=2)),
+  c(pod,region,season,"first.20012016",round(mean(slopevec.first.recent,na.rm=T),digits=2),round(quantile(slopevec.first.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.first.recent,uci,na.rm=T),digits=2),round(quantile(slopevec.first.recent,.025,na.rm=T),digits=2),round(quantile(slopevec.first.recent,.975,na.rm=T),digits=2)),
+  c(pod,region,season,"last.20012016",round(mean(slopevec.last.recent,na.rm=T),digits=2),round(quantile(slopevec.last.recent,lci,na.rm=T),digits=2),round(quantile(slopevec.last.recent,uci,na.rm=T),digits=2),round(quantile(slopevec.last.recent,.025,na.rm=T),digits=2),round(quantile(slopevec.last.recent,.975,na.rm=T),digits=2))
   )
-colnames(df)<-c("pod","region","season","phase","slope.mn","slope.lci","slope.uci")
+
+colnames(df)[1:7]<-c("pod","region","season","phase","slope.mn","slope.lci","slope.uci")
 cis<-uci-lci
 if(assumeSRKW==TRUE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"_ci",cis,"occprob_wrecent_assumeSRKW.csv", sep="")}
 if(assumeSRKW==FALSE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"_ci",cis,"occprob_wrecent_assumeSRKW.csv", sep="")}
 
 write.csv(df,df.name, row.names=FALSE)
-
 #save years and first-last-peak estimates
 phen<-cbind(pod,region,season,rownames(ann.res),round(ann.res[,"mean"]),round(ann.res[,"lci"]),round(ann.res[,"uci"]),
             round(ann.first[,"mean"]),round(ann.first[,"lci"]),round(ann.first[,"uci"]),

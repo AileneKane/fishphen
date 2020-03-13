@@ -471,8 +471,10 @@ colnames(cpue.old)<-colnames(cpue.rec)<-c("doy","cpue.mean","cpue.sd")
 
 #fit gams of srkw prob of presence
 #source(orca_rungams_lime.R)#take a long time so just read in model ests
-#Belowneeds work!
+#Below needs work!
 limegests<-read.csv("analyses/output/lime_prob.occ.50.csv", header=TRUE)#also 0.90 and 0.95
+
+
 pod = "SR"#choices are S,J.K,L
 minprob = 0.
 get.gests<-function(limegests,pod){
