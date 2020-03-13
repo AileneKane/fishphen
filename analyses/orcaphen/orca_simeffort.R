@@ -216,17 +216,17 @@ if(uss==FALSE & wholeyear==FALSE){
       y<-c(mean(pssum.df$firstdif),mean(pssum.df$lastdif))
       png(paste("analyses/orcaphen/figures/simeffortonly",styr,"-2017.png",sep=""),height=480, width=480)
       #first ps
-      plot(x,y,pch=16,col="gray",ylim=c(-10,10), xlim=c(0,5), typ="p", bty="l", cex=1.5, xlab="", xaxt="n", ylab="Change in day of year", main = paste(styr,"-2017",sep=""))
+      plot(x,y,pch=16,col="gray",ylim=c(-10,10), xlim=c(0,5), typ="p", bty="l", cex=1.8, xlab="", xaxt="n", ylab="Change in day of year", main = paste(styr,"-2017",sep=""))
       ylci<-c(quantile(pssum.df$firstdif,probs=0.25),quantile(pssum.df$lastdif, probs = 0.25))
       yuci<-c(quantile(pssum.df$firstdif, probs = 0.75),quantile(pssum.df$lastdif, probs = 0.75))
       
-      arrows(x,yuci,x,ylci, length=0, col="gray", lwd=2)
+      arrows(x,yuci,x,ylci, length=0, col="gray", lwd=3)
        y<-c(mean(usssum.df$firstdif),mean(usssum.df$lastdif))
-       points(x+2,y,pch=16,col="gray", cex=1.5)
-      # ylci<-c(quantile(usssum.df$firstdif,probs=0.25),quantile(usssum.df$lastdif, probs = 0.25))
-      # yuci<-c(quantile(usssum.df$firstdif, probs = 0.75),quantile(usssum.df$lastdif, probs = 0.75))
-      # 
-      # arrows(x+2,yuci,x+2,ylci, length=0, col="gray", lwd=2)
+       points(x+2,y,pch=16,col="gray", cex=1.8)
+       ylci<-c(quantile(usssum.df$firstdif,probs=0.25),quantile(usssum.df$lastdif, probs = 0.25))
+       yuci<-c(quantile(usssum.df$firstdif, probs = 0.75),quantile(usssum.df$lastdif, probs = 0.75))
+       
+       arrows(x+2,yuci,x+2,ylci, length=0, col="gray", lwd=3)
       # x.dat<-c(change.df$first.dif[1],change.df$last.dif[1]) 
       # #ps
       #points(x,as.numeric(c(change.df$first.dif[1],change.df$last.dif[1])),pch=16,col="black", cex=1.5) 
@@ -235,7 +235,7 @@ if(uss==FALSE & wholeyear==FALSE){
       # points(x+2,as.numeric(c(change.df$first.dif[2],change.df$last.dif[2])),pch=16,col="black", cex=1.5) 
       # arrows(x+2,as.numeric(c(change.df$first.uci[2],change.df$last.uci[2])),x+2,as.numeric(c(change.df$first.lci[2],change.df$last.lci[2])), length=0, col="black", lwd=1)
       # 
-      # abline(h=0)
+      abline(h=0)
       
       axis(side=1, at=c(1,2,3,4), labels=c("first obs","last obs","first obs","last obs"))   
       

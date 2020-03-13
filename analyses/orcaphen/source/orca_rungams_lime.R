@@ -96,7 +96,7 @@ mtext("D)", side = 3, line = 1, adj=0)
 
 dev.off()
 
-
+#Plot actual whale days as well
 #Look at model results          
 # windows()
 # conditional_effects(m2, surface = TRUE)
