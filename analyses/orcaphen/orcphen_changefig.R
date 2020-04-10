@@ -9,17 +9,17 @@ options(stringsAsFactors = FALSE)
 
 #library(lme4)
 # Set working directory: 
-setwd("~/Documents/GitHub/fishphen")
+setwd("~/GitHub/fishphen")
 #or from work laptop:
 #setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
 
 #Read in summaries of rates of change from orca occupancy model
-l2<-read.csv("analyses/output/L_2uss_doy92-3031978-2017_ci0.5occprob_wrecent_assumeSRKW.csv")
-l1<-read.csv("analyses/output/L_1ps_doy183-3661978-2017_ci0.5occprob_wrecent_assumeSRKW.csv")
-k2<-read.csv("analyses/output/K_2uss_doy92-3031978-2017_ci0.5occprob_wrecent_assumeSRKW.csv")
-k1<-read.csv("analyses/output/K_1ps_doy183-3661978-2017_ci0.5occprob_wrecent_assumeSRKW.csv")
-j2<-read.csv("analyses/output/J_2uss_doy92-3031978-2017_ci0.5occprob_wrecent_assumeSRKW.csv")
-j1<-read.csv("analyses/output/J_1ps_doy183-3661978-2017_ci0.5occprob_wrecent_assumeSRKW.csv")
+l2<-read.csv("analyses/output/L_2uss_doy92-3031978-2017_ci0.5occprob_wrecent.csv")
+l1<-read.csv("analyses/output/L_1ps_doy183-3661978-2017_ci0.5occprob_wrecent.csv")
+k2<-read.csv("analyses/output/K_2uss_doy92-3031978-2017_ci0.5occprob_wrecent.csv")
+k1<-read.csv("analyses/output/K_1ps_doy183-3661978-2017_ci0.5occprob_wrecent.csv")
+j2<-read.csv("analyses/output/J_2uss_doy92-3031978-2017_ci0.5occprob_wrecent.csv")
+j1<-read.csv("analyses/output/J_1ps_doy183-3661978-2017_ci0.5occprob_wrecent.csv")
 
 all2<-rbind(j2,k2,l2)
 all1<-rbind(j1,k1,l1)

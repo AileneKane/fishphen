@@ -20,7 +20,7 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="J"#options= J,K,L,SR
+pod="L"#options= J,K,L,SR
 region="uss"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
@@ -572,7 +572,7 @@ df<-rbind(
 colnames(df)[1:7]<-c("pod","region","season","phase","slope.mn","slope.lci","slope.uci")
 cis<-uci-lci
 if(assumeSRKW==TRUE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"_ci",cis,"occprob_wrecent_assumeSRKW.csv", sep="")}
-if(assumeSRKW==FALSE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"_ci",cis,"occprob_wrecen.csv", sep="")}
+if(assumeSRKW==FALSE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"_ci",cis,"occprob_wrecent.csv", sep="")}
 
 write.csv(df,df.name, row.names=FALSE)
 #save years and first-last-peak estimates
