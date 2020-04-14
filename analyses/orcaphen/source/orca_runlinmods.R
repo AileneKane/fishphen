@@ -15,13 +15,13 @@ for(y in 1:length(years)){
 }
 df <- as.data.frame(cbind(years.all,nobs.all,firstest.all,lastest.all))
 colnames(df)[1:2]<-c("year","nobs")
-windows()
+#windows()
 plot(df$year,df$firstest.all,xlab="year",ylab="first obs doy", main="", bty="l", pch=21, bg="gray")
 mod<-lm(df$firstest.all~df$year)
 abline(mod)
 mtext(paste("r2=",round(summary(mod)$r.squared, digits=2),",p=",round(summary(mod)$coeff[2,4], digits=2)), side=3, adj=1, cex=0.7)
 mtext(paste("coef=",round(summary(mod)$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
-windows()
+#windows()
 plot(df$year,df$lastest.all,xlab="year",ylab="last obs doy", main="", bty="l", pch=21, bg="gray")
 mod<-lm(df$lastest.all~df$year)
 abline(mod)
@@ -97,7 +97,7 @@ pod.df$firstest.all<-as.numeric(pod.df$firstest.all)
 pod.df$lastest.all<-as.numeric(pod.df$lastest.all)
 
 pod.df$year<-as.numeric(pod.df$year)
-windows(height=6,width=7)
+#windows(height=6,width=7)
 par(mfrow=c(2,2))
 for(r in 1:2){
   reg.df<-pod.df[pod.df$region==regions[r],]
@@ -143,7 +143,7 @@ if(styr==2001){
 
 
 
-windows()
+#windows()
 par(mfrow=c(1,2))
 #First obs
 boxplot(as.numeric(pod.df$firstest[pod.df$region=="ps"])~as.factor(pod.df$period[pod.df$region=="ps"]), xlab="Period", ylab="Estimate of first obs (doy) in PS", main="First obs")

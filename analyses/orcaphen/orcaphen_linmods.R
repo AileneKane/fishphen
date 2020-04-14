@@ -127,7 +127,7 @@ lime1995$mean<-as.numeric(lime1995$mean.all)+90
 lime1995$lastest<-as.numeric(lime1995$lastest.all)+90
 
 #quartz(height=4,width=12)
-pdf(file="analyses/orcaphen/figures/lime_albchin.pdf",height=4,width=12)
+pdf(file="analyses/orcaphen/figures/lime_albchinbrms.pdf",height=4,width=12)
 myPalette <- colorRampPalette(brewer.pal(length(unique(albchin95$year)), "Blues")) #### Gives us a heat map look
 cols = rev(myPalette(length(unique(albchin95$year))))
 par(mfrow=c(1,3))
@@ -485,35 +485,32 @@ get.gests<-function(limegests,pod){
   meanprobs<-c()
   prob.lc<-c()
   prob.uc<-c()
+  whaleests
   years<-c()
-for(y in unique(limegests$year)){
-  yeardat<-limegests[limegests$year==y,]
-  podcol<-yeardat[,which(colnames(yeardat)==paste(pod,"prob.Estimate",sep=""))]
-  yrpeakoc<-max(podcol)
-  yrpeakoc.doy<-yeardat$doy[which(podcol==yrpeakoc)]
-  yrfirst.doy<-yeardat$doy[min(which(podcol>minprob))]
-  yrlast.doy<-yeardat$doy[max(which(podcol>minprob))]
-  meanprob<-mean(podcol)
-  lprob<-quantile(podcol,0.25)
-  uprob<-quantile(podcol,0.75)
-  peakoc<-c(peakoc,yrpeakoc)
-  peakoc.doy<-c(peakoc.doy,yrpeakoc.doy)
-  firstprob<-c(firstprob,yrfirst.doy)
-  lastprob<-c(lastprob,yrlast.doy)
-  meanprobs<-c(meanprobs,meanprob)
-  prob.lc<-c(prob.lc,lprob)
-  prob.uc<-c(prob.uc,uprob)
-  years<-c(years,y)
-}
+  for(y in unique(limegests$year)){
+    yeardat<-limegests[limegests$year==y,]
+    podcol<-yeardat[,which(colnames(yeardat)==paste(pod,"prob.Estimate",sep=""))]
+    yrpeakoc<-max(podcol)
+    yrpeakoc.doy<-yeardat$doy[which(podcol==yrpeakoc)]
+    yrfirst.doy<-yeardat$doy[min(which(podcol>minprob))]
+    yrlast.doy<-yeardat$doy[max(which(podcol>minprob))]
+    meanprob<-mean(podcol)
+    lprob<-quantile(podcol,0.25)
+    uprob<-quantile(podcol,0.75)
+    peakoc<-c(peakoc,yrpeakoc)
+    peakoc.doy<-c(peakoc.doy,yrpeakoc.doy)
+    firstprob<-c(firstprob,yrfirst.doy)
+    lastprob<-c(lastprob,yrlast.doy)
+    meanprobs<-c(meanprobs,meanprob)
+    prob.lc<-c(prob.lc,lprob)
+    prob.uc<-c(prob.uc,uprob)
+    years<-c(years,y)
+  }
   gests<-as.data.frame(cbind(years,peakoc,peakoc.doy,firstprob,lastprob,meanprobs,prob.lc,prob.uc))
   row.names(gests)<-NULL
   return(gests)
 }
-gests<-get.gests(limegests,"prob.occ")
-jgests<-get.gests(limegests,"jprob.occ")
-kgests<-get.gests(limegests,"kprob.occ")
-lgests<-get.gests(limegests,"lprob.occ")
-
+gests<-get.gests(limegests,"SR")
 meanmod<-summary(lm(gests$meanprobs~gests$year))#trend is getting lower
 summary(lm(jgests$meanprobs~jgests$year))#not getting lower
 summary(lm(kgests$meanprobs~kgests$year))#getting lower
@@ -566,35 +563,58 @@ legend(115,1,legend=c("1994-2005","2006-2017"),lty=c(2,1),lwd=2,col="black", bty
 legend(115,.85,legend=c("SRKW","salmon"),lty=1,lwd=2,col=c("black","salmon"), bty="n")
 
 dev.off()
-gests95<-gests[gests$years>1993,]
-gests95<-gests95[gests95$years!=2014,]
+
 #not running mean
 #quartz(height=4,width=12)
-par(mfrow=c(1,4))
+albchiphenest<-read.csv("analyses/output/albionchiphenest.csv", header=TRUE)
+#restrict to time frame consistent with orcas
+albchinest95<-albchiphenest[albchiphenest$year>1995,]
 albchinest95<-albchinest95[albchinest95$year<2018,]
-plot(albchinest95$firstobsdate,gests95$firstprob,type="p",pch=21, cex.axis=1.3,cex.lab=1.3,bg = cols[factor(albchin95$year)],xlab="Chinook Arrival (doy)",ylab="SRKW Arrival (doy)", cex=1.2, bty="l")
-#what is the really late salmon year?
-#albchin95$year[which(albchin95$firstobsdate==max(albchin95$firstobsdate, na.rm=TRUE))]#2007
-#points(albchin95$firstobsdate,lime.df$firstest.all,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
-legend("topleft",legend=c("1994","2017"), pch=21, pt.bg=c(cols[1], cols[length(cols)]), bty="n", cex=1.4)
-mod<-lm(gests95$firstprob~albchinest95$firstobsdate)
+
+myPalette <- colorRampPalette(brewer.pal(length(unique(albchinest95$year)), "Blues")) #### Gives us a heat map look
+cols = rev(myPalette(length(unique(albchinest95$year))))
+png(file="analyses/orcaphen/figures/lime_albchin_gam.png",height=400,width=1200)
+#quartz
+par(mfrow=c(1,3), mar=c(5, 5, 4, 2) + 0.1)
+#plot(albchinest95$firstobsdate,gests$firstprob,type="p",pch=21, cex.axis=1.3,cex.lab=1.3,bg = cols[factor(albchinest95$year)],xlab="Chinook Arrival (doy)",ylab="SRKW Arrival (doy)", cex=1.2, bty="l")
+#legend("topleft",legend=c("1994","2017"), pch=21, pt.bg=c(cols[1], cols[length(cols)]), bty="n", cex=1.4)
+#mod<-lm(gests$firstprob~albchinest95$firstobsdate)
+#if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
+#if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
+
+# plot(albchinest95$firstobsdate,gests$peakoc.doy,type="p",pch=21, cex.axis=1.3,cex.lab=1.3,bg = cols[factor(albchinest95$year)],xlab="Chinook Arrival (doy)",ylab="SRKW Peak Occupancy prob (doy)", cex=1.2, bty="l")
+# mod<-lm(gests$peakoc.doy~albchinest95$firstobsdate)
+# if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
+# if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
+
+plot(albchinest95$peakobsdate,gests$peakoc.doy,type="p",pch=21, cex.axis=1.8,cex.lab=1.8,bg = cols[factor(albchinest95$year)],xlab="Day of Peak Chinook Abundance (DOY)",ylab="Day of Peak SRKW Occupancy Probability (DOY)", cex=1.8, bty="l")
+mod<-lm(gests$peakoc.doy~albchinest95$peakobsdate)
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
 if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
+mtext("B)", side = 3, line = 1, adj=0)
 
+# 
+# plot(albchinest95$lastobsdate,gests$lastprob,type="p",pch=21, cex.axis=1.3,cex.lab=1.3,bg = cols[factor(albchinest95$year)],xlab="Chinook Arrival (doy)",ylab="Day of Peak SRKW Occupancy Probability (DOY)", cex=1.2, bty="l")
+# mod<-lm(gests$lastprob~albchinest95$lastobsdate)
+# if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
+# if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
 
-plot(albchin95$firstobsdate,gests95$peakoc.doy,type="p",pch=21, cex.axis=1.3,cex.lab=1.3,bg = cols[factor(albchin95$year)],xlab="Chinook Arrival (doy)",ylab="SRKW Peak Occupancy prob (doy)", cex=1.2, bty="l")
-#what is the really late salmon year?
-#albchin95$year[which(albchin95$firstobsdate==max(albchin95$firstobsdate, na.rm=TRUE))]#2007
-points(albchin95$firstobsdate,lime.df$firstest.all,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
-legend("topleft",legend=c("1994","2017"), pch=21, pt.bg=c(cols[1], cols[length(cols)]), bty="n", cex=1.4)
-mod<-lm(lime.df$firstest.all~albchin95$firstobsdate)
+plot(albchinest95$alltotal,gests$peakoc.doy, type="p",pch=21, cex.axis=1.8,cex.lab=1.8,bg = cols[factor(albchinest95$year)],xlab="Chinook Abundance (CPUE)",ylab="Day of Peak SRKW Occupancy Probability (DOY)", cex=1.8, bty="l")
+mod<-lm(gests$peakoc.doy~albchinest95$alltotal)
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
 if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
-
+mtext("C)", side = 3, line = 1, adj=0)
 
 #whale days vs chinook run size
-plot(albchin95$alltotal,lime.df$nobs,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="Whale days", cex=1.2, bty="l")
-points(albchin95$alltotal,lime.df$nobs,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
+plot(albchin95$alltotal,limewhaledays.prob$whdays.prob,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.8,cex.lab=1.8,xlab="Chinook Abundance (CPUE)",ylab="Whale days (#)", cex=1.8, bty="l")
+#points(albchin95$alltotal,limewhaledays.prob$whdays.prob,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
+
+mod<-lm(limewhaledays.prob$whdays.prob~albchin95$alltotal)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
+if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3, lwd=2)}
+mtext("D)", side = 3, line = 1, adj=0)
+
+dev.off()
 
 mod<-lm(lime.df$nobs~albchin95$alltotal)
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
@@ -617,18 +637,13 @@ if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,lw
 dev.off()
 
 #Now calculate Eric's new whale days metric:
-limewhaledays.prob<-aggregate(limegests$prob.occ, by=list(limegests$year), sum)
+limewhaledays.prob<-aggregate(limegests$SRprob.Estimate, by=list(limegests$year), sum)
 colnames(limewhaledays.prob)<-c("year","whdays.prob")
 limewhaledays.prob<-limewhaledays.prob[limewhaledays.prob$year>1993,]
+limewhaledays.prob<-limewhaledays.prob[limewhaledays.prob$year!=2014,]
+albchin95<-albchin95[albchin95$year<2017,]
 quartz()
 par(mfrow=c(1,2))
-plot(albchin95$alltotal,lime1995$nobs,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="Whale days", cex=1.2, bty="l")
-points(albchin95$alltotal,lime1995$nobs,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
-
-mod<-lm(lime1995$nobs~albchin95$alltotal)
-if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
-if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3, lwd=2)}
-
 plot(albchin95$alltotal,limewhaledays.prob$whdays.prob,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="Whale days prob", cex=1.2, bty="l")
 points(albchin95$alltotal,limewhaledays.prob$whdays.prob,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
 
