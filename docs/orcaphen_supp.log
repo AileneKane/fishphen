@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  9 JAN 2020 11:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  13 APR 2020 16:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -387,6 +387,24 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
+(/usr/local/texlive/2015/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
+\LTleft=\skip51
+\LTright=\skip52
+\LTpre=\skip53
+\LTpost=\skip54
+\LTchunksize=\count115
+\LTcapwidth=\dimen125
+\LT@head=\box29
+\LT@firsthead=\box30
+\LT@foot=\box31
+\LT@lastfoot=\box32
+\LT@cols=\count116
+\LT@rows=\count117
+\c@LT@tables=\count118
+\c@LT@chunks=\count119
+\LT@p@ftn=\toks22
+)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/tools/xr.sty
 Package: xr 1994/05/28 v5.02 eXternal References (DPC)
 )
@@ -396,28 +414,25 @@ Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 57.
-\captionmargin=\dimen125
-\captionmargin@=\dimen126
-\captionwidth=\dimen127
-\caption@tempdima=\dimen128
-\caption@indent=\dimen129
-\caption@parindent=\dimen130
-\caption@hangindent=\dimen131
+\captionmargin=\dimen126
+\captionmargin@=\dimen127
+\captionwidth=\dimen128
+\caption@tempdima=\dimen129
+\caption@indent=\dimen130
+\caption@parindent=\dimen131
+\caption@hangindent=\dimen132
 )
-\c@ContinuedFloat=\count115
+\c@ContinuedFloat=\count120
 Package caption Info: hyperref package is loaded.
-)
+Package caption Info: longtable package is loaded.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2013/02/03 v1.3-62 longtable captions (AR)
+))
 (/usr/local/texlive/2015/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
-(./orcaphen_supp.aux
-
-LaTeX Warning: Label `tab:salmon' multiply defined.
-
-
-LaTeX Warning: Label `tab:salmon' multiply defined.
-
-)
+(./orcaphen_supp.aux)
 \openout1 = `orcaphen_supp.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
@@ -434,7 +449,8 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
 LaTeX Font Info:    ... okay on input line 45.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 45.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 45.
- (/usr/local/texlive/2015/texmf-dist/tex/latex/base/ts1cmr.fd
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 45.
@@ -443,17 +459,17 @@ LaTeX Font Info:    ... okay on input line 45.
 
 (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count116
-\scratchdimen=\dimen132
-\scratchbox=\box29
-\nofMPsegments=\count117
-\nofMParguments=\count118
-\everyMPshowfont=\toks22
-\MPscratchCnt=\count119
-\MPscratchDim=\dimen133
-\MPnumerator=\count120
-\makeMPintoPDFobject=\count121
-\everyMPtoPDFconversion=\toks23
+\scratchcounter=\count121
+\scratchdimen=\dimen133
+\scratchbox=\box33
+\nofMPsegments=\count122
+\nofMParguments=\count123
+\everyMPshowfont=\toks23
+\MPscratchCnt=\count124
+\MPscratchDim=\dimen134
+\MPnumerator=\count125
+\makeMPintoPDFobject=\count126
+\everyMPtoPDFconversion=\toks24
 ) (/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -469,7 +485,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\AtBeginShipoutBox=\box30
+\AtBeginShipoutBox=\box34
 Package hyperref Info: Link coloring OFF on input line 45.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/nameref.sty
@@ -478,7 +494,7 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count122
+\c@section@level=\count127
 )
 LaTeX Info: Redefining \ref on input line 45.
 LaTeX Info: Redefining \pageref on input line 45.
@@ -516,26 +532,18 @@ LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <6> not available
 
 LaTeX Warning: No \author given.
 
+[1
+
+{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <10> not available
+(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 66.
+LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <7> not available
+(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 66.
 LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <5> not available
-(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 74.
+(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 66.
 
-Overfull \hbox (3.41487pt too wide) in paragraph at lines 76--76
+Overfull \hbox (3.41487pt too wide) in paragraph at lines 83--83
 []|\T1/aer/m/n/8 Latitude| 
- []
-
-
-Overfull \hbox (2.82294pt too wide) in paragraph at lines 78--78
-[]|\T1/aer/m/n/8 Chinook| 
- []
-
-
-Overfull \hbox (2.82294pt too wide) in paragraph at lines 81--81
-[]|\T1/aer/m/n/8 Chinook| 
- []
-
-
-Overfull \hbox (2.82294pt too wide) in paragraph at lines 84--84
-[]|\T1/aer/m/n/8 Chinook| 
  []
 
 
@@ -544,12 +552,22 @@ Overfull \hbox (2.82294pt too wide) in paragraph at lines 85--85
  []
 
 
+Overfull \hbox (4.72136pt too wide) in paragraph at lines 85--85
+[]|\T1/aer/m/n/8 wild/hatchery| 
+ []
+
+
 Overfull \hbox (2.82294pt too wide) in paragraph at lines 87--87
 []|\T1/aer/m/n/8 Chinook| 
  []
 
 
-Overfull \hbox (2.82294pt too wide) in paragraph at lines 90--90
+Overfull \hbox (2.82294pt too wide) in paragraph at lines 91--91
+[]|\T1/aer/m/n/8 Chinook| 
+ []
+
+
+Overfull \hbox (2.82294pt too wide) in paragraph at lines 93--93
 []|\T1/aer/m/n/8 Chinook| 
  []
 
@@ -559,73 +577,147 @@ Overfull \hbox (2.82294pt too wide) in paragraph at lines 96--96
  []
 
 
-Overfull \hbox (4.72136pt too wide) in paragraph at lines 96--96
-[]|\T1/aer/m/n/8 wild/hatchery| 
+Overfull \hbox (4.24446pt too wide) in paragraph at lines 115--115
+[]|\T1/aer/m/n/8 1724.86| 
  []
 
-[1
 
-{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<../analyses/orcaphen/figures/limekilntrends_dat.pdf, id=15, 1084.05pt x 433.62
+Overfull \hbox (4.24446pt too wide) in paragraph at lines 121--121
+[]|\T1/aer/m/n/8 1640.82| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
+
+ []
+
+[2] [3]
+<../analyses/orcaphen/figures/phentrends_lime_peak.png, id=41, 1204.5pt x 401.5
 pt>
-File: ../analyses/orcaphen/figures/limekilntrends_dat.pdf Graphic file (type pd
-f)
- <use ../analyses/orcaphen/figures/limekilntrends_dat.pdf>
-Package pdftex.def Info: ../analyses/orcaphen/figures/limekilntrends_dat.pdf us
-ed on input line 196.
-(pdftex.def)             Requested size: 377.62633pt x 151.04807pt.
+File: ../analyses/orcaphen/figures/phentrends_lime_peak.png Graphic file (type 
+png)
+ <use ../analyses/orcaphen/figures/phentrends_lime_peak.png>
+Package pdftex.def Info: ../analyses/orcaphen/figures/phentrends_lime_peak.png 
+used on input line 173.
+(pdftex.def)             Requested size: 377.62633pt x 125.87277pt.
+ [4]
+<../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png, id=50, 691.8648pt 
+x 366.8907pt>
+File: ../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png Graphic file (
+type png)
+ <use ../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png>
+Package pdftex.def Info: ../analyses/figures/OrcaPhenPlots/numsights_1976_2regs
+.png used on input line 181.
+(pdftex.def)             Requested size: 377.62633pt x 200.25656pt.
 
-<../analyses/figures/proboccK_4panels.png, id=16, 1102.8402pt x 885.3075pt>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+<../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png, id=51, 692.10
+57pt x 361.1091pt>
+File: ../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png Graphic f
+ile (type png)
+
+<use ../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png>
+Package pdftex.def Info: ../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW
+2regs.png used on input line 187.
+(pdftex.def)             Requested size: 377.62633pt x 197.02922pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+<../analyses/orcaphen/figures/modwhaledays_lime.png, id=52, 963.6pt x 481.8pt>
+File: ../analyses/orcaphen/figures/modwhaledays_lime.png Graphic file (type png
+)
+
+<use ../analyses/orcaphen/figures/modwhaledays_lime.png>
+Package pdftex.def Info: ../analyses/orcaphen/figures/modwhaledays_lime.png use
+d on input line 193.
+(pdftex.def)             Requested size: 377.62633pt x 188.81284pt.
+
+<../analyses/orcaphen/figures/orcachinphenoverlapKL2005.png, id=53, 963.6pt x 1
+277.0109pt>
+File: ../analyses/orcaphen/figures/orcachinphenoverlapKL2005.png Graphic file (
+type png)
+ <use ../analyses/orcaphen/figures/orcachinphenoverlapKL2005.png>
+Package pdftex.def Info: ../analyses/orcaphen/figures/orcachinphenoverlapKL2005
+.png used on input line 199.
+(pdftex.def)             Requested size: 377.62633pt x 500.44846pt.
+
+<../analyses/orcaphen/figures/orcachinphenoverlapALLSR20052007.png, id=54, 964.
+5636pt x 1291.7058pt>
+File: ../analyses/orcaphen/figures/orcachinphenoverlapALLSR20052007.png Graphic
+ file (type png)
+
+<use ../analyses/orcaphen/figures/orcachinphenoverlapALLSR20052007.png>
+Package pdftex.def Info: ../analyses/orcaphen/figures/orcachinphenoverlapALLSR2
+0052007.png used on input line 206.
+(pdftex.def)             Requested size: 377.62633pt x 505.71451pt.
+
+<../analyses/orcaphen/figures/simeffortonly2panels.png, id=55, 936.6192pt x 481
+.8pt>
+File: ../analyses/orcaphen/figures/simeffortonly2panels.png Graphic file (type 
+png)
+ <use ../analyses/orcaphen/figures/simeffortonly2panels.png>
+Package pdftex.def Info: ../analyses/orcaphen/figures/simeffortonly2panels.png 
+used on input line 213.
+(pdftex.def)             Requested size: 377.62633pt x 194.25308pt.
+
+<../analyses/figures/proboccK_4panels.png, id=56, 1102.8402pt x 885.3075pt>
 File: ../analyses/figures/proboccK_4panels.png Graphic file (type png)
 
 <use ../analyses/figures/proboccK_4panels.png>
 Package pdftex.def Info: ../analyses/figures/proboccK_4panels.png used on input
- line 202.
+ line 220.
 (pdftex.def)             Requested size: 377.62633pt x 303.13493pt.
 
-<../analyses/figures/proboccL_4panels.png, id=17, 1086.459pt x 911.3247pt>
+<../analyses/figures/proboccL_4panels.png, id=57, 1086.459pt x 911.3247pt>
 File: ../analyses/figures/proboccL_4panels.png Graphic file (type png)
 
 <use ../analyses/figures/proboccL_4panels.png>
 Package pdftex.def Info: ../analyses/figures/proboccL_4panels.png used on input
- line 210.
+ line 228.
 (pdftex.def)             Requested size: 377.62633pt x 316.75742pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 217.
- [2] [3 <../analyses/orcaphen/figures/limekilntrends_dat.pdf> <../analyses/figu
-res/proboccK_4panels.png (PNG copy)>] [4 <../analyses/figures/proboccL_4panels.
-png (PNG copy)>] [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 217.
-
-(./orcaphen_supp.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 217.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 217.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 247.
+ [5 <../analyses/orcaphen/figures/phentrends_lime_peak.png> <../analyses/figure
+s/OrcaPhenPlots/numsights_1976_2regs.png (PNG copy)>] [6 <../analyses/figures/O
+rcaPhenPlots/whaledays_assumeSRKW2regs.png (PNG copy)> <../analyses/orcaphen/fi
+gures/modwhaledays_lime.png>]
+[7 <../analyses/orcaphen/figures/orcachinphenoverlapKL2005.png (PNG copy)>]
+[8 <../analyses/orcaphen/figures/orcachinphenoverlapALLSR20052007.png (PNG copy
+)>] [9 <../analyses/orcaphen/figures/simeffortonly2panels.png (PNG copy)>]
+[10 <../analyses/figures/proboccK_4panels.png (PNG copy)>] [11 <../analyses/fig
+ures/proboccL_4panels.png (PNG copy)>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 247.
+ (./orcaphen_supp.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 247.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 247.
 Package rerunfilecheck Info: File `orcaphen_supp.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 217.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 247.
  ) 
 Here is how much of TeX's memory you used:
- 8383 strings out of 493089
- 125373 string characters out of 6134842
- 269731 words of memory out of 5000000
- 11708 multiletter control sequences out of 15000+600000
- 30061 words of font info for 67 fonts, out of 8000000 for 9000
+ 8558 strings out of 493089
+ 129035 string characters out of 6134842
+ 253515 words of memory out of 5000000
+ 11856 multiletter control sequences out of 15000+600000
+ 30962 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,9n,38p,1651b,362s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,9n,38p,2455b,362s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb><
-/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></u
-sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
-/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/l
-ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loca
-l/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb>
-Output written on orcaphen_supp.pdf (5 pages, 1141452 bytes).
+/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
+/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/loc
+al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/
+texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb>
+Output written on orcaphen_supp.pdf (11 pages, 1833596 bytes).
 PDF statistics:
- 80 PDF objects out of 1000 (max. 8388607)
- 61 compressed objects within 1 object stream
- 16 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 128 PDF objects out of 1000 (max. 8388607)
+ 94 compressed objects within 1 object stream
+ 28 named destinations out of 1000 (max. 500000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 

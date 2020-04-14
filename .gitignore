@@ -62,3 +62,10 @@ analyses/output/j.brms.Rda
 *.Rda
 analyses/docs/srkw_phenology_Wolkovichmeeting.pdf
 analyses/docs/srkw_phenology_Wolkovichmeeting.pptx
+.Rhistory
+.Rhistory
+analyses/.DS_Store
+analyses/figures/.DS_Store
+*.ai
+*.aux
+*.log
