@@ -57,7 +57,7 @@
 \renewcommand{\thefigure}{S\arabic{figure}}
 
 \section* {Comparing observed and modeled estimates of `Whale Days' at Lime Kiln}
-\par We fit occupancy models to estimate daily and annual probabilities of presence for Southern Resident Killer Whales (SRKWs) at Lime Kiln Point State Park, where a consistently collected observation dataset suggests that SRKWs have shifted the timing of their activity in the area (Fig.\ref{fig:limetime}. We calculated annual total whale days quantified from the data directly (i.e., a whale-day was counted as a day on which whales were observed) and quantified from model-estimated probabilities of whale presence (i.e., each days probability of whale presence was summed across the year). The two calculations both reveal declines in SRKW abunandace in recent years, across all three pods (Fig. \ref{fig:limewdays} \& \ref{fig:mlimewdays}). 
+\par We fit occupancy models to estimate daily and annual probabilities of presence for Southern Resident Killer Whales (SRKWs) at Lime Kiln Point State Park, where a consistently collected observation dataset suggests that SRKWs have shifted the timing of their activity in the area (Fig.\ref{fig:limetime}. We calculated annual total whale days quantified from the data directly (i.e., a whale-day was counted as a day on which whales were observed) and quantified from model-estimated probabilities of whale presence (i.e., each days probability of whale presence was summed across the year). The two calculations both reveal declines in SRKW abunandace in recent years, across all three pods (Fig. \ref{fig:mlimewdays}). 
 \section* {Effects of changes in effort on estimated phenological change}
 With increasing public awareness of SRKWs near urban areas (e.g. the Salish Sea), the number of public reports of whales and people contributing to sightings networks such as the OrcaMaster Database have increased since its inception (Fig.\ref{fig:sights}). This shift in effort complicates interpretations of trends in the number of whale days over time (Fig. \ref{fig:wdays}) because an increase in the number of whale on which SRKWs were observed could be due to increased observer effort in a region, rather than due to increased whale activity in the region. To better understand how increased effort across the time-series (i.e., increased numbers of sightings over time) may affect estimates of trends in phenology, we simulated data sets of whale presence during two seasons equivalent to those in our data set (spring/summer, which was 1 May through 31 Sept, or 153 days, and fall/winter, which was 1 October through 1 Feb, or 123 days). We used whale presence probabilities that matched the mean observed probabilities for the Central Salish Sea and Puget Sound regions, separately, from 1978-2017 (Table S1). We kept them constant over 40 simulated years, respectively. We then created an observation data set, in which effort (the number of observations) varied. During the low effort time period (years 1-20), the number of observations had a mean of 15 per year for Puget Sound and 104 per year in the Central Salish Sea (matching the means for these regions from 1978-1997 in the OrcaMaster database). During the high effort time period (years 21-40 in our simulated data set), the number of annual observations had a mean of 39 for Puget Sound and 133 for the Central Salish Sea (matching those in the OrcaMaster database from 1998-2017). We then calculated first- and last- observations dates for each simulated year. We ran these simulations 100 times and calculated the difference between the low effort and high effort time periods. We compared these to the mean differences in first- and last-observation dates across time periods in the OrcaMaster database, for each region, to understand whether observed changes may be due to changes in effort over time, rather than changes in killer whale activity. We conducted the same analysis across the recent time frame (2001-2017), as well, using region-specific estimates of presence probabilities and observer effort obtained from this time-period.
 
@@ -72,7 +72,7 @@ With increasing public awareness of SRKWs near urban areas (e.g. the Salish Sea)
 
 \section* {Supplemental Tables}
 % latex table generated in R 3.6.0 by xtable 1.8-4 package
-% Wed Mar 11 10:28:38 2020
+% Mon Apr 13 16:57:24 2020
 \begin{table}[ht]
 \centering
 \caption{\textbf{Salmon runs in Central Salish Sea and Puget Sound Proper} included in our analyses.} 
@@ -102,7 +102,7 @@ Puget Sound Proper & CEDAR RIVER HATCHERY & Chinook & wild & 47.3761 & -121.9625
 \endgroup
 \end{table}
 % latex table generated in R 3.6.0 by xtable 1.8-4 package
-% Wed Mar 11 10:28:38 2020
+% Mon Apr 13 16:57:24 2020
 \begin{table}[ht]
 \centering
 \caption{\textbf{Salmon phenology has shifted earlier in Puget Sound Proper}, from 1997-2017, as quantified in the 13 runs included in our hierarchical model across coho, chum, and Chinook adult return data (see Table S1). ADD FRASER RIVER CHINOOK TRENDS TO THIS TABLE} 
@@ -126,7 +126,7 @@ last & intercept & 1640.82 & 1447.50 & 1834.16 & 1076.32 & 2205.48 \\
 \end{table}
 
 % latex table generated in R 3.6.0 by xtable 1.8-4 package
-% Wed Mar 11 10:28:39 2020
+% Mon Apr 13 16:57:24 2020
 \begin{table}[ht]
 \centering
 \caption{\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper and the central Salish Sea, from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent and 95 percent uncertainty intervals are shown.NEED TO ADD 95 perceiles!} 
@@ -136,26 +136,26 @@ last & intercept & 1640.82 & 1447.50 & 1834.16 & 1076.32 & 2205.48 \\
   \hline & & & & \multicolumn{3}{c |}{1978-2017 trend} &\multicolumn{3}{c |}{2002-2017 trend}\\
  Pod & Region & Season & Phase & mean & 25\% & 75\% & mean & 25\% & 75\% \\ 
   \hline
-J & Puget Sound & Fall & peak & 1.17 & 0.93 & 1.44 & 0.81 & -0.37 & 1.94 \\ 
-  J & Puget Sound & Fall & first & 0.54 & 0.10 & 0.97 & 2.68 & 1.66 & 3.71 \\ 
-  J & Puget Sound & Fall & last & 0.87 & 0.43 & 1.31 & -1.07 & -2.00 & -0.15 \\ 
-  J & Central Salish Sea & Summer & peak & 1.04 & 0.65 & 1.44 & 5.78 & 3.73 & 8.19 \\ 
-  J & Central Salish Sea & Summer & first & -0.74 & -0.88 & -0.58 & 1.11 & 0.93 & 1.20 \\ 
-  J & Central Salish Sea & Summer & last & 1.12 & 0.96 & 1.28 & 0.48 & 0.31 & 0.67 \\ 
+J & Puget Sound & Fall & peak & 1.14 & 0.87 & 1.41 & 0.29 & 1.88 & 0.74 \\ 
+  J & Puget Sound & Fall & first & 0.54 & 0.08 & 0.99 & -0.81 & 1.88 & 2.67 \\ 
+  J & Puget Sound & Fall & last & 0.97 & 0.52 & 1.40 & -0.31 & 2.21 & -0.95 \\ 
+  J & Central Salish Sea & Summer & peak & 1.03 & 0.65 & 1.43 & -0.19 & 2.14 & 6.25 \\ 
+  J & Central Salish Sea & Summer & first & -0.74 & -0.89 & -0.59 & -1.19 & -0.32 & 1.11 \\ 
+  J & Central Salish Sea & Summer & last & 1.11 & 0.94 & 1.26 & 0.68 & 1.62 & 0.50 \\ 
    \hline
-K & Puget Sound & Fall & peak & 1.80 & 1.51 & 2.11 & 1.82 & 0.59 & 2.96 \\ 
-  K & Puget Sound & Fall & first & 1.70 & 1.14 & 2.27 & 2.73 & 1.55 & 3.90 \\ 
-  K & Puget Sound & Fall & last & 2.76 & 2.24 & 3.30 & 1.62 & 0.88 & 2.33 \\ 
-  K & Central Salish Sea & Summer & peak & 0.90 & 0.59 & 1.22 & 1.11 & 0.15 & 2.08 \\ 
-  K & Central Salish Sea & Summer & first & -0.34 & -0.61 & -0.09 & 0.87 & 0.34 & 1.62 \\ 
-  K & Central Salish Sea & Summer & last & 0.65 & 0.42 & 0.84 & -0.81 & -1.42 & -0.25 \\ 
+K & Puget Sound & Fall & peak & 1.79 & 1.50 & 2.10 & 0.88 & 2.66 & 1.72 \\ 
+  K & Puget Sound & Fall & first & 1.65 & 1.09 & 2.21 & 0.00 & 3.22 & 2.17 \\ 
+  K & Puget Sound & Fall & last & 2.67 & 2.10 & 3.25 & 1.08 & 4.15 & 1.38 \\ 
+  K & Central Salish Sea & Summer & peak & 0.97 & 0.68 & 1.26 & 0.06 & 1.84 & 1.37 \\ 
+  K & Central Salish Sea & Summer & first & -0.35 & -0.61 & -0.10 & -1.09 & 0.41 & 0.85 \\ 
+  K & Central Salish Sea & Summer & last & 0.68 & 0.45 & 0.88 & 0.12 & 1.38 & -0.83 \\ 
    \hline
-L & Puget Sound & Fall & peak & 1.09 & 0.90 & 1.27 & -0.21 & -0.73 & 0.25 \\ 
-  L & Puget Sound & Fall & first & 1.87 & 1.22 & 2.57 & 1.84 & 0.84 & 2.92 \\ 
-  L & Puget Sound & Fall & last & 1.06 & 0.32 & 1.82 & -1.76 & -2.29 & -1.23 \\ 
-  L & Central Salish Sea & Summer & peak & 0.23 & -0.02 & 0.50 & -1.05 & -1.98 & -0.09 \\ 
-  L & Central Salish Sea & Summer & first & -1.81 & -2.10 & -1.52 & 0.53 & 0.23 & 0.87 \\ 
-  L & Central Salish Sea & Summer & last & 1.07 & 0.83 & 1.30 & -0.18 & -0.39 & 0.05 \\ 
+L & Puget Sound & Fall & peak & 1.10 & 0.90 & 1.30 & 0.50 & 1.67 & -0.38 \\ 
+  L & Puget Sound & Fall & first & 1.81 & 1.17 & 2.49 & -0.30 & 3.72 & 1.66 \\ 
+  L & Puget Sound & Fall & last & 1.11 & 0.38 & 1.88 & -1.13 & 3.12 & -1.78 \\ 
+  L & Central Salish Sea & Summer & peak & 0.23 & -0.04 & 0.50 & -0.55 & 1.01 & -1.12 \\ 
+  L & Central Salish Sea & Summer & first & -1.79 & -2.08 & -1.51 & -2.62 & -0.90 & 0.54 \\ 
+  L & Central Salish Sea & Summer & last & 1.07 & 0.83 & 1.29 & 0.45 & 1.78 & -0.19 \\ 
    \hline
 \end{tabular}
 \endgroup
@@ -170,19 +170,28 @@ L & Puget Sound & Fall & peak & 1.09 & 0.90 & 1.27 & -0.21 & -0.73 & 0.25 \\
 %(d) show relationship between lime kiln, and central salish sea phenology?
 
 \begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/phentrends_lime_2panels.png} 
-\caption{\textbf{SRKW phenology at Lime Kiln State Park is shifting}, with the day of year of first sighting getting later (A) and the day of year of last sighting getting earlier (B),from 1994-2017. These trends are associated with a decrease in the amount of time SRKWs are spending near Lime Kiln (i.e., the number of days on which SRKWs were observed ("whale days") has declined since 1994 (Figs \ref{fig:mlimewdays}).}
+\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/phentrends_lime_peak.png} 
+\caption{\textbf{SRKW phenology at Lime Kiln State Park is shifting}, with the likely arrival day of year (A, defined here as the first day of year when the occurrence probability is >0.20) and peak occurrence probability day of year (B) getting later, from 1994-2017. Mean occurrance probability from May to August (the season when regularl monitoring of SRKWs occurs at Lime Kiln) is declining during this time period. These trends are associated with a decrease in the amount of time SRKWs are spending near Lime Kiln (i.e., the number of days on which SRKWs were observed ("whale days") has declined since 1994 (Fig. \ref{fig:mlimewdays}).}
 \label{fig:limetime}
+\end{figure}
+\newpage
+
+\newpage
+\begin{figure}[h!]
+\includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png} 
+\caption{\textbf{Sightings of SRKWs from the OrcaMaster Database}, from 1978-2017. }
+\label{fig:sights}
+\end{figure}
+
+\begin{figure}[h!]
+\includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png} 
+\caption{\textbf{Number of whale days from the OrcaMaster Database}, from 1978-2017. }
+\label{fig:wdays}
 \end{figure}
 
 \begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/whaledays_lime.png} 
-\caption{\textbf{Number of whale days at Lime Kiln State Park} has declined in recent years across all pods (A), J pod (B), K pod (C), and L pod (D). }
-\label{fig:limewdays}
-\end{figure}
-\begin{figure}[p]
 \includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/modwhaledays_lime.png} 
-\caption{\textbf{Number of modeled whale days at Lime Kiln State Park} has declined in recent years across all pods (A), J pod (B), K pod (C), and L pod (D). ERIC SUGGESTS OVERLAYING MODELED AND EMPIRCAL WHALE DAYS ON THE SAME FIG. ALSO ADD UNCERTAINTY TO THIS.}
+\caption{\textbf{Whale days and estimated Chinook abundance have declined at Lime Kiln State Park} since 1994. We show obsserved and modeled numbers of whale days from our Lime Kiln occupancy model, across all pods (A), J pod (B), K pod (C), and L pod (D), as well as estimated annual catch per unit effort (CPUE, catch per thousand fathom minutes), from our abundance model fit to Albion test fishery data from May though September across all Chinook. Shading shows 50 percentile uncertainty intervals.}
 \label{fig:mlimewdays}
 \end{figure}
 \newpage
@@ -194,22 +203,9 @@ L & Puget Sound & Fall & peak & 1.09 & 0.90 & 1.27 & -0.21 & -0.73 & 0.25 \\
 
 \newpage
 \begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/orcachinphenoverlapJ20052007.png}
-\caption{\textbf{SRKW phenology has shifted, in concert with shifts in Fraser River Chinook Salmon}. Altering the breakpoint between early and recent time-periods frmo 2006, as show in Fig. 3 in the main text (A) to 2007 (B) or 2005 (C) did not qualitatively alter results.  Adult Fraser River Chinook salmon (pink lines) phenology and SRKW phenology have shifted, with peak arrival dates delaying in recent (solid lines) compared with earlier (dashed lines) years. We show patterns for J-pod here, to be consistent with Fig. 4 \& 5. }
-\label{fig:KLchin}
-\end{figure}
-\newpage
-
-\begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.pdf} 
-\caption{\textbf{Sightings of SRKWs from the OrcaMaster Database}, from 1978-2017. }
-\label{fig:sights}
-\end{figure}
-
-\begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.pdf} 
-\caption{\textbf{Number of whale days from the OrcaMaster Database}, from 1978-2017. }
-\label{fig:wdays}
+\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/orcachinphenoverlapALLSR20052007.png}
+\caption{\textbf{Changing the breakpoint has little qualitative effect on patterns of shifts in SRKW phenology Fraser River Chinook}. We show patterns for all SRKW pods together (as in Figure 3 in the main text) with different breakpoints of 2005 (A), 2006 (B, as in Figure 3) and 2007 (C). SRKW phenology (blue lines) is quantified from Lime Kiln Point State Park; adult Fraser River Chinook salmon (pink lines) abundance and SRKW phenology have shifted, with peak arrival dates delaying in recent (solid lines) compared with earlier years (dashed lines).}
+\label{fig:brkpt}
 \end{figure}
 
 
