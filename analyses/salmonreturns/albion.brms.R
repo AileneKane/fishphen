@@ -6,7 +6,7 @@ options(stringsAsFactors = FALSE)
 
 
 # Set working directory: 
-setwd("~/Documents/GitHub/fishphen")
+setwd("~/GitHub/fishphen")
 #or from laptop:
 #setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
 
@@ -22,6 +22,45 @@ allyears<-unique(d$year)
 dat<-d
 season="allyear"#choices are "springsum" or "fall" or "allyear
 head(dat)
+dat<-dat[dat$year<2018,]
+# 2. Compare albion data to CTC data
+ctc<-read.csv("data/CTCEscapement.csv", header=TRUE)
+ctc<-ctc[ctc$Year<2018 & ctc$Yea>1979,]
+#select only spring and summer
+datsp<-dat[dat$calDay<213,]
+cpuesptot<-aggregate(datsp$cpue,list(datsp$year),sum, na.rm= TRUE)
+cpuetot<-aggregate(dat$cpue,list(dat$year),sum, na.rm= TRUE)
+
+colnames(cpuetot)<-c("year","cpuetot")
+colnames(cpuesptot)<-c("year","cpuesptot")
+
+cpuetot<-cpuetot[cpuetot$year<2018,]
+cpuesptot<-cpuesptot[cpuesptot$year<2018,]
+
+ctc$tot<-as.numeric(ctc$SpringSummerTotalRun)
+ctc$sp12<-ctc$SpringAge1.2ctc$total<-ctc$SpringAge1.2+ctc$SpringAge1.3+ctc$SummerAge0.3+ctc$SummerAge1.3+ctc$Harrison_Esc+ctc$LowerShuswap_Esc
+png(file="analyses/orcaphen/figures/ctcalbion.png",height=600,width=1500)
+par(mfcol=c(2,4))
+ctccols<-c(2,3,4,5)
+for(i in ctccols){
+  ctcnums<-ctc[ctc$Year>1990,]
+  ctcnums<-ctcnums[,i]
+  
+plot(ctcnums,cpuesptot$cpuesptot[as.numeric(cpuetot$year)>1990], pch=21, xlab = "Escapement estimates", ylab="Albion Test Fishery CPUE (1April-1Aug)",bg="gray", main = paste(colnames(ctc)[i]))
+mod<-lm(cpuesptot$cpuesptot[as.numeric(cpuesptot$year)>1990]~ctcnums)
+if(summary(mod)$coef[2,4]<0.1){abline(mod, lwd=2)}
+r<-cor.test(cpuesptot$cpuesptot[as.numeric(cpuesptot$year)>1990],ctcnums)
+mtext(paste("cor = ",round(r$estimate,digits=2),", p = ",round (r$p.value, digits = 4)), side = 3,adj=0, line = -2, cex=1.1)
+plot(ctcnums,cpuetot$cpuetot[as.numeric(cpuetot$year)>1990], pch=21, xlab = "Escapement estimates",  ylab="Albion Test Fishery CPUE (1April-20Oct)",bg="gray")
+mod2<-lm(cpuetot$cpuetot[as.numeric(cpuetot$year)>1990]~ctcnums)
+if(summary(mod)$coef[2,4]<0.1){abline(mod2, lwd=2)}
+r<-cor.test(cpuetot$cpuetot[as.numeric(cpuetot$year)>1990],ctcnums)
+mtext(paste("cor = ",round(r$estimate,digits=2),", p = ",round (r$p.value, digits = 4)), side = 3,adj=0, line = -2, cex=1.1)
+
+}
+
+dev.off()
+
 
 
 #now fit splines suggested analysis

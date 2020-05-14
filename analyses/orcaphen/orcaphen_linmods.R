@@ -476,7 +476,7 @@ limegests<-read.csv("analyses/output/lime_prob.occ.50.csv", header=TRUE)#also 0.
 
 
 pod = "SR"#choices are S,J.K,L
-minprob = 0.
+minprob = 0.2
 get.gests<-function(limegests,pod){
   peakoc.doy<-c()
   peakoc<-c()
@@ -485,7 +485,6 @@ get.gests<-function(limegests,pod){
   meanprobs<-c()
   prob.lc<-c()
   prob.uc<-c()
-  whaleests
   years<-c()
   for(y in unique(limegests$year)){
     yeardat<-limegests[limegests$year==y,]
@@ -639,10 +638,10 @@ dev.off()
 #Now calculate Eric's new whale days metric:
 limewhaledays.prob<-aggregate(limegests$SRprob.Estimate, by=list(limegests$year), sum)
 colnames(limewhaledays.prob)<-c("year","whdays.prob")
-limewhaledays.prob<-limewhaledays.prob[limewhaledays.prob$year>1993,]
-limewhaledays.prob<-limewhaledays.prob[limewhaledays.prob$year!=2014,]
+limewhaledays.prob$year<-unique(lime.df$year)
+limewhaledays.prob<-limewhaledays.prob[limewhaledays.prob$year>1992,]
 albchin95<-albchin95[albchin95$year<2017,]
-quartz()
+windows()
 par(mfrow=c(1,2))
 plot(albchin95$alltotal,limewhaledays.prob$whdays.prob,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="Whale days prob", cex=1.2, bty="l")
 points(albchin95$alltotal,limewhaledays.prob$whdays.prob,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
@@ -650,5 +649,23 @@ points(albchin95$alltotal,limewhaledays.prob$whdays.prob,pch=21, bg = cols[facto
 mod<-lm(limewhaledays.prob$whdays.prob~albchin95$alltotal)
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
 if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3, lwd=2)}
+
+
+#compare albion cpue to ctc escapement
+ctc<-read.csv("data/CTCEscapement.csv", header=TRUE)
+ctc<-ctc[ctc$Year<2017 & ctc$Yea>1992,]
+ctc<-ctc[ctc$Year!=2013,]
+ctccols<-c(2,3,4,5,6)
+windows()
+par(mfrow=c(1,5))
+for(i in ctccols){
+  ctcnums<-ctc[,i]
+  
+  plot(ctcnums,limewhaledays.prob$whdays.prob,type="p",pch=21, bg = cols[factor(ctc$Year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook escapement",ylab="Whale days", cex=1.2, bty="l",main = paste(colnames(ctc)[i]))
+  mod<-lm(limewhaledays.prob$whdays.prob~ctcnums)
+  if(summary(mod)$coef[2,4]<0.1){abline(mod)}
+}
+
+dev.off()
 
 
