@@ -20,8 +20,8 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="L"#options= J,K,L,SR
-region="uss"#options=upper salish sea (uss) or puget sound (ps)
+pod="J"#options= J,K,L,SR
+region="ps"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
 #Choose the credible intervals you 
@@ -245,8 +245,8 @@ cols = c("darkblue","royalblue")}
 if(region == "ps"){color = "salmon"
 cols = c("salmon","lightsalmon4")}
 
-
-
+prob<-c(0.2,0.3,0.4,0.5)
+for(p in prob){
 findmax.fn<-function(x) {
   mean(which(x==max(x)))
 }
@@ -262,7 +262,7 @@ lpmax[lpmax==min(dat$day)]<-NA
 dim(out$sims.list$psi)
 doy<-seq(from=min(dat$day),to=max(dat$day),by=1)
 #Plot by decade to see changes in psi over time
-quartz(height=6,width=12)
+#quartz(height=6,width=12)
 par(mfrow=c(1,4))
 plot(doy,out$mean$psi[1,], type= "l", ylim=c(0,1))
 for(y in 2:10){
@@ -283,8 +283,8 @@ lines(doy,out$mean$psi[y,])
 length(unique(dat$day))
 
 #plot mean psi across all years for the season
-if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"meanoccprob_assumeSRKW.pdf", sep=""),height=6,width=8)}
-if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"meanoccprob.pdf", sep=""),height=6,width=8)}
+if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p,"meanoccprob_assumeSRKW.pdf", sep=""),height=6,width=8)}
+if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p,"meanoccprob.pdf", sep=""),height=6,width=8)}
 
 
 #quartz(height=6,width=8)
@@ -378,11 +378,11 @@ slope.recent.uci<-quantile(r.recent[,2],c(uci),na.rm=T)
 
 #get first date when occurrenceis greater than some chosen probability
 findfirst.fn<-function(x) {
-  min(which(plogis(x)>prob), na.rm=TRUE)
+  min(which(plogis(x)>p), na.rm=TRUE)
 }
 #check:
 count.fn<-function(x) {
-  length(which(plogis(x)<prob))
+  length(which(plogis(x)<p))
 }
 firstlp<-array(data=NA,dim=c(out$n.sims,nyear))
 dimnames(firstlp)<-list(c(1:out$n.sims),c(sort(unique(dat$year))))
@@ -449,7 +449,7 @@ slope.first.recent.uci<-quantile(r.first.recent[,2],c(uci),na.rm=T)
 
 #get last date when detectability is greater than prob
 findlast.fn<-function(x) {
-  max(which(plogis(x)>prob), na.rm=TRUE)
+  max(which(plogis(x)>p), na.rm=TRUE)
 }
 #check:
 #count.fn<-function(x) {
@@ -571,8 +571,8 @@ df<-rbind(
 
 colnames(df)[1:7]<-c("pod","region","season","phase","slope.mn","slope.lci","slope.uci")
 cis<-uci-lci
-if(assumeSRKW==TRUE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"_ci",cis,"occprob_wrecent_assumeSRKW.csv", sep="")}
-if(assumeSRKW==FALSE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"_ci",cis,"occprob_wrecent.csv", sep="")}
+if(assumeSRKW==TRUE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"_ci",cis,"_occprobmin",p,"_wrecent_assumeSRKW.csv", sep="")}
+if(assumeSRKW==FALSE){df.name<-paste("analyses/output/",pod,"_",season,region,"_","doy",min(dat$day),"-",max(dat$day),min(dat$year),"-",max(dat$year),"_ci",cis,"_occprobmin",p,"_wrecent.csv", sep="")}
 
 write.csv(df,df.name, row.names=FALSE)
 #save years and first-last-peak estimates
@@ -580,17 +580,17 @@ phen<-cbind(pod,region,season,rownames(ann.res),round(ann.res[,"mean"]),round(an
             round(ann.first[,"mean"]),round(ann.first[,"lci"]),round(ann.first[,"uci"]),
             round(ann.last[,"mean"]),round(ann.last[,"lci"]),round(ann.last[,"uci"]),round(meanpsi, digits=2))
 colnames(phen)<-c("pod","region","season","year","peak.psi","peak.lcl","peak.ucl","first.psi","first.lcl","first.ucl","last.psi","last.lcl","last.ucl", "mean.psi")
-if(assumeSRKW==TRUE){phen.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"_assumeSRKWoccprobdoy.csv", sep="")}
-if(assumeSRKW==FALSE){phen.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"_occprobdoy.csv", sep="")}
+if(assumeSRKW==TRUE){phen.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"_occprobmin",p,"_assumeSRKWoccprobdoy.csv", sep="")}
+if(assumeSRKW==FALSE){phen.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"_occprobmin",p,"_occprobdoy.csv", sep="")}
 
 write.csv(phen,phen.name, row.names=FALSE)
 
-if(assumeSRKW==TRUE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"assumeSRKWdetprob.csv", sep="")}
-if(assumeSRKW==FALSE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"detprob.csv", sep="")}
+if(assumeSRKW==TRUE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"_occprobmin",p,"assumeSRKWdetprob.csv", sep="")}
+if(assumeSRKW==FALSE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"_occprobmin",p,"detprob.csv", sep="")}
 
 write.csv(meanp, p.name, row.names=TRUE)
-if(assumeSRKW==TRUE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"assumeSRKWdetprob.csv", sep="")}
-if(assumeSRKW==FALSE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"detprob.csv", sep="")}
+if(assumeSRKW==TRUE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"_occprobmin",p,"assumeSRKWdetprob.csv", sep="")}
+if(assumeSRKW==FALSE){p.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"_ci",cis,"_occprobmin",p,"detprob.csv", sep="")}
 
 mean.psi.allyears<-jags.out$BUGSoutput$mean$psi
 if(assumeSRKW==TRUE){psi.name<-paste("analyses/output/",pod,"_",season,region,"_doy",min(dat$day),"-",max(dat$day),"_",min(dat$year),"-",max(dat$year),"assumeSRKWmeanoccprob_all.csv", sep="")}
@@ -605,9 +605,9 @@ if(region == "uss"){color = "darkblue"}
 if(region == "ps"){color = "salmon"}
 
 # save plotted results as pdf
-if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"assumeSRKWpeakoccprob.pdf", sep=""),width=7,height=7)}
+if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p,"assumeSRKWpeakoccprob.pdf", sep=""),width=7,height=7)}
 
-if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"peakoccprob.pdf", sep=""),width=7,height=7)}
+if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p,"peakoccprob.pdf", sep=""),width=7,height=7)}
 
 ### plot estimates of peak prob of occurrence over all years
 #quartz(width=7, height=6)
@@ -648,9 +648,9 @@ if(season==2){abline(a=intercept,b=slope,col="midnightblue",lwd=2)}
 dev.off()
 #plot only recent years
 # save plotted results as pdf
-if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_","2001-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"assumeSRKWpeakoccprob.pdf", sep=""),width=7,height=7)}
+if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_","2001-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p,"assumeSRKWpeakoccprob.pdf", sep=""),width=7,height=7)}
 
-if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_","2001-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob,"peakoccprob.pdf", sep=""),width=7,height=7)}
+if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_","2001-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p,"peakoccprob.pdf", sep=""),width=7,height=7)}
 
 ### plot estimates of peak occurence over only recent years
 #quartz(width=7, height=6)
@@ -705,7 +705,7 @@ par(mfrow=c(1,1),mai=c(1,1,1,0.5))
 x=rownames(ann.first)
 y=ann.first[,"mean"]
 seasname<-c("winter","summer")
-plot(x,y,xlab="",ylab="",axes=F,main=paste("First Detection Probability >",prob,"\n",pod," Pod",seasname[as.numeric(season)],region),
+plot(x,y,xlab="",ylab="",axes=F,main=paste("First Detection Probability >",p,"\n",pod," Pod",seasname[as.numeric(season)],region),
      ylim=range(dat$day),pch=16,type="l", lwd=1.5,col=color)
 polygon(c(rev(x),x),c(rev(ann.first[,"uci"]),ann.first[,"lci"]),col=alpha(color,0.2),lty=0)
 
@@ -736,8 +736,8 @@ if(season==2){abline(a=intercept.first,b=slope.first,col="midnightblue",lwd=2)}
 dev.off()
 
 # save plotted results as pdf
-if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"last_",prob,"assumeSRKWoccprob.pdf", sep=""),width=7,height=7)}
-if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"last_",prob,"occprob.pdf", sep=""),width=7,height=7)}
+if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"last_",p,"assumeSRKWoccprob.pdf", sep=""),width=7,height=7)}
+if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"last_",p,"occprob.pdf", sep=""),width=7,height=7)}
 
 ### plot estimates of last detectability > selected prob over all years
 #quartz(width=7, height=6)
@@ -745,7 +745,7 @@ par(mfrow=c(1,1),mai=c(1,1,1,0.5))
 x=rownames(ann.last)
 y=ann.last[,"mean"]
 seasname<-c("winter","summer")
-plot(x,y,xlab="",ylab="",axes=F,main=paste("Last Occurence Probability >",prob,"\n",pod," Pod",seasname[as.numeric(season)],region),
+plot(x,y,xlab="",ylab="",axes=F,main=paste("Last Occurence Probability >",p,"\n",pod," Pod",seasname[as.numeric(season)],region),
      ylim=range(dat$day),pch=16,type="l", lwd=1.5,col=color)
 polygon(c(rev(x),x),c(rev(ann.last[,"uci"]),ann.last[,"lci"]),col=alpha(color,0.2),lty=0)
 
@@ -809,8 +809,8 @@ for (xj in 1:length(years)) {
   # plot bars
   #for seasonal values...    
   figpath<- paste("analyses/figures/",pod,sep="")
-  if(assumeSRKW==TRUE){figname<-paste("orcaphen",j,region,seasonname[as.numeric(season)],"doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob, "assumeSRKW.pdf",sep="_")}
-  if(assumeSRKW==FALSE){figname<-paste("orcaphen",j,region,seasonname[as.numeric(season)],"doy",min(dat$day),"-",max(dat$day),"_",pod,"_",prob, ".pdf",sep="_")}
+  if(assumeSRKW==TRUE){figname<-paste("orcaphen",j,region,seasonname[as.numeric(season)],"doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p, "assumeSRKW.pdf",sep="_")}
+  if(assumeSRKW==FALSE){figname<-paste("orcaphen",j,region,seasonname[as.numeric(season)],"doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p, ".pdf",sep="_")}
   
   pdf(file.path(figpath, figname), width = 9, height = 6)
   
@@ -842,4 +842,7 @@ for (xj in 1:length(years)) {
   }
   dev.off()
   }
+
+}
+
 
