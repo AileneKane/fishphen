@@ -92,8 +92,8 @@ albchinest95<-albchinest95[-which(albchinest95$year==2014),]
 
 #function to make plots and fit linear models correlating phenology of SRKW to prey
 #choose pod to use for SRKW data
-pod = "L"#choices are "SR" "J" "K" "L"
-brkyr = 2007#try 2005, 2006, 2007, 2008
+pod = "SR"#choices are "SR" "J" "K" "L"
+brkyr = 2006#try 2005, 2006, 2007, 2008
 
 
 source("analyses/orcaphen/source/makeplots_srchinoverlap.R")
@@ -167,7 +167,7 @@ points(albchin95$firstobsdate,lime.df$firstest.p,pch=16, col = "blue",cex=1.2)
 
 
 #whale days vs chinook run size
-plot(albchin95$alltotal,lime1995$nobs,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="Whale days", cex=1.2, bty="l")
+plot(albchin95$alltotal,lime1995$nobs,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance Index",ylab="Whale days", cex=1.2, bty="l")
 #points(albchin95$alltotal,lime.df$nobs,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
 
 mod<-lm(lime1995$nobs~albchin95$alltotal)
@@ -176,7 +176,7 @@ if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3, l
 
 #compare lime kiln phenology to whol region phenology from 2002-2017
 #Lastobs of SRKW vs total run size###Could add this
-plot(albchin95$alltotal,lime1995$lastest.all,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="SRKW Departure (doy)", cex=1.2, bty="l")
+plot(albchin95$alltotal,lime1995$lastest.all,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance Index",ylab="SRKW Departure (doy)", cex=1.2, bty="l")
 #points(albchin95$alltotal,lime.df$lastest.all,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
 
 mod<-lm(lime1995$lastest.all~albchin95$alltotal)
@@ -243,7 +243,7 @@ if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  
 
 
 #whale days vs chinook run size
-plot(albchin95$alltotal,lime.df$nobs,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="Whale days", cex=1.2, bty="l")
+plot(albchin95$alltotal,lime.df$nobs,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance Index",ylab="Whale days", cex=1.2, bty="l")
 #points(albchin95$alltotal,lime.df$nobs,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
 
 mod<-lm(lime.df$nobs~albchin95$alltotal)
@@ -252,7 +252,7 @@ if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3, l
 
 #compare lime kiln phenology to whol region phenology from 2002-2017
 #Lastobs of SRKW vs total run size###Could add this
-plot(albchin95$alltotal,lime.df$lastest.all,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="SRKW Departure (doy)", cex=1.2, bty="l")
+plot(albchin95$alltotal,lime.df$lastest.all,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance Index",ylab="SRKW Departure (doy)", cex=1.2, bty="l")
 #points(albchin95$alltotal,lime.df$lastest.all,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
 
 mod<-lm(lime.df$lastest.all~albchin95$alltotal)
@@ -278,7 +278,7 @@ if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
 if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
 
 #whale days vs chinook run size
-plot(albchin95$alltotal,lime.df$nobs,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="Whale days", cex=1.2, bty="l")
+plot(albchin95$alltotal,lime.df$nobs,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance Index",ylab="Whale days", cex=1.2, bty="l")
 points(albchin95$alltotal,lime.df$nobs,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
 legend("topleft",legend=c("1994","2017"), pch=21, pt.bg=c(cols[1], cols[length(cols)]), bty="n", cex=1.4)
 
@@ -288,7 +288,7 @@ if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3, l
 
 #compare lime kiln phenology to whol region phenology from 2002-2017
 #Lastobs of SRKW vs total run size###Could add this
-plot(albchin95$alltotal,lime.df$lastest.all,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance (cpue)",ylab="SRKW Departure (doy)", cex=1.2, bty="l")
+plot(albchin95$alltotal,lime.df$lastest.all,type="p",pch=21, bg = cols[factor(albchin95$year)],cex.axis=1.3,cex.lab=1.3,xlab="Chinook Abundance Index",ylab="SRKW Departure (doy)", cex=1.2, bty="l")
 points(albchin95$alltotal,lime.df$lastest.all,pch=21, bg = cols[factor(albchin95$year)],cex=1.5)
 
 mod<-lm(lime.df$lastest.all~albchin95$alltotal)
@@ -339,109 +339,6 @@ plot(lime1995$lastest,j1995$last.psi,type="p",pch=16, col = "darkblue", xlab="Li
 mod<-lm(j1995$last.psi~as.numeric(lime1995$lastest))
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, col="darkblue")}
 if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3, col = "darkblue")}
-
-
-# #Relate USS data to chinook phenology in the Fraser river
-# albchin<-read.csv("analyses/output/albionchiphen.csv", header = TRUE)
-# albchinest<-read.csv("analyses/output/albionchiphenest.csv", header = TRUE)
-# 
-# #restrict to jpod estst years that we have chinook data for
-# j1980<-j.occest[j.occest$year>1979,]
-# #also try restricting to after 2001
-# j2002b<-j.occest[j.occest$year>2001,]
-# 
-# albchin2002<-albchin[albchin$year>2002  & albchin$year<2018,]
-# albchin1980<-albchin[albchin$year<2018,]
-# 
-# albchinest2002<-albchinest[albchinest$year>2002  & albchinest$year<2018,]
-# albchinest1980<-albchinest[albchinest$year<2018,]
-# albchinest95<-albchinest[albchinest$year>1994,]
-# 
-# quartz(height=8,width=25)
-# par(mfrow=c(1,6))
-# plot(albchin1980$firstobsdate,j1980$first.psi,type="p",pch=16, col = "black",xlab="Chinook Arrival DOY",ylab="SRKW Arrival DOY (occ est)", cex=1.2, bty="l")
-# #what is the really late salmon year?
-# #albchin95$year[which(albchin95$firstobsdate==max(albchin95$firstobsdate, na.rm=TRUE))]#2007
-# mod<-lm(j1980$first.psi~albchin1980$firstobsdate)
-# if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
-# if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
-# 
-# #Peak obs of SRKW vs first
-# plot(albchin1980$firstobsdat,j1980$peak.psi,type="p",pch=16, col = "black",xlab="Chinook Arrival DOY",ylab="SRKW peak DOY (occ est)", cex=1.2, bty="l")
-# mod<-lm(j1980$peak.psi~albchin1980$firstobsdat)
-# if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
-# if(summary(mod)$coef[2,4]<.1){abline(mod, lty=3)}
-# 
-# #peak obs of SRKW vs peak run date
-# plot(albchin1980$peakobsdate,j1980$peak.psi,type="p",pch=16, col = "black",xlab="Chinook Peak DOY",ylab="SRKW peak DOY (occ est)", cex=1.2, bty="l")
-# mod<-lm(j1980$peak.psi~albchin1980$peakobsdate)
-# if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
-# if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
-# 
-# #Last obs of SRKW vs last obs of salmon
-# plot(albchin1980$lastobsdate,j1980$last.psi,type="p",pch=16, col = "black",xlab="Chinook Last Obs DOY",ylab="SRKW Departure DOY (occ est)", cex=1.2, bty="l")
-# mod<-lm(j1980$first.psi~albchin1980$lastobsdate)
-# if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
-# if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
-# 
-# #firstobs vs chinook run size
-# plot(albchin1980$alltotal,j1980$first.psi,type="p",pch=16, col = "black",xlab="Chinook Run Size",ylab="SRKW Arrival DOY (occ est)", cex=1.2, bty="l")
-# mod<-lm(j1980$first.psi~albchin1980$alltotal)
-# if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
-# if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
-# 
-# #Lastobs of SRKW vs total run size
-# plot(albchin1980$alltotal,j1980$last.psi,type="p",pch=16, col = "black",xlab="Chinook Run Size",ylab="SRKW Departure (occ est)", cex=1.2, bty="l")
-# mod<-lm(j1980$last.psi~albchin1980$alltotal)
-# if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1)}
-# if(summary(mod)$coef[2,4]<.15){abline(mod, lty=3)}
-# 
-# # 
-# # #plot time series of peak adjacent to each other
-# # quartz()
-# # plot(lime.df$year,lime.df$firstest.all, type="l", bty="u", lwd=2, ylab="Day of year (orcas)", xlab="Year", ylim=c(120,180))
-# # par(new = TRUE)
-# # plot(albchin95$year,albchin95$firstobsdate, type="l", bty="u",col="salmon", lwd=2, lty=2, yaxt="n", ylab="", xlab="", xaxt="n")
-# # #plot curves of whales vs salmon curves
-# # axis(side = 4)
-# # 
-# # ##Compare the above time-series to time series of estimates of chinook from spline models
-# # quartz()
-# # plot(lime.df$year,lime.df$firstest.all, type="l", bty="u", lwd=2, ylab="Day of year (orcas)", xlab="Year", ylim=c(120,180))
-# # par(new = TRUE)
-# # plot(albchinest95$year,albchinest95$firstobsdate, type="l", bty="u",col="salmon", lwd=2, lty=2, yaxt="n", ylab="", xlab="", xaxt="n")
-# # #plot curves of whales vs salmon curves
-# # axis(side = 4)
-# # lines(albchinest95$year,albchinest95$peakobsdate-50)
-# # 
-# # # 
-# # #Try with standardized dates
-# # lime.df$firstest.all.stand<-lime.df$firstest.all-mean(lime.df$firstest.all)
-# albchinest95$peakobsdate.stand<-albchinest95$peakobsdate-mean(albchinest95$peakobsdate)
-# albchinest95$firstobsdate.stand<-albchinest95$firstobsdate-mean(albchinest95$firstobsdate)
-# albchinest95$peakobsdate.sp.stand<-albchinest95$peakobsdate.sp-mean(albchinest95$peakobsdate.sp)
-# albchinest95$peakobsdate.fa.stand<-albchinest95$peakobsdate.fa-mean(albchinest95$peakobsdate.fa)
-# 
-# lime.df$firstest.all.z<-(lime.df$firstest.all-mean(lime.df$firstest.all))/(sd(lime.df$firstest.all))
-# albchinest95$peakobsdate.z<-(albchinest95$peakobsdate-mean(albchinest95$peakobsdate))/(sd(albchinest95$peakobsdate))
-# albchinest95$firstobsdate.z<-(albchinest95$firstobsdate-mean(albchinest95$firstobsdate))/(sd(albchinest95$firstobsdate))
-# albchinest95$peakobsdate.sp.z<-(albchinest95$peakobsdate.sp-mean(albchinest95$peakobsdate.sp))/(sd(albchinest95$peakobsdate.sp))
-# albchinest95$peakobsdate.fa.z<-(albchinest95$peakobsdate.fa-mean(albchinest95$peakobsdate.fa))/(sd(albchinest95$peakobsdate.fa))
-# 
-# quartz()
-# plot(lime.df$year,lime.df$firstest.all.stand, type="l", bty="u", lwd=2, ylab="Day of year", xlab="Year",ylim=c(-25,16))
-# lines(albchinest95$year,albchinest95$peakobsdate.sp.stand)
-# 
-# quartz()
-# plot(lime.df$year,lime.df$firstest.all.stand, type="l", bty="u", lwd=2, ylab="Day of year (standardized)", xlab="Year",ylim=c(-15,66))
-# albchin95$firstobsdate.stand<-albchin95$firstobsdate-mean(albchin95$firstobsdate)
-# abline(h=0, lty=3)
-# lines(albchin95$year,albchin95$firstobsdate.stand,col="salmon", lwd=2, lty=2)
-# #add cpue
-# par(new = TRUE)
-# plot(albchin95$year,albchin95$alltotal, type="l", bty="u",col="salmon", lwd=1, yaxt="n", ylab="", xlab="", xaxt="n")
-# #plot curves of whales vs salmon curves
-# axis(side = 4)
 
 
 #Plot curves of salmon abundance vs day vs mean whale day
