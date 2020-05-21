@@ -101,7 +101,7 @@ allsumobs<-aggregate(limewdaysabs$AllSRpres,by=list(limewdaysabs$year),sum)
 colnames(jsumobs)<-colnames(ksumobs)<-colnames(lsumobs)<-colnames(allsumobs)<-c("year","wdays")
 png(filename="analyses/orcaphen/figures/modwhaledays_lime.png",height=480,width=960)
 #quartz(height=6,width=12)
-par(mfrow=c(2,4))
+par(mfrow=c(2,3))
 plot(as.numeric(yearsum$year),yearsum$wdays,ylab= "Year", xlab= "Number of Modeled Whale Days", bty="l", type="l", col=alpha("darkblue",0.8),lwd=2,main = "All Pods")
 lines(as.numeric(allsumobs$year),allsumobs$wdays, type="l", col=alpha("darkblue",0.8),, lty=2,lwd=2)
 polygon(c(rev(as.numeric(yearsum$year)),as.numeric(yearsum$year)), c(rev(yearsum.uc$wdays), yearsum.lc$wdays), col = alpha("darkblue", 0.2), border = NA)
@@ -121,13 +121,17 @@ polygon(c(rev(as.numeric(ksum$year)),as.numeric(ksum$year)), c(rev(ksum.uc$wdays
 mtext("C)", side = 3, line = 1, adj=0)
 
 plot(as.numeric(lsum$year),lsum$wdays,ylab= "Year", xlab= "Number of Modeled Whale Days", bty="l", type="l", col="darkblue",lwd=2, main = "L Pod")
-lines(as.numeric(lsumobs$year),lsumobs$wdays, type="l", col=alpha("darkblue",0.8),, lty=2,lwd=2)
+lines(as.numeric(lsumobs$year),lsumobs$wdays, type="l", col=alpha("darkblue",0.8), lty=2,lwd=2)
 polygon(c(rev(as.numeric(lsum$year)),as.numeric(lsum$year)), c(rev(lsum.uc$wdays), lsum.lc$wdays), col = alpha("darkblue", 0.2), border = NA)
 
 mtext("D)", side = 3, line = 1, adj=0)
 
 
-#Add modeled salmon cpue
+#Add modeled salmon cpue and data cpue
+chindat<-read.csv("analyses/output/albionchiphen_allyear.csv", header = TRUE)
+chindat<-chindat[chindat$year>1993,]
+chindat<-chindat[chindat$year<2018,]
+
 chinab<-read.csv("analyses/output/albiongamests.csv", header = TRUE)
 #restrict days
 chinab<-chinab[chinab$doy<230,]
@@ -137,7 +141,9 @@ chinab<-chinab[chinab$year<2018,]
 
 chinsum<-aggregate(chinab$cpue.est,by=list(chinab$year),sum)
 colnames(chinsum)<-c("year","totalcpue")
-plot(as.numeric(chinsum$year),chinsum$totalcpue,xlab= "Year", ylab= "Total Estimated Chinook Abundance", bty="l", lty=2,type="l", col="salmon",lwd=2)
+plot(as.numeric(chindat$year),chindat$alltotal,ylim=c(0,360),xlab= "Year", ylab= "Total Estimated Chinook Abundance", bty="l", lty=1,type="l", col="salmon",lwd=2)
+lines(as.numeric(chinsum$year),chinsum$totalcpue,lty=2, col="salmon",lwd=2)
+
 mtext("E)", side = 3, line = 1, adj=0)
 
 dev.off()
