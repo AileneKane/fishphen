@@ -23,6 +23,7 @@ dat<-d
 season="allyear"#choices are "springsum" or "fall" or "allyear
 head(dat)
 dat<-dat[dat$year<2018,]
+sumalb<-tapply(dat$cpue,list(dat$year),sum)
 # 2. Compare albion data to CTC data
 ctc<-read.csv("data/CTCEscapement.csv", header=TRUE)
 ctc<-ctc[ctc$Year<2018 & ctc$Yea>1979,]
@@ -39,19 +40,18 @@ cpuesptot<-cpuesptot[cpuesptot$year<2018,]
 
 ctc$tot<-as.numeric(ctc$SpringSummerTotalRun)
 ctc$sp12<-ctc$SpringAge1.2ctc$total<-ctc$SpringAge1.2+ctc$SpringAge1.3+ctc$SummerAge0.3+ctc$SummerAge1.3+ctc$Harrison_Esc+ctc$LowerShuswap_Esc
-png(file="analyses/orcaphen/figures/ctcalbion.png",height=600,width=1500)
-par(mfcol=c(2,4))
+png(file="analyses/orcaphen/figures/ctcalbion.png",height=1500,width=800)
+par(mfrow=c(4,2))
 ctccols<-c(2,3,4,5)
 for(i in ctccols){
   ctcnums<-ctc[ctc$Year>1990,]
   ctcnums<-ctcnums[,i]
-  
-plot(ctcnums,cpuesptot$cpuesptot[as.numeric(cpuetot$year)>1990], pch=21, xlab = "Escapement estimates", ylab="Albion Test Fishery CPUE (1April-1Aug)",bg="gray", main = paste(colnames(ctc)[i]))
+  plot(ctcnums,cpuesptot$cpuesptot[as.numeric(cpuetot$year)>1990], pch=16, xlab = "Escapement estimates", ylab="Albion Test Fishery (CPUE, 1April-1Aug)",col="gray",bty="l", main = paste(colnames(ctc)[i]), cex.lab=1.5, cex.axis=1.5,cex=1.5, cex.main=1.5)
 mod<-lm(cpuesptot$cpuesptot[as.numeric(cpuesptot$year)>1990]~ctcnums)
 if(summary(mod)$coef[2,4]<0.1){abline(mod, lwd=2)}
 r<-cor.test(cpuesptot$cpuesptot[as.numeric(cpuesptot$year)>1990],ctcnums)
 mtext(paste("cor = ",round(r$estimate,digits=2),", p = ",round (r$p.value, digits = 4)), side = 3,adj=0, line = -2, cex=1.1)
-plot(ctcnums,cpuetot$cpuetot[as.numeric(cpuetot$year)>1990], pch=21, xlab = "Escapement estimates",  ylab="Albion Test Fishery CPUE (1April-20Oct)",bg="gray")
+plot(ctcnums,cpuetot$cpuetot[as.numeric(cpuetot$year)>1990], pch=16, xlab = "Escapement estimates (#s)",  ylab="Albion Test Fishery (CPUE, 1April-20Oct)",col="gray",bty="l", main = paste(colnames(ctc)[i]), cex.lab=1.5, cex.axis=1.5,cex=1.5, cex.main=1.5)
 mod2<-lm(cpuetot$cpuetot[as.numeric(cpuetot$year)>1990]~ctcnums)
 if(summary(mod)$coef[2,4]<0.1){abline(mod2, lwd=2)}
 r<-cor.test(cpuetot$cpuetot[as.numeric(cpuetot$year)>1990],ctcnums)
