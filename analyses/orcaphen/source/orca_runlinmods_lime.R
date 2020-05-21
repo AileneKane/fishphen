@@ -150,7 +150,7 @@ for(p in 1:length(podcols)){
 
 lime.df <- cbind(lime.df,pods.all.p,years.all.p,nobs.all.p,firstest.all.p,lastest.all.p,mean.all.p)
 
-#windows()
+if(substr(getwd(),8,21)=="aileneettinger"){quartz()} else{windows()}
 plot(lime.df$year[!lime.df$year==1990],lime.df$nobs[!lime.df$year==1990],type="p",pch=21, bg = "darkblue",xlab="Year",ylab="Number of days", cex=1.2, bty="l", ylim=c(1,70), main = "Whale Days")
 lime.df$nobs<-as.numeric(lime.df$nobs)
 lime.df$year<-as.numeric(lime.df$year)

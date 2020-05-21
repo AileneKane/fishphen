@@ -1,5 +1,5 @@
 
-windows()
+if(substr(getwd(),8,21)=="aileneettinger"){quartz()} else{windows()}
  par(mai=c(1,1,1,1.5))
  #start with uss, all SRKWs
  plot(rownames(wdays),wdays$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="All SRKW sightings, 1978-2017", ylim=c(0,300))
@@ -26,7 +26,7 @@ windows()
  mtext(paste((round(m.ps$coef[2], digits=2)*10),"days/dec"), line=-20.5, adj=1.3,cex=0.9)
  mtext(paste((round(m.oc$coef[2], digits=2)*10),"days/dec"), line=-23.5, adj=1.3,cex=0.9)
 
- windows()
+ if(substr(getwd(),8,21)=="aileneettinger"){quartz()} else{windows()}
  par(mfrow=c(3,1))#par(mfrow)
  #J pod
  plot(rownames(wdays.J),wdays.J$uss,type="l",xlab="Year",ylab="Number of whale days", lwd=2,bty="l", main="J sightings, 1978-2017", ylim=c(0,200), col="blue")
@@ -52,7 +52,7 @@ windows()
 podcols<-c("Jpres", "Kpres", "Lpres", "AllSRpres")
 pods<-c("J","K","L","SRs")
 for(p in 1:length(podcols)){
-  windows(width=16,height=6)
+  if(substr(getwd(),8,21)=="aileneettinger"){quartz()} else{windows()}
   par(omi=c(.5,2,.5,.5), mfrow=c(1,3))
   colnum<-which(colnames(orcasum.days)==podcols[p])
   regions=unique(orcasum.days$region)
