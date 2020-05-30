@@ -191,7 +191,7 @@ y <- dat$ndet
 
 # Simulation parameters
 #ni=15000; nc=2; nb=0; nt=10
-ni=15000; nc=2; nb=5000; nt=1
+ni=20000; nc=4; nb=10000; nt=10
 # List input data
 jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots","n","X","Z","nc", "nb", "ni", "nt","zst","y")
 
@@ -214,6 +214,13 @@ jags.out<-jags.parallel(jags.data,f.inits,parameters,"analyses/splinesSiteOccS4p
 #Look at psi
 out<-jags.out$BUGSoutput
 jags.out$BUGSoutput$mean$psi#probability of presence (daily, across 40 years)
+
+#Look at Rhat
+range(out$summary[,8])
+length(which(out$summary[,8]>1.1))/length(out$summary[,8])
+rownames(out$summary[which(out$summary[,8]>1.1),])
+  #look at problem psis & problem lps
+
 dim(jags.out$BUGSoutput$mean$psi)
 meanpsi<-rowMeans(jags.out$BUGSoutput$mean$psi)#meanannual mean prob occurrence
 names(meanpsi)<-seq(min(dat$year),max(dat$year), by=1)

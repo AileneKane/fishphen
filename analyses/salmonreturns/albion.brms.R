@@ -69,18 +69,19 @@ dat$effort<-as.numeric(dat$effort)
 dat$year2<-as.factor(dat$year)
 dat$calDay<-as.numeric(dat$calDay)
 dat$catch<-as.numeric(dat$catch)
-dat$logcpue<-log(dat$cpue)
-m1 <- brm(cpue ~ s(calDay) + (1|year2),
+m2 <- brm(cpue ~ s(calDay) + (calday|year2),
           data=dat,
-          family =gaussian(), cores = 4,
+          family =lognormal(), cores = 4,
           iter = 4000, warmup = 1000, thin = 10,
           control = list(adapt_delta = 0.99))
 
-summary(m1)
+summary(m2)
 windows()
 #add a very small number to cpue to use lognormal distribution
 
-dat$cpue<-dat$cpue+.0000000000001
+dat$cpue1<-dat$cpue+1
+dat$logcpue<-log(dat$cpue1)
+
 m2log <- brm(cpue~ s(calDay) + (calDay|year2),
           data=dat,
           family =lognormal(), cores = 4,
@@ -88,11 +89,10 @@ m2log <- brm(cpue~ s(calDay) + (calDay|year2),
           control = list(adapt_delta = 0.99, max_treedepth=15))
 
 
-
 #Look at model results          
 windows()
-conditional_effects(m1, surface = TRUE)
-
+conditional_effects(m2log, surface = TRUE)
+summary(m2log)
 
 windows()
 conditional_effects(m2, surface = TRUE)
