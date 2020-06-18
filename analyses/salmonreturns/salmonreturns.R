@@ -1,15 +1,6 @@
 #Salmon return timing phenology using WDFW data
 #Started by Ailene on March 12, 2019
-# To do for orca paper:
-# 1. Choose streams to include in paper. Choose streams that 
-### a) have high total run sizes for wild coho, chum, chinook; 
-### b) are close to puget sound
-#2. See if there are multiple runs in these focal streams by looking at day of year when peak occurs
-#3. Extract first, last, peak and median dates, then look at trends by fitting linear models
-# Also:
-# 1. Check that correlations on map are correct- some seem to have significant lines when they ar not super strong relationships...  
-# 2. Plot curves of each stream/year as a separate line on same figure
-# 3. Using curves, decide on different seasons to use per stream/hatchery
+
 #housekeeping
 
 rm(list=ls()) 

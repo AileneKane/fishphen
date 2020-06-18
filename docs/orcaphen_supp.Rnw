@@ -51,7 +51,7 @@
 \title{Supplemental materials for `Shifting phenology of an endangered apex predator tracks changes in its favored prey'}
 \date{\today}
 \maketitle
-\author{A.K. Ettinger, C. Harvey, B. Hanson, C. Emmons, J. Olson, E. Ward,J. Samhouri}
+\author{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand{\thetable}{S\arabic{table}}
 \renewcommand{\thefigure}{S\arabic{figure}}
@@ -59,33 +59,51 @@
 \emph{Southern resident killer whale presence and their prey at Lime Kiln Point State}
 \begin{enumerate}
 \item \underline{Southern resident killer whale presence model}
-We fit separate a hierarchical model to each pod (J, K, L), as well as a hierarchical model to all SRKWs pooled together. We estimated the occurrence probability (Pr(z=1)), as a smooth function of day of year, s(day), fitted via a thin plate regresion spline basis using the programming language \texttt{Stan} \citep{Carpenter:2016aa} (\texttt{www.mc-stan.org}), accessed via the \texttt{brms}\citep{brms2017,brms2018} package in R \citep{Rcore2019}, version 3.6.2. We assessed model performance through Rhat (all were close to 1) and high neff, as well as visual consideration of chain convergence and posteriors \citep{BDA}.
-\par We included years as groups in our hierarchical model, and allowed the smoothed effect of day of year on presence to vary across year: 
-\\-Add equation
-%\begin{align*}
-%z_{i} \sim Bernoulli(\psi_{i})
-%\end{align*}
-%\begin{align*}
-%logit (\psi_{i}) = (\beta_0_{year[i]} + s(day)_{year[i]}
-%\end{align*}
+We fit separate a hierarchical model to each pod (J, K, L), as well as a hierarchical model to all SRKWs pooled together. We estimated the presence, or occurrence probability (Pr(y=1)), as a smooth function of day of year, \emph{s(day)}. We assumed \emph{y} to be a Bernoulli random variable dependent on day of year (as a smooth function, using thin plate regression spline basis), with a year-specific shape as well as a year-specific intercept (i.e., random effect of year):
+
+
+\begin{align*}
+Pr(y_i = 1) &= logit^{-1} (\alpha_{year[i]} + s(day)_{year[i]}),
+\end{align*}
+
+\begin{align*}
+\alpha_{year} & \sim N(\mu_{\alpha}, \sigma_{\alpha}) \\
+\end{align*}
+
+
 \item \underline{Fraser River Chinook salmon abundance index model}
 
-This model can be described by the following equations:
-\\-Add equation
-\\where CPUEi is catch per unit effort on dayi, mu(dayi) is the overall mean phenology function predicted by day of year across all years, v(day) is the year's deviation from that mean function (also assumed to be a smooth function of time) and XXi is an error process, assumed to be normally distributed. Mu(day) and v(day) were parameterized with smoothing splines and fit \texttt{Stan} \citep{Carpenter:2016aa} (\texttt{www.mc-stan.org}), accessed via the \texttt{brms}\citep{brms2017,brms2018} package in R \citep{Rcore2019}, version 3.6.2. We ran four chains simultaneously, each with 4 000 sampling iterations (1 000 of which were used for warm-up). We assessed model performance through Rhat (all were close to 1) and high neff, as well as visual consideration of chain convergence and posteriors \citep{BDA}.
-\item \underline{Southern resident killer whales in the Central Salish Sea and Puget Sound Proper}
-\par We quantified pod-specific phenology for J, K, and L pods using occupancy models, which can estimate jointly species presence and detection probability (p, the probability of detecting at least one individual present at a site) by distinguishing true presence or absence, z (a latent, unobservable state), from observed presence. Occupancy models are composed of a state sub-model, which is the model for the ecological process of true presence or absence, and an observation sub-model, which links the observations (i.e., the number of sightings of the pod per day per site) to the state model. Our hierarchical occupancy model can be described by the following equations:\\
- \\-Add equation
-\\
-Observation model: Y(area,yr,day)~ Binomial (Tyr,day,area,Zyr,day*Parea,yr)\\
-State model: zyr,day ~ Bernoulli(Psiyr,day)\\
-                                                                                                                                             
-in which occupancy probability (Psiyr,day) was modeled as a semi-parametric, smooth function of day of year (‘day’), using flexible thin-plate spline regression modelling, and year (‘yr’) as a level (Strebel et al., 2014). The number of sightings in which the pod was detected (yarea,yr,day) among the total number of sightings made in the area, year, and day (Tyr,day,area) was modeled as a binomial random variable. The number of successful sightings (y) depended on the product of the state of occurrence (zyr,day) and of detection probability (parea,yr). We assumed zyr,day to be a Bernoulli random variable for which 0 signifies absence and 1 is presence. We modeled detection probability (parea,yr) as a year- and area-specific probability between 0 and 1.
- 
-\par Pod-specific occupancy models were fit using \texttt{JAGS}, a program for analysis of Bayesian hierarchical models with Markov Chain Monte Carlo simulation (Plummer, 2019), accessed via the \texttt{R2jags} package (Su and Yajima, 2015) in R \citep{Rcore2019}, version 3.6.2. We ran four chains simultaneously, each with 12 000 sampling iterations (4 000 of which were used for burn-in). We assessed model performance through Rhat (all were close to 1) and high neff, as well as visual consideration of chain convergence and posteriors \citep{BDA}. We fit separate occupancy models for each region (i.e., Central Salish Sea and Puget Sound proper) and season (spring/summer vs. fall/winter, since seasonal use varies by region) for each pod, and extracted estimates of annual arrival, departure, and peak occupancy dates with each model. We defined the arrival date as the earliest day within the season when occupancy probability exceeded 0.5; departure date was the latest day within the season when detection probability exceeded 0.5. Using a threshold probability between 0.2 and 0.5 did not qualitatively alter observed trends, Table S4.)
- 
+We modeled an index of Fraser River Chinook salmmon abundance (\emph{y}, the log of the daily catch per unit effort, CPUE, to which we added one prior to logging to avoid values of zero) as a smooth function of day of year (using thin plate regression spline basis), with a year-specific shape as well as a year-specific intercept (i.e., random effect of year):
+
+
+\begin{align*}
+y_1 &= \alpha_{year[i]} + s(day)_{year[i]}
+\end{align*}
+
+\begin{align*}
+\alpha_{year} & \sim N(\mu_{\alpha}, \sigma_{\alpha}) \\
+\end{align*}
+
 \end{enumerate}
 
+The above models for killer whales ad Chinook were fitted via a thin plate regresion spline basis using the programming language \texttt{Stan} \citep{Carpenter:2016aa} (\texttt{www.mc-stan.org}), accessed via the \texttt{brms}\citep{brms2017,brms2018} package in R \citep{Rcore2019}, version 3.6.2. For each model fit, we ran four chains simultaneously, each with 4 000 sampling iterations (1 000 of which were used for warm-up). Code for the above models is in Appendix 1. We assessed model performance through Rhat (all were close to 1) and high neff, as well as visual consideration of chain convergence and posteriors \citep{BDA}.
+\emph{Southern resident killer whales in the Central Salish Sea and Puget Sound Proper}
+\par We quantified pod-specific phenology for J, K, and L pods using occupancy models, which can estimate jointly species presence and detection probability (p, the probability of detecting at least one individual present at a site) by distinguishing true presence or absence, \emph{z} (a latent, unobservable state), from observed presence. Occupancy models are composed of a state sub-model, which is the model for the ecological process of true presence or absence, and an observation sub-model, which links the observations (i.e., the number of sightings of the pod per day per site) to the state model. We modelled occupancy probability ($\psi_{yr,day}$) was modeled as a semi-parametric, smooth function of day of year (\emph{`day'}), using flexible thin-plate spline regression modelling, and year (\emph{`yr'}) as a level \citep{strebel2014}. Thus, the sub-models are:
+\begin{enumerate}
+
+\item \underline{State model}, in which we assumed $Z_{yr,day}$ to be a Bernoulli random variable for which 0 signifies absence and 1 is presence:
+ \begin{align*}
+Z_{year,day} \sim Bernoulli (\psi_{yr,day})
+\end{align*}
+  \item Observation model, in which the number of successful sightings ($Y$) in a particular fishing area in a particular day on a particular year, was modeled as a binomial random variable composed of the total number of sightings made in the areas, year, and day ($T_{yr,day,area}$), and the product of the state of occurrence ($Z_{yr,day}$) and detection probability ($P$). We modeled detection probability as a year- and area-specific probability between 0 and 1 ($P_{area,yr}$):
+\begin{align*}
+Y(area,yr,day) \sim Binomial (T_{year, day,area},Z_{year,day}*P_{area,year})
+\end{align*}
+                                                                             \end{enumerate}                                                       
+
+ 
+\par We fit separate occupancy models for each region (i.e., Central Salish Sea and Puget Sound proper) and season (spring/summer vs. fall/winter, since seasonal use varies by region) for each pod, and extracted estimates of annual arrival, departure, and peak occupancy dates with each model. We defined the arrival date as the earliest day within the season when occupancy probability exceeded 0.5; departure date was the latest day within the season when detection probability exceeded 0.5. Using a threshold probability between 0.2 and 0.5 did not qualitatively alter observed trends.) Pod-specific occupancy models were fit using \texttt{JAGS}, a program for analysis of Bayesian hierarchical models with Markov Chain Monte Carlo simulation (Plummer, 2019), accessed via the \texttt{R2jags} package (Su and Yajima, 2015) in R \citep{Rcore2019}, version 3.6.2. We ran four chains simultaneously, each with 12 000 sampling iterations (4 000 of which were used for burn-in). We assessed model performance through Rhat, which were close to 1, and high neff, as well as visual consideration of chain convergence and posteriors \citep{BDA}. Model code can be found in Appendix 2.
+ 
 \section* {Comparing observed and modeled estimates of `whale days' at Lime Kiln Point State Park, Washington, USA}
 \par We calculated annual total whale days quantified from the data directly (i.e., a whale-day was counted as a day on which Southern Resident Killer Whales (SRKWs) were observed) and quantified from model-estimated probabilities of whale presence (i.e., each days probability of whale presence was summed across the year). Model-estimated presence probabilities were obtained from occupancy models, which estimated daily and annual probabilities of presence of SRKWs at Lime Kiln Point State Park. The two calculations both reveal declines in SRKW presence in recent years, across all three pods (Fig. \ref{fig:mlimewdays}). This consistently collected dataset also suggests that SRKWs have shifted the timing of their activity in the area (Fig.\ref{fig:limetime}.
 \section* {Effects of changes in effort on estimated phenological change}
@@ -95,10 +113,6 @@ With increasing public awareness of SRKWs near urban areas (e.g. the Salish Sea)
 
 \bibliography{..//refs/noaalib.bib}
 
-\par \underline{Things to add}:
-
-\par Table S4. Add table demonstrating that using a threshold probability lower than 0.5 did not qualitatively alter results (i.e., trends in first and last are consistent)
-
 %\par Coincident with these phenological trends, the number of whale days has also changed across the time-series (Fig. SX). Since 2001, the number of whale days has decreased in the Central Salish Sea, across all pods, whereas in Puget Sound proper the number of whale days did not show a consistent trend (Fig. SX). From 1978 to 2017, the number of whale days increased in both regions (and for all pods). 
 
 
@@ -106,7 +120,7 @@ With increasing public awareness of SRKWs near urban areas (e.g. the Salish Sea)
 <<label=salmontab,echo=FALSE,results=tex>>=
 library(xtable)
 salmontab<-read.csv("../analyses/output/salmonlatlon.csv",header=TRUE)
-salmontab$region<-"Puget Sound Proper"  
+salmontab$region<-c("Puget Sound Proper",rep("",times = 12))  
 salmontab$origin<-"hatchery"
 salmontab$origin[salmontab$ORIGIN_TYPE_Code=="W"]<-"wild"
 salmontab$species<-"chum"
@@ -140,22 +154,33 @@ pstrendstab<-pstrendstab[-1,]
 phenophase<-c("first","","peak","","last","")
 #parameter<-c("$\\alpha_{group}$","$\\beta_{year}$","$\\alpha_{group}$","$\\beta_{year}$","$\\alpha_{group}$","$\\beta_{year}$") 
 parameter<-c("intercept","year","intercept","year","intercept","year") 
-
 pstrendstab<-cbind(phenophase,parameter,pstrendstab)
 
+albion<-read.csv("../analyses/output/albionreturntrends_linmodyrs.csv",header=TRUE)
+albion<-albion[,4:9]
+colnames(albion)<-c("phen","mean","25%", "75%","2.5%","97.5%")
+alb<-rbind(albion[1:2,2:6],albion[5:6,2:6],albion[3:4,2:6])
 
-salmtrends.table<-xtable(pstrendstab,caption = "\\textbf{Salmon phenology has shifted earlier in Puget Sound Proper}, from 1997-2017, as quantified in the 13 runs included in our hierarchical model across coho, chum, and Chinook adult return data (see Table S1). ADD FRASER RIVER CHINOOK TRENDS TO THIS TABLE",#add fraser river chinook 1994-2017, as quantified in the Albion Test Fishery dataset
+phenophase<-c("first","","peak","","last","")
+parameter<-c("intercept","year","intercept","year","intercept","year") 
+
+alb<-cbind(phenophase,parameter,alb)
+alltab<-rbind(alb,pstrendstab)
+region<-c("Central Salish Sea","","","","","","Puget Sound Proper","","","","","")
+alltab<-cbind(region,alltab)
+salmtrends.table<-xtable(alltab,caption = "\\textbf{Salmon phenology has shifted} later in part of the Central Salish Sea (based on spring/summer Chinook in the Albion Test Fishery data, from 1995-2017) and earlier in Puget Sound Proper (based on 13 runs across coho, chum, and Chinook adult in Table S1, from 1997-2017).",
             label="tab:salmtren",align=c(
               "|p{0.01\\textwidth}", 
-              "|p{0.12\\textwidth}",
+              "|p{0.18\\textwidth}",
+              "|p{0.11\\textwidth}",
               "p{0.1\\textwidth}",
-              "p{0.05\\textwidth}",
+              "p{0.08\\textwidth}",
               "p{0.08\\textwidth}",
               "p{0.08\\textwidth}",
               "p{0.08\\textwidth}",
                "p{0.08\\textwidth}|"))
 
-print(salmtrends.table, include.rownames=FALSE, hline.after = c(-1,0,2,4,6),caption.placement="top",size="\\footnotesize")#,sanitize.text.function = identity
+print(salmtrends.table, include.rownames=FALSE, hline.after = c(-1,0,6,12),caption.placement="top",size="\\footnotesize")#,sanitize.text.function = identity
 @
 
 <<label=occmodsums,echo=FALSE,results=tex>>=
@@ -165,7 +190,7 @@ for (i in 1:length(modsumfiles)){
   modsum<-read.csv(paste("../analyses/output/",modsumfiles[i],sep=""), header=TRUE)
   modsumold<-modsum[1:3,]
   modsumnew<-modsum[4:6,]
-  modsumwide<-cbind(modsumold,modsumnew[,5:7])
+  modsumwide<-cbind(modsumold,modsumnew[,5:9])
   allsums<-rbind(allsums,modsumwide)
 }
 allsums$Region[allsums$region=="ps"]<-"Puget Sound"
@@ -175,31 +200,32 @@ allsums$Season[allsums$season=="2"]<-"Summer"
 #allsums$Season[allsums$season=="3"]<-"Full Year"
 #allsums<-allsums[-which(allsums$season=="3"),]
 
-colnames(allsums)[8:10]<-c("slope.recent","slope.lci.recent","slope.uci.recent")
+colnames(allsums)[10:14]<-c("slope.recent","slope.lci.recent","slope.uci.recent","X2.5.recent","X97.5.recent")
 
-#allsums$slope.all<-paste(allsums$slope.mn," (",allsums$slope.lci," - ",allsums$slope.uci,")", sep="")
-#allsums$slope.all.recent<-paste(allsums$slope.recent," (",allsums$slope.lci.recent," - ",allsums$slope.uci.recent,")", sep="")
-
-modsumtab<-subset(allsums, select=c(pod,Region,Season,phase,slope.mn,slope.lci,slope.uci,slope.recent,slope.lci.recent,slope.uci.recent))
-colnames(modsumtab)[1:10]<-c("Pod","Region","Season","Phase","mean","25%", "75%","mean","25%", "75%")
+modsumtab<-subset(allsums, select=c(pod,Region,Season,phase,slope.mn,slope.lci,slope.uci,X2.5.,X97.5.,slope.recent,slope.lci.recent,slope.uci.recent,X2.5.recent,X97.5.recent))
+colnames(modsumtab)<-c("Pod","Region","Season","Phase","mean","25%", "75%","2.5%","97.5%","mean","25%", "75%","2.5%","97.5%")
 addtorow <- list()
   addtorow$pos <- list(-1)
-  addtorow$command <- c("\\hline & & & & \\multicolumn{3}{c |}{1978-2017 trend} &\\multicolumn{3}{c |}{2002-2017 trend}\\\\\n ")
+  addtorow$command <- c("\\hline & & & & \\multicolumn{5}{c |}{1978-2017 trend} &\\multicolumn{5}{c |}{2002-2017 trend}\\\\\n ")
 
 #modsumtab$region[modsumtab$region=="ps"]<-"puget"
 #modsumtab$region[modsumtab$region=="uss"]<-"central"
 
-modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper and the central Salish Sea, from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent and 95 percent uncertainty intervals are shown.NEED TO ADD 95 perceiles!",
+modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper and the central Salish Sea, from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent and 95 percent uncertainty intervals are shown.",
             label="tab:modsum",align=c(
               "|p{0.01\\textwidth}", 
-              "|p{0.04\\textwidth}",
-               "|p{0.20\\textwidth}",
-               "|p{0.1\\textwidth}",
-               "|p{0.08\\textwidth}",
+              "|p{0.02\\textwidth}",
+               "|p{0.15\\textwidth}",
+               "|p{0.06\\textwidth}",
+               "|p{0.04\\textwidth}",
               "|p{0.05\\textwidth}",
               "p{0.05\\textwidth}", 
               "p{0.05\\textwidth}",
+              "p{0.05\\textwidth}", 
+              "p{0.05\\textwidth}",
               "|p{0.05\\textwidth}",
+              "p{0.05\\textwidth}",
+              "p{0.05\\textwidth}", 
               "p{0.05\\textwidth}",
                "p{0.05\\textwidth}|"))
 
@@ -269,7 +295,7 @@ print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.p
 
 \begin{figure}[p]
 \includegraphics[width=0.8\textwidth]{../analyses/figures/proboccK_4panels.png} 
-\caption{\textbf{K-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C).} This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 50\% credible intervals (95\% credible intervals in Table SX). 
+\caption{\textbf{K-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C).} This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 50\% credible intervals. 
 }
 \label{fig:Kprobs}
 \end{figure}
@@ -277,22 +303,10 @@ print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.p
 
 \begin{figure}[p]
 \includegraphics[width=0.8\textwidth]{../analyses/figures/proboccL_4panels.png} 
-\caption{\textbf{L-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C)}. This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 50\% credible intervals (95\% credible intervals in Table SX). 
+\caption{\textbf{L-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C)}. This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 50\% credible intervals. 
 }
 \label{fig:Lprobs}
 \end{figure}
-
-%Ailene’s To Do List
-%Check #s and be consistent about CIs (95% in text,  50% in figures, both in supp)
-%Notes for Discussion (possible points to add, from Meeting with Jameal and Chris):
-%Phenology matters to killer whales in one region but not in other. Where it matters, things that modify timing should be included. Indirect to think about how hatchery timing could affect that. 
-%Could reference atlantic modelling or scaling up to ecosystem level by referencing Isaac’s papers. Cite Lacey paper. On the other hand, you could regulate all the fishing and vessel traffic could still inhibit prey capture for SRKWs.
-%Add a sentence for cumulative impacts on recovering prey . Try to think of other similar examples- perhaps on lands. Great barrier reef- taken one conservation action but another limiting factor in play. 
-%Engage cumulative impacts, EBME literature to be broader. It's widely acknowledged %that cumulative impacts are threatening SRKWs. Timing is less often considered. %Will Satherwaite paper on salmon. Forecasting with SRKWs- managing 
-%Disproportionate importance of some timing- Are there particular times of year  %when SRKWs are more sensitive to starvation (e.g. due to birth)? 
-%Overall abundance is still important for prey.  But its not the whole story. %Phenology is not the whole story either.
-%Fisheries are more direct way of managing prey than hatcheries.
-\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \end{document}
