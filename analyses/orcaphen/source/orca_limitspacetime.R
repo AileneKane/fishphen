@@ -29,7 +29,7 @@ if(includeCanada==TRUE & use3regions==TRUE){
 d<-d[d$Year>=firstyear,]
 
 
-#4. On4ly keep sites in Washington state
+#4. Only keep sites north of Washington state southern border
 d<-d[as.numeric(d$Lat)>46.9,]
 ##check that this lines up with olson et al numbers
 #tapply(d$SightDate[d$Year>1975 & d$Year<2015],d$Source[d$Year>1975 & d$Year<2015],length)

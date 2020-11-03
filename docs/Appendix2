@@ -1,4 +1,11 @@
-
+###########################################################
+### Model code for `Shifting phenology of an endangered ###
+#### apex predator tracks changes in its favored prey' ####
+# Appendix 2. JAGS code for pod-specific occupancy models #
+######## See Supplemental Materials For details ###########
+##### By Ailene Ettinger, ailene.ettinger@tnc.org #########
+###########################################################
+###########################################################
     model { 
     ### Define seasonal and annual patterns in occurrence probability
     for (m in 1:nyear) {  

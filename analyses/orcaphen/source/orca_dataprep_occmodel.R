@@ -1,13 +1,12 @@
 # Orca analysis: occupancy models
 # Started November 1327, 2018
-# by Ailene Ettinger ailene.ettinger@noo.gov
-#NEed to fix this
+# by Ailene Ettinger ailene.ettinger@noaa.gov
 #housekeeping
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
 
 # Set working directory: 
-setwd("~/Documents/GitHub/fishphen")
+setwd("~/GitHub/fishphen")
 
 # Load libraries
 library(dplyr)
@@ -51,14 +50,13 @@ source("analyses/orcaphen/source/orca_get_whaledays.R")
 d$yrdayfa<-paste(d$Year, d$day,d$FishArea,sep="_")
 
 #Raw detection ratios:
-obs = aggregate(Orcas ~yrdayfa, data = d,sum)
+obs = aggregate(Obs ~yrdayfa, data = d,sum)
 
 # presence of each pod
 js = aggregate(J ~yrdayfa, data = d,sum)
 ks = aggregate(K~yrdayfa, data = d,sum)
 ls = aggregate(L~yrdayfa, data = d,sum)
 srs = aggregate(SRKW~yrdayfa, data = d,sum)
-
 det<-cbind(js,ks[,2],ls[,2],srs[,2],obs[2])
 colnames(det)[2:6]<-c("Jobs","Kobs","Lobs","AllSRobs","nrep")
 
