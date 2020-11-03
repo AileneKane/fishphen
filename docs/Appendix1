@@ -1,7 +1,8 @@
 ###########################################################
 ### Model code for `Shifting phenology of an endangered ###
 #### apex predator tracks changes in its favored prey' ####
-##### Code for brms models; see Supplemental Materials ####
+##### Appendix 1. Code for Lime Kiln and Albion data ######
+######## See Supplemental Materials For details ###########
 ##### By Ailene Ettinger, ailene.ettinger@tnc.org #########
 ###########################################################
 ##1.Southern resident killer whale presence at Lime Kiln ##
@@ -45,13 +46,12 @@ save(l2, file="analyses/output/l.brms.Rda")
 #https://www.pac.dfo-mpo.gc.ca/fm-gp/fraser/docs/commercial/albionchinook-quinna-eng.html
 ###########################################################
 
-dat$effort<-as.numeric(dat$effort)
 dat$year<-as.factor(dat$year)
 dat$calDay<-as.numeric(dat$calDay)
-dat$catch<-as.numeric(dat$catch)
+dat$cpuw<-as.numeric(dat$cpue)
 m <- brm(cpue ~ s(calDay) + (calday|year),
           data=dat,
-          family =lognormal(), cores = 4,
+          family =gaussian(), cores = 4,
           iter = 4000, warmup = 1000, thin = 10,
           control = list(adapt_delta = 0.99))
           

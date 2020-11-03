@@ -226,7 +226,7 @@ write.csv(d,"analyses/output/AppendixII_cleaned.csv")
 
 #d[d$Year>1975 & d$Year<2015 & d$Quadrant == 18,]
 
-#to get TWM "sighting archive" which are "sighitng records reported by public and relaibale observers to TWM
+#to get TWM "sighting archive" which are "sighting records reported by public and relaibale observers to TWM
 #length(d$SightDate[d$Source =="TWM-HYD-Pub" | d$Source =="TWM-HYD-Rel"| d$Source =="TWM-SA-Pub"|d$Source =="TWM-SA-Rel"|d$Source == "TWM-Otis"])
 #39819 without Otis, 41800 with OTtis
 #d$year.doy<-paste(d$Year,d$day,sep=".")

@@ -20,13 +20,13 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="J"#options= J,K,L,SR
-region="ps"#options=upper salish sea (uss) or puget sound (ps)
+pod="K"#options= J,K,L,SR
+region="uss"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
 #Choose the credible intervals you 
-lci<-0.25
-uci<-0.75
+lci<-0.1
+uci<-0.9
 
 prob<-0.5
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
@@ -43,7 +43,7 @@ if(assumeSRKW==TRUE){
   if(pod=="SR"){dat<-read.csv("analyses/output/allsr_dat_assumeSRKW.csv",header=T)}
 }
 #choose region
-dat<-dat[dat$region==region,]
+dat<-dat[which(dat$region==region),]
 #Add a column for "season" and restrict data to season that is appropriate to the region
 #use may 1 for uss season, oct 1 for ps season as start dates
 #use oct 31 for uss season, jan31 for ps season, as end dates
@@ -70,8 +70,7 @@ if(wholeyear==TRUE ){
   dat$season<-3
   }
 
-dat<-dat[dat$season==season,]
-dat <- dat[apply(dat, 1, function(x) all(!is.na(x))),] # only keep rows of all not na
+dat<-dat[which(dat$season==season),]
 
 #if winter  (season 1), then days= days after sept 30
 #if(season=="1"){
@@ -190,8 +189,9 @@ zst <- array(1, dim=c(nyear,n))
 y <- dat$ndet
 
 # Simulation parameters
+
 #ni=15000; nc=2; nb=0; nt=10
-ni=20000; nc=4; nb=10000; nt=10
+ni=20000; nc=2; nb=10000; nt=10
 # List input data
 jags.data <- list("site","survey","nobs","nrep","nsite","nyear","year","nknots","n","X","Z","nc", "nb", "ni", "nt","zst","y")
 

@@ -15,7 +15,7 @@ if(assumeSRKW==FALSE){
     d$SRKW<-0
     d$SRKW[grep("SR",d$Pod.cl)]<- 1
     d$SRKW[d$J==1|d$K==1|d$L==1]<- 1  } 
-d$Orcas<-1
+d$Obs<-1
 d$Trans<-0
 d$Trans[grep("T",d$Pod.cl)]<- 1
 
@@ -36,13 +36,13 @@ d$yrfa<-paste(d$Year, d$FishArea,sep="_")
 #1. Plot the total number of orca observations per year in each region since 1978
 #a. All pods together
 #b .Each pod separately
-obs = aggregate(Orcas ~yrregion, data = d,sum)
+obs = aggregate(Obs ~yrregion, data = d,sum)
 js = aggregate(J ~yrregion, data = d,sum)
 ks = aggregate(K~yrregion, data = d,sum)
 ls = aggregate(L~yrregion, data = d,sum)
 srs = aggregate(SRKW~yrregion, data = d,sum)
 orcasum<-cbind(js,ks[,2],ls[,2],srs[,2],obs[2])
-colnames(orcasum)[2:6]<-c("Jobs","Kobs","Lobs","AllSRobs","AllOrcas")
+colnames(orcasum)[2:6]<-c("Jobs","Kobs","Lobs","AllSRobs","AllObs")
 orcasum$year<-substr(orcasum$yrregion,1,4)
 orcasum$region<-substr(orcasum$yrregion,6,nchar(orcasum$yrregion))
 
@@ -86,14 +86,14 @@ orcasum$region<-substr(orcasum$yrregion,6,nchar(orcasum$yrregion))
 #2. Plot the number of "whale days" (days on which whales were observed in each region)
 #a. All pods together
 #b .Each pod separately
-obs.days = aggregate(Orcas ~yrdayregion, data = d,sum)
+obs.days = aggregate(Obs ~yrdayregion, data = d,sum)
 js.days = aggregate(J ~yrdayregion, data = d,sum)
 ks.days = aggregate(K~yrdayregion, data = d,sum)
 ls.days = aggregate(L~yrdayregion, data = d,sum)
 srs.days = aggregate(SRKW~yrdayregion, data = d,sum)
 orcasum.days<-cbind(js.days,ks.days[,2],ls.days[,2],srs.days[,2],obs.days[2])
 
-colnames(orcasum.days)[2:6]<-c("Jobs","Kobs","Lobs","AllSRobs","AllOrcas")
+colnames(orcasum.days)[2:6]<-c("Jobs","Kobs","Lobs","AllSRobs","AllObs")
 orcasum.days$year<-substr(orcasum.days$yrdayregion,1,4)
 orcasum.days$day<-substr(orcasum.days$yrdayregion,6,8)
 orcasum.days$region<-substr(orcasum.days$yrdayregion,10,nchar(orcasum.days$yrdayregion))
