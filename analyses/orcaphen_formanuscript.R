@@ -11,7 +11,7 @@ options(stringsAsFactors = FALSE)
 # Set working directory: 
 #setwd("~/GitHub/fishphen")
 #or from laptop:
-#setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
+setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
 
 # Load libraries
 library(dplyr)
@@ -28,6 +28,7 @@ includeCanada=TRUE
 firstyear=1976#probably set to 1975 or 1976 (Olson et al)
 assumeSRKW=FALSE #If true, assume that "Orcas" means SRKW unless noted otherwuse (i.e. Transients or NRKWs)
 use3regions=FALSE#If true, separate out the straight of Juan de Fuca as a 3rd region, distinct from CSS and PS (all code not yet working for 3 regions!)
+plotPNG =FALSE#if false, plots pdfs
 #Set start of seasons
 ps.start<-182#July 1 = 182
 uss.start<-91#April 1 = 91, 

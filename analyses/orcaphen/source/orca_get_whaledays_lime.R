@@ -1,14 +1,14 @@
 limed<-d[d$Source=="TWM-Otis",]
 limed<-limed[which(!is.na(limed$SightDate)),]
 
-obs.days.lime = aggregate(Orcas ~yrdayfa, data = limed,sum)
+obs.days.lime = aggregate(Obs ~yrdayfa, data = limed,sum)
 js.days.lime = aggregate(J ~yrdayfa, data = limed,sum)
 ks.days.lime = aggregate(K~yrdayfa, data = limed,sum)
 ls.days.lime = aggregate(L~yrdayfa, data = limed,sum)
 srs.days.lime = aggregate(SRKW~yrdayfa, data = limed,sum)
 orcasum.days.lime<-cbind(js.days.lime,ks.days.lime[,2],ls.days.lime[,2],srs.days.lime[,2],obs.days.lime[2])
 
-colnames(orcasum.days.lime)[2:6]<-c("Jobs","Kobs","Lobs","AllSRobs","AllOrcas")
+colnames(orcasum.days.lime)[2:6]<-c("Jobs","Kobs","Lobs","AllSRobs","AllObs")
 orcasum.days.lime$year<-substr(orcasum.days.lime$yrdayfa,1,4)
 orcasum.days.lime$day<-substr(orcasum.days.lime$yrdayfa,6,8)
 orcasum.days.lime$fa<-substr(orcasum.days.lime$yrdayfa,10,nchar(orcasum.days.lime$yrdayfa))
@@ -90,7 +90,9 @@ jsum<-aggregate(limewdaysabs$Jpres,by=list(limewdaysabs$year),sum)
 ksum<-aggregate(limewdaysabs$Kpres,by=list(limewdaysabs$year),sum)
 lsum<-aggregate(limewdaysabs$Lpres,by=list(limewdaysabs$year),sum)
 colnames(yearsum)<-colnames(jsum)<-colnames(ksum)<-colnames(lsum)<-c("year","wdays")
-png(filename="analyses/orcaphen/figures/whaledays_lime.png",height=480,width=960)
+if(plotPNG == TRUE){png(filename="analyses/orcaphen/figures/whaledays_lime.png",height=480,width=960)}
+if(plotPNG == FALSE){pdf("analyses/orcaphen/figures/whaledays_lime.pdf",height=5,width=15)}
+
 #windows(height=6,width=12)
 par(mfrow=c(1,4))
 plot(as.numeric(yearsum$year),yearsum$wdays,ylab= "Year", xlab= "Number of Whale Days", bty="l", type="l", col="darkblue",lwd=2,main = "All Pods")
