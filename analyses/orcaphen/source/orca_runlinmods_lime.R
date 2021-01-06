@@ -166,7 +166,9 @@ wdays.end<-lime.df$nobs[lime.df$year==2017]
 (wdays.start-wdays.end)/wdays.start
 
 #function to plot whale days
-png(filename="analyses/orcaphen/figures/whaledays_lime.png",height=480,width=960)
+png(filename="analyses/orcaphen/figures/whaledays_lime.png",height=400,width=1200)
+#pdf("analyses/orcaphen/figures/whaledays_lime.pdf",height=4,width=12)
+
 #windows(height=6,width=12)
 par(mfrow=c(1,4))
 ps<-c("SRs","J","K","L")
@@ -174,7 +176,7 @@ lets<-c("A)","B)","C)","D)")
 mains<-c("All Pods","J Pod","K Pod","L Pod")
 for(i in 1:length(ps)){
   poddat<-lime.df[lime.df$pod==ps[i],]
-  plot(poddat$year,poddat$nobs,ylab= "Year", xlab= "Number of Whale Days", bty="l", type="l", col="darkblue",lwd=2,main = paste(mains[i]))
+  plot(poddat$year,poddat$nobs,xlab= "Year", ylab= "Number of Whale Days", bty="l", type="l", col="darkblue",xlim=c(1994,2017),lwd=2,main = paste(mains[i]))
   mtext(paste(lets[i]), side = 3, line = 1, adj=0)
 }
 dev.off()

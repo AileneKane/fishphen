@@ -166,14 +166,17 @@ gests<-get.gests(limegests,"SR")
 jgests<-get.gests(limegests,"J")
 kgests<-get.gests(limegests,"K")
 lgests<-get.gests(limegests,"L")
+gests$years<-as.numeric(gests$years)
+gests$peakoc.doy<-as.numeric(gests$peakoc.doy)
+jgests$peakoc.doy<-as.numeric(jgests$peakoc.doy)
 
-meanmod<-summary(lm(gests$meanprobs~gests$year))#trend is getting lower
+meanmod<-summary(lm(gests$meanprobs~gests$years))#trend is getting lower
 
-peakmod<-summary(lm(gests$peakoc.doy~gests$year))#trend is getting later
-confint(lm(gests$peakoc.doy~gests$year),level= .90)
-summary(lm(jgests$peakoc.doy~jgests$year))# getting later
-summary(lm(kgests$peakoc.doy~kgests$year))# getting later
-summary(lm(lgests$peakoc.doy~lgests$year))#not getting later
+peakmod<-summary(lm(as.numeric(gests$peakoc.doy)~gests$years))#trend is getting later
+confint(lm(gests$peakoc.doy~gests$years),level= .80)
+summary(lm(jgests$peakoc.doy~jgests$years))# getting later
+summary(lm(kgests$peakoc.doy~kgests$years))# getting later
+summary(lm(lgests$peakoc.doy~lgests$years))#not getting later
 
 confint(lm(gests$lastprob~gests$year),level= .90)
 confint(lm(gests$firstprob~gests$year), level=.90)
@@ -190,7 +193,7 @@ albchinest90<-albchinest90[albchinest90$year!=2013,]
 gests<-gests[gests$years>1990,]
 myPalette <- colorRampPalette(brewer.pal(length(unique(albchinest90$year)), "Blues")) #### Gives us a heat map look
 cols = rev(myPalette(length(unique(albchinest90$year))))
-png(file="analyses/orcaphen/figures/lime_albchin_gam.png",height=400,width=1200)
+png(file="analyses/orcaphen/figures/lime_albchin_gam.png",height=1500,width=4500, res = 300)
 #quartz()
 par(mfrow=c(1,3), mar=c(5, 5, 4, 2) + 0.1)
 

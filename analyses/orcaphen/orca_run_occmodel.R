@@ -13,20 +13,20 @@ rm(list=ls())
 options(stringsAsFactorwants = FALSE)
 
 # Set working directory
-setwd("~/GitHub/fishphen")
+setwd("~/Documents/GitHub/fishphen")
 
 # Load libraries
 library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="K"#options= J,K,L,SR
-region="uss"#options=upper salish sea (uss) or puget sound (ps)
+pod="J"#options= J,K,L,SR
+region="ps"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
 #Choose the credible intervals you 
-lci<-0.1
-uci<-0.9
+lci<-0.125
+uci<-0.875
 
 prob<-0.5
 # Read observation data from focal pod (created in orca_dataprep_occmodel.R)
@@ -249,8 +249,8 @@ colnames(meanp)<-seq(min(dat$year),max(dat$year), by=1)
 
 if(region == "uss"){color = "darkblue"
 cols = c("darkblue","royalblue")}
-if(region == "ps"){color = "salmon"
-cols = c("salmon","lightsalmon4")}
+if(region == "ps"){color = "yellow1"
+cols = c("yellow1","gold3")}
 
 prob<-c(0.2,0.3,0.4,0.5)
 for(p in prob){
@@ -289,40 +289,6 @@ lines(doy,out$mean$psi[y,])
 }
 length(unique(dat$day))
 
-#plot mean psi across all years for the season
-if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p,"meanoccprob_assumeSRKW.pdf", sep=""),height=6,width=8)}
-if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p,"meanoccprob.pdf", sep=""),height=6,width=8)}
-
-
-#quartz(height=6,width=8)
-psi.med<-apply(out$sims.list$psi[,32:40,],c(3),median)
-plot(doy,psi.med, type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", lty=1,col=color, lwd=2)
-names(out)
-#lines(doy,psi.med)
-psi.uci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=uci)
-psi.lci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=lci)
-#lines(doy,psi.lci,col=cols[2], lwd=2)
-#lines(doy,psi.uci,col=cols[2], lwd=2)
-#psi<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.5)
-
-polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(color,0.2),lty=0)
-psi.med<-apply(out$sims.list$psi[,24:31,],c(3),median)
-#lines(doy,colMeans(out$mean$psi[11:20,]),col=cols[4])
-lines(doy,psi.med,col=cols[2], lwd=2, lty=2)
-psi.uci<-apply(out$sims.list$psi[,24:31,],c(3),quantile,probs=uci)
-#lines(doy,psi.uci)
-psi.lci<-apply(out$sims.list$psi[,24:31,],c(3),quantile,probs=lci)
-#lines(doy,psi.lci)
-polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(cols[2],0.2),lty=0)
-
-#lines(doy,colMeans(out$mean$psi[1:10,]),col=cols[1], lwd=2)
-#lines(doy,colMeans(out$mean$psi[1:30,]),col=color,lwd=3)
-legend("topleft",legend=c(paste(unique(dat$year)[32],"-",unique(dat$year)[40],sep= ""),
-                         #paste(unique(dat$year)[11],"-",unique(dat$year)[20],sep= ""),
-                         #paste(unique(dat$year)[21],"-",unique(dat$year)[30],sep= ""),
-                         #paste(unique(dat$year)[1],"-",unique(dat$year)[10],sep= ""),
-                          paste(unique(dat$year)[24],"-",unique(dat$year)[31],sep= "")),lwd=c(2,2),lty=c(1,2),col=c(color,cols[2]), bty="n")
-dev.off()
 # summarize estimates and look at change across the whole time series
 
 ann.res<-array(NA, dim=c(max(dat$year)-min(dat$year)+1,3),dimnames=list(c(min(dat$year):max(dat$year)),c("mean","lci","uci")))
@@ -342,7 +308,58 @@ psi.ann[names(res),"lci"]<-psi
 psi<-apply(out$sims.list$psi,c(2),quantile,probs=uci,na.rm=T)
 psi.ann[names(res),"uci"]<-psi
 
-# look at change only since
+
+#plot mean psi across all years for the season
+if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p,"meanoccprob_assumeSRKW.pdf", sep=""),height=6,width=8)}
+if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p,"meanoccprob.pdf", sep=""),height=6,width=8)}
+
+
+#quartz(height=6,width=8)
+psi.med<-apply(out$sims.list$psi[,32:40,],c(3),median)
+plot(doy,psi.med, type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", lty=1,col=color, lwd=2)
+#names(out)
+#lines(doy,psi.med)
+psi.uci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=uci)
+psi.lci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=lci)
+#lines(doy,psi.lci,col=cols[2], lwd=2)
+#lines(doy,psi.uci,col=cols[2], lwd=2)
+#psi<-apply(out$sims.list$psi[,31:40,],c(3),quantile,probs=.5)
+polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(color,0.2),lty=0)
+#add point for mean peak day of year
+pkocdoy<-mean(ann.res[,"mean"][32:40])
+pkocdoy.lci<-quantile(ann.res[,"mean"][32:40],lci)
+pkocdoy.uci<-quantile(ann.res[,"mean"][32:40],uci)
+arrows(pkocdoy.lci,psi.med[which(doy==as.integer(pkocdoy))],pkocdoy.uci,psi.med[which(doy==as.integer(pkocdoy))],code = 0, col = cols[1], lwd = 3)
+points(pkocdoy,psi.med[which(doy==as.integer(pkocdoy))], pch = 21, bg=cols[1], cex = 2)
+#arrows(pkocdoy.rec,psi.med[which(doy==as.integer(pkocdoy.rec))]+.4,pkocdoy.rec,psi.med[which(doy==as.integer(pkocdoy.rec))]+.02,code = 2, col = cols[1], lwd = 2)
+
+psi.med<-apply(out$sims.list$psi[,24:31,],c(3),median)
+#lines(doy,colMeans(out$mean$psi[11:20,]),col=cols[4])
+lines(doy,psi.med,col=cols[2], lwd=2, lty=2)
+psi.uci<-apply(out$sims.list$psi[,24:31,],c(3),quantile,probs=uci)
+#lines(doy,psi.uci)
+psi.lci<-apply(out$sims.list$psi[,24:31,],c(3),quantile,probs=lci)
+#lines(doy,psi.lci)
+polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(cols[2],0.2),lty=0)
+#add point for mean peak day of year
+pkocdoy<-mean(ann.res[,"mean"][24:31])
+pkocdoy.lci<-quantile(ann.res[,"mean"][24:31],lci)
+pkocdoy.uci<-quantile(ann.res[,"mean"][24:31],uci)
+arrows(pkocdoy.lci,psi.med[which(doy==as.integer(pkocdoy))],pkocdoy.uci,psi.med[which(doy==as.integer(pkocdoy))],code = 0, col = cols[2], lwd = 3)
+points(pkocdoy,psi.med[which(doy==as.integer(pkocdoy))], pch = 21, bg=cols[2], cex = 2)
+#arrows(pkocdoy.rec,psi.med[which(doy==as.integer(pkocdoy.rec))]+.4,pkocdoy.rec,psi.med[which(doy==as.integer(pkocdoy.rec))]+.02,code = 2, col = cols[1], lwd = 2)
+
+#lines(doy,colMeans(out$mean$psi[1:10,]),col=cols[1], lwd=2)
+#lines(doy,colMeans(out$mean$psi[1:30,]),col=color,lwd=3)
+if(season==1){mtext("A)",side = 3, line = 0, adj =0)}
+if(season==2){  mtext("C)",side = 3, line = 0, adj =0)}
+
+legend("topleft",legend=c(paste(unique(dat$year)[32],"-",unique(dat$year)[40],sep= ""),
+                         #paste(unique(dat$year)[11],"-",unique(dat$year)[20],sep= ""),
+                         #paste(unique(dat$year)[21],"-",unique(dat$year)[30],sep= ""),
+                         #paste(unique(dat$year)[1],"-",unique(dat$year)[10],sep= ""),
+                          paste(unique(dat$year)[24],"-",unique(dat$year)[31],sep= "")),lwd=c(2,2),lty=c(1,2),col=c(cols), bty="n")
+dev.off()
 
 
 # get estimate of trend in date of peak detectability over years
@@ -609,7 +626,7 @@ write.csv(mean.psi.allyears, psi.name, row.names=TRUE)
 # Plot output
 #-----------------------------------------------------------------
 if(region == "uss"){color = "darkblue"}
-if(region == "ps"){color = "salmon"}
+if(region == "ps"){color = "yellow1"}
 
 # save plotted results as pdf
 if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p,"assumeSRKWpeakoccprob.pdf", sep=""),width=7,height=7)}
@@ -649,8 +666,10 @@ if(season ==3){
   #}    
 #}
 #clip(2008,2017, min(y), max(y))
-if(season==1){abline(a=intercept,b=slope,col="darkred",lwd=2)}
-if(season==2){abline(a=intercept,b=slope,col="midnightblue",lwd=2)}
+if(season==1){abline(a=intercept,b=slope,col="gold3",lwd=2)
+    mtext("B)",side = 3, line = 0, adj =0)}
+if(season==2){abline(a=intercept,b=slope,col="midnightblue",lwd=2)
+  mtext("D)",side = 3, line = 0, adj =0)}
 
 dev.off()
 #plot only recent years
@@ -692,8 +711,10 @@ if(season ==3){
 #}    
 #}
 #clip(2008,2017, min(y), max(y))
-if(season==1){abline(a=intercept.recent,b=slope.recent,col="darkred",lwd=2)}
-if(season==2){abline(a=intercept.recent,b=slope.recent,col="midnightblue",lwd=2)}
+if(season==1){abline(a=intercept,b=slope,col="gold3",lwd=2)
+  mtext("B)",side = 3, line = 0, adj =0)}
+if(season==2){abline(a=intercept,b=slope,col="midnightblue",lwd=2)
+  mtext("D)",side = 3, line = 0, adj =0)}
 
 dev.off()
 
@@ -737,7 +758,7 @@ if(season==3){
   
   #}    
 #}
-if(season==1){abline(a=intercept.first,b=slope.first,col="darkred",lwd=2)}
+if(season==1){abline(a=intercept.first,b=slope.first,col="gold3",lwd=2)}
 if(season==2){abline(a=intercept.first,b=slope.first,col="midnightblue",lwd=2)}
 
 dev.off()
@@ -777,8 +798,10 @@ if(season==3){
 #  
   #}    
 #}
-if(season ==1){abline(a=intercept.last,b=slope.last,col="darkred",lwd=2)}
-if(season ==2){abline(a=intercept.last,b=slope.last,col="midnightblue",lwd=2)}
+if(season==1){abline(a=intercept,b=slope,col="gold3",lwd=2)
+  mtext("B)",side = 3, line = 0, adj =0)}
+if(season==2){abline(a=intercept,b=slope,col="midnightblue",lwd=2)
+  mtext("D)",side = 3, line = 0, adj =0)}
 
 dev.off()
 

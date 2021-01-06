@@ -82,7 +82,7 @@ source("analyses/orcaphen/source/orca_get_whaledays_lime.R")
 #albchinest<-read.csv("analyses/output/albionchiphenbrmslog.csv", header = TRUE)
  albchinest<-read.csv("analyses/output/albionchiphenest.csv", header = TRUE)
 
-#albchinest95<-albchinest[albchinest$year>1993  & albchinest$year<2018,]
+albchinest95<-albchinest[albchinest$year>1993  & albchinest$year<2018,]
 albchinest95<-albchinest95[-which(albchinest95$year==2014),]
 
 

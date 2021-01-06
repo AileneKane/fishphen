@@ -46,3 +46,23 @@ plot(doy,rep(mean(doy),times=length(doy)), xlab= "peak prey day", ylab= "peak pr
 mtext("D)", side=3, line=1, adj=0, cex=1.2)
 
 dev.off()
+
+#make a schematic of multiple salmon stocks
+
+pdf("/Users/aileneettinger/Documents/GitHub/fishphen/analyses/figures/salmonportfolio_schematic.pdf",height=8, width=8)
+#quartz(height=8,width=8)
+
+
+
+par(mfrow=c(1,1))
+plot(doy,preydays*100, xlab= "day of year", ylab= "abundance",xlim=c(1,365),ylim=c(0,100*max(whaledays)+.001),yaxt="n", type="l", col = "salmon",lty=1, lwd=3, cex.axis=1.5, cex.lab=1.5, bty="l")
+stocknum<-6
+stockmns<-as.integer(rnorm(stocknum,mean = 200,sd =80))
+sds<-as.integer(rnorm(stocknum,mean = 40, sd = 10))
+scale<-c(30,40,30,10,15,40)
+cols<-c("purple","salmon", "darksalmon","gray","maroon","darkgray")
+for (i in 1:stocknum){
+  stockphen<-scale[i]*dnorm(doy,stockmns[i],sds[i])
+  lines(doy,stockphen,lty=1, lwd=3,col=alpha(cols[i],.4))
+}
+dev.off()
