@@ -20,8 +20,8 @@ library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="J"#options= J,K,L,SR
-region="ps"#options=upper salish sea (uss) or puget sound (ps)
+pod="L"#options= J,K,L,SR
+region="uss"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE
 #Choose the credible intervals you 
@@ -314,9 +314,12 @@ if(assumeSRKW==TRUE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat
 if(assumeSRKW==FALSE){pdf(file=paste("analyses/figures/",pod,"/orcaphen_",min(dat$year),"-",max(dat$year),"_",region,"_",season,"_doy",min(dat$day),"-",max(dat$day),"_",pod,"_",p,"meanoccprob.pdf", sep=""),height=6,width=8)}
 
 
-#quartz(height=6,width=8)
+#windows(height=6,width=8)
 psi.med<-apply(out$sims.list$psi[,32:40,],c(3),median)
-plot(doy,psi.med, type= "l", ylim=c(0,1), ylab= "Probability of occurrence", xlab= "Day of Year", bty="l", lty=1,col=color, lwd=2)
+plot(doy,psi.med, type= "l", ylim=c(0,1.2), 
+     ylab= "Probability of occurrence", xlab= "Day of Year", yaxt ="n",
+     bty="l", lty=1,col=color, lwd=2)
+axis(side = 2, at = seq(from = 0, to = 1.0, by = .2), labels = c("0","0.2","0.4","0.6","0.8", "1.0"))
 #names(out)
 #lines(doy,psi.med)
 psi.uci<-apply(out$sims.list$psi[,32:40,],c(3),quantile,probs=uci)
@@ -329,9 +332,11 @@ polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(color,0.2),lty=0)
 pkocdoy<-mean(ann.res[,"mean"][32:40])
 pkocdoy.lci<-quantile(ann.res[,"mean"][32:40],lci)
 pkocdoy.uci<-quantile(ann.res[,"mean"][32:40],uci)
-arrows(pkocdoy.lci,psi.med[which(doy==as.integer(pkocdoy))],pkocdoy.uci,psi.med[which(doy==as.integer(pkocdoy))],code = 0, col = cols[1], lwd = 3)
-points(pkocdoy,psi.med[which(doy==as.integer(pkocdoy))], pch = 21, bg=cols[1], cex = 2)
-#arrows(pkocdoy.rec,psi.med[which(doy==as.integer(pkocdoy.rec))]+.4,pkocdoy.rec,psi.med[which(doy==as.integer(pkocdoy.rec))]+.02,code = 2, col = cols[1], lwd = 2)
+#arrows(pkocdoy.lci,psi.med[which(doy==as.integer(pkocdoy))],pkocdoy.uci,psi.med[which(doy==as.integer(pkocdoy))],code = 0, col = cols[1], lwd = 3)
+#points(pkocdoy,psi.med[which(doy==as.integer(pkocdoy))], pch = 21, bg=cols[1], cex = 2)
+
+arrows(pkocdoy.lci,1.2,pkocdoy.uci,1.2,code = 0, col = cols[1], lwd = 3)
+points(pkocdoy,1.2, pch = 21, bg=cols[1], cex = 2)
 
 psi.med<-apply(out$sims.list$psi[,24:31,],c(3),median)
 #lines(doy,colMeans(out$mean$psi[11:20,]),col=cols[4])
@@ -345,8 +350,12 @@ polygon(c(rev(doy),doy),c(rev(psi.uci),psi.lci),col=alpha(cols[2],0.2),lty=0)
 pkocdoy<-mean(ann.res[,"mean"][24:31])
 pkocdoy.lci<-quantile(ann.res[,"mean"][24:31],lci)
 pkocdoy.uci<-quantile(ann.res[,"mean"][24:31],uci)
-arrows(pkocdoy.lci,psi.med[which(doy==as.integer(pkocdoy))],pkocdoy.uci,psi.med[which(doy==as.integer(pkocdoy))],code = 0, col = cols[2], lwd = 3)
-points(pkocdoy,psi.med[which(doy==as.integer(pkocdoy))], pch = 21, bg=cols[2], cex = 2)
+#arrows(pkocdoy.lci,psi.med[which(doy==as.integer(pkocdoy))],pkocdoy.uci,psi.med[which(doy==as.integer(pkocdoy))],code = 0, col = cols[2], lwd = 3)
+#points(pkocdoy,psi.med[which(doy==as.integer(pkocdoy))], pch = 21, bg=cols[2], cex = 2)
+#or always above plot?
+arrows(pkocdoy.lci,1.14,pkocdoy.uci,1.14,code = 0, col = cols[2], lty=2,lwd = 3)
+points(pkocdoy,1.14, pch = 21, bg=cols[2], cex = 2)
+
 #arrows(pkocdoy.rec,psi.med[which(doy==as.integer(pkocdoy.rec))]+.4,pkocdoy.rec,psi.med[which(doy==as.integer(pkocdoy.rec))]+.02,code = 2, col = cols[1], lwd = 2)
 
 #lines(doy,colMeans(out$mean$psi[1:10,]),col=cols[1], lwd=2)
