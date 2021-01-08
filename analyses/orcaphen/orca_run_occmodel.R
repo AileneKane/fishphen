@@ -13,14 +13,14 @@ rm(list=ls())
 options(stringsAsFactorwants = FALSE)
 
 # Set working directory
-setwd("~/Documents/GitHub/fishphen")
+setwd("~/GitHub/fishphen")
 
 # Load libraries
 library(R2jags)
 library(scales)
 
 # Choose the data you want:
-pod="L"#options= J,K,L,SR
+pod="J"#options= J,K,L,SR
 region="uss"#options=upper salish sea (uss) or puget sound (ps)
 wholeyear=FALSE #if FALSE then resitrct to assigned seasons for uss and ps
 assumeSRKW=FALSE

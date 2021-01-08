@@ -109,3 +109,27 @@ if(assumeSRKW==TRUE){
   write.csv(kdet,"analyses/output/k_dat_assumeSRKW.csv",row.names = FALSE)
   write.csv(jdet,"analyses/output/j_dat_assumeSRKW.csv",row.names = FALSE)
 }
+
+
+#Check that fishing areas are correct and write out lat/longs for making map
+#write out csv of all lat/longs for map
+d$lat.long<-paste(d$Lat,d$Long,sep=".")
+orcalatlon<-d%>% # start with the data frame
+  distinct(lat.long, .keep_all = TRUE) %>% # establishing grouping variables
+  filter(SRKW == 1) %>%#select only SRKWs
+  dplyr::select(LikelyPod, region,FishArea,Lat,Long)
+
+#remove weird longitudes
+orcalatlon<-orcalatlon[orcalatlon$Long!="0",]
+orcalatlon<-orcalatlon[orcalatlon$region!="oc",]
+write.csv(orcalatlon,"analyses/output/srkw_mapdatfile_new.csv", row.names = FALSE)
+library(rworldmap)
+library(scales)
+newmap<-getMap(resolution = "low")
+plot(newmap, xlim=range(as.numeric(orcalatlon$Long)), ylim = range(as.numeric(orcalatlon$Lat)))
+points(orcalatlon$Long[orcalatlon$region == "ps"],orcalatlon$Lat[orcalatlon$region == "ps"], type = "p", pch = 16, col = adjustcolor("goldenrod",alpha.f = 0.6))
+points(orcalatlon$Long[orcalatlon$region == "uss"],orcalatlon$Lat[orcalatlon$region == "uss"], type = "p", pch = 16, col = adjustcolor("darkblue",alpha.f = 0.6))
+
+unique(orcalatlon$FishArea[orcalatlon$region=="uss"])
+#checked and fixws 06,18C,19C, 29C, 17C, 20C, 05, 07
+

@@ -152,3 +152,6 @@ orcasum.days<-orcasum.days[!is.na(orcasum.days$decade),]
 orcasum.days$period<-NA
 orcasum.days$period[orcasum.days$year<1997 & orcasum.days$year>1976]<-"1977-1996"
 orcasum.days$period[orcasum.days$year<2018 & orcasum.days$year>1996]<-"1997-2017"
+
+
+#

@@ -31,6 +31,10 @@ d<-d[d$Year>=firstyear,]
 
 #4. Only keep sites north of Washington state southern border
 d<-d[as.numeric(d$Lat)>46.9,]
+
+#5. Only keep sites east of Bonilla Tatoosh line (longitude-124.8220176)
+d<-d[as.numeric(d$Long)> -124.63,]
+
 ##check that this lines up with olson et al numbers
 #tapply(d$SightDate[d$Year>1975 & d$Year<2015],d$Source[d$Year>1975 & d$Year<2015],length)
 #to get their Lime Kiln Station sightings data (the below is after limitspacetime):
@@ -45,4 +49,3 @@ d<-d[as.numeric(d$Lat)>46.9,]
 #be able to include it! with lat/longs. Olson et al use the Quadrants...
 ##d$year.doy<-pa  ste(d$Year,d$day,sep=".")
 #length(unique(d$year.doy))#8447
-
