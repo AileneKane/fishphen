@@ -120,16 +120,16 @@ orcalatlon<-d%>% # start with the data frame
   dplyr::select(LikelyPod, region,FishArea,Lat,Long)
 
 #remove weird longitudes
-orcalatlon<-orcalatlon[orcalatlon$Long!="0",]
-orcalatlon<-orcalatlon[orcalatlon$region!="oc",]
-write.csv(orcalatlon,"analyses/output/srkw_mapdatfile_new.csv", row.names = FALSE)
-library(rworldmap)
-library(scales)
-newmap<-getMap(resolution = "low")
-plot(newmap, xlim=range(as.numeric(orcalatlon$Long)), ylim = range(as.numeric(orcalatlon$Lat)))
-points(orcalatlon$Long[orcalatlon$region == "ps"],orcalatlon$Lat[orcalatlon$region == "ps"], type = "p", pch = 16, col = adjustcolor("goldenrod",alpha.f = 0.6))
-points(orcalatlon$Long[orcalatlon$region == "uss"],orcalatlon$Lat[orcalatlon$region == "uss"], type = "p", pch = 16, col = adjustcolor("darkblue",alpha.f = 0.6))
-
-unique(orcalatlon$FishArea[orcalatlon$region=="uss"])
-#checked and fixws 06,18C,19C, 29C, 17C, 20C, 05, 07
+# orcalatlon<-orcalatlon[orcalatlon$Long!="0",]
+# orcalatlon<-orcalatlon[orcalatlon$region!="oc",]
+# write.csv(orcalatlon,"analyses/output/srkw_mapdatfile_new.csv", row.names = FALSE)
+# library(rworldmap)
+# library(scales)
+# newmap<-getMap(resolution = "low")
+# plot(newmap, xlim=range(as.numeric(orcalatlon$Long)), ylim = range(as.numeric(orcalatlon$Lat)))
+# points(orcalatlon$Long[orcalatlon$region == "ps"],orcalatlon$Lat[orcalatlon$region == "ps"], type = "p", pch = 16, col = adjustcolor("goldenrod",alpha.f = 0.6))
+# points(orcalatlon$Long[orcalatlon$region == "uss"],orcalatlon$Lat[orcalatlon$region == "uss"], type = "p", pch = 16, col = adjustcolor("darkblue",alpha.f = 0.6))
+# 
+# unique(orcalatlon$FishArea[orcalatlon$region=="uss"])
+# #checked and fixws 06,18C,19C, 29C, 17C, 20C, 05, 07
 
