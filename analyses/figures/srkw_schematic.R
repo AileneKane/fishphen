@@ -18,14 +18,20 @@ plot(doy,whaledays, xlab= "day of year", ylab= "occurrence probability",xlim=c(1
 lines(doy_shift,whaledays,lty=1, lwd=2,col="darkblue")
 lines(doy,preydays,lty=2, lwd=2,col="salmon")
 lines(doy_shift,preydays,lty=1, lwd=2,col="salmon")
+
+points(doy[which(whaledays==max(whaledays))],max(whaledays)+.0003,pch=21,bg="darkblue", cex=1.2)
+points(doy_shift[which(whaledays==max(whaledays))],max(whaledays)+.0003,pch=21,bg="darkblue", cex=1.2)
+points(doy[which(preydays==max(preydays))],max(preydays)+.0003,pch=21,bg="salmon", cex=1.2)
+points(doy_shift[which(preydays==max(preydays))],max(preydays)+.0003,pch=21,bg="salmon", cex=1.2)
+
 mtext("Matched phenological shifts:", side=3, line=3, adj=0, cex=1.2)
 mtext("A)", side=3, line=1, adj=0, cex=1.2)
 
 legend("topleft",legend=c("past","present"),lty=c(2,1), lwd=2, bty="n", col= "darkblue")
-arrows(doy[which(whaledays==max(whaledays))],max(whaledays)+.0004,doy_shift[which(whaledays==max(whaledays))],max(whaledays)+.0004, code=3, angle=90, length=.05, lwd=2, col="darkblue")
-arrows(doy[which(preydays==max(preydays))],max(whaledays)+.001,doy_shift[which(preydays==max(preydays))],max(whaledays)+.001, code=3, angle=90, length=.05, lwd=2, col="salmon")
-text(doy_shift[which(whaledays==max(whaledays))]+60,max(whaledays)+.0004,"predator shift")
-text(doy_shift[which(preydays==max(preydays))]+50,max(whaledays)+.001,"prey shift")
+arrows(doy[which(whaledays==max(whaledays))],max(whaledays)+.0007,doy_shift[which(whaledays==max(whaledays))],max(whaledays)+.0007, code=2, angle=45, length=.05, lwd=2, col="darkblue")
+arrows(doy[which(preydays==max(preydays))],max(preydays)+.0007,doy_shift[which(preydays==max(preydays))],max(preydays)+.0007, code=2, angle=45, length=.05, lwd=2, col="salmon")
+text(doy_shift[which(whaledays==max(whaledays))]+60,max(whaledays)+.0007,"predator shift")
+text(doy_shift[which(preydays==max(preydays))]+50,max(preydays)+.0007,"prey shift")
 
 plot(doy,doy, xlab= "peak prey day", ylab= "peak predator day", type="l", lty=1, lwd=2, cex.axis=1.5, cex.lab=1.5, bty="l")
 mtext("B)", side=3, line=1, adj=0, cex=1.2)
@@ -35,11 +41,17 @@ doy_shift_mis<-doy+10
 lines(doy_shift_mis,whaledays,lty=1, lwd=2,col="darkblue")
 lines(doy,preydays,lty=2, lwd=2,col="salmon")
 lines(doy_shift,preydays,lty=1, lwd=2,col="salmon")
+points(doy[which(whaledays==max(whaledays))],max(whaledays)+.0003,pch=21,bg="darkblue", cex=1.2)
+points(doy_shift_mis[which(whaledays==max(whaledays))],max(whaledays)+.0003,pch=21,bg="darkblue", cex=1.2)
+points(doy[which(preydays==max(preydays))],max(preydays)+.0003,pch=21,bg="salmon", cex=1.2)
+points(doy_shift[which(preydays==max(preydays))],max(preydays)+.0003,pch=21,bg="salmon", cex=1.2)
+
+
 mtext("Mismatched phenological shifts:", side=3, line=3, adj=0, cex=1.2)
-arrows(doy[which(whaledays==max(whaledays))],max(whaledays)+.0004,doy_shift_mis[which(whaledays==max(whaledays))],max(whaledays)+.0004, code=3, angle=90, length=.05, lwd=2,col="darkblue")
-arrows(doy[which(preydays==max(preydays))],max(whaledays)+.001,doy_shift[which(preydays==max(preydays))],max(whaledays)+.001, code=3, angle=90, length=.05, lwd=2, col="salmon")
-text(doy_shift_mis[which(whaledays==max(whaledays))]+50,max(whaledays)+.0004,"predator shift")
-text(doy_shift[which(preydays==max(preydays))]+60,max(whaledays)+.001,"prey shift")
+arrows(doy[which(whaledays==max(whaledays))],max(whaledays)+.0007,doy_shift_mis[which(whaledays==max(whaledays))],max(whaledays)+.0007, code=2, angle=45, length=.05, lwd=2,col="darkblue")
+arrows(doy[which(preydays==max(preydays))],max(preydays)+.0007,doy_shift[which(preydays==max(preydays))],max(preydays)+.0007, code=2, angle=45, length=.05, lwd=2, col="salmon")
+text(doy_shift_mis[which(whaledays==max(whaledays))]+50,max(whaledays)+.0007,"predator shift")
+text(doy_shift[which(preydays==max(preydays))]+60,max(preydays)+.0007,"prey shift")
 mtext("C)", side=3, line=1, adj=0, cex=1.2)
 
 plot(doy,rep(mean(doy),times=length(doy)), xlab= "peak prey day", ylab= "peak predator day", type="l", lty=3, lwd=2, cex.axis=1.5, cex.lab=1.5, bty="l")
