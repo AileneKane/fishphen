@@ -22,11 +22,17 @@ library(matrixStats)
 library(plotfunctions)
 library(igraph)
 library(brms)
+
+#load a function that pulls out phenology dates
+source("analyses/orcaphen/source/phen.functions.R")
+
 # 1. Choose the years, regions of interest, assumption about reports in the OrcaMaster and get the data
 includeCanada=TRUE
 firstyear=1976#probably set to 1975 or 1976 (Olson et al)
 assumeSRKW=FALSE #If true, assume that "Orcas" means SRKW unless noted otherwuse (i.e. Transients or NRKWs)
 use3regions=FALSE#If true, separate out the straight of Juan de Fuca as a 3rd region, distinct from CSS and PS (all code not yet working for 3 regions!)
+plotPNG =FALSE#if false, plots pdfs
+
 #Set start of seasons
 ps.start<-182#July 1 = 182
 uss.start<-91#April 1 = 91, 
@@ -72,8 +78,8 @@ source("analyses/orcaphen/source/orca_makemap.R")
 #8. Prep the lime kiln only data for either gams or linear models
 source("analyses/orcaphen/source/orca_get_whaledays_lime.R")
 
-#9. Fit gams in brms to limekiln data 
-#source("analyses/orcaphen/source/orca_rungams_lime.R")
+#9. Fit gams in brms to limekiln data or load models that were already fit
+source("analyses/orcaphen/source/orca_rungams_lime.R")
 
 #this takes a while, so just read in the relevant data from this below
   
@@ -94,6 +100,7 @@ brkyr = 2006#try 2005, 2006, 2007, 2008
 
 source("analyses/orcaphen/source/makeplots_srchinoverlap.R")
 
+#read in lime.df!!!
 
 #add 90 days to limekiln doy columns to make comparable to chinook
 lime2002<-lime.df[lime.df$year>2001,]
@@ -350,38 +357,6 @@ colnames(cpue.old)<-colnames(cpue.rec)<-c("doy","cpue.mean","cpue.sd")
 #source(orca_rungams_lime.R)#take a long time so just read in model ests
 limegests<-read.csv("analyses/output/lime_prob.occ.50.csv", header=TRUE)#also 0.90 and 0.95
 
-get.gests<-function(limegests,occprobs){
-  peakoc.doy<-c()
-  peakoc<-c()
-  firstprob<-c()
-  lastprob<-c()
-  meanprobs<-c()
-  prob.lc<-c()
-  prob.uc<-c()
-  years<-c()
-for(y in unique(limegests$year)){
-  yeardat<-limegests[limegests$year==y,]
-  occprobcol<-yeardat[,which(colnames(yeardat)==occprobs)]
-  yrpeakoc<-max(occprobcol)
-  yrpeakoc.doy<-yeardat$doy[which(occprobcol==yrpeakoc)]
-  yrfirst.doy<-yeardat$doy[min(which(occprobcol>0.1))]
-  yrlast.doy<-yeardat$doy[max(which(occprobcol>0.1))]
-  meanprob<-mean(occprobcol)
-  lprob<-quantile(occprobcol,0.25)
-  uprob<-quantile(occprobcol,0.75)
-  peakoc<-c(peakoc,yrpeakoc)
-  peakoc.doy<-c(peakoc.doy,yrpeakoc.doy)
-  firstprob<-c(firstprob,yrfirst.doy)
-  lastprob<-c(lastprob,yrlast.doy)
-  meanprobs<-c(meanprobs,meanprob)
-  prob.lc<-c(prob.lc,lprob)
-  prob.uc<-c(prob.uc,uprob)
-  years<-c(years,y)
-}
-  gests<-as.data.frame(cbind(years,peakoc,peakoc.doy,firstprob,lastprob,meanprobs,prob.lc,prob.uc))
-  row.names(gests)<-NULL
-  return(gests)
-}
 gests<-get.gests(limegests,"prob.occ")
 jgests<-get.gests(limegests,"jprob.occ")
 kgests<-get.gests(limegests,"kprob.occ")

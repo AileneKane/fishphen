@@ -58,12 +58,13 @@ pods<-c("J", "K","L","SRs")
 #aggregate whale days
 
 #first add zeros
+
 limeyears<-unique(orcasum.days.lime$year)
 
 alllimeabs<-c()
 
 for(y in limeyears){
-  days<-seq(from=min(orcasum.days.lime$day), to =214, by=1)#Cut off season aug 1 (214), as observations at lime kiln end then
+  days<-seq(from=min(orcasum.days.lime$day), to =as.numeric(max(limed$day)), by=1)
 
   abs<-rep(0,times=length(days))
   years<-rep(y, times=length(days))
