@@ -44,7 +44,7 @@ colnames(cpue.old)<-colnames(cpue.rec)<-c("doy","cpue.mean","cpue.sd")
 
 
 pdf(paste("analyses/orcaphen/figures/orcachinphenoverlap",pod,brkyr,".pdf",sep=""),height=5, width=12)
-#png(paste("analyses/orcaphen/figures/orcachinphenoverlap",pod,brkyr,".png",sep=""),height=400, width=1200)
+png(paste("analyses/orcaphen/figures/orcachinphenoverlap",pod,brkyr,".png",sep=""),height=400, width=1200)
 
 # to figure out how much to shift the salmon curve earlier- because they are measured at ft. langely on the frasier river, but we are interested in when they are at lime kiln
 # lime  kiln is ~160 km from lime kiln "as the fish swims" and fish swim about 70 km per day! only need to shift by 2-3 days?
@@ -98,6 +98,7 @@ uci=0.875
 
 #old time period
 pkdoy<-mean(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993])+shift
+#pkdoy<-which(cpue.old$cpue.mean==max(cpue.old$cpue.mean))#this changes things...
 pkdoy.lci<-quantile(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993],lci)+shift
 pkdoy.uci<-quantile(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993],uci)+shift
 arrows(pkdoy.lci,3.9,pkdoy.uci,3.9,code = 0, col = "salmon", lty=2,lwd = 3)
