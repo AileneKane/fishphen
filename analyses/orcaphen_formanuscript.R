@@ -62,8 +62,6 @@ source("analyses/orcaphen/source/orca_plot_whaledays.R")
 #6. Make a map of the SRKW sightings in ps and uss (note that this map is not the map used in the ms- Erica made the map)
 source("analyses/orcaphen/source/orca_makemap.R")
 
-
-
 #8a. Prep the lime kiln only sdata for either gams or linear models
 source("analyses/orcaphen/source/orca_get_whaledays_lime.R")
 #7.Fit gams to Lime Kiln SRKW data and 

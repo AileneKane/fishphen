@@ -14,12 +14,12 @@ setwd("~/GitHub/fishphen")
 #setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
 
 #Read in summaries of rates of change from orca occupancy model
-l2<-read.csv("analyses/output/L_2uss_doy92-3031978-2017_ci0.5occprob_wrecent.csv")
-l1<-read.csv("analyses/output/L_1ps_doy183-3661978-2017_ci0.5occprob_wrecent.csv")
-k2<-read.csv("analyses/output/K_2uss_doy92-3031978-2017_ci0.5occprob_wrecent.csv")
-k1<-read.csv("analyses/output/K_1ps_doy183-3661978-2017_ci0.5occprob_wrecent.csv")
-j2<-read.csv("analyses/output/J_2uss_doy92-3031978-2017_ci0.5occprob_wrecent.csv")
-j1<-read.csv("analyses/output/J_1ps_doy183-3661978-2017_ci0.5occprob_wrecent.csv")
+l2<-read.csv("analyses/output/L_2uss_doy92-3031978-2017_ci0.75_occprobmin0.5_wrecent.csv")
+l1<-read.csv("analyses/output/L_1ps_doy183-3661978-2017_ci0.75_occprobmin0.5_wrecent.csv")
+k2<-read.csv("analyses/output/K_2uss_doy92-3031978-2017_ci0.75_occprobmin0.5_wrecent.csv")
+k1<-read.csv("analyses/output/K_1ps_doy183-3661978-2017_ci0.75_occprobmin0.5_wrecent.csv")
+
+j1<-read.csv("analyses/output/J_1ps_doy183-3661978-2017_ci0.75_occprobmin0.5_wrecent.csv")
 
 all2<-rbind(j2,k2,l2)
 all1<-rbind(j1,k1,l1)
@@ -86,7 +86,7 @@ png(file="analyses/figures/srkw_salmon_recentshifts_lm.png",width=600,height=500
 #quartz(width=12, height=10)
 #par(mfcol=c(2,3),mai=c(.5,1,.5,0.5))
 par(mfcol=c(2,2),mai=c(.5,1,.5,0.5))
-x<-rep(1,times=3)
+x<-rep(1,times=3)+c(0,.1,.2)
 #Central salish sea first...
 plot(x,all2$slope.mn[all2$phase=="first.20012016"],pch=c(21,22,24),bg="darkblue", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,7), bty="l", cex=2)
 abline(h=0,lty=2)

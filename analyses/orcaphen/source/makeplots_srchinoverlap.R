@@ -98,7 +98,7 @@ uci=0.875
 
 #old time period
 pkdoy<-mean(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993])+shift
-#pkdoy<-which(cpue.old$cpue.mean==max(cpue.old$cpue.mean))#this changes things...
+#pkdoy<-which(cpue.old$cpue.mean==max(cpue.old$cpue.mean))#this changes things...talk to JAmeal about whether we should show the mean day of year of peak abundance or the day of year of mean peak abundance....
 pkdoy.lci<-quantile(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993],lci)+shift
 pkdoy.uci<-quantile(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993],uci)+shift
 arrows(pkdoy.lci,3.9,pkdoy.uci,3.9,code = 0, col = "salmon", lty=2,lwd = 3)
