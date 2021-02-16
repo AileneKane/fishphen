@@ -61,7 +61,7 @@ mtext("A)", side=3, line=1, adj=0, cex=1.5)
 
 #mtext(paste(podname,"presence",sep=" "),side=4, adj=.5, line=2)
 #legend(135,1.2,legend=c(paste(brkyr,"2017",sep="-"),paste("1994",(brkyr-1),sep="-")),lty=c(1,2),lwd=2,col="darkblue", bty="n", cex=1.3)
-legend("bottomright",legend=c(paste(brkyr,"2017",sep="-"),paste("1994",(brkyr-1),sep="-")),lty=c(1,2),lwd=2,col="darkblue", bty="n", cex=1.3)
+legend("bottomright",legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="darkblue", bty="n", cex=1.3)
 
 #Plot mean peak day across early vs late time periods
 gests<-get.gests(limegests,"prob.occ")
@@ -162,7 +162,7 @@ for(i in 1:length(bryears)){
   mtext(paste(lets[i]), side=3, line=1, adj=0, cex=1.5)
   #axis(side = 4)
   
-  legend("bottomright",legend=c(paste(brkyr,"2017",sep="-"),paste("1994",(brkyr-1),sep="-")),lty=c(1,2),lwd=2,col="darkblue", bty="n", cex=1.3)
+  legend("topleft",legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="darkblue", bty="n", cex=1.3)
 gests<-get.gests(limegests,"prob.occ")
 lci=.125
 uci=0.875
@@ -264,7 +264,7 @@ for(i in 1:length(podnames)){
   #axis(side = 4)
   
   #mtext(paste(podname,"presence",sep=" "),side=4, adj=.5, line=2)
-  legend("bottomright",legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="darkblue", bty="n", cex= 1.5)
+  legend("topleft",legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="darkblue", bty="n", cex= 1.5)
   gests<-get.gests(limegests,"prob.occ")
   lci=.125
   uci=0.875
