@@ -79,14 +79,14 @@ source("analyses/orcaphen/source/orca_makemap.R")
 source("analyses/orcaphen/source/orca_get_whaledays_lime.R")
 
 #9. Fit gams in brms to limekiln data or load models that were already fit
-source("analyses/orcaphen/source/orca_rungams_lime.R")
+#source("analyses/orcaphen/source/orca_rungams_lime.R")
 
 #this takes a while, so just read in the relevant data from this below
   
 #10. Read in model results from albion test fishery gams (in albion.brms.R)
 #albchin<-read.csv("analyses/output/albionchiphen_allyear.csv", header = TRUE)
 #albchinest<-read.csv("analyses/output/albionchiphenbrmslog.csv", header = TRUE)
- albchinest<-read.csv("analyses/output/albionchiphenest.csv", header = TRUE)
+albchinest<-read.csv("analyses/output/albionchiphenest.csv", header = TRUE)
 
 albchinest95<-albchinest[albchinest$year>1993  & albchinest$year<2018,]
 albchinest95<-albchinest95[-which(albchinest95$year==2014),]

@@ -255,7 +255,7 @@ for(i in 1:length(podnames)){
   wdays.old$seocc<-wdays.old$sdocc/sqrt(wdays.old$n)
   
   
-  plot(wdays.old$doy,wdays.old$meanocc, type="l",lty=2, lwd=2,col="darkblue", xlim=c(140,200), ylim=c(0,1.1),  ylab="Probability of Occurrence",xlab="Day of Year", bty="l", cex.axis = 1.5, cex.lab=1.5)
+  plot(wdays.old$doy,wdays.old$meanocc, type="l",lty=2, lwd=2,col="darkblue", xlim=c(140,200), ylim=c(0,1.15),  ylab="Probability of Occurrence",xlab="Day of Year", bty="l", cex.axis = 1.5, cex.lab=1.5)
   polygon(c(rev(wdays.old$doy),wdays.old$doy),c(rev(wdays.old$meanocc+wdays.old$sdocc),wdays.old$meanocc-wdays.old$sdocc),col=alpha("darkblue",0.05),lty=0)
   polygon(c(rev(wdays.rec$doy),wdays.rec$doy),c(rev(wdays.rec$meanocc+wdays.rec$sdocc),wdays.rec$meanocc-wdays.rec$sdocc),col=alpha("darkblue",0.05),lty=0)
   
@@ -273,15 +273,15 @@ for(i in 1:length(podnames)){
   pkocdoy<-mean(gests$peakoc.doy[gests$year<brkyr & gests$year>1993])
   pkocdoy.lci<-quantile(gests$peakoc.doy[gests$year<brkyr & gests$year>1993],lci)
   pkocdoy.uci<-quantile(gests$peakoc.doy[gests$year<brkyr & gests$year>1993],uci)
-  arrows(pkocdoy.lci,.95,pkocdoy.uci,.95,code = 0, col = "darkblue", lty=2,lwd = 3)
-  points(pkocdoy,.95, pch = 21, bg="darkblue", cex = 2)
+  arrows(pkocdoy.lci,1.05,pkocdoy.uci,1.05,code = 0, col = "darkblue", lty=2,lwd = 3)
+  points(pkocdoy,1.05, pch = 21, bg="darkblue", cex = 2)
   
   #recent time period
   pkocdoy<-mean(gests$peakoc.doy[gests$year>=brkyr])
   pkocdoy.lci<-quantile(gests$peakoc.doy[gests$year>=brkyr],lci)
   pkocdoy.uci<-quantile(gests$peakoc.doy[gests$year>=brkyr],uci)
-  arrows(pkocdoy.lci,1,pkocdoy.uci,1,code = 0, col = cols[2], lty=1,lwd = 3)
-  points(pkocdoy,1, pch = 21, bg=cols[2], cex = 2)
+  arrows(pkocdoy.lci,.95,pkocdoy.uci,.95,code = 0, col = cols[2], lty=1,lwd = 3)
+  points(pkocdoy,.95, pch = 21, bg=cols[2], cex = 2)
   
   
   }
