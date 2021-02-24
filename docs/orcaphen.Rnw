@@ -1,6 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%START PREAMBLE THAT IS THE SAME FOR ALL EXAMPLES
 \documentclass{article}
 
+%Required: You must have these
 \usepackage{Sweave}
 \usepackage{graphicx}
 \usepackage{tabularx}
@@ -9,9 +10,6 @@
 \usepackage{pdflscape}
 \usepackage{array}
 \usepackage{gensymb}
-\usepackage{amsmath}
-\usepackage{xr}
-
 %\usepackage[backend=bibtex]{biblatex}
 %Strongly recommended
   %put your figures in one place
@@ -52,142 +50,119 @@
 \SweaveOpts{concordance=FALSE}
 %\SweaveOpts{concordance=TRUE}
 
-\bibliographystyle{../refs/bibstyles/amnat.bst}
-\title{Shifts in Southern Resident Killer Whale Phenology in the Salish Sea}
+%\bibliographystyle{/Users/ailene.ettinger/Documents/GitHub/fishphen/refs/bibstyles/amnat.bst}% i moved a style file into the ospree git repo. feel free to add whatever style you like and update, lizzie! I don't have besjournals
+\title{Shifts in Orca Phenology and their Prey in the Salish Sea}
 \date{\today}
 \maketitle
 \author{A.K. Ettinger, C. Harvey, J. Samhouri, B. Hanson, C. Emmons, J. Olson, E. Ward}
 \maketitle  %put the fancy title on
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\par 
-\emph{Target journal(s)}: Global change biology, Journal of Applied Ecology %, Marine Ecology Progress Series, not currently written for a short-form journal but perhaps consider PNAS?
-\section* {Introduction}
-\par Phenology, or the timing of biological activities such as migration, growth, and reproduction, can have dramatic implications for fitness \citep{lane2012,chuine2010}. Consumer phenology that is out of step with its resource phenology can cause increased mortality %\citep{lamaris2018} 
-or reduced reproductive success \citep{post2007}. The critical nature of these ``matches'' or  ``mismatches'' was originally described for fish and zooplankton \citep{hjort1914,cushing1974,cushing1975}, and has received renewed scientific interest as phenological shifts have been increasingly observed in conjunction with recent climate change \citep{durant2007}. 
 
-\par Despite its importance, phenology of many organisms, even those of conservation concern, remains poorly understood and is rarely quantified, especially for marine organisms. A recent meta-analysis found that shifts in marine phenology are at least as dramatic as those observed in terrestrial systems (e.g., - 4.4 $\pm$0.7 days per decade) \citep{poloczanska2013}. The abundance of critical resources is more often a focus of natural resource management, yet the timing of resource peaks can be at least as important to consumers \citep{hipfner2008}.
- %JS: I am also thinking that some of the ecological literature on resource pulses could be helpful here, eg Yang et al 2008, 2010
-\par Southern resident killer whales (SRKWs, \emph{Orcinus orca}) are a federally endangered population that spends time in the Salish Sea, the inland marine waters of Washington State, USA, and British Columbia, Canada (Fig. 1).  SRKWs vary seasonally in their use of inland waters: they travel between summer and winter core areas that can be separated by thousands of kilometers, spending time in outer coastal areas when they are not in inland waters \citep{balcomb1986,krahn2005}. The timing of their movements are thought to be related to seasonal migrations of their prey.  SRKWs differ from many orca whales in that their primary prey are salmon (\emph{Oncorhynchus} species), especially Chinook salmon \citep[\emph{Oncorhynchus tshawytscha}][]{hanson2010}. SRKWs use inland waters to hunt when their prey are aggregated and locally highly abundant, and have received widespread scientific and public attention in recent years as their numbers have declined\citep[e.g., Seattle Times articles,][]{lusseau2009,larson2018, olson2018}. Insufficient prey availability is believed to be one of the primary threats to this population, along with vessel traffic and pollutants \citep{krahn2007,lusseau2009,hanson2010,ward2009}. 
-\par In recent decades, the abundance and phenology of the favored prey of SRKWs, salmon, has shifted in the western United States \citep{weinheimer2017,reed2011,ford2006,satterthwaite2014}(add Nelson for Chinook hatchery release timing), though patterns vary by species and location. We would therefore expect SRKW phenology to have shifted during this time, if prey is a primary driver of their activity in inland waters. If SRKW phenology has not shifted at a rate consistent with phenological shifts in their prey, this mismatch could exacerbate the low prey availability they experience. 
-%\par Add a paragraph about monitoring of whales? Quantifying changes in the timing of SRKW activity in inland waters over the pst 40 years is challenging because monitoring effort has increased during this time \citep{olson2018, strebel2014}. 
-\par Here, we seek to quantify seasonal variation in SRKW activity and the extent to which these seasonal patterns have shifted in recent decades.
-Specifically, we ask:
+\section* {Background}
 \begin{enumerate}
-\item Has the timing of SRKW activity (phenology) shifted in the Salish Sea? 
-\item If there have been phenological shifts in SRKW activity, do these shifts coincide with shifts in phenology of their prey, salmon (\emph{Oncorhynchus} species)?
+\item Southern resident killer whales (SRKWs) are a threatened population, recieved much scientific and public attention.
+\item  SRKWs use of the Salish Sea varies seasonally across two broad areas: the upper Salish Sea 
+(north of Admiralty Inlet, reference Map).
+\item Efforts are underway to alter hatchery production to benefit orca whales, because one of the threats facing SRKWs is thought to be lack of prey. We know that SRKWs forage on chinook salmon as a primary food source (cite hanson papers), but there are lots of questions about what other species they use and how their prey varies seasonally. 
+\item SRKW activity is generally thought to be related to finding prey. In recent decades, salmon abundance and phenology has shifted in the Salish Sea \citep{weinheimer2017,reed2011,ford2006}(add Nelson for chinook hatchery release timing, others for abundance data), though rates vary by species and location. We would therefore expect SRKW phenology to have shifted during this time, if prey is a primary driver of their activity in the Salish Sea. 
+
+\item SRKWs may be spending more time in Puget Sound \citep{olson2018}. However, the details are unclear because monitoring effort has also increased duiring this time. Understanding how SRKW activity varies seasonally and how these seasonal patterns have shifted in recent decades will allow us to develop and test hypotheses about potential drivers of these shifts, which in turn will provide information that may be useful for management decision-making to conserve SRKWs.
+\item Additionally: could make this more explicitly about changes in effort/presence-only database and citizen science. 
 \end{enumerate}
+\section* {Research Questions}
+Here, we ask:
+\begin{enumerate}
+\item Has the timing of SRKW activity (phenology) shifted in the upper Salish Sea and/or Puget Sound? (First observation date, Last observation date, number of days observed)
+\item If there have been phenological shifts in SRKW activity, do these shifts coincide with shifts in phenology or abundance of their prey (chinook, coho, chum salmon)?
+\end{enumerate}
+
 
 \section* {Methods}
-\subsection*{Focal species description}
-Southern resident killer whales are a population of fish-eating killer whales that inhabit coastal waters from central California to northern British Columbia.  During the summer months they are often seen in inland waters of Washington and southern British Columbia (Fig. 1). Southern residents are considered distinct from another population of fish-eating killer whales, known as the northern resident killer whales (NRKWs), whose distribution is further north, and from co-occurring `transient' killer whales, which feed primarily on marine mammals (Bigg 1982). Southern resident killer whales feed primarily on salmon, especially Chinook salmon \citep{hanson2010}. This populations of whales has declined dramatically since the 1970s, and are now listed as endangered under the Canadian Species at Risk Act (SARA) and the US Endangered Species Act (ESA). Threats to the population include small population size, chemical contamination, disturbance from boat traffic, and insufficient prey availability (Holt et al. 2009, Lusseau et al. 2009, Noren et al. 2009, Williams et al. 2009, Ward et al. 2009, Ford et al. 2009). The SRKW population is composed of three subgroups, or pods, identified as J, K, and L, which are matrilineally related, cohesive and stable social groups. Individuals rarely disperse from their natal pods (Bigg et al. 1990).
-\subsection* {Data}
-\par \underline{Southern resident killer whales}: To quantify SRKW seasonal phenology over time, we used the OrcaMaster Database for Whale Sighting Data (Whale Museum), comprised of data from five main sources, including public sightings networks (e.g., OrcaNetwork), commercial whale watch data, and scientific surveys (e.g., SPOT data from satellite tracking units) \citep{olson2018}. We used data from 1978-2017, because prior to this time there was no dedicated effort to track SRKW presence in the region \citep{olson2018}. We used these sighting data to quantify %first observation day-of-year (DOY, the first date on which one or more pods of SRKWs were observed in a given region) and last observation DOY (the lasst date on which one or more pods of SRKWs were observed) 
-detection of SRKWs in the two core areas: the Central Salish Sea, used primarily by SRKWs from May through September, and Puget Sound proper, visited by SRKWs most commonly from September through January \citep[Fig. 1][]{olson2018}. We used these seasonal definitions because they are most aligned with mean SRKW seasonal activity patterns over time (Fig \ref{fig:phenplot}).  We also quantified number of whale days (i.e., days on which whales were observed) within a season and year for each region. This work is focused oh phenology of SRKWs, so we counted a whale day as a day on which an entry in the OrcaMaster database reported sighting "southern residents" or J, K, and/or L pods specifically. Note that this approach differs from \citet{olson2018}, who assumed that any orca whale sighting in the database was a southern resident, unless noted as a transient or northern resident killer whale.  
-\par Add something about lime kiln subset of OrcaMaster data.
-\par \underline{Salmon}: We wanted to quantify potential shifts in SRKW prey (i.e., adult salmon) phenology since 2001 (coinciding with the time frame across which we summarize trends in SRKW phenology). Ideally, we would compare SRKW phenology to salmon phenology in the same inland marine waters. However, we were unable to find spatially explicit daily or weekly data of salmon species presence or abundance in these regions, across this time frame. We therefore used data from freshwater areas where adult salmon arrive after entering inland marine waters. We used two distinct datasets for salmon phenology. For the Central Salish Sea region, we used adult salmon return data from the Albion Chinook test fishery, located  on the lower Fraser River at Albion, British Columbia, Canada (https://www.pac.dfo-mpo.gc.ca/fm-gp/fraser/docs/commercial/albionchinook-quinnat-eng.html). We used these data because SRKWS feed primarily on Chinook salmon during the spring/summer season (comprising 50-90\% of their diet during this time), and approximately 80-90\% of the Chinook salmon consumed by SRKWs during the months of May to September appear to be from the Fraser River \citep{hanson2010}. Add a citation, if possible, relating Fraser River Salmon to Lime Kiln?
+\begin{enumerate}
+\item Data
+\begin{enumerate}
+\item To quantify orca seasonal phenology over time, we used the OrcaMaster Database for Whale Sighting Data (Whale Museum), comprised of data from five main sources, including public sightings networks (e.g., OrcaNetwork), commercial whale watch data, and scientific surveys (e.g., SPOT data from satellite tracking units) \citep{olson2018}. We used data from 1978-2017, because prior to 1976, there was no dedicated effort to track SRKW presence in the region \citep{olson2018}. We used these sighting data to identify first observation day-of-year (DOY, the first date on which one or more pods of SRKWs were observed) and last observation DOY (the first date on which one or more pods of SRKWs were observed) for each sub-region (Upper Salish Sea and Puget Sound) and season (Winter-- October through January; and Summer-- May through September). We used these seasonal definitions because they are most aligned with mean SRKW seasonal activity patterns over time (Fig \ref{fig:phenplot},Fig \ref{fig:phenplot2}).
 
 
-\par For Puget Sound proper, we used adult salmon return ('escapement') data for coho (\emph{O. kisutch}), chum (\emph{O. keta}), and Chinook salmon in Washington state, available from the Washington Department of Fish and Wildlife (WDFW, https://wdfw.wa.gov/fishing/management/hatcheries/escapement). These daily or weekly  data are available for 67 streams going back to 1997 and include wild and hatchery counts. We selected sites located close to Puget Sound or the central Salish Sea (i.e.., within XX km) with the greatest available data (i.e., long time series with frequent monitoring), and with relatively large run sizes (range of average counts from trap estimates = 1,400-30,000 for chum, 621 - 11,500 for coho, and 550-13,350 for Chinook.) We stress that the particular runs we chose may not be widely represented in SRKW diet, but they represent the best available data for salmon phenology in Washington state of which we are aware. %Can we say how well represented these salmon area based on brad or mike's papers?
-We  include all three salmon species because the breadth of SRKW diet increases during the fall/winter months and can include large proportions of chum and coho, in addition to Chinook \citep{hanson2019,ford2016}.  
+\item WDFW adult salmon return data for coho, chum, chinook in XX streams (Alternatively, may use RMIS data for coho, chum, chinook.)
+\end{enumerate}
+\item Analysis
+\begin{enumerate}
+\item To identify trends over time in phenology for all SRKWs in the Upper Salish Sea and in Puget Sound, we used linear regression on first  and last observation dates from 1978 through 2017. We also compared first and last observation dates across time periods (1978-1997 versus 1998-2018), using boxplots and t-tests (Fig \ref{fig:boxplot1} and \ref{fig:boxplot2}), because relationships over time did not look linear and linear regression provided poor fit (Fig \ref{fig:reg}). 
+\item To estimate effects of increased effort (i.e., increased numbers of sightings over time) on trends in phenology, we simulated datasets of whale presence during two seasons equivalent to those in our dataset (summer, which was 1 May through 31 Sept, or 153 days, and fall, which was 1 October through 1 Feb, or 123 days). We used whale presence probabilities of 0.85 for the Upper Salish Sea and 0.6 for Puget Sound (the means in our dataset for each region) and kept it constant over 40 simulated years. We then created an observation dataset, in which effort (the number of observations), varied. During the low effort time period (years 1-20), the number of observations had a mean of 15 per year for Puget Sound and 104 per year in the Upper Salish Sea (matching the means for these reagions from 1978-1997 in the OrcaMaster database).  During the high effort time period (years 21-40 in our simulated dataset), the number of annual observations had a mean of 39 for Puget Sound andand 133 for the Upper Salish Sea (matching those in the OrcaMAster database from 1998-2017). We then calculated first- and last- observations dates for each simulated year. We ran these simulation 100 times and calculated the difference between the low effort and high effort time periods. We compared these to the mean differences first- and last-observation daates across time periods in the OrcaMaster database, for each region, to understand whether observed changes may be due to changes in effort over time, rather than changes in orca activity (Fig \ref{fig:sims}).
 
-\subsection* {Analysis}
-\underline{Southern resident killer whales}:
-\par To identify trends over time in phenology for SRKWs in the Central Salish Sea and in Puget Sound proper, we summarized the number of whale days (days on which whales were observed), as well as first-, last-, and mean- observation dates from 1978 through 2017 in each region. Cite figures for which this whole-population data are shown
+\item To identify trends over time in phenology for each pod separately (J,K,L) in the Upper Salish Sea and in Puget Sound, we used linear regression on first-, last-, and peak detection dates estimated from pod-specific occupancy models. Occupancy models (MacKenzie et al. 2002) can estimate jointly species presence or abundance and detection probability (the probability to detect at least one individual present at site). We parameterized the model with annual occupancy probabilities (i.e., we did not fit a dynamic model, but a multiseason model (Royle and Kery 2007). The distribution submodel distinguishes true presence or absence of pod,p, (z, a latent state) in marine area i in year t, ...add equation here. We assumed zi,t to be a Bernoulli random variable...
+We modelled detection probability as a function of year and date, with detectability modelled as a semi-parametric, smooth function of date using flexible thin-plate spline regression modelling \citep{strebel2014}. 
 
-\par We quantified pod-specific phenology for J, K, and L pods in the Central Salish Sea versus Puget Sound Proper using occupancy models. Occupancy models can estimate jointly species presence and detection probability (\emph{p},the probability of detecting at least one individual present at a site) by distinguishing true presence or absence, \emph{z} (a latent, unobservable state), from observed presence. Occupancy models are composed of a state sub-model, which is the model for the ecological process of true presence or absence, and  an observation sub-model, which links the observations (i.e., whether or not whales were seen) to the state model.
-\par We fit a hierarchical model in which occupancy probability (psi) was a function of day of year (i.e., we did not fit a dynamic model, but a multi-year model,Royle and Kery 2007), with year and marine area as levels. Occupancy probability was modeled as a semi-parametric, smooth function of day of year (`\emph{day}')using flexible thin-plate spline regression modelling \citep{strebel2014}. We assumed \emph{z}, to be a Bernoulli random variable for which 0 signifies absence and 1 is presence. We modeled detection probability (\emph{p}) as a year- (`\emph{yr}') and marine area- (`\emph{area}') specific probability between 0 and 1. Thus, our occupancy model can be described by the following equations:
+\item We used linear regression to identify trends over time in first, median, and last dates of salmon adult migration timing.
+\end{enumerate}
+\end{enumerate}
 
-\par Observation model:
-\begin{equation} 
-y_{area,yr,day} \sim Binomial (T_{yr,day,area}, z_{yr,day} * p_{area,yr})\\
-\end{equation}
-
-\par State model:
-\begin{equation} 
-z_{yr,day} \sim Bernoulli (\mathrm{\Psi}_{yr,day})\\
-\end{equation}
-
-\par Occupancy models were fit using JAGS, a program for analysis of Bayesian hierarchical models using Markov Chain Monte Carlo (MCMC) simulation \citep{plummer2019}, using the R2jags package \citep{su2015} in R, version 3.6.0 \citep{r2019}. We fit separate occupancy models within each region (and season, since seasonal use varies by region) for each pod, and extracted estimates of annual arrival, departure, and peak occupancy dates with each model. We defined arrival date as the earliest DOY within the season when occupancy probability exceeded 0.5; departure date was the latest DOY within the season when detection probability exceeded 0.5. (Using a threshold probability lower than 0.5 did not qualitatively alter observed trends, Figure SX.)
-
-\par With increasing public awareness of the plight of SRKWs and with the rise of social media, there has been a dramatic increase in reported sightings of SRKWs since 1978 \citep{olson2018}. As a presence-only database, trends in the OrcaMaster dataset should be interpreted with care, since they could be due to shifts in effort as well as (or instead of) trends in SRKW activity. For this reason, we report all trends across two different durations: the full dataset (from 1978-2017) and recent years (2001-2017). We use 2002 as a cut-off, to avoid the sharp increase in sightings that occurred from 2000 to 2001, likely influenced by the onset of internet-based sightings platforms that began that year \citep{olson2018}. Further, because the above occupancy models cannot fully statistically account for changes in effort over time, due to the presence-only nature of the data, we compared SRKW phenology estimates from the occupancy models to phenology observed at Lime Kiln State Park from 1990 to 2017. Lime Kiln is located on the west side of San Juan Island (Fig. 1) and XXX (add some more justification for the Lime Kiln data). This dataset represents a subset of the OrcaMaster database that was collected with consistent observer effort from May through September \citep{olson2018}.  
-
-\underline{Quantifying effects of changes in effort}:
-\par To better understand how increased effort across the time-series (i.e., increased numbers of sightings over time) may affect estimates of trends in phenology, we simulated data sets of whale presence during two seasons equivalent to those in our data set (spring/summer, which was 1 May through 31 Sept, or 153 days, and fall/winter, which was 1 October through 1 Feb, or 123 days). We used whale presence probabilities of 0.85 for the Central Salish Sea and 0.6 for Puget Sound (the means in our data set for each region) and kept them constant over 40 simulated years. We then created an observation data set, in which effort (the number of observations), varied. During the low effort time period (years 1-20), the number of observations had a mean of 15 per year for Puget Sound and 104 per year in the Central Salish Sea (matching the means for these regions from 1978-1997 in the OrcaMaster database).  During the high effort time period (years 21-40 in our simulated data set), the number of annual observations had a mean of 39 for Puget Sound and 133 for the Central Salish Sea (matching those in the OrcaMaster database from 1998-2017). We then calculated first- and last- observations dates for each simulated year. We ran these simulation 100 times and calculated the difference between the low effort and high effort time periods. We compared these to the mean differences first- and last-observation dates across time periods in the OrcaMaster database, for each region, to understand whether observed changes may be due to changes in effort over time, rather than changes in orca activity.\\
-\underline{Salmon}:
-\par We used hierarchical linear models to identify trends over time in first, median, peak, and last dates of salmon adult migration timing in Puget Sound proper. We treated distinct rivers and species, as well as hatchery versus wild types of the same species, as separate groups in our model. Our multilevel model included all three species across hatchery and wild salmon in 10 streams, yielding 17 distinct groups. The response variable was number of salmon, and the explanatory variable was day of year. Our model allowed for different trends (slopes) across these separate groups, estimating both group-level responses (i.e., run-specific estimates, generally resulting in more accurate estimates for well-represented groups), and the distribution from which they are drawn, yielding an estimate of the overall response across groups.
-\par Add equation for multi-level Puget Sound salmon phenology model here
-\par We used linear models to identify trends over time in first, median, peak, and last dates of salmon adult migration timing in Albion test fishery data. The response variable was catch per unit effort (CPUE), a metric of salmon abundance that accounts for the search effort, which varies annually for these data (cite website or report for these data).
-\par Add equation for Albion Test fishery salmon phenology model here
 
 \section*{Results}
-\par We found that SRKW phenology has shifted. Since 2002, estimated peak occurrence probability in the Central Salish Sea has gotten later for all three pods (Fig. \ref{fig:timeseries}), at rates ranging from 0.88  to 2.71 days per year (Fig. \ref{fig:shifts}). Trends across the full dataset (1978-2017) were also toward later peak occurrence probability, though they were less dramatic and the large increase in effort has likely affected some of these trends (see Supplemental Materials for details, especially Fig. SX and Table S1).  In Puget Sound proper, there has not been a consistent linear trend in peak occurrence since 2002 for any pod (i.e., credible intervals around the slopes encompass 0). The trend across the full dataset has been toward later peak occurrence for all three pods (see Supplemental Materials for details, especially Fig. SX and Table S1). 
-\par Coincident with these phenological trends, the number of whale days has also changed across the time-series (Fig. 3). Since 2002, the number of whale days has decreased in the Central Salish Sea, across all pods; in Puget Sound proper XXX. From 1978 to 2017, the number of whale days increased in both regions (and for all pods); at least some of these increasing trends are likely due to observed phenological shifts in the Central Salish Sea, however. 
-\par We found that salmon phenology has shifted as well, with trends differing across regions (Fig. 4). In the central Salish Sea, the return timing of Chinook in the Fraser River has delayed by 0.80 days per year (80\% credible intervals: 0.5-1.1 days per year) for first-observations dates since 2002 (Fig 4A; see Table S1 for trends from 1980-2017, the full time series available).  Delays in peak return and median return dates are stronger (1.2 and 1.3 days per year, respectively). In Puget Sound proper, we find a shift toward earlier returns (Fig. 4B).
-
-\par Add summary of analysis that more explicitly compares match/mismatch over time, at least for Lime Kiln and Fraser River Chinook.
-
 \section*{Discussion}
-\par Recent shifts in phenology have been identified in diverse ecosystems around the world \citep{poloczanska2013}, but the importance and management implications of phenological shifts in consumers and their prey, as well as the potential for match/mismatch dynamics with climate change, remain poorly understood, especially for species of conservation concern. Here we show that the timing of SRKW activity has shifted over the past 40 years, with recent trends differing from long-term trends. Changes in marine phenology have been widely reported and are often attributed to climate change \citep{poloczanska2013}. Given the observational nature of the dataset, and that many factors have changed over the length of the dataset, it is impossible to definitively identify drivers of the shifts we observed. There are many factors that could affect phenology of SRKWs in the Salish Sea, a few of which we discuss below.
-
-\par Phenological shifts observed in SRKWs may be attributable to changes in their prey. In the Central Salish Sea, SRKW phenological shifts are comparable to shifts in Chinook salmon (Fig. 4), and SRKW phenology is related to salmon phenology and abundance across years, at least at one consistently-observed site in the region (Fig. 5). The trend toward later returns in Fraser River Chinook (and later arrivals of SRKWs in the region) differs from trends in Puget Sound proper, where salmon returns are getting earlier. Across the west coast, similarly divergent trends have been observed across species and populations of salmonids. For example, in southeast Alaska, the migration timing of many adult sockeye salmon (\emph{O. nerka}) populations has shifted later, whereas but pink, chum, and coho populations have shifted earlier in the reegion \citep{kovach2015}. These varying trends may be due to genetic differences across populations, perhaps driven by fishing pressure \citep{tillotson2018,morita2018} or hatchery practices \citep{tillotson2019}. In Puget Sound, where salmon returns are trending earlier (Fig. 4), the prevalence of hatchery-origin fish may be greater than in the Central Salish Sea (cite George Pesce paper). The timing of SRKW activity in Puget Sound proper appears to be shifting in a manner that differs from shifts in salmon timing (e.g., salmon are shifting eralier, but SRKWs are not, Fig. 4). If these divergent trends continue, the timing of SRKWs activity in the region may become increasingly mismatched from their prey. This could cause additional stress on SRKW populations, since the timing of resource availability can be as important as the amount of the resource \citep[Brianna's work,][]{hipfner2008}. Could add something about greater diversity of prey in Puget Sound\citep{ford2016,hanson2010}?
-\par Shifts in prey phenology and abundance are only one potential driver of SRKW phenology, however. There may be social reasons for shifts. Other global change factors: increased vessel traffic and other disturbances. increased fishing?
-\par Definitive absence data would be allow for better quantifiaction of trends in phenology and potentially aid in identifying drivers. Observer effort has clearly shifted over time (Fig. 2) and the separating changes in effort from biological shifts is challenging with presence-only data, such as the OrcaMaster database. This dataset represents the best available long-term data on SRKWs, and it could be even more valuable if absence data are incorpoated into the database moving forward; this would allow for more robust analyses of whale distributions. 
-\par 
 \section*{Conclusion}
 
-\section*{To Do}
-\begin{enumerate}
-\item Add more to Discussion!
-\item Modify Figure 1 (add lime kiln, add Albion test fishery locations)
-\item Modify Figure 2 (add shading for error of estimated prob of occupancy)
-\item Modify Figure 3 (shown only recent time period included in models (2002-2017) and add linear trend for the tie period, if significant)
-\item Modify Figure 4 (Add SRKW shifts)
-\item Modify Figure 5 
-\item Supplemental Materials:
-\begin{enumerate}
-\item Table comparing estimates of shifts
-\item Time series of peak prob. occurrence for K and L pods
-\item Time series for first- and last- dates when occurrence probability is greater than 0.5 for J,K,L pods
-\item Expected phenological change due to change in effort alone (simulations)- do this for the recent time span as well?
-
-\end{enumerate}
-\end{enumerate}
-\bibliography{../refs/noaalib.bib}
-
-
 \section* {Figures}
+\begin{enumerate}
+\item 3-paneled figure with the following panels: 
+\begin{enumerate}
+\item Map of Salish Sea showing 2 seasons and habitat use areas.
+\item Observations in Puget Sound (fall/winter) (rough versions are Fig. \ref{fig:phenplot} and \ref{fig:phenplot2}
+\item Observations in the upper salish sea (spring/summer)
+\end{enumerate}
+\item 4- or 6-paneled figure with trends in first and last observation dates (and number of whale days?) of whales in upper Salish Sea (summer habitat) and south Puget Sound (winter habitat)
+\item 6-paneled figured of Pod-specific trends in first and last observation dates puget sound and the upper salish sea (rough version is Fig. \ref{fig:trends}
+\end{enumerate}
 
 \begin{figure}[p]
-\includegraphics[width=0.5\textwidth]{../analyses/figures/OrcaPhenPlots/srkw_justmap_assumeSRKW_April1.png} 
-\caption{\textbf{Southern resident killer whale activity varies across two broad regions: the Central Salish Sea and Puget Sound proper}. }
- \label{fig:map}
+\includegraphics{../analyses/figures/OrcaPhenPlots/SRKW_yr_doy.pdf} 
+\caption{\textbf{Southern resident killer whale activity in the Upper Salish Sea and Puget Sound varies by season}.Need to add a map of where observations are, and make this look prettier...}
+ \label{fig:phenplot}
+ \end{figure}
+ 
+ \begin{figure}[p]
+\includegraphics{../analyses/figures/basicplots/propwhdaysperweek_std.pdf} 
+\caption{\textbf{Southern resident killer whale observations, in terms of proportion of days per week that whales were observed, in the Outer Coast, Puget Sound and Upper Salish Sea, varies by season}. Proportions are the mean across all years (1978-2017) and have been standardized by subtracting the mean and dividing by the standard deviation. Thus, the "0" line marks the mean proportion for that region. Weeks range from 1 (i.e., the first week in January) to 52 (i.e., the last week in December).}
+ \label{fig:phenplot2}
+ \end{figure}
+
+\begin{figure}[p]
+\includegraphics{../analyses/figures/basicplots/propwhdaysperweek.pdf} 
+\caption{\textbf{Southern resident killer whale activity varies by season and region}. Lines show proportion of days per week (1 Jan= week 1) in which whales were observed in the region.}
+ \label{fig:phenplot2}
+ \end{figure} 
+\begin{figure}[p]
+\includegraphics{../analyses/orcaphen/figures/boxplots_1978_2017_ps.pdf} 
+\caption{\textbf{Change in in first and last observation dates of SRKW in Puget Sound.} }
+ \label{fig:boxplot1}
+ \end{figure}
+ \begin{figure}[p]
+\includegraphics{../analyses/orcaphen/figures/boxplots_1978_2017_uss.pdf} 
+\caption{\textbf{Change in in first and last observation dates of SRKW in the Upper Salish Sea.} }
+ \label{fig:boxplot2}
  \end{figure}
  
 \begin{figure}[p]
-\includegraphics[width=0.6\textwidth]{../analyses/figures/OrcaPhenPlots/WhaleDaysProbOCc_4panels.pdf} 
-\caption{\textbf{Southern resident killer whale activity varies seasonally in the Central Salish Sea and Puget Sound proper} and this phenology has shifted later in recent years, particularly in the Central Salish Sea. Shading represents standard deviation for left pane and 80\% credible intervals for right panels (need to add this!) .}
-\label{fig:phenplot}
- \end{figure}
-
-
-\begin{figure}[p]
-\includegraphics{../analyses/figures/OrcaPhenPlots/timeseries_1976_assumeSRKW2regs.pdf} 
-\caption{\textbf{Long-term trends differ from recent trends} for whale sightings (A), whale days (B), and peak occurrence probability in the Central Salish Sea (C) and Puget Sound proper(D). Occurrence probability for J pod is shown here; see Supplemental Materials for time series for K and L pods, as well as time series for other phenological estimates (i.e., first- and last- dates when occurrence probability is greater than 0.5). Shading represents 80\% credible intervals. SHOW ONLY RECENT TRENDS IN RIGHT PANELS}
- \label{fig:timeseries}
+\includegraphics{../analyses/orcaphen/figures/simvdata_1978_2017.pdf} 
+\caption{\textbf{Change in first and last observation dates in Puget Sound and the Upper Salish Sea.} Observed changes (black dots) are compared with expected changes due to shifts in effort alone (gray lines show 90 quantiles of from a simulated dataset resulting from shifts in effort, with the probability of SRKW presence was kept constant across time).}
+ \label{fig:sim}
  \end{figure}
  
 
+  \begin{figure}[p]
+\includegraphics{../analyses/orcaphen/figures/linreg_1978_2017.pdf} 
+\caption{\textbf{Time series and linear regression of first and last observation dates of SRKW.} }
+ \label{fig:reg}
+ \end{figure}
+ 
+
+ 
 \begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/figures/salmon_shifts_lmm.pdf} 
-\caption{\textbf{Trends in first-, peak-, mid-, and last- observation dates for salmon} in the Fraser River Albion test fishery (upper panel), and across 17 different species/rivers in Puget Sound proper. ADD SRKW trends!}
- \label{fig:shifts}
+\includegraphics{../analyses/figures/J/orcaphen_1976_2017_PS_winter_Jfirst.pdf} 
+\caption{\textbf{Trends in first- and last- observation dates for J, K, and L pod.} Make this a 6-paneled figure}
+ \label{fig:trends}
  \end{figure}
 
-\begin{figure}[p]
-\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/lime_albchin.pdf} 
-\caption{\textbf{SRKW phenology is related to estimated Chinook phenology (A) and run size (B,C)}, for Lime Kiln State Park, a SRKW observation site in the central Salish Sea with a consistent data collection effort from 1994-2017 (from May through October,A). Chinook phenology and run size was estimated from the Fraser River Albion test fishery data. Phenology of the Central Salish Sea region as a whole appear to be less related to the patterns of this particular test fishery data, for many possible reasons (see Supplemental Materials for details).Add match/mismatch curves and/or time series of salmon and SRKWs. }
- \label{fig:shifts}
- \end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliography{../refs/noaalib.bib}
 \end{document}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
