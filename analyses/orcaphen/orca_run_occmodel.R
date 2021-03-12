@@ -1,5 +1,5 @@
 ##################################################################
-# Orca phenology occupancy model, based on the
+# Orca phenology occupancy model ,based on the
 # Worked example to run the model presented in Strebel et al., 2014
 # (Study of phenology by flexible estimation and modeling of seasonal detectability peaks)
 # Ailene Ettinger, ailene.ettinger@noaa.gov
@@ -338,8 +338,8 @@ pkocdoy.uci<-quantile(ann.res[,"mean"][32:40],uci)
 #arrows(pkocdoy.lci,psi.med[which(doy==as.integer(pkocdoy))],pkocdoy.uci,psi.med[which(doy==as.integer(pkocdoy))],code = 0, col = cols[1], lwd = 3)
 #points(pkocdoy,psi.med[which(doy==as.integer(pkocdoy))], pch = 21, bg=cols[1], cex = 2)
 
-arrows(pkocdoy.lci,1.2,pkocdoy.uci,1.2,code = 0, col = cols[1], lwd = 3)
-points(pkocdoy,1.2, pch = 21, bg=cols[1], cex = 2)
+arrows(pkocdoy.lci,1.14,pkocdoy.uci,1.2,code = 0, col = cols[1], lwd = 3)
+points(pkocdoy,1.14, pch = 21, bg=cols[1], cex = 2)
 
 psi.med<-apply(out$sims.list$psi[,24:31,],c(3),median)
 #lines(doy,colMeans(out$mean$psi[11:20,]),col=cols[4])
@@ -356,8 +356,8 @@ pkocdoy.uci<-quantile(ann.res[,"mean"][24:31],uci)
 #arrows(pkocdoy.lci,psi.med[which(doy==as.integer(pkocdoy))],pkocdoy.uci,psi.med[which(doy==as.integer(pkocdoy))],code = 0, col = cols[2], lwd = 3)
 #points(pkocdoy,psi.med[which(doy==as.integer(pkocdoy))], pch = 21, bg=cols[2], cex = 2)
 #or always above plot?
-arrows(pkocdoy.lci,1.14,pkocdoy.uci,1.14,code = 0, col = cols[2], lty=2,lwd = 3)
-points(pkocdoy,1.14, pch = 21, bg=cols[2], cex = 2)
+arrows(pkocdoy.lci,1.2,pkocdoy.uci,1.14,code = 0, col = cols[2], lty=2,lwd = 3)
+points(pkocdoy,1.2, pch = 21, bg=cols[2], cex = 2)
 
 #arrows(pkocdoy.rec,psi.med[which(doy==as.integer(pkocdoy.rec))]+.4,pkocdoy.rec,psi.med[which(doy==as.integer(pkocdoy.rec))]+.02,code = 2, col = cols[1], lwd = 2)
 
@@ -366,11 +366,8 @@ points(pkocdoy,1.14, pch = 21, bg=cols[2], cex = 2)
 if(season==1){mtext("C)",side = 3, line = 0, adj =0)}
 if(season==2){  mtext("A)",side = 3, line = 0, adj =0)}
 
-legend("topleft",legend=c(paste(unique(dat$year)[32],"-",unique(dat$year)[40],sep= ""),
-                         #paste(unique(dat$year)[11],"-",unique(dat$year)[20],sep= ""),
-                         #paste(unique(dat$year)[21],"-",unique(dat$year)[30],sep= ""),
-                         #paste(unique(dat$year)[1],"-",unique(dat$year)[10],sep= ""),
-                          paste(unique(dat$year)[24],"-",unique(dat$year)[31],sep= "")),lwd=c(2,2),lty=c(1,2),col=c(cols), bty="n")
+legend("topleft",legend=c(paste(unique(dat$year)[24],"-",unique(dat$year)[31],sep= ""),
+                          paste(unique(dat$year)[32],"-",unique(dat$year)[40],sep= "")),lwd=c(2,2),lty=c(2,1),col=c(cols), bty="n")
 
 #dev.off()
 

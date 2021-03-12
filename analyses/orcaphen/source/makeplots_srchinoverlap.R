@@ -7,6 +7,9 @@
 pod = "SR"
 limegests<-read.csv("analyses/output/lime_prob.occ.75.csv", header=TRUE)
 dim(limegests)
+
+albchinphenest<-read.csv("analyses/output/albionchiphenest.csv", header = TRUE)
+
 #limegests$year<-as.numeric(rep(seq(1994,2017,by = 1), each = 75))
 if(pod== "SR"){limegests$prob.occ<-limegests$SRprob.Estimate
               podname = "SRKW"
@@ -43,13 +46,14 @@ cpue.rec<-cbind(aggregate(chinab.rec$cpue,by=list(chinab.rec$doy),mean),aggregat
 colnames(cpue.old)<-colnames(cpue.rec)<-c("doy","cpue.mean","cpue.sd")
 
 
-pdf(paste("analyses/orcaphen/figures/orcachinphenoverlap",pod,brkyr,".pdf",sep=""),height=5, width=12)
-png(paste("analyses/orcaphen/figures/orcachinphenoverlap",pod,brkyr,".png",sep=""),height=400, width=1200)
+pdf(paste("analyses/orcaphen/figures/orcachinphenoverlap",pod,brkyr,".pdf",sep=""),height=5, width=15)
+#png(paste("analyses/orcaphen/figures/orcachinphenoverlap",pod,brkyr,".png",sep=""),height=400, width=1200)
 
 # to figure out how much to shift the salmon curve earlier- because they are measured at ft. langely on the frasier river, but we are interested in when they are at lime kiln
 # lime  kiln is ~160 km from lime kiln "as the fish swims" and fish swim about 70 km per day! only need to shift by 2-3 days?
 #windows(height=6, width=12)
-par(oma=c(1,1.5,1,3), mar=c(4,4.5,4,6),mfrow=c(1,2))
+if(pod =="SR" & brkyr==2006) {par(oma=c(1,1.5,1,3), mar=c(4,4.5,4,6),mfrow=c(1,3))
+} else {par(oma=c(1,1.5,1,3), mar=c(4,4.5,4,6),mfrow=c(1,2))}
 
 plot(wdays.old$doy,wdays.old$meanocc, type="l",lty=2, lwd=2,col="darkblue", xlim=c(140,200), ylim=c(0,1.1),  ylab="Probability of Occurrence",xlab="Day of Year", bty="l", cex.axis = 1.5, cex.lab=1.5)
 polygon(c(rev(wdays.old$doy),wdays.old$doy),c(rev(wdays.old$meanocc+wdays.old$sdocc),wdays.old$meanocc-wdays.old$sdocc),col=alpha("darkblue",0.05),lty=0)
@@ -72,15 +76,15 @@ uci=0.875
 pkocdoy<-mean(gests$peakoc.doy[gests$year<brkyr & gests$year>1993])
 pkocdoy.lci<-quantile(gests$peakoc.doy[gests$year<brkyr & gests$year>1993],lci)
 pkocdoy.uci<-quantile(gests$peakoc.doy[gests$year<brkyr & gests$year>1993],uci)
-arrows(pkocdoy.lci,1.05,pkocdoy.uci,1.05,code = 0, col = "darkblue", lty=2,lwd = 3)
-points(pkocdoy,1.05, pch = 21, bg="darkblue", cex = 2)
+arrows(pkocdoy.lci,1.1,pkocdoy.uci,1.1,code = 0, col = "darkblue", lty=2,lwd = 3)
+points(pkocdoy,1.1, pch = 21, bg="darkblue", cex = 2)
 
 #recent time period
 pkocdoy<-mean(gests$peakoc.doy[gests$year>=brkyr])
 pkocdoy.lci<-quantile(gests$peakoc.doy[gests$year>=brkyr],lci)
 pkocdoy.uci<-quantile(gests$peakoc.doy[gests$year>=brkyr],uci)
-arrows(pkocdoy.lci,1.1,pkocdoy.uci,1.1,code = 0, col = cols[2], lty=1,lwd = 3)
-points(pkocdoy,1.1, pch = 21, bg=cols[2], cex = 2)
+arrows(pkocdoy.lci,1.05,pkocdoy.uci,1.05,code = 0, col = cols[2], lty=1,lwd = 3)
+points(pkocdoy,1.05, pch = 21, bg=cols[2], cex = 2)
 
 
 shift<--14
@@ -101,15 +105,15 @@ pkdoy<-mean(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993])+shift
 #pkdoy<-which(cpue.old$cpue.mean==max(cpue.old$cpue.mean))#this changes things...talk to JAmeal about whether we should show the mean day of year of peak abundance or the day of year of mean peak abundance....
 pkdoy.lci<-quantile(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993],lci)+shift
 pkdoy.uci<-quantile(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993],uci)+shift
-arrows(pkdoy.lci,3.9,pkdoy.uci,3.9,code = 0, col = "salmon", lty=2,lwd = 3)
-points(pkdoy,3.9, pch = 21, bg="salmon", cex = 2)
+arrows(pkdoy.lci,4.1,pkdoy.uci,4.1,code = 0, col = "salmon", lty=2,lwd = 3)
+points(pkdoy,4.1, pch = 21, bg="salmon", cex = 2)
 
 #recent time period
 pkdoy<-mean(gests$peakcpue.doy[gests$year>=brkyr])+shift
 pkdoy.lci<-quantile(gests$peakcpue.doy[gests$year>=brkyr],lci)+shift
 pkdoy.uci<-quantile(gests$peakcpue.doy[gests$year>=brkyr],uci)+shift
-arrows(pkdoy.lci,4.1,pkdoy.uci,4.1,code = 0, col = "salmon", lty=1,lwd = 3)
-points(pkdoy,4.1, pch = 21, bg="salmon", cex = 2)
+arrows(pkdoy.lci,3.9,pkdoy.uci,3.9,code = 0, col = "salmon", lty=1,lwd = 3)
+points(pkdoy,3.9, pch = 21, bg="salmon", cex = 2)
 
 
 
@@ -117,7 +121,29 @@ points(pkdoy,4.1, pch = 21, bg="salmon", cex = 2)
 
 mtext("B)", side=3, line=1, adj=0, cex=1.5)
 
+if(pod =="SR" & brkyr==2006) {
+#restrict SRKW and chin data to consistent years
+albchinest90<-albchinphenest[albchinphenest$year>1992,]
+albchinest90<-albchinest90[albchinest90$year<2017,]
+#albchinest90<-albchinest90[albchinest90$year!=1991,]
+#albchinest90<-albchinest90[albchinest90$year!=1992,]
+albchinest90<-albchinest90[albchinest90$year!=2014,]#missing from SRKW data
+myPalette <- colorRampPalette(brewer.pal(length(unique(albchinest90$year)), "Blues")) #### Gives us a heat map look
+cols = rev(myPalette(length(unique(albchinest90$year))))
+#png(file="analyses/orcaphen/figures/lime_albchin_gam.png",height=1500,width=4500, res = 300)
+#quartz()
+#par(mfrow=c(1,3), mar=c(5, 5, 4, 2) + 0.1)
+limegestsyr<-get.gests(limegests,"prob.occ")
 
+limegestsyr<-limegestsyr[limegestsyr$years>1992,]
+
+plot(albchinest90$peakobsdate,limegestsyr$peakoc.doy,type="p",pch=21, cex.axis=1.8,cex.lab=1.8,bg = cols[factor(albchinest90$year)],xlab="Day of Peak Chinook Abundance Index (DOY)",ylab="Day of Peak SRKW Occupancy Probability (DOY)", cex=1.8, bty="l")
+mod<-lm(limegestsyr$peakoc.doy~albchinest90$peakobsdate)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
+if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
+mtext("C)", side=3, line=1, adj=0, cex=1.5)
+
+}
 dev.off()
 }
 

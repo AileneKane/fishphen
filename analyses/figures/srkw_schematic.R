@@ -1,5 +1,8 @@
 #Script to make schematic figure of hypotheses tested with the SRKW work
 #started October 8, 2019
+
+setwd("~/GitHub/fishphen/analyses/figures")
+
 #Create phenology curve for SRKWs:
 meannum<-30
 phenshift<-10
@@ -12,7 +15,7 @@ whaledays<-dnorm(doy,mean=meandoy,sd=sddoy)
 preydays<-dnorm(doy,mean=meandoy,sd=sdprey)
 
 doy_shift<-doy+50
-pdf("/Users/aileneettinger/Documents/GitHub/fishphen/analyses/figures/srkw_schematic.pdf",height=8, width=8)
+pdf("srkw_schematic.pdf",height=8, width=8)
 #quartz(height=8,width=8)
 #windows()
 par(mfrow=c(2,2))
