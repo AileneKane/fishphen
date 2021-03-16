@@ -40,18 +40,20 @@ cpuesptot<-cpuesptot[cpuesptot$year<2018,]
 
 ctc$tot<-as.numeric(ctc$SpringSummerTotalRun)
 ctc$sp12<-ctc$SpringAge1.2ctc$total<-ctc$SpringAge1.2+ctc$SpringAge1.3+ctc$SummerAge0.3+ctc$SummerAge1.3+ctc$Harrison_Esc+ctc$LowerShuswap_Esc
-png(file="analyses/orcaphen/figures/ctcalbion.png",height=1500,width=800)
+pdf(file="analyses/orcaphen/figures/ctcalbion.pdf",height=15,width=8)
 par(mfrow=c(4,2))
 ctccols<-c(2,3,4,5)
 for(i in ctccols){
   ctcnums<-ctc[ctc$Year>1990,]
   ctcnums<-ctcnums[,i]
-  plot(ctcnums,cpuesptot$cpuesptot[as.numeric(cpuetot$year)>1990], pch=16, xlab = "Escapement estimates", ylab="Albion Test Fishery (CPUE, 1April-1Aug)",col="gray",bty="l", main = paste(colnames(ctc)[i]), cex.lab=1.5, cex.axis=1.5,cex=1.5, cex.main=1.5)
+  plot(ctcnums,cpuesptot$cpuesptot[as.numeric(cpuetot$year)>1990], pch=16, xlab = "Escapement estimates", ylab="Albion Test Fishery (CPUE, 1April-1Aug)",col="gray",bty="l", main = paste(colnames(ctc)[i]), 
+       cex.lab=1.5, cex.axis=1.5,cex=2, cex.main=1.5)
 mod<-lm(cpuesptot$cpuesptot[as.numeric(cpuesptot$year)>1990]~ctcnums)
 if(summary(mod)$coef[2,4]<0.1){abline(mod, lwd=2)}
 r<-cor.test(cpuesptot$cpuesptot[as.numeric(cpuesptot$year)>1990],ctcnums)
 mtext(paste("cor = ",round(r$estimate,digits=2),", p = ",round (r$p.value, digits = 4)), side = 3,adj=0, line = -2, cex=1.1)
-plot(ctcnums,cpuetot$cpuetot[as.numeric(cpuetot$year)>1990], pch=16, xlab = "Escapement estimates (#s)",  ylab="Albion Test Fishery (CPUE, 1April-20Oct)",col="gray",bty="l", main = paste(colnames(ctc)[i]), cex.lab=1.5, cex.axis=1.5,cex=1.5, cex.main=1.5)
+plot(ctcnums,cpuetot$cpuetot[as.numeric(cpuetot$year)>1990], pch=16, xlab = "Escapement estimates (#s)",  ylab="Albion Test Fishery (CPUE, 1April-20Oct)",col="gray",bty="l", main = paste(colnames(ctc)[i]), 
+     cex.lab=1.5, cex.axis=1.5,cex=2, cex.main=1.5)
 mod2<-lm(cpuetot$cpuetot[as.numeric(cpuetot$year)>1990]~ctcnums)
 if(summary(mod)$coef[2,4]<0.1){abline(mod2, lwd=2)}
 r<-cor.test(cpuetot$cpuetot[as.numeric(cpuetot$year)>1990],ctcnums)

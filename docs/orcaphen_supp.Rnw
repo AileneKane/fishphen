@@ -10,6 +10,7 @@
 \usepackage{array}
 \usepackage{gensymb}
 \usepackage{amsmath}
+\usepackage{changepage}
 %\usepackage{longtable}
 \usepackage{xr}
 
@@ -59,11 +60,11 @@
 \emph{Southern resident killer whale presence and their prey at Lime Kiln Point State}
 \begin{enumerate}
 \item \underline{Southern resident killer whale presence model}
-\par We fit a separate hierarchical model to each pod (J, K, L), as well as a hierarchical model to all SRKWs pooled together. We estimated the presence, or occurrence probability (Pr(y=1)), as a smooth function of day of year, \emph{s(day)}. We assumed \emph{y} to be a Bernoulli random variable dependent on day of year (as a smooth function, using thin plate regression spline basis), with a year-specific shape as well as a year-specific intercept (i.e., a random effect of year):
+\par We fit a separate hierarchical model to each pod (J, K, L), as well as a hierarchical model to all SRKWs pooled together. We estimated the presence, or occurrence probability (with presence when Pr(\emph{$\psi$}=1)), as a smooth function of day of year, \emph{s(day)}. Specifically, we assumed $\psi$ to be a Bernoulli random variable dependent on day of year (as a smooth function, using thin plate regression spline basis), with a year-specific shape as well as a year-specific intercept (i.e., a random effect of year):
 
 
 \begin{align*}
-Pr(y_i = 1) &= logit^{-1} (\alpha_{year[i]} + s(day)_{year[i]})
+Pr(\psi_i = 1) &= logit^{-1} (\alpha_{year[i]} + s(day)_{year[i]})
 \end{align*}
 
 \begin{align*}
@@ -198,8 +199,12 @@ salmtrends.table<-xtable(alltab,caption = "\\textbf{Salmon phenology has shifted
                "p{0.08\\textwidth}|"))
 
 print(salmtrends.table, include.rownames=FALSE, hline.after = c(-1,0,6,12),caption.placement="top",size="\\footnotesize")#,sanitize.text.function = identity
+@
 
-modsumfiles<-dir("../analyses/output")[grep("ci0.5occprob_wrecent",dir("../analyses/output"))]
+\begin{adjustwidth}{-4cm}{-2cm}
+<<label=srkwtrendtab,echo=FALSE,results=tex>>=
+
+modsumfiles<-dir("../analyses/output")[grep("ci0.5_occprobmin0.5_wrecent",dir("../analyses/output"))]
 allsums<-c()
 for (i in 1:length(modsumfiles)){
   modsum<-read.csv(paste("../analyses/output/",modsumfiles[i],sep=""), header=TRUE)
@@ -208,55 +213,87 @@ for (i in 1:length(modsumfiles)){
   modsumwide<-cbind(modsumold,modsumnew[,5:9])
   allsums<-rbind(allsums,modsumwide)
 }
-allsums$Region[allsums$region=="ps"]<-"Puget Sound"
-allsums$Region[allsums$region=="uss"]<-"Central Salish Sea"
-allsums$Season[allsums$season=="1"]<-"Fall"
-allsums$Season[allsums$season=="2"]<-"Summer"
+allsums$Region[allsums$region=="ps"]<-"ps"
+allsums$Region[allsums$region=="uss"]<-"css"
+allsums$Season[allsums$season=="1"]<-"fall"
+allsums$Season[allsums$season=="2"]<-"sum"
+
 #allsums$Season[allsums$season=="3"]<-"Full Year"
 #allsums<-allsums[-which(allsums$season=="3"),]
+colnames(allsums)[10:14]<-c("slope.recent","slope.25.recent","slope.75.recent","X2.5.recent","X97.5.recent")
+colnames(allsums)[6:7]<-c("slope.25","slope.75")
 
-colnames(allsums)[10:14]<-c("slope.recent","slope.lci.recent","slope.uci.recent","X2.5.recent","X97.5.recent")
+modsumfiles2<-dir("../analyses/output")[grep("ci0.75_occprobmin0.5_wrecent",dir("../analyses/output"))]
+all75ths<-c()
+for (i in 1:length(modsumfiles2)){
+  modsum<-read.csv(paste("../analyses/output/",modsumfiles2[i],sep=""), header=TRUE)
+  old75th<-modsum[1:3,6:7]
+  new75th<-modsum[4:6,6:7]
+  wide75th<-cbind(old75th,new75th)
+  all75ths<-rbind(all75ths,wide75th)
+}
+colnames(all75ths)[3:4]<-c("slope.lci.recent","slope.uci.recent")
 
-modsumtab<-subset(allsums, select=c(pod,Region,Season,phase,slope.mn,slope.lci,slope.uci,X2.5.,X97.5.,slope.recent,slope.lci.recent,slope.uci.recent,X2.5.recent,X97.5.recent))
-colnames(modsumtab)<-c("Pod","Region","Season","Phase","mean","25%", "75%","2.5%","97.5%","mean","25%", "75%","2.5%","97.5%")
+allsums<-cbind(allsums,all75ths)
+modsumtab<-subset(allsums, select=c(pod,Region,Season,phase,slope.mn,slope.25,slope.75,slope.lci,slope.uci,X2.5.,X97.5.,slope.recent,slope.25.recent,slope.75.recent,slope.lci.recent,slope.uci.recent,X2.5.recent,X97.5.recent))
+colnames(modsumtab)<-c("pod","region","season","phase","mean","25%", "75%","12.5%","87.5%", "2.5%","97.5%","mean","25%", "75%","12.5%","87.5%","2.5%","97.5%")
 addtorow <- list()
   addtorow$pos <- list(-1)
-  addtorow$command <- c("\\hline & & & & \\multicolumn{5}{c |}{1978-2017 trend} &\\multicolumn{5}{c |}{2002-2017 trend}\\\\\n ")
+  addtorow$command <- c("\\hline & & & & \\multicolumn{7}{c |}{1978-2017 trend} &\\multicolumn{7}{c |}{2002-2017 trend}\\\\\n ")
 
 #modsumtab$region[modsumtab$region=="ps"]<-"puget"
 #modsumtab$region[modsumtab$region=="uss"]<-"central"
 
-modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper and the central Salish Sea, from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent and 95 percent uncertainty intervals are shown.",
+modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper (`ps') during the fall/winter (`fall') and the central Salish Sea (`css') during the spring/summer (`sum'), from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the same peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent, 75 percent, and 95 percent uncertainty intervals are shown.",
             label="tab:modsum",align=c(
-              "|p{0.01\\textwidth}", 
-              "|p{0.02\\textwidth}",
-               "|p{0.15\\textwidth}",
-               "|p{0.06\\textwidth}",
-               "|p{0.04\\textwidth}",
-              "|p{0.05\\textwidth}",
-              "p{0.05\\textwidth}", 
-              "p{0.05\\textwidth}",
-              "p{0.05\\textwidth}", 
-              "p{0.05\\textwidth}",
-              "|p{0.05\\textwidth}",
-              "p{0.05\\textwidth}",
-              "p{0.05\\textwidth}", 
-              "p{0.05\\textwidth}",
-               "p{0.05\\textwidth}|"))
+              "|p{0.009\\textwidth}", 
+              "|p{0.018\\textwidth}",
+               "|p{0.035\\textwidth}",
+               "|p{0.035\\textwidth}",
+               "|p{0.035\\textwidth}",
+              "|p{0.035\\textwidth}",
+              "p{0.035\\textwidth}", 
+              "p{0.035\\textwidth}",
+              "p{0.035\\textwidth}", 
+              "p{0.035\\textwidth}",
+               "p{0.035\\textwidth}", 
+              "p{0.035\\textwidth}",
+              "|p{0.035\\textwidth}",
+              "p{0.035\\textwidth}",
+              "p{0.035\\textwidth}", 
+              "p{0.035\\textwidth}",
+              "p{0.035\\textwidth}", 
+              "p{0.035\\textwidth}",
+               "p{0.035\\textwidth}|"))
 
-print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.placement="top",size="\\footnotesize",sanitize.rownames.function=identity,add.to.row=addtorow)
+print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.placement="top",size="tiny",sanitize.rownames.function=identity,add.to.row=addtorow, latex.environments = "flushleft")
 @
+\end{adjustwidth}
+
+
+
+
+
+.
+ 
+.
+
+. 
 
  \pagebreak
+  
+\section*{ }
+  \pagebreak
+
 \section* {Supplemental Figures}
 
 \begin{figure}[!hp]
-\includegraphics[width=0.5\textwidth]{../analyses/orcaphen/figures/ctcalbion.png}
+\includegraphics[width=0.7\textwidth]{../analyses/orcaphen/figures/ctcalbion.pdf}
 \caption{\textbf{Comparison of the abundance index from Albion test fishery CPUE (used in this paper) to alternative indices of abundance: total escapement from four index stocks used by the Pacific Salmon Commission (PSC 2018)}, from 1975-2018. Top row shows relationship between Albion Test Fishery CPUE to escapement estimates for four spring and summer index stocks assessed by the Pacific Salmon Commission in the Fraser River: Fraser Spring-Run 1.2, Fraser Spring-Run 1.3, Fraser Summer-Run 1.3, and Fraser Summer Run 0.3.}
 \label{fig:ctcalb}
 \end{figure}
 \begin{figure}[!hp]
-\includegraphics[width=0.5\textwidth]{../analyses/figures/phenophases.pdf}
+\includegraphics[width=0.7\textwidth]{../analyses/figures/phenophases.pdf}
 \caption{\textbf{The phenophases quantified in this study} included day of year of first and last occurrence, as well as day of year of peak occurrence probability for southern resident killer whales and peak abundance index for salmon.}
 \label{fig:ctcalb}
 \end{figure}
@@ -280,14 +317,14 @@ print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.p
 \label{fig:mlimewdays}
 \end{figure}
 \begin{figure}[!hp]
-\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/phentrends_lime_peak.png} 
-\caption{\textbf{SRKW phenology at Lime Kiln State Park is shifting}, with the likely arrival day of year (A, defined here as the first day of year when the occurrence probability is >0.20) and peak occurrence probability day of year (B) getting later, from 1994-2017. Mean occurrence probability from May to August (the season when regular monitoring of SRKWs occurs at Lime Kiln) is declining during this time period. These trends are associated with a decrease in the amount of time SRKWs are spending near Lime Kiln (i.e., the number of days on which SRKWs were observed ("whale days") has declined since 1994 (Fig. \ref{fig:mlimewdays}).}
+\includegraphics[width=0.99\textwidth]{../analyses/orcaphen/figures/phentrends_lime_peak.pdf} 
+\caption{\textbf{SRKW phenology at Lime Kiln State Park is shifting}, with the likely arrival day of year (A, defined here as the first day of year when the occurrence probability is >0.20) and peak occurrence probability day of year (B) getting later, from 1994-2017. In addition, mean occurrence probability from May to August (the season when regular monitoring of SRKWs occurs at Lime Kiln) is declining during this time period (C). These trends are associated with a decrease in the amount of time SRKWs are spending near Lime Kiln (i.e., the number of days on which SRKWs were observed ("whale days") has declined since 1994 (Fig. \ref{fig:mlimewdays}) and are consistent with shifts in the timing of peak abundance (D) and abundance index (E,F) of their preferred prey, Fraser River Chinook Salmon. (See also Fig. 3 in the main text).}
 \label{fig:limetime}
 \end{figure}
 
 \newpage
 \begin{figure}[!hp]
-\includegraphics[width=0.5\textwidth]{../analyses/orcaphen/figures/orcachinphenoverlap_allpods2006.pdf}
+\includegraphics[width=0.5\textwidth]{../analyses/orcaphen/figures/orcachinphenoverlap_allpods2006_edited.pdf}
 \caption{\textbf{SRKW phenology has shifted, in concert with shifts in Fraser River Chinook Salmon at one site with consistent observations in the Central Salish Sea}. K- and L-pod phenology (blue lines) is quantified from Lime Kiln Point State Park, SRKW phenology has shifted, with peak arrival dates delaying in recent (solid lines) compared with earlier (dashed lines) years. We show patterns for J-pod (A), K-pod (B), and L-Pod (C). Compare to Fig. 3 of the main text, which shows all pods together. }
 \label{fig:KLchin}
 \end{figure}
