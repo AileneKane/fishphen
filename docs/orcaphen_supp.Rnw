@@ -50,7 +50,7 @@
 \bibliographystyle{../refs/bibstyles/amnat.bst}
 
 \title{Supplemental materials for `Shifting phenology of an endangered apex predator tracks changes in its favored prey'}
-\date{\today}
+\date{ }
 \maketitle
 \author{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -337,12 +337,6 @@ print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.p
 \end{figure}
 
 
-\begin{figure}[!hp]
-\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/simeffortonly2panels.png} 
-\caption{\textbf{Expected change in phenology due to changes in effort alone, across Puget Sound and the Central Salish Sea regions}, from 1978-2017 (A) and from 2001-2017 (B). }
-\label{fig:simeffort}
-\end{figure}
-
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/figures/proboccK_4panels.png} 
@@ -358,6 +352,13 @@ print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.p
 }
 \label{fig:Lprobs}
 \end{figure}
+
+\begin{figure}[!hp]
+\includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/simeffortonly2panels.png} 
+\caption{\textbf{Expected change in phenology due to changes in effort alone, across Puget Sound and the Central Salish Sea regions}, from 1978-2017 (A) and from 2001-2017 (B). }
+\label{fig:simeffort}
+\end{figure}
+
 \pagebreak
 
 
