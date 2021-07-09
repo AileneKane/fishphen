@@ -86,7 +86,7 @@ load("analyses/output/sr.brms.Rda")
 
 #Make figures of model estimated whale days with 75 percent
 limedays<-read.csv("analyses/output/lime_prob.occ.75.csv", header=TRUE)
-limedays$year<-as.numeric(as.character(limewdaysabs$year))
+limedays$year<-as.numeric(as.character(limedays$year))
 limedays<-limedays[limedays$year>1991,]
 
 yearsum<-aggregate(limedays$SRprob.Estimate,by=list(limedays$year),sum)
@@ -115,7 +115,7 @@ lsumobs<-aggregate(limewdaysabs$Lpres,by=list(limewdaysabs$year),sum)
 allsumobs<-aggregate(limewdaysabs$AllSRpres,by=list(limewdaysabs$year),sum)
 colnames(jsumobs)<-colnames(ksumobs)<-colnames(lsumobs)<-colnames(allsumobs)<-c("year","wdays")
 png(filename="analyses/orcaphen/figures/modwhaledays_lime.png",height=480,width=960)
-#quartz(height=6,width=12)
+#windows(height=6,width=12)
 par(mfrow=c(2,3))
 plot(as.numeric(yearsum$year),yearsum$wdays,ylab= "Year", xlab= "Number of Modeled Whale Days", bty="l", type="l", col=alpha("darkblue",0.8),lwd=2,main = "All Pods")
 lines(as.numeric(allsumobs$year),allsumobs$wdays, type="l", col=alpha("darkblue",0.8),, lty=2,lwd=2)

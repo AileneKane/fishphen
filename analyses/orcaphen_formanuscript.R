@@ -11,7 +11,7 @@ options(stringsAsFactors = FALSE)
 # Set working directory: 
 #setwd("~/GitHub/fishphen")
 #or from laptop:
-setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
+setwd("C:/Users/ailene.ettinger.TNC/OneDrive - The Nature Conservancy/Documents/GitHub/fishphen")
 
 # Load libraries
 library(dplyr)
@@ -45,7 +45,7 @@ dim(d)#105339     21 on Nov 8, 2019
 
 # 3. Limit space and time to firstyear or later and Salish Sea, Puget Sound, Washington Outer Coast 
 source("analyses/orcaphen/source/orca_limitspacetime.R")
-dim(d)#103121      22
+dim(d)#102512     22
 #table(d$FishArea,d$region)#check regions are correct
 
 #4. Get data in terms of number of observations per day and "whale days": days on which whales were seen (presence/absence for each day)
