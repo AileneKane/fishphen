@@ -6,7 +6,7 @@
 
 pod = "SR"
 limegests<-read.csv("analyses/output/lime_prob.occ.75.csv", header=TRUE)
-dim(limegests)
+#dim(limegests)
 
 albchinphenest<-read.csv("analyses/output/albionchiphenest.csv", header = TRUE)
 

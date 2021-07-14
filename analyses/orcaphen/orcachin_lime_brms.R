@@ -49,7 +49,7 @@ dim(d)#102512     22 on July 8, 2021
 
 # 3. Limit space and time to firstyear or later and Salish Sea, Puget Sound, Washington Outer Coast 
 source("analyses/orcaphen/source/orca_limitspacetime.R")
-dim(d)#103121      22
+dim(d)# 102113     22
 #table(d$FishArea,d$region)#check regions are correct
 
 #4. Get data in terms of number of observations per day and "whale days": days on which whales were seen (presence/absence for each day)
@@ -64,8 +64,6 @@ source("analyses/orcaphen/source/orca_plot_whaledays.R")
 
 #6. if you want to do some other basic plots of the data. This includes proportion of days in a week in which whales were observed up by week and decade
 source("analyses/orcaphen/source/orca_plotdata.R")
-#To fix in above: remove all quartz()
-
 
 #7. Make a map of the SRKW sightings in ps and uss
 source("analyses/orcaphen/source/orca_makemap.R")
@@ -79,7 +77,7 @@ source("analyses/orcaphen/source/orca_makemap.R")
 source("analyses/orcaphen/source/orca_get_whaledays_lime.R")
 
 #9. Fit gams in brms to limekiln data or load models that were already fit
-#source("analyses/orcaphen/source/orca_rungams_lime.R")
+source("analyses/orcaphen/source/orca_rungams_lime.R")
 
 #this takes a while, so just read in the relevant data from this below
   
@@ -101,6 +99,7 @@ brkyr = 2006#try 2005, 2006, 2007, 2008
 source("analyses/orcaphen/source/makeplots_srchinoverlap.R")
 
 #read in lime.df!!!
+source("analyses/orcaphen/source/orca_get_limedf.R")
 
 #add 90 days to limekiln doy columns to make comparable to chinook
 lime2002<-lime.df[lime.df$year>2001,]
@@ -361,9 +360,9 @@ gests<-get.gests(limegests,"prob.occ")
 jgests<-get.gests(limegests,"jprob.occ")
 kgests<-get.gests(limegests,"kprob.occ")
 lgests<-get.gests(limegests,"lprob.occ")
-
+jgests$meanprobs
 meanmod<-summary(lm(gests$meanprobs~gests$year))#trend is getting lower
-summary(lm(jgests$meanprobs~jgests$year))#not getting lower
+summary(lm(~jgests$year))#not getting lower
 summary(lm(kgests$meanprobs~kgests$year))#getting lower
 summary(lm(lgests$meanprobs~lgests$year))#getting lower
 
