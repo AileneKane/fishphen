@@ -56,12 +56,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand{\thetable}{S\arabic{table}}
 \renewcommand{\thefigure}{S\arabic{figure}}
-\section*{Additional Details on Our Use of the Orca Master Dataset}
-
-As a presence-only database, trends in the Orca Master dataset should be interpreted with care, since they could be due to shifts in effort (i.e., the number of total observations) as well as (or instead of) trends in SRKW presence (see Effects of changes in effort on estimated phenological change in the Supplemental Materials). For this reason, and because we know there has been a dramatic increase in reported whale sightings (Olson et al., 2018), we report all trends across two different durations: the full dataset (from 1978-2017) and recent years (2001-2017). We use 2001 as a cut-off, to avoid the sharp increase in sightings that occurred from 2000 to 2001 (Fig. S3-4), likely influenced by the onset of internet-based sightings platforms that began that year (Hauser et al., 2007; Olson et al., 2018).
-
-For our analyses, bbservation of any individual or group of whales within a pod counted as presence of that pod, with the exception of “L87,” an individual that spent little time with his natal L pod following the death of his mother, and was instead seen more frequently with J- and K-pods. Observations of this individual alone were therefore not counted as presence of L pod in our analyses.
- 
 \section*{Models}
 \emph{Southern resident killer whale presence and their prey at Lime Kiln Point State}
 \begin{enumerate}
@@ -142,7 +136,7 @@ With increasing public awareness of SRKWs near urban areas (e.g. the Salish Sea)
 
 \section* {Supplemental Tables}
 % latex table generated in R 4.0.4 by xtable 1.8-4 package
-% Wed Jul 14 11:18:20 2021
+% Fri Apr  2 16:35:47 2021
 \begin{table}[ht]
 \centering
 \caption{\textbf{Salmon runs in Central Salish Sea and Puget Sound Proper} included in our analyses.} 
@@ -172,7 +166,7 @@ Puget Sound Proper & CEDAR RIVER HATCHERY & Chinook & wild & 47.3761 & -121.9625
 \endgroup
 \end{table}
 % latex table generated in R 4.0.4 by xtable 1.8-4 package
-% Wed Jul 14 11:18:20 2021
+% Fri Apr  2 16:35:47 2021
 \begin{table}[ht]
 \centering
 \caption{\textbf{Salmon phenology has shifted} later in part of the Central Salish Sea (based on spring/summer Chinook in the Albion Test Fishery data, from 1995-2017) and earlier in Puget Sound Proper (based on 13 runs across coho, chum, and Chinook adult in Table S1, from 1997-2017).} 
@@ -201,7 +195,7 @@ Puget Sound Proper & first & intercept & 1706.47 & 1425.65 & 1987.32 &  886.42 &
 \end{table}
 \begin{adjustwidth}{-4cm}{-2cm}
 % latex table generated in R 4.0.4 by xtable 1.8-4 package
-% Wed Jul 14 11:18:20 2021
+% Fri Apr  2 16:35:47 2021
 \begin{table}[ht]
 \begin{flushleft}
 \caption{\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper (`ps') during the fall/winter (`fall') and the central Salish Sea (`css') during the spring/summer (`sum'), from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the same peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent, 75 percent, and 95 percent uncertainty intervals are shown.} 
@@ -304,16 +298,10 @@ L & ps & fall & peak & 1.07 & 0.87 & 1.29 & 0.71 & 1.43 & 0.41 & 1.65 & -0.47 & 
 \end{figure}
 
 
-\begin{figure}[!hp]
-\includegraphics[width=0.8\textwidth]{../analyses/figures/proboccJ_4panels.png} 
-\caption{\textbf{J-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C).} This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 75\% credible intervals. 
-}
-\label{fig:Jprobs}
-\end{figure}
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/figures/proboccK_4panels.png} 
-\caption{\textbf{K-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C).} This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 75\% credible intervals. 
+\caption{\textbf{K-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C).} This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 50\% credible intervals. 
 }
 \label{fig:Kprobs}
 \end{figure}
@@ -321,14 +309,14 @@ L & ps & fall & peak & 1.07 & 0.87 & 1.29 & 0.71 & 1.43 & 0.41 & 1.65 & -0.47 & 
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/figures/proboccL_4panels.png} 
-\caption{\textbf{L-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C)}. This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 75\% credible intervals. 
+\caption{\textbf{L-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C)}. This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 50\% credible intervals. 
 }
 \label{fig:Lprobs}
 \end{figure}
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/simeffortonly2panels.png} 
-\caption{\textbf{Expected change in phenology due to changes in effort alone, across Puget Sound and the Central Salish Sea regions}, from 1978-2017 (A) and from 2001-2017 (B).Error bars represent 50\% uncertainty intervals. }
+\caption{\textbf{Expected change in phenology due to changes in effort alone, across Puget Sound and the Central Salish Sea regions}, from 1978-2017 (A) and from 2001-2017 (B). }
 \label{fig:simeffort}
 \end{figure}
 
