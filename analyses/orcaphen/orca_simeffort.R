@@ -14,7 +14,7 @@ options(stringsAsFactors = FALSE)
 
 
 # Set working directory: 
-setwd("~/GitHub/fishphen")
+setwd("~/Documents/GitHub/fishphen")
 #or from laptop:
 #setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
 
@@ -52,7 +52,7 @@ source("analyses/orcaphen/source/orca_get_whaledays.R")
 
 
 #5. Fit some basic linear models to all srkw data
-styr = 2001#choose 1978 or 2001 to coincide with our ms
+styr = 1978#choose 1978 or 2001 to coincide with our ms
 if(styr == 2001){bkyr = 2009}
 if(styr == 1978){bkyr = 1997}
 source("analyses/orcaphen/source/orca_runlinmods.R")
@@ -182,10 +182,10 @@ for (i in 1:length(effort)){
  par(mfrow=c(1,2))
  #First obs)
  boxplot(df$firstest~as.factor(df$numobs), xlab="Number of days observed", ylab="Estimate of first obs (doy)", main=paste("First obs"))
- first.t<-t.test(df$firstest~as.factor(df$numobs), conf.level=0.5) 
+ first.t<-t.test(df$firstest~as.factor(df$numobs), conf.level=0.75) 
  #Last obs
  boxplot(df$lastest~as.factor(df$numobs), xlab="Number of days observed", ylab="Estimate of last obs (doy)", main="Last obs")
- last.t<-t.test(df$lastest~as.factor(df$numobs), conf.level=0.5)
+ last.t<-t.test(df$lastest~as.factor(df$numobs), conf.level=0.75)
  sum.df$lowobs<-lowobs
  sum.df$hiobs<-highobs
  if(uss==FALSE & wholeyear==FALSE){
@@ -217,15 +217,15 @@ if(uss==FALSE & wholeyear==FALSE){
       png(paste("analyses/orcaphen/figures/simeffortonly",styr,"-2017.png",sep=""),height=480, width=480)
       #first ps
       plot(x,y,pch=16,col="gray",ylim=c(-10,10), xlim=c(0,5), typ="p", bty="l", cex=1.8, xlab="", xaxt="n", ylab="Change in day of year", main = paste(styr,"-2017",sep=""))
-      ylci<-c(quantile(pssum.df$firstdif,probs=0.25),quantile(pssum.df$lastdif, probs = 0.25))
-      yuci<-c(quantile(pssum.df$firstdif, probs = 0.75),quantile(pssum.df$lastdif, probs = 0.75))
+      ylci<-c(quantile(pssum.df$firstdif,probs=0.125),quantile(pssum.df$lastdif, probs = 0.125))
+      yuci<-c(quantile(pssum.df$firstdif, probs = 0.875),quantile(pssum.df$lastdif, probs = 0.875))
       
       arrows(x,yuci,x,ylci, length=0, col="gray", lwd=3)
        y<-c(mean(usssum.df$firstdif),mean(usssum.df$lastdif))
        points(x+2,y,pch=16,col="gray", cex=1.8)
-       ylci<-c(quantile(usssum.df$firstdif,probs=0.25),quantile(usssum.df$lastdif, probs = 0.25))
-       yuci<-c(quantile(usssum.df$firstdif, probs = 0.75),quantile(usssum.df$lastdif, probs = 0.75))
-       
+       ylci<-c(quantile(usssum.df$firstdif,probs=0.125),quantile(usssum.df$lastdif, probs = 0.125))
+       yuci<-c(quantile(usssum.df$firstdif, probs = 0.875),quantile(usssum.df$lastdif, probs = 0.875))
+       #12.5%   87.5
        arrows(x+2,yuci,x+2,ylci, length=0, col="gray", lwd=3)
       # x.dat<-c(change.df$first.dif[1],change.df$last.dif[1]) 
       # #ps
