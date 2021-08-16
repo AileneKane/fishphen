@@ -1,4 +1,4 @@
-# Make plots for supplement
+# Make plots of trends in Lime Kiln SRKW phenology, for main text and supplement supplement
 #April 2020
 #housekeeping
 
@@ -73,15 +73,15 @@ summary(lm(lgests$meanprobs~lgests$year))#getting lower
 
 
 peakmod<-summary(lm(gests$peakoc.doy~gests$year))#trend is getting later
-confint(lm(gests$peakoc.doy~gests$year),level= .95)
+confint(lm(gests$peakoc.doy~gests$year),level= .75)
 summary(lm(jgests$peakoc.doy~jgests$year))# getting later
 summary(lm(kgests$peakoc.doy~kgests$year))# getting later
 summary(lm(lgests$peakoc.doy~lgests$year))#not getting later
 
-confint(lm(gests$lastprob~gests$year),level= .95)
-confint(lm(gests$firstprob~gests$year), level=.95)
-firstmod<-summary(lm(gests$firstprob~gests$year))#trend is getting later
-
+confint(lm(gests$lastprob~gests$year),level= .75)
+confint(lm(gests$firstprob~gests$year), level=.75)
+firstmod<-lm(gests$firstprob~gests$year)#trend is getting later
+summary(firstmod)
 pdf("analyses/orcaphen/figures/phentrends_lime_peak.pdf",height=8,width=12)
 #quartz(height=10,width=10)
 par(mfrow=c(2,3),mar=c(7, 5, 4, 2) + 0.1)

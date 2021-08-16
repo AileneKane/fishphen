@@ -1,47 +1,39 @@
 
-#Fit a bernouli gam with presence of SRs as the response, using brms package
-# m1 <- brm(AllSRpres ~ s(day) + (1|year),
+#Load bernouli gams with presence of SRs as the response, fit using brms package
+
+# m2 <- brm(AllSRpres ~ s(day) + (day|year),
 #           data=limewdaysabs,
-#           family =bernoulli(), cores = 4,
+#           family =bernoulli(), cores = 2,
 #           iter = 4000, warmup = 1000, thin = 10,
-#           control = list(adapt_delta = 0.99))
-# 
-# summary(m1)
-# windows()
+#           control = list(adapt_delta = 0.99, max_treedepth=15))
+# save(m2, file="analyses/output/sr.brms.Rda")
+load("analyses/output/sr.brms.Rda")
 
-m2 <- brm(AllSRpres ~ s(day) + (day|year),
-          data=limewdaysabs,
-          family =bernoulli(), cores = 2,
-          iter = 4000, warmup = 1000, thin = 10,
-          control = list(adapt_delta = 0.99, max_treedepth=15))
-save(m2, file="analyses/output/sr.brms.Rda")
-
-#load("analyses/output/sr.brms.Rda")
-
-j2 <- brm(Jpres ~ s(day) + (day|year),
-          data=limewdaysabs,
-          family =bernoulli(), cores = 2,
-          iter = 4000, warmup = 1000, thin = 10,
-control = list(adapt_delta = 0.99, max_treedepth=15))
- save(j2, file="analyses/output/j.brms.Rda")
-#load("analyses/output/j.brms.Rda")
-# 
-k2 <- brm(Kpres ~ s(day) + (day|year),
-           data=limewdaysabs,
-           family =bernoulli(), cores = 2,
-           iter = 4000, warmup = 1000, thin = 10,
-           control = list(adapt_delta = 0.99, max_treedepth=15))
- save(k2, file="analyses/output/k.brms.Rda")
+# j2 <- brm(Jpres ~ s(day) + (day|year),
+#           data=limewdaysabs,
+#           family =bernoulli(), cores = 2,
+#           iter = 4000, warmup = 1000, thin = 10,
+# control = list(adapt_delta = 0.99, max_treedepth=15))
+#  save(j2, file="analyses/output/j.brms.Rda")
+load("analyses/output/j.brms.Rda")
  
-#load("analyses/output/k.brms.Rda")
+# k2 <- brm(Kpres ~ s(day) + (day|year),
+#            data=limewdaysabs,
+#            family =bernoulli(), cores = 2,
+#            iter = 4000, warmup = 1000, thin = 10,
+#            control = list(adapt_delta = 0.99, max_treedepth=15))
+#  save(k2, file="analyses/output/k.brms.Rda")
+#  
+load("analyses/output/k.brms.Rda")
 
-l2 <- brm(Lpres ~ s(day) + (day|year),
-           data=limewdaysabs,
-           family =bernoulli(), chains = 2,
-           iter = 4000, warmup = 1000, thin = 10,
-           control = list(adapt_delta = 0.99, max_treedepth=15 ))
- save(l2, file="analyses/output/l.brms.Rda")
- #load("analyses/output/l.brms.Rda")
+# l2 <- brm(Lpres ~ s(day) + (day|year),
+#            data=limewdaysabs,
+#            family =bernoulli(), chains = 2,
+#            iter = 4000, warmup = 1000, thin = 10,
+#            control = list(adapt_delta = 0.99, max_treedepth=15 ))
+#  save(l2, file="analyses/output/l.brms.Rda")
+
+load("analyses/output/l.brms.Rda")
 
 prob.occ.95<-cbind(limewdaysabs$year,limewdaysabs$day,fitted(m2),fitted(j2),fitted(k2),fitted(l2))
 

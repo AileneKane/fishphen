@@ -4,8 +4,7 @@
 # if(pod== "L"){load("analyses/output/l.brms.Rda")}
 #load("analyses/output/albionchibrmslog.Rda")
 
-pod = "SR"
-limegests<-read.csv("analyses/output/lime_prob.occ.75.csv", header=TRUE)
+#pod = "SR"
 #dim(limegests)
 
 albchinphenest<-read.csv("analyses/output/albionchiphenest.csv", header = TRUE)
