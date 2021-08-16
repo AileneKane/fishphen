@@ -9,7 +9,7 @@ rm(list=ls())
 options(stringsAsFactors = FALSE)
 
 # Set working directory: 
-setwd("~/GitHub/fishphen")
+setwd("~/Documents/GitHub/fishphen")
 
 # Load libraries
 library(dplyr)
@@ -49,7 +49,7 @@ dim(d)#102512     22 on July 8, 2021
 
 # 3. Limit space and time to firstyear or later and Salish Sea, Puget Sound, Washington Outer Coast 
 source("analyses/orcaphen/source/orca_limitspacetime.R")
-dim(d)# 102113     22
+dim(d)# 102511     22
 #table(d$FishArea,d$region)#check regions are correct
 
 #4. Get data in terms of number of observations per day and "whale days": days on which whales were seen (presence/absence for each day)
@@ -76,11 +76,19 @@ source("analyses/orcaphen/source/orca_makemap.R")
 #8. Prep the lime kiln only data for either gams or linear models
 source("analyses/orcaphen/source/orca_get_whaledays_lime.R")
 
-#9. Fit gams in brms to limekiln data or load models that were already fit
-source("analyses/orcaphen/source/orca_rungams_lime.R")
-
+#9a. Fit gams in brms to limekiln data or load models that were already fit
+#source("analyses/orcaphen/source/orca_rungams_lime.R")
 #this takes a while, so just read in the relevant data from this below
-  
+
+#OR
+
+#9b. Fit gams in brms to limekiln data or load models that were already fit
+source("analyses/orcaphen/source/orca_loadgams_lime.R")
+
+
+#10. Make est whale days plot (FigS5)
+source("analyses/orcaphen/source/make_estwhaledayslime_plot.R")
+
 #10. Read in model results from albion test fishery gams (in albion.brms.R)
 #albchin<-read.csv("analyses/output/albionchiphen_allyear.csv", header = TRUE)
 #albchinest<-read.csv("analyses/output/albionchiphenbrmslog.csv", header = TRUE)
@@ -88,7 +96,6 @@ albchinest<-read.csv("analyses/output/albionchiphenest.csv", header = TRUE)
 
 albchinest95<-albchinest[albchinest$year>1993  & albchinest$year<2018,]
 albchinest95<-albchinest95[-which(albchinest95$year==2014),]
-
 
 #function to make plots and fit linear models correlating phenology of SRKW to prey
 #choose pod to use for SRKW data

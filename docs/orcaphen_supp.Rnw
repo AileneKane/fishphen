@@ -56,7 +56,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand{\thetable}{S\arabic{table}}
 \renewcommand{\thefigure}{S\arabic{figure}}
-\section*{Additional Details on Our Use of the Orca Master Dataset}
+\section*{Additional details on our use of the Orca Master dataset}
 
 As a presence-only database, trends in the Orca Master dataset should be interpreted with care, since they could be due to shifts in effort (i.e., the number of total observations) as well as (or instead of) trends in SRKW presence (see Effects of changes in effort on estimated phenological change in the Supplemental Materials). For this reason, and because we know there has been a dramatic increase in reported whale sightings (Olson et al., 2018), we report all trends across two different durations: the full dataset (from 1978-2017) and recent years (2001-2017). We use 2001 as a cut-off, to avoid the sharp increase in sightings that occurred from 2000 to 2001 (Fig. S3-4), likely influenced by the onset of internet-based sightings platforms that began that year (Hauser et al., 2007; Olson et al., 2018).
 
