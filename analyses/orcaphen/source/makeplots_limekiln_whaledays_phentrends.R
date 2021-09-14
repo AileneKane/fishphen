@@ -22,6 +22,7 @@ yearconvert<-as.data.frame(cbind(unique(limegests.org$styear),actualyrs))
 colnames(yearconvert)<-c("styear","year")
 limegests<-left_join(limegests.org,yearconvert, copy = TRUE)
 limegests<-limegests[limegests$year>1993,]
+plotpdf = TRUE #if false, plot as png
 pod = "SR"#choices are S,J.K,L
 minprob = 0.2
 get.gests<-function(limegests,pod){
@@ -62,7 +63,8 @@ kgests<-get.gests(limegests,"K")
 lgests<-get.gests(limegests,"L")
 
 #Run linear models to quantify trends
-meanmod<-summary(lm(gests$meanprobs~gests$year))#trend is getting lower
+meanmod<-lm(gests$meanprobs~gests$year)
+summary(meanmod)  #trend is getting lower
 summary(lm(jgests$meanprobs~jgests$year))#not getting lower
 summary(lm(kgests$meanprobs~kgests$year))#getting lower
 summary(lm(lgests$meanprobs~lgests$year))#getting lower
@@ -102,8 +104,8 @@ podname = "L pod"
   colnames(wdays.old)<-colnames(wdays.rec)<-c("doy","meanocc","sdocc","n")
   
   #Make figure
-  
-  pdf("analyses/orcaphen/figures/srkwphentrends_lime.pdf",height=8,width=12)
+  if(plotpdf==FALSE){png("analyses/orcaphen/figures/srkwphentrends_lime.png",height=600,width=1200, res=100)}
+  if(plotpdf==TRUE){pdf("analyses/orcaphen/figures/srkwphentrends_lime.pdf",height=6,width=12)}
   #quartz(height=5,width=10)
   par(mfrow=c(1,3),mar=c(7, 5, 4, 2) + 0.1)
   alph=0.75
@@ -165,7 +167,9 @@ colnames(yearsum.lc)<-colnames(yearsum.uc)<-c("year","wdays")
   mtext("C)", side=3, line=2, adj=-.2, cex=1.5)
   #print(summary(mod))
   dev.off() 
-#plot(gests$year,gests$firstprob,xlab= "Year", ylab= "Arrival Day of Year", pch=21, bty="l", cex.axis=1.5,cex.lab=1.6,cex=1.8,bg="dark blue")
+
+  
+  #plot(gests$year,gests$firstprob,xlab= "Year", ylab= "Arrival Day of Year", pch=21, bty="l", cex.axis=1.5,cex.lab=1.6,cex=1.8,bg="dark blue")
 #mtext(paste("E)"), side = 3, line = 1, adj=0)
 #if(firstmod$coef[2,4]<(1-alph)){abline(firstmod, lty=1, lwd=2)}
 #print(paste("r2=",round(firstmod$r.squared, digits=2),",p=",round(firstmod$coeff[2,4], digits=3)), side=3, adj=1, cex=0.7)
@@ -178,12 +182,12 @@ colnames(yearsum.lc)<-colnames(yearsum.uc)<-c("year","wdays")
 #print(paste("coef=",round(firstmod$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
 
   #Mean probability of occurrence across the time series
-  plot(gests$year,gests$meanprobs,xlab= "Year", ylab= "Mean Occurrence Probability", pch=21,  cex.axis=1.5,cex.lab=1.6,bty="l",cex=1.5,bg="dark blue")
-  mtext("C)", side=3, line=2, adj=-.2, cex=1.5)
-  if(meanmod$coef[2,4]<(1-alph)){abline(meanmod, lty=1, lwd=2)}
-  print(paste("r2=",round(meanmod$r.squared, digits=2),",p=",round(meanmod$coeff[2,4], digits=3)), side=3, adj=1, cex=0.7)
-  print(paste("coef=",round(meanmod$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
-  
-
-#
-dev.off()
+#   plot(gests$year,gests$meanprobs,xlab= "Year", ylab= "Mean Occurrence Probability", pch=21,  cex.axis=1.5,cex.lab=1.6,bty="l",cex=1.5,bg="dark blue")
+#   mtext("C)", side=3, line=2, adj=-.2, cex=1.5)
+#   if(meanmod$coef[2,4]<(1-alph)){abline(meanmod, lty=1, lwd=2)}
+#   print(paste("r2=",round(meanmod$r.squared, digits=2),",p=",round(meanmod$coeff[2,4], digits=3)), side=3, adj=1, cex=0.7)
+#   print(paste("coef=",round(meanmod$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
+#   
+# 
+# #
+# dev.off()
