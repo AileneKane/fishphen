@@ -74,7 +74,7 @@ Pr(\psi_i = 1) &= logit^{-1} (\alpha_{year[i]} + s(day)_{year[i]})
 \end{align*}
 
 \begin{align*}
-\alpha_{year} & \sim N(\mu_{\alpha}, \sigma_{\alpha}) \\
+\alpha_{year} & \sim N(\mu_{\alpha}, \sigma^{2}_{\alpha}) \\
 \end{align*}
 
 
@@ -88,7 +88,7 @@ y_i &= \alpha_{year[i]} + s(day)_{year[i]}
 \end{align*}
 
 \begin{align*}
-\alpha_{year} & \sim N(\mu_{\alpha}, \sigma_{\alpha}) \\
+\alpha_{year} & \sim N(\mu_{\alpha}, \sigma^{2}_{\alpha}) \\
 \end{align*}
 
 \end{enumerate}
@@ -120,7 +120,7 @@ day_i &= \alpha_{group[i]} + \beta_{year}
 \end{align*}
 
 \begin{align*}
-\alpha_{group} & \sim N(\mu_{\alpha}, \sigma_{\alpha}) \\
+\alpha_{group} & \sim N(\mu_{\alpha}, \sigma^{2}_{\alpha}) \\
 \end{align*}
 
 \end{enumerate}
