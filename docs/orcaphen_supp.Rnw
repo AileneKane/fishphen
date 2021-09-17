@@ -323,33 +323,33 @@ print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.p
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/modwhaledays_lime.png} 
-\caption{\textbf{Whale days and estimated Chinook abundance have declined at Lime Kiln State Park} since 1994. We show observed and modeled numbers of whale days from our Lime Kiln occupancy model, across all pods (A), J pod (B), K pod (C), and L pod (D), as well as estimated annual catch per unit effort (CPUE, catch per thousand fathom minutes), from our abundance model fit to Albion test fishery data from May though September across all Chinook. Shading shows 75th percentile uncertainty intervals.}
+\caption{\textbf{Whale days and estimated Chinook abundance have declined at Lime Kiln State Park} since 1994. We show observed and modeled numbers of whale days from our Lime Kiln occupancy model, across all pods (A), J pod (B), K pod (C), and L pod (D), as well as estimated annual catch per unit effort (CPUE, catch per thousand fathom minutes), from our abundance index model fit to Albion test fishery data from May though September across all Chinook. Shading shows 75th percentile uncertainty intervals.}
 \label{fig:mlimewdays}
-\end{figure}
-\begin{figure}[!hp]
-\includegraphics[width=0.99\textwidth]{../analyses/orcaphen/figures/phentrends_lime_peak.pdf} 
-\caption{\textbf{SRKW phenology at Lime Kiln State Park is shifting}, with the likely arrival day of year (A, defined here as the first day of year when the occurrence probability is >0.20) and peak occurrence probability day of year (B) getting later, from 1994-2017. In addition, mean occurrence probability from May to August (the season when regular monitoring of SRKWs occurs at Lime Kiln) is declining during this time period (C). These trends are associated with a decrease in the amount of time SRKWs are spending near Lime Kiln (i.e., the number of days on which SRKWs were observed ("whale days") has declined since 1994 (Fig. \ref{fig:mlimewdays}) and are consistent with shifts in the timing of peak abundance (D) and abundance index (E,F) of their preferred prey, Fraser River Chinook Salmon. (See also Fig. 3 in the main text).}
-\label{fig:limetime}
-\end{figure}
+% \end{figure}
+% \begin{figure}[!hp]
+% \includegraphics[width=0.99\textwidth]{../analyses/orcaphen/figures/phentrends_lime_peak.pdf} 
+% \caption{\textbf{SRKW phenology at Lime Kiln State Park is shifting}, with the likely arrival day of year (A, defined here as the first day of year when the occurrence probability is >0.20) and peak occurrence probability day of year (B) getting later, from 1994-2017. In addition, mean occurrence probability from May to August (the season when regular monitoring of SRKWs occurs at Lime Kiln) is declining during this time period (C). These trends are associated with a decrease in the amount of time SRKWs are spending near Lime Kiln (i.e., the number of days on which SRKWs were observed ("whale days") has declined since 1994 (Fig. \ref{fig:mlimewdays}) and are consistent with shifts in the timing of peak abundance (D) and abundance index (E,F) of their preferred prey, Fraser River Chinook Salmon. (See also Fig. 3 in the main text).}
+% \label{fig:limetime}
+% \end{figure}
 
 \newpage
 \begin{figure}[!hp]
 \includegraphics[width=0.5\textwidth]{../analyses/orcaphen/figures/orcachinphenoverlap_allpods2006_edited.pdf}
-\caption{\textbf{SRKW phenology has shifted, in concert with shifts in Fraser River Chinook Salmon at one site with consistent observations in the Central Salish Sea}. K- and L-pod phenology (blue lines) is quantified from Lime Kiln Point State Park, SRKW phenology has shifted, with peak arrival dates delaying in recent (solid lines) compared with earlier (dashed lines) years. We show patterns for J-pod (A), K-pod (B), and L-Pod (C). Compare to Fig. 3 of the main text, which shows all pods together. }
+\caption{\textbf{SRKW phenology has shifted, in concert with shifts in Fraser River Chinook Salmon at one site with consistent observations in the Central Salish Sea}. Phenology (blue lines) is quantified from Lime Kiln Point State Park, SRKW phenology has shifted, with peak arrival dates delaying in recent (solid lines) compared with earlier (dashed lines) years. We show patterns for J-pod (A), K-pod (B), and L-Pod (C). Compare to Fig. 3 of the main text, which shows all pods together. }
 \label{fig:KLchin}
 \end{figure}
 
 \newpage
 \begin{figure}[!hp]
 \includegraphics[width=0.9\textwidth]{../analyses/orcaphen/figures/orcachinphenoverlapSRallbrkyears.pdf}
-\caption{\textbf{Changing the break-point has little qualitative effect on patterns of shifts in SRKW phenology Fraser River Chinook}. We show patterns for all SRKW pods together (as in Figure 3 in the main text) with different breakpoints of 2005 (A,B), 2006 (C,D, as in Figure 3) and 2007 (E,F). SRKW phenology (blue lines, A,C,E) is quantified from Lime Kiln Point State Park; an index of adult Fraser River Chinook salmon (summed daily CPUE from April through August, pink lines) and SRKW phenology have shifted, with peak arrival dates delaying in recent (solid lines) compared with earlier years (dashed lines).}
+\caption{\textbf{Changing the break-point has little qualitative effect on patterns of shifts in SRKW and Fraser River Chinook phenology}. We show patterns for all SRKW pods together (as in Figure 3 in the main text) with different breakpoints of 2005 (A,B), 2006 (C,D, as in Figure 3) and 2007 (E,F). SRKW phenology (blue lines, A,C,E) is quantified from Lime Kiln Point State Park; an index of adult Fraser River Chinook salmon (summed daily CPUE from April through August, pink lines) and SRKW phenology have shifted, with peak arrival dates delaying in recent (solid lines) compared with earlier years (dashed lines).}
 \label{fig:brkpt}
 \end{figure}
 
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/figures/proboccJ_4panels.png} 
-\caption{\textbf{J-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C).} This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 75\% credible intervals. 
+\caption{\textbf{J-pod activity varies seasonally in the Central Salish Sea (A) and Puget Sound proper (C).} This phenology has shifted later in recent years in the Central Salish Sea (B) and in Puget Sound (D). The shift toward later arrival in the central Salish Sea is evident the estimated probabilities of occurrence from the occupancy models for K-pod (A,C) as well as the linear trends in peak occurrence probability from 2001-2017 (B,D). Shading around lines represents 75\% uncertainty intervals. 
 }
 \label{fig:Jprobs}
 \end{figure}
