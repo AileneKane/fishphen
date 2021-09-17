@@ -71,100 +71,56 @@ dat$effort<-as.numeric(dat$effort)
 dat$year2<-as.factor(dat$year)
 dat$calDay<-as.numeric(dat$calDay)
 dat$catch<-as.numeric(dat$catch)
-m2 <- brm(cpue ~ s(calDay) + (calday|year2),
-          data=dat,
-          family =lognormal(), cores = 4,
-          iter = 4000, warmup = 1000, thin = 10,
-          control = list(adapt_delta = 0.99))
-
-summary(m2)
-windows()
-#add a very small number to cpue to use lognormal distribution
-
-dat$cpue1<-dat$cpue+1
+dat$cpue1<-dat$cpue+.005
 dat$logcpue<-log(dat$cpue1)
 
-m2log <- brm(cpue~ s(calDay) + (calDay|year2),
-          data=dat,
-          family =lognormal(), cores = 4,
-          iter = 4000, warmup = 1000, thin = 10,
+# m1 <- brm(cpue1 ~ s(calDay) + (calDay|year2),
+#           data=dat,
+#           family =lognormal(), chains = 2,
+#           iter = 6000, warmup = 1000, thin = 10,
+#           control = list(adapt_delta = 0.99, max_treedepth=15))
+# 
+# summary(m1)
+# windows()
+#add a very small number to cpue to use lognormal distribution
+
+#Focal model is m2:
+m2 <- brm(logcpue~ s(calDay) + (calDay|year2),
+          data=dat, chains = 2,
+          iter = 6000, warmup = 1000, thin = 10,
           control = list(adapt_delta = 0.99, max_treedepth=15))
 
+plot(m2)
+# m3 <- brm(logcpue~ s(calDay) + (1|year2),
+#           data=dat, chains = 2,
+#           iter = 6000, warmup = 1000, thin = 10,
+#           control = list(adapt_delta = 0.99, max_treedepth=15))
 
 #Look at model results          
-windows()
-conditional_effects(m2log, surface = TRUE)
-summary(m2log)
+# windows()
+# conditional_effects(m3, surface = TRUE)
+# summary(m2log)
+save(m2, file="analyses/output/albionchibrms.Rda")
 
-windows()
+
+load("analyses/output/albionchibrms.Rda")
+
+#Look at overall pattern in cpue, across all years
 conditional_effects(m2, surface = TRUE)
 
 
-albgam<-cbind(dat$year,dat$calDay,fitted(m2),fitted(m2,probs=c(0.05,0.95)),fitted(m2,probs=c(0.25,0.75)))
-colnames(albgam)[1:3]<-c("year","doy", "cpue")
+albgam<-as.data.frame(cbind(dat$year,dat$calDay,fitted(m2),fitted(m2,probs=c(0.05,0.95)),fitted(m2,probs=c(0.25,0.75))))
+colnames(albgam)[1:3]<-c("year","doy", "logcpue.est")
+albgam$estcpue<-exp(as.numeric(albgam$logcpue.est))
+colnames(albgam)[15]<-c("cpue.est")
+
+#compare fitted to estimated cpue
+sumest<-tapply(albgam$cpue.est,list(albgam$year),sum)
+
 write.csv(albgam,"analyses/output/albionchiphenbrms.csv", row.names = FALSE)
 
 
-albgamlog<-cbind(dat$year,dat$calDay,fitted(m2log),fitted(m2log,probs=c(0.05,0.95)),fitted(m2log,probs=c(0.25,0.75)))
-colnames(albgamlog)[1:3]<-c("year","doy", "cpue")
-write.csv(albgamlog,"analyses/output/albionchiphenbrmslog.csv", row.names = FALSE)
-
-save(m2, file="analyses/output/albionchibrms.Rda")
-save(m2log, file="analyses/output/albionchibrmslog.Rda")
-
-#poisson models
-dat$effort<-as.integer(dat$effort)
-dat$year2<-as.factor(dat$year)
-dat$calDay<-as.numeric(dat$calDay)
-dat$catch<-as.integer(dat$catch)
-dat$effort<-as.integer(dat$effort)
-
-m1 <- brm(catch ~ s(calDay) + offset(effort) + (1|year2),
-          data=dat,
-          family =poisson(), cores = 4,
-          iter = 4000, warmup = 1000, thin = 10,
-          control = list(adapt_delta = 0.99))
-
-summary(m1)
-windows()alDay
-
-m2 <- brm(catch~ s(calDay)  + offset(effort) + (c|year2),
-          data=dat,
-          family =poisson(), cores = 4,
-          iter = 4000, warmup = 1000, thin = 10,
-          control = list(adapt_delta = 0.99, max_treedepth=15))
-
-
-
-
-
-
-
-#old code using sme
-
-fit<-sme(cpue,doy,year,criteria="AIC")
-quartz()
-plot(fit,type="diagnostic")
-fit$info
-quartz()
-plot(fit,type="model",xlab="doy",ylab="cpue")
-length(fit$fitted)
-summary(fit)
-#this fitting takes a while
-plot(fit,type="raw",showModelFits=TRUE,xlab="doy",ylab="cpue")
-#next extract peak doy around doy 100 and around doy 150 from model predictions
-summary(fit)
-preds<-as.data.frame(fit$fitted)
-preds$year<-substr(rownames(preds),1,4)
-#preds$n<-substr(rownames(preds),5,length(rownames(preds)))
-preds$doy<-dat$calDay
-
-colnames(preds)[1]<-"cpue.est"
-preds$cpue.est[preds$cpue.est<0]<-0
-tail(preds)
-write.csv(preds,"analyses/output/albiongamests.csv", row.names=FALSE)
-
-allyears<-unique(preds$year)
+allyears<-unique(albgam$year)
 
 seasons<-c("springsum","fall","allyear")
 years<-c()
@@ -180,7 +136,7 @@ alltotal.sp<-c()
 alltotal.fa<-c()
 
 for(y in allyears){
-  datyr<-preds[preds$year==y,]
+  datyr<-albgam[albgam$year==y,]
   if (dim(datyr)[1]<=1){
     first<-last<-mid<-peak<-NA
     total<-NA
@@ -229,9 +185,12 @@ for(y in allyears){
 albchiphenest<-cbind("ck","albion",years,firstobsdate,lastobsdate,peakobsdate,peakobsdate.sp,peakobsdate.fa,midobsdate,alltotal,alltotal.sp,alltotal.fa)
 
 colnames(albchiphenest)[1:3]<-c("sp","site","year")
-write.csv(albchiphenest,"analyses/output/albionchiphenest.csv", row.names =FALSE)
+write.csv(albchiphenest,"analyses/output/albionchiphenestbrms.csv", row.names =FALSE)
 
-#Now estimate trends in phenology from gamests rather than those above calculated frmo raw data
+
+
+
+#Now estimate trends in phenology from gamests rather than those calculated frmo raw data
 albchiphenest<-read.csv("analyses/output/albionchiphenest.csv", header=TRUE)
 #restrict to time frame consistent with orcas
 albchiphenest<-albchiphenest[albchiphenest$year>1995,]
@@ -262,3 +221,41 @@ sums<-cbind("ck","albion",phen,allmodsums,allmodsums.50ci,allmodsums.95ci)
 colnames(sums)<-c("sp","site","phen","est","ci25","ci75","ci2.5","ci97.5")
 
 write.csv(sums, "analyses/output/albionreturntrends_linmodyrs.csv", row.names = TRUE)
+
+#Check est vs obs
+albgam<-as.data.frame(cbind(dat$year,dat$calDay,fitted(m2),fitted(m2,probs=c(0.05,0.95)),fitted(m2,probs=c(0.25,0.75))))
+
+sumest<-tapply(albgam$cpue.est,list(albgam$year),sum)
+sumest
+plot(sumalb,sumest)
+plot(names(sumalb),sumalb)
+points(names(sumest),sumest,pch=16,col=alpha("green",.5))
+
+
+       
+       
+       
+       
+# #old code using sme
+# fit<-sme(cpue,doy,year,criteria="AIC")
+# quartz()
+# plot(fit,type="diagnostic")
+# fit$info
+# quartz()
+# plot(fit,type="model",xlab="doy",ylab="cpue")
+# length(fit$fitted)
+# summary(fit)
+# #this fitting takes a while
+# plot(fit,type="raw",showModelFits=TRUE,xlab="doy",ylab="cpue")
+# #next extract peak doy around doy 100 and around doy 150 from model predictions
+# summary(fit)
+# preds<-as.data.frame(fit$fitted)
+# preds$year<-substr(rownames(preds),1,4)
+# #preds$n<-substr(rownames(preds),5,length(rownames(preds)))
+# preds$doy<-dat$calDay
+# 
+# colnames(preds)[1]<-"cpue.est"
+# preds$cpue.est[preds$cpue.est<0]<-0
+# tail(preds)
+# write.csv(preds,"analyses/output/albiongamests.csv", row.names=FALSE)
+# 

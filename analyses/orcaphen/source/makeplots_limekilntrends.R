@@ -7,7 +7,8 @@ options(stringsAsFactors = FALSE)
 
 #add libraries
 library(dplyr)
-
+library(RColorBrewer)
+library(scales)
 # Set working directory: 
 #setwd("~/GitHub/fishphen")
 #or from laptop:
@@ -80,43 +81,53 @@ summary(lm(lgests$peakoc.doy~lgests$year))#not getting later
 
 confint(lm(gests$lastprob~gests$year),level= .75)
 confint(lm(gests$firstprob~gests$year), level=.75)
-firstmod<-lm(gests$firstprob~gests$year)#trend is getting later
-summary(firstmod)
-pdf("analyses/orcaphen/figures/phentrends_lime_peak.pdf",height=8,width=12)
-#quartz(height=10,width=10)
-par(mfrow=c(2,3),mar=c(7, 5, 4, 2) + 0.1)
-alph=0.95
+firstmod<-summary(lm(gests$firstprob~gests$year))#trend is getting later
+pdf("analyses/orcaphen/figures/phentrends_lime_peak.pdf",height=6,width=12)
+#quartz(height=6,width=12)
+par(mfrow=c(1,3),mar=c(7, 5, 4, 2) + 0.1)
+alph=0.90
 myPalette <- colorRampPalette(brewer.pal(length(unique(gests$year)), "Blues")) #### Gives us a heat map look
 cols = rev(myPalette(length(unique(gests$year))))
 
 plot(gests$year,gests$firstprob,xlab= "Year", ylab= "Arrival Day of Year", pch=21, bty="l", cex.axis=1.5,cex.lab=1.6,cex=1.8,bg=cols[factor(gests$year)])
 mtext(paste("A"), side = 3, line = 1, adj=0)
-if(firstmod$coef[2,4]<(1-alph)){abline(firstmod, lty=1, lwd=2)}
+if(firstmod$coef[2,4]<(1-alph)){abline(firstmod$coef[,1], lty=1, lwd=2)}
 print(paste("r2=",round(firstmod$r.squared, digits=2),",p=",round(firstmod$coeff[2,4], digits=3)), side=3, adj=1, cex=0.7)
 print(paste("coef=",round(firstmod$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
 
 plot(gests$year,gests$peakoc.doy,xlab= "Year", ylab= "Day of Peak SRKW Occupancy Prob.", pch=21, bty="l", cex.axis=1.5,cex.lab=1.6,cex=1.8,bg=cols[factor(gests$year)])
-if(peakmod$coef[2,4]<(1-alph)){abline(peakmod, lty=1, lwd=2)}
+if(peakmod$coef[2,4]<(1-alph)){abline(peakmod$coef[,1], lty=1, lwd=2)}
 print(paste("r2=",round(peakmod$r.squared, digits=2),",p=",round(peakmod$coeff[2,4], digits=3)), side=3, adj=1, cex=0.7)
 print(paste("coef=",round(peakmod$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
 mtext("B)", side = 3, line = 1, adj=0)
 
 plot(gests$year,gests$meanprobs,xlab= "Year", ylab= "Mean Occurrence Probability", pch=21,  cex.axis=1.5,cex.lab=1.6,bty="l",cex=1.5,bg=cols[factor(gests$year)])
 mtext("C)", side = 3, line = 1, adj=0)
-if(meanmod$coef[2,4]<(1-alph)){abline(meanmod, lty=1, lwd=2)}
+if(meanmod$coef[2,4]<(1-alph)){abline(meanmod$coef[,1], lty=1, lwd=2)}
 print(paste("r2=",round(meanmod$r.squared, digits=2),",p=",round(meanmod$coeff[2,4], digits=3)), side=3, adj=1, cex=0.7)
 print(paste("coef=",round(meanmod$coeff[2,1], digits=2)), side=3,line=-1, adj=1, cex=0.7)
  
 
 #quartz(height=4,width=12)
 albchiphenest<-read.csv("analyses/output/albionchiphenest.csv", header=TRUE)
+albchiphenbrms<-read.csv("analyses/output/albionchiphenestbrms.csv", header=TRUE)
+
+albchiphen<-read.csv("analyses/output/albionchiphen.csv", header=TRUE)
 
 #restrict SRKW and chin data to consistent years
 albchinest90<-albchiphenest[albchiphenest$year>1993,]
 albchinest90<-albchinest90[albchinest90$year<2017,]
-#albchinest90<-albchinest90[albchinest90$year!=1991,]
-#albchinest90<-albchinest90[albchinest90$year!=1992,]
+
+albchiphen90<-albchiphen[albchiphen$year>1993,]
+albchiphen90<-albchiphen90[albchiphen90$year<2017,]
+
+albchiphenbrms90<-albchiphenbrms[albchiphenbrms$year>1993,]
+albchiphenbrms90<-albchiphenbrms90[albchiphenbrms90$year<2017,]
+
 albchinest90<-albchinest90[albchinest90$year!=2013,]
+albchiphen90<-albchiphen90[albchiphen90$year!=2013,]
+albchiphenbrms90<-albchiphenbrms90[albchiphenbrms90$year!=2013,]
+
 gests<-gests[gests$years>1990,]
 #myPalette <- colorRampPalette(brewer.pal(length(unique(albchinest90$year)), "Blues")) #### Gives us a heat map look
 #cols = rev(myPalette(length(unique(albchinest90$year))))
@@ -125,12 +136,12 @@ gests<-gests[gests$years>1990,]
 #par(mfrow=c(1,3), mar=c(5, 5, 4, 2) + 0.1)
 
 plot(albchinest90$peakobsdate,gests$peakoc.doy,type="p",pch=21,  cex.axis=1.5,cex.lab=1.6,bg = cols[factor(albchinest90$year)],xlab="Day of Peak Chinook Abundance",ylab="Day of Peak SRKW Occupancy Prob.", cex=1.8, bty="l")
-mod<-lm(gests$peakoc.doy~albchinest90$peakobsdate)
+mod<-lm(gests$peakoc.doy~albchiphen90$peakobsdate)
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
 if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
 mtext("D)", side = 3, line = 1, adj=0)
 print(summary(mod))
-
+albchinest90$alltotal<-as.numeric(albchinest90$alltotal)
 plot(albchinest90$alltotal,gests$peakoc.doy, type="p",pch=21, cex.axis=1.5,cex.lab=1.6,bg = cols[factor(albchinest90$year)],xlab="Chinook Abundance Index (CPUE)",ylab="Day of Peak SRKW Occupancy Prob.", cex=1.8, bty="l")
 mod<-lm(gests$peakoc.doy~albchinest90$alltotal)
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
@@ -150,3 +161,24 @@ mtext("F)", side = 3, line = 1, adj=0)
 print(summary(mod))
 
 dev.off()
+
+
+#comparing different models with measured data:
+plot(albchinest90$peakobsdate,gests$peakoc.doy,type="p",pch=21,  cex.axis=1.5,cex.lab=1.6,bg = cols[factor(albchinest90$year)],xlab="Day of Peak Chinook Abundance",ylab="Day of Peak SRKW Occupancy Prob.", cex=1.8, bty="l")
+mod<-lm(gests$peakoc.doy~albchinest90$peakobsdate)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
+if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
+mtext("D)", side = 3, line = 1, adj=0)
+print(summary(mod))
+
+albchiphen90$peakobsdate<-as.numeric(albchiphen90$peakobsdate)
+albchiphen90$alltotal<-as.numeric(albchiphen90$alltotal)
+
+plot(albchiphen90$peakobsdate,gests$peakoc.doy,type="p",pch=21,  cex.axis=1.5,cex.lab=1.6,bg = cols[factor(albchinest90$year)],xlab="Day of Peak Chinook Abundance",ylab="Day of Peak SRKW Occupancy Prob.", cex=1.8, bty="l")
+mod<-lm(gests$peakoc.doy~albchiphen90$peakobsdate)
+if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
+if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
+mtext("D)", side = 3, line = 1, adj=0)
+print(summary(mod))
+
+
