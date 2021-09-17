@@ -63,7 +63,7 @@ wdays.L<-as.data.frame(tapply(orcasum.days$Lpres,list(orcasum.days$year,orcasum.
 source("analyses/orcaphen/source/orca_plot_whaledays.R")
 
 #6. if you want to do some other basic plots of the data. This includes proportion of days in a week in which whales were observed up by week and decade
-source("analyses/orcaphen/source/orca_plotdata.R")
+#source("analyses/orcaphen/source/orca_plotdata.R")
 
 #7. Make a map of the SRKW sightings in ps and uss
 source("analyses/orcaphen/source/orca_makemap.R")
