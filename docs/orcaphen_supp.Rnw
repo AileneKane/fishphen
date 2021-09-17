@@ -298,17 +298,21 @@ print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.p
 \caption{\textbf{Comparison of the abundance index from Albion test fishery CPUE (used in this paper) to alternative indices of abundance: total escapement from four index stocks used by the Pacific Salmon Commission (PSC 2018)}, from 1975-2018. Top row shows relationship between Albion Test Fishery CPUE to escapement estimates for four spring and summer index stocks assessed by the Pacific Salmon Commission in the Fraser River: Fraser Spring-Run 1.2, Fraser Spring-Run 1.3, Fraser Summer-Run 1.3, and Fraser Summer Run 0.3.}
 \label{fig:ctcalb}
 \end{figure}
+
+
 \begin{figure}[!hp]
 \includegraphics[width=0.7\textwidth]{../analyses/figures/phenophases.pdf}
 \caption{\textbf{The phenophases quantified in this study} included day of year of first and last occurrence, as well as day of year of peak occurrence probability for southern resident killer whales and peak abundance index for salmon.}
 \label{fig:ctcalb}
 \end{figure}
 
+
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png} 
 \caption{\textbf{Sightings of SRKWs from the OrcaMaster Database}, from 1978-2017. }
 \label{fig:sights}
 \end{figure}
+
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png} 
@@ -319,7 +323,7 @@ print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.p
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/modwhaledays_lime.png} 
-\caption{\textbf{Whale days and estimated Chinook abundance have declined at Lime Kiln State Park} since 1994. We show observed and modeled numbers of whale days from our Lime Kiln occupancy model, across all pods (A), J pod (B), K pod (C), and L pod (D), as well as estimated annual catch per unit effort (CPUE, catch per thousand fathom minutes), from our abundance model fit to Albion test fishery data from May though September across all Chinook. Shading shows 50 percentile uncertainty intervals.}
+\caption{\textbf{Whale days and estimated Chinook abundance have declined at Lime Kiln State Park} since 1994. We show observed and modeled numbers of whale days from our Lime Kiln occupancy model, across all pods (A), J pod (B), K pod (C), and L pod (D), as well as estimated annual catch per unit effort (CPUE, catch per thousand fathom minutes), from our abundance model fit to Albion test fishery data from May though September across all Chinook. Shading shows 75th percentile uncertainty intervals.}
 \label{fig:mlimewdays}
 \end{figure}
 \begin{figure}[!hp]

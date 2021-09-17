@@ -36,16 +36,16 @@ uss.start<-91#April 1 = 91,
 
 d <- read.csv("data/AppendixII.csv")
 quads<-read.csv("data/QuadCentroids.csv")
-dim(d)#105344  18 on Nov 08, 2019
+dim(d)#105344  18 on Sept 14, 2021
 
 # 2. Clean the data (also saved in output/AppendixII_cleaned,csv)
 source("analyses/orcaphen/source/clean_orca.R")
-dim(d)#105339     21 on Nov 8, 2019
+dim(d)#105339     21 on Sept 14, 2021
 
 
 # 3. Limit space and time to firstyear or later and Salish Sea, Puget Sound, Washington Outer Coast 
 source("analyses/orcaphen/source/orca_limitspacetime.R")
-dim(d)#102512     22
+dim(d)#102512     22 on Sept 14, 2021
 #table(d$FishArea,d$region)#check regions are correct
 
 #4. Get data in terms of number of observations per day and "whale days": days on which whales were seen (presence/absence for each day)
