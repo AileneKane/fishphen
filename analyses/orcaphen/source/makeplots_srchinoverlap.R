@@ -147,9 +147,17 @@ dev.off()
 png(file="analyses/orcaphen/figures/lime_albchin_brms.png",height=1500,width=1500, res = 300)
   #quartz()
   #par(mfrow=c(1,3), mar=c(5, 5, 4, 2) + 0.1)
-  limegestsyr<-get.gests(limegests,"prob.occ")
+albchinest90<-albchinphenest[albchinphenest$year>1993,]
+albchinest90<-albchinest90[albchinest90$year<2018,]
+#albchinest90<-albchinest90[albchinest90$year!=1991,]
+#albchinest90<-albchinest90[albchinest90$year!=1992,]
+albchinest90<-albchinest90[albchinest90$year!=2014,]#missing from SRKW data
+myPalette <- colorRampPalette(brewer.pal(length(unique(albchinest90$year)), "Blues")) #### Gives us a heat map look
+cols = rev(myPalette(length(unique(albchinest90$year))))
+
+limegestsyr<-get.gests(limegests,"prob.occ")
   
-  limegestsyr<-limegestsyr[limegestsyr$years>1992,]
+  limegestsyr<-limegestsyr[limegestsyr$years>1993,]
   
   plot(albchinest90$peakcpue.doy,limegestsyr$peakoc.doy,type="p",pch=21, cex.axis=1.2,cex.lab=1.2,bg = cols[factor(albchinest90$year)],xlab="Day of Peak Chinook Abundance Index (DOY)",ylab="Day of Peak SRKW Occupancy Probability (DOY)", cex=1.8, bty="l")
   mod<-lm(limegestsyr$peakoc.doy~albchinest90$peakcpue.doy )
