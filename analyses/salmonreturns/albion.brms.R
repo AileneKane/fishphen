@@ -117,7 +117,7 @@ colnames(albgam)[15]<-c("cpue.est")
 #compare fitted to estimated cpue
 sumest<-tapply(albgam$cpue.est,list(albgam$year),sum)
 
-write.csv(albgam,"analyses/output/albionchiphenbrms.csv", row.names = FALSE)
+write.csv(albgam,"analyses/output/albionbrmsests.csv", row.names = FALSE)
 
 
 allyears<-unique(albgam$year)

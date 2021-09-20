@@ -69,6 +69,10 @@ source("analyses/orcaphen/source/orca_get_whaledays_lime.R")
 #source("analyses/orcaphen/source/orca_rungams_lime.R")#take a long time, also- should replace with occupancy model fit in jags
 limegests<-read.csv("analyses/output/limekiln.srkw.gamests.csv", header=TRUE)
 
+
+#9b. Fit gams in brms to limekiln data or load models that were already fit
+source("analyses/orcaphen/source/orca_loadgams_lime.R")
+
 #Plot curves of salmon abundance vs day vs mean whale day
 
 chinab<-read.csv("analyses/output/albiongamests.csv", header = TRUE)

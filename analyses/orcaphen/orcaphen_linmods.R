@@ -125,7 +125,7 @@ colnames(cpue.old)<-colnames(cpue.rec)<-c("doy","cpue.mean","cpue.sd")
 #fit gams of srkw prob of presence
 #source(orca_rungams_lime.R)#take a long time so just read in model ests
 #Below needs work!
-limegests<-read.csv("analyses/output/lime_prob.occ.50.csv", header=TRUE)#also 0.90 and 0.95
+limegests<-read.csv("analyses/output/lime_prob.occ.75.csv", header=TRUE)#also 0.90 and 0.95
 limegests$year<-rep(unique(lime.df$year), each=75)
 
 pod = "SR"#choices are S,J.K,L
@@ -185,12 +185,12 @@ confint(lm(gests$firstprob~gests$year), level=.90)
 albchiphenest<-read.csv("analyses/output/albionchiphenest.csv", header=TRUE)
 
 #restrict SRKW and chin data to consistent years
-albchinest90<-albchiphenest[albchiphenest$year>1992,]
+albchinest90<-albchiphenest[albchiphenest$year>1990,]
 albchinest90<-albchinest90[albchinest90$year<2017,]
 #albchinest90<-albchinest90[albchinest90$year!=1991,]
-#albchinest90<-albchinest90[albchinest90$year!=1992,]
+albchinest90<-albchinest90[albchinest90$year!=1992,]
 albchinest90<-albchinest90[albchinest90$year!=2013,]
-gests<-gests[gests$years>1990,]
+gests<-gests[gests$years>1991,]
 myPalette <- colorRampPalette(brewer.pal(length(unique(albchinest90$year)), "Blues")) #### Gives us a heat map look
 cols = rev(myPalette(length(unique(albchinest90$year))))
 png(file="analyses/orcaphen/figures/lime_albchin_gam.png",height=1500,width=4500, res = 300)

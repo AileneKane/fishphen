@@ -41,6 +41,7 @@ get.gests.chin<-function(gests,cpue){#occprobs=cpue
   firstcpue<-c()
   lastcpue<-c()
   meancpues<-c()
+  totalcpues<-c()
   cpue.lc<-c()
   cpue.uc<-c()
   years<-c()
@@ -52,6 +53,7 @@ get.gests.chin<-function(gests,cpue){#occprobs=cpue
     yrfirst.doy<-yeardat$doy[min(which(cpuecol>0))]
     yrlast.doy<-yeardat$doy[max(which(cpuecol>0))]
     meancpue<-mean(cpuecol)
+    totalcpue<-sum(cpuecol)
     lprob<-quantile(cpuecol,0.25)
     uprob<-quantile(cpuecol,0.75)
     peakcpue<-c(peakcpue,yrpeak)
@@ -59,12 +61,14 @@ get.gests.chin<-function(gests,cpue){#occprobs=cpue
     firstcpue<-c(firstcpue,yrfirst.doy)
     lastcpue<-c(lastcpue,yrlast.doy)
     meancpues<-c(meancpues,meancpue)
+    totalcpues<-c(totalcpues,totalcpue)
     cpue.lc<-c(cpue.lc,lprob)
     cpue.uc<-c(cpue.uc,uprob)
     years<-c(years,y)
   }
-  gests<-as.data.frame(cbind(years,peakcpue,peakcpue.doy,firstcpue,lastcpue,meancpue,cpue.lc,cpue.uc))
+  gests<-as.data.frame(cbind(years,peakcpue,peakcpue.doy,firstcpue,lastcpue,meancpue,cpue.lc,cpue.uc,totalcpues))
    row.names(gests)<-NULL
   return(gests)
 }
+
 
