@@ -60,7 +60,7 @@
 
 As a presence-only database, trends in the Orca Master dataset should be interpreted with care, since they could be due to shifts in effort (i.e., the number of total observations) as well as (or instead of) trends in SRKW presence (see Effects of changes in effort on estimated phenological change in the Supplemental Materials). For this reason, and because we know there has been a dramatic increase in reported whale sightings (Olson et al., 2018), we report all trends across two different durations: the full dataset (from 1978-2017) and recent years (2001-2017). We use 2001 as a cut-off, to avoid the sharp increase in sightings that occurred from 2000 to 2001 (Fig. S3-4), likely influenced by the onset of internet-based sightings platforms that began that year (Hauser et al., 2007; Olson et al., 2018).
 
-For our analyses, bbservation of any individual or group of whales within a pod counted as presence of that pod, with the exception of “L87,” an individual that spent little time with his natal L pod following the death of his mother, and was instead seen more frequently with J- and K-pods. Observations of this individual alone were therefore not counted as presence of L pod in our analyses.
+For our analyses, observation of any individual or group of whales within a pod counted as presence of that pod, with the exception of ``L87,'' an individual that spent little time with his natal L pod following the death of his mother, and was instead seen more frequently with J- and K-pods. Observations of this individual alone were therefore not counted as presence of L pod in our analyses.
  
 \section*{Models}
 \emph{Southern resident killer whale presence and their prey at Lime Kiln Point State}
@@ -80,7 +80,7 @@ Pr(\psi_i = 1) &= logit^{-1} (\alpha_{year[i]} + s(day)_{year[i]})
 
 \item \underline{Fraser River Chinook salmon abundance index model}
 
-We modeled an index of Fraser River Chinook salmon abundance (\emph{y}, the log of the daily catch per unit effort [CPUE] to which we added one prior to logging to avoid values of zero) as a smooth function of day of year (using thin plate regression spline basis), with a year-specific shape as well as a year-specific intercept (i.e., random effect of year):
+We modeled an index of Fraser River Chinook salmon abundance (\emph{y}, the log of the daily catch per unit effort [CPUE] to which we added 0.001 prior to logging to avoid values of zero) as a smooth function of day of year (using thin plate regression spline basis), with a year-specific shape as well as a year-specific intercept (i.e., random effect of year):
 
 
 \begin{align*}
@@ -93,7 +93,7 @@ y_i &= \alpha_{year[i]} + s(day)_{year[i]}
 
 \end{enumerate}
 
-The above models for killer whales ad Chinook were fitted via thin plate regression spline basis using the programming language \texttt{Stan} \citep{Carpenter:2016aa} (\texttt{www.mc-stan.org}), accessed via the \texttt{brms}\citep{brms2018} package in R \citep{Rcore2019}, version 3.6.2. For each model fit, we ran four chains simultaneously, each with 4 000 sampling iterations (1 000 of which were used for warm-up). Code for the above models is in Appendix 1. We assessed model performance through $R_{hat}$ (all were close to 1) and high neff, as well as visual consideration of chain convergence and posteriors \citep{BDA}.
+The above models for killer whales ad Chinook were fitted via thin plate regression spline basis using the programming language \texttt{Stan} \citep{Carpenter:2016aa} (\texttt{www.mc-stan.org}), accessed via the \texttt{brms}\citep{brms2018} package in R \citep{Rcore2021}, version 4.0.4. For each model fit, we ran four chains simultaneously, each with 4 000 sampling iterations (1 000 of which were used for warm-up). Code for the above models is in Appendix 1. We assessed model performance through $R_{hat}$ (all were close to 1) and high neff, as well as visual consideration of chain convergence and posteriors \citep{BDA}.
 \par \emph{Southern resident killer whales and salmon in the Central Salish Sea and Puget Sound Proper}
 \begin{enumerate}
 \item \underline {Southern resident killer whale occupancy models}
@@ -142,7 +142,7 @@ With increasing public awareness of SRKWs near urban areas (e.g. the Salish Sea)
 
 \section* {Supplemental Tables}
 % latex table generated in R 4.0.4 by xtable 1.8-4 package
-% Mon Sep 20 12:47:09 2021
+% Mon Sep 20 13:32:13 2021
 \begin{table}[ht]
 \centering
 \caption{\textbf{Salmon runs in Central Salish Sea and Puget Sound Proper} included in our analyses.} 
@@ -172,7 +172,7 @@ Puget Sound Proper & CEDAR RIVER HATCHERY & Chinook & wild & 47.3761 & -121.9625
 \endgroup
 \end{table}
 % latex table generated in R 4.0.4 by xtable 1.8-4 package
-% Mon Sep 20 12:47:09 2021
+% Mon Sep 20 13:32:13 2021
 \begin{table}[ht]
 \centering
 \caption{\textbf{Salmon phenology has shifted} later in part of the Central Salish Sea (based on spring/summer Chinook in the Albion Test Fishery data, from 1995-2017) and earlier in Puget Sound Proper (based on 13 runs across coho, chum, and Chinook adult in Table S1, from 1997-2017).} 
@@ -201,7 +201,7 @@ Puget Sound Proper & first & intercept & 1706.47 & 1425.65 & 1987.32 &  886.42 &
 \end{table}
 \begin{adjustwidth}{-4cm}{-2cm}
 % latex table generated in R 4.0.4 by xtable 1.8-4 package
-% Mon Sep 20 12:47:10 2021
+% Mon Sep 20 13:32:13 2021
 \begin{table}[ht]
 \begin{flushleft}
 \caption{\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper (`ps') during the fall/winter (`fall') and the central Salish Sea (`css') during the spring/summer (`sum'), from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the same peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent, 75 percent, and 95 percent uncertainty intervals are shown.} 
