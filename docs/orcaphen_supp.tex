@@ -142,7 +142,28 @@ With increasing public awareness of SRKWs near urban areas (e.g. the Salish Sea)
 
 \section* {Supplemental Tables}
 % latex table generated in R 4.0.4 by xtable 1.8-4 package
-% Mon Sep 20 13:32:13 2021
+% Fri Oct 15 16:12:00 2021
+\begin{table}[ht]
+\centering
+\caption{\textbf{Data types and sources}} 
+\label{tab:salmon}
+\begingroup\footnotesize
+\begin{tabular}{|p{0.1\textwidth}|p{0.1\textwidth}|p{0.2\textwidth}|p{0.16\textwidth}|p{0.2\textwidth}|p{0.16\textwidth}|}
+  \hline
+Region & Species & Data Source & Data Type & Spatial Scale & Temporal Scale \\ 
+  \hline
+Central Salish Sea & SRKW & Lime Kiln Point State Park & Standardized effort & Local (single point) & 1994-2017, daily May-Sept \\ 
+   & SRKW & Orca MAster (The Whale Museum, 2018) & Presence-only, crowd-sourced & Regional (multiple points) & 1978-2017, opportunistic observations \\ 
+   & Chinook salmon & Albion test fisher & Standardized effort & Local (transect) & 1992-2017, daily April-Oct \\ 
+   \hline
+Puget Sound Proper & SRKW & Orca MAster (The Whale Museum, 2018) & Presence-only, crowd-sourced & Regional (multiple points) & 1978-2017, opportunistic observations \\ 
+   & Chinook,coho, chum salmon & WDFW count data from 7 streams & Standardized effort & Local (13 points) & Variable (see Table S2) \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
+% latex table generated in R 4.0.4 by xtable 1.8-4 package
+% Fri Oct 15 16:12:00 2021
 \begin{table}[ht]
 \centering
 \caption{\textbf{Salmon runs in Central Salish Sea and Puget Sound Proper} included in our analyses.} 
@@ -170,9 +191,9 @@ Puget Sound Proper & CEDAR RIVER HATCHERY & Chinook & wild & 47.3761 & -121.9625
    \hline
 \end{tabular}
 \endgroup
-\end{table}
+\end{table}\begin{adjustwidth}{-4cm}{-2cm}
 % latex table generated in R 4.0.4 by xtable 1.8-4 package
-% Mon Sep 20 13:32:13 2021
+% Fri Oct 15 16:12:00 2021
 \begin{table}[ht]
 \centering
 \caption{\textbf{Salmon phenology has shifted} later in part of the Central Salish Sea (based on spring/summer Chinook in the Albion Test Fishery data, from 1995-2017) and earlier in Puget Sound Proper (based on 13 runs across coho, chum, and Chinook adult in Table S1, from 1997-2017).} 
@@ -199,16 +220,17 @@ Puget Sound Proper & first & intercept & 1706.47 & 1425.65 & 1987.32 &  886.42 &
 \end{tabular}
 \endgroup
 \end{table}
-\begin{adjustwidth}{-4cm}{-2cm}
+\vspace*{\floatsep}
+
 % latex table generated in R 4.0.4 by xtable 1.8-4 package
-% Mon Sep 20 13:32:13 2021
+% Fri Oct 15 16:12:00 2021
 \begin{table}[ht]
 \begin{flushleft}
-\caption{\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper (`ps') during the fall/winter (`fall') and the central Salish Sea (`css') during the spring/summer (`sum'), from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the same peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent, 75 percent, and 95 percent uncertainty intervals are shown.} 
+\caption{\textbf{Estimated linear trends in peak-, first, and last likely occurance dates for southern resident killer whiles} in Puget Sound proper (`ps') during the fall/winter (`fall', from July through December) and the central Salish Sea (`css') during the spring/summer (`sum', from April through October), from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the same peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent, 75 percent, and 95 percent uncertainty intervals are shown.} 
 \label{tab:modsum}
 \begingroup\tiny
 \begin{tabular}{|p{0.018\textwidth}|p{0.035\textwidth}|p{0.035\textwidth}|p{0.035\textwidth}|p{0.035\textwidth}p{0.035\textwidth}p{0.035\textwidth}p{0.035\textwidth}p{0.035\textwidth}p{0.035\textwidth}p{0.035\textwidth}|p{0.035\textwidth}p{0.035\textwidth}p{0.035\textwidth}p{0.035\textwidth}p{0.035\textwidth}p{0.035\textwidth}p{0.035\textwidth}|}
-  \hline & & & & \multicolumn{7}{c |}{1978-2017 trend} &\multicolumn{7}{c |}{2002-2017 trend}\\
+  \hline & & & & \multicolumn{7}{c |}{1978-2017 trend} &\multicolumn{7}{c |}{2001-2017 trend}\\
  pod & region & season & phase & mean & 25\% & 75\% & 12.5\% & 87.5\% & 2.5\% & 97.5\% & mean & 25\% & 75\% & 12.5\% & 87.5\% & 2.5\% & 97.5\% \\ 
   \hline
 J & ps & fall & peak & 1.17 & 0.91 & 1.47 & 0.71 & 1.61 & 0.33 & 1.93 & 0.45 & -0.67 & 1.55 & -1.41 & 2.38 & -2.81 & 4.09 \\ 
@@ -241,18 +263,23 @@ L & ps & fall & peak & 1.07 & 0.87 & 1.29 & 0.71 & 1.43 & 0.41 & 1.65 & -0.47 & 
 
 
 
+\newpage
+\section*{}
+
+\newpage
 .
- 
 .
 
-. 
-
- \pagebreak
-  
-\section*{ }
-  \pagebreak
-
+\newpage
 \section* {Supplemental Figures}
+
+\begin{figure}[!hp]
+\includegraphics[width=0.7\textwidth]{../analyses/figures/phenophases.pdf}
+\caption{\textbf{The phenophases quantified in this study} included day of year of first and last occurrence, as well as day of year of peak occurrence probability for southern resident killer whales and peak abundance index for salmon.}
+\label{fig:ctcalb}
+\end{figure}
+
+\vspace*{\floatsep}
 
 \begin{figure}[!hp]
 \includegraphics[width=0.7\textwidth]{../analyses/orcaphen/figures/ctcalbion.pdf}
@@ -261,12 +288,7 @@ L & ps & fall & peak & 1.07 & 0.87 & 1.29 & 0.71 & 1.43 & 0.41 & 1.65 & -0.47 & 
 \end{figure}
 
 
-\begin{figure}[!hp]
-\includegraphics[width=0.7\textwidth]{../analyses/figures/phenophases.pdf}
-\caption{\textbf{The phenophases quantified in this study} included day of year of first and last occurrence, as well as day of year of peak occurrence probability for southern resident killer whales and peak abundance index for salmon.}
-\label{fig:ctcalb}
-\end{figure}
-
+\vspace*{\floatsep}
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png} 
@@ -333,7 +355,7 @@ L & ps & fall & peak & 1.07 & 0.87 & 1.29 & 0.71 & 1.43 & 0.41 & 1.65 & -0.47 & 
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/simeffortonly2panels.png} 
-\caption{\textbf{Expected change in phenology due to changes in effort alone, across Puget Sound and the Central Salish Sea regions}, from 1978-2017 (A) and from 2001-2017 (B).Error bars represent 50\% uncertainty intervals. }
+\caption{\textbf{Expected change in phenology due to changes in effort alone, across Puget Sound and the Central Salish Sea regions}, from 1978-2017 (A) and from 2001-2017 (B).Error bars represent 75\% uncertainty intervals. }
 \label{fig:simeffort}
 \end{figure}
 

@@ -179,12 +179,12 @@ for (i in 1:length(effort)){
   #look at difference between first and last doy in 2 time periods
   }
  #print(df)
- par(mfrow=c(1,2))
+ #par(mfrow=c(1,2))
  #First obs)
- boxplot(df$firstest~as.factor(df$numobs), xlab="Number of days observed", ylab="Estimate of first obs (doy)", main=paste("First obs"))
+ #boxplot(df$firstest~as.factor(df$numobs), xlab="Number of days observed", ylab="Estimate of first obs (doy)", main=paste("First obs"))
  first.t<-t.test(df$firstest~as.factor(df$numobs), conf.level=0.75) 
  #Last obs
- boxplot(df$lastest~as.factor(df$numobs), xlab="Number of days observed", ylab="Estimate of last obs (doy)", main="Last obs")
+ #boxplot(df$lastest~as.factor(df$numobs), xlab="Number of days observed", ylab="Estimate of last obs (doy)", main="Last obs")
  last.t<-t.test(df$lastest~as.factor(df$numobs), conf.level=0.75)
  sum.df$lowobs<-lowobs
  sum.df$hiobs<-highobs
@@ -216,7 +216,7 @@ if(uss==FALSE & wholeyear==FALSE){
       y<-c(mean(pssum.df$firstdif),mean(pssum.df$lastdif))
       png(paste("analyses/orcaphen/figures/simeffortonly",styr,"-2017.png",sep=""),height=480, width=480)
       #first ps
-      plot(x,y,pch=16,col="gray",ylim=c(-10,10), xlim=c(0,5), typ="p", bty="l", cex=1.8, xlab="", xaxt="n", ylab="Change in day of year", main = paste(styr,"-2017",sep=""))
+      plot(x,y,pch=16,col="gray",ylim=c(-12,12), xlim=c(0,5), typ="p", bty="l", cex=1.8, xlab="", xaxt="n", ylab="Change in day of year", main = paste(styr,"-2017",sep=""), cex.lab=1.5, cex.axis=1.5)
       ylci<-c(quantile(pssum.df$firstdif,probs=0.125),quantile(pssum.df$lastdif, probs = 0.125))
       yuci<-c(quantile(pssum.df$firstdif, probs = 0.875),quantile(pssum.df$lastdif, probs = 0.875))
       
@@ -237,11 +237,12 @@ if(uss==FALSE & wholeyear==FALSE){
       # 
       abline(h=0)
       
-      axis(side=1, at=c(1,2,3,4), labels=c("first obs","last obs","first obs","last obs"))   
+      axis(side=1, at=c(1,2,3,4), labels=c("first obs","last obs","first obs","last obs"),cex.axis=1.2)   
       
-      axis(side=1, at=c(1.5,3.5), labels=c("Puget Sound","Upper Salish Sea"),line=1, lty=0)
+      axis(side=1, at=c(1.5,3.5), labels=c("Puget Sound","Upper Salish Sea"),line=1, lty=0, cex.axis=1.5)
       
       #legend("topright",legend=c("Expected change due to change in effort alone", "Observed change"),col=c("gray","black"),pch=16)
+      
       dev.off()
        
       

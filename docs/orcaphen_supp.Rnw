@@ -141,6 +141,32 @@ With increasing public awareness of SRKWs near urban areas (e.g. the Salish Sea)
 \pagebreak
 
 \section* {Supplemental Tables}
+<<label=datasourcetab,echo=FALSE,results=tex>>=
+library(xtable)
+region<-c("Central Salish Sea","","","Puget Sound Proper","")
+species<-c("SRKW","SRKW","Chinook salmon","SRKW","Chinook,coho, chum salmon")
+data.source<-c("Lime Kiln Point State Park","Orca MAster (The Whale Museum, 2018)","Albion test fisher","Orca MAster (The Whale Museum, 2018)","WDFW count data from 7 streams")
+data.type<-c("Standardized effort","Presence-only, crowd-sourced", "Standardized effort","Presence-only, crowd-sourced","Standardized effort")
+spatial.scale<-c("Local (single point)","Regional (multiple points)","Local (transect)","Regional (multiple points)","Local (13 points)")
+temporal.scale<-c("1994-2017, daily May-Sept","1978-2017, opportunistic observations","1992-2017, daily April-Oct","1978-2017, opportunistic observations","Variable (see Table S2)")
+
+dattab<-cbind(region,species,data.source,data.type,spatial.scale,temporal.scale)
+
+colnames(dattab)<-c("Region","Species","Data Source","Data Type", "Spatial Scale", "Temporal Scale")
+
+dat.table<-xtable(dattab,caption = "\\textbf{Data types and sources}",
+            label="tab:salmon",align=c(
+              "|p{0.01\\textwidth}", 
+              "|p{0.1\\textwidth}",
+               "|p{0.1\\textwidth}",
+               "|p{0.2\\textwidth}",
+               "|p{0.16\\textwidth}",
+              "|p{0.2\\textwidth}",
+               "|p{0.16\\textwidth}|"))
+
+print(dat.table, include.rownames=FALSE, hline.after = c(-1,0,3,5),caption.placement="top",size="\\footnotesize")
+@
+
 <<label=salmontab,echo=FALSE,results=tex>>=
 library(xtable)
 salmontab<-read.csv("../analyses/output/salmonlatlon.csv",header=TRUE)
@@ -169,7 +195,7 @@ salm.table<-xtable(salmtab,caption = "\\textbf{Salmon runs in Central Salish Sea
 
 print(salm.table, include.rownames=FALSE, hline.after = c(-1,0,1,14),caption.placement="top",size="\\footnotesize")
 @
-
+\begin{adjustwidth}{-4cm}{-2cm}
 <<label=salmonphentrendstab,echo=FALSE,results=tex>>=
 pstrends<-read.csv("../analyses/output/salmonreturntrends_pslmm.csv",header=TRUE)
 pstrendstab<-t(pstrends)
@@ -207,7 +233,8 @@ salmtrends.table<-xtable(alltab,caption = "\\textbf{Salmon phenology has shifted
 print(salmtrends.table, include.rownames=FALSE, hline.after = c(-1,0,6,12),caption.placement="top",size="\\footnotesize")#,sanitize.text.function = identity
 @
 
-\begin{adjustwidth}{-4cm}{-2cm}
+\vspace*{\floatsep}
+
 <<label=srkwtrendtab,echo=FALSE,results=tex>>=
 
 modsumfiles<-dir("../analyses/output")[grep("ci0.5_occprobmin0.5_wrecent",dir("../analyses/output"))]
@@ -245,12 +272,12 @@ modsumtab<-subset(allsums, select=c(pod,Region,Season,phase,slope.mn,slope.25,sl
 colnames(modsumtab)<-c("pod","region","season","phase","mean","25%", "75%","12.5%","87.5%", "2.5%","97.5%","mean","25%", "75%","12.5%","87.5%","2.5%","97.5%")
 addtorow <- list()
   addtorow$pos <- list(-1)
-  addtorow$command <- c("\\hline & & & & \\multicolumn{7}{c |}{1978-2017 trend} &\\multicolumn{7}{c |}{2002-2017 trend}\\\\\n ")
+  addtorow$command <- c("\\hline & & & & \\multicolumn{7}{c |}{1978-2017 trend} &\\multicolumn{7}{c |}{2001-2017 trend}\\\\\n ")
 
 #modsumtab$region[modsumtab$region=="ps"]<-"puget"
 #modsumtab$region[modsumtab$region=="uss"]<-"central"
 
-modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, start-of-, and end-of-season SRKW phenology} in Puget Sound proper (`ps') during the fall/winter (`fall') and the central Salish Sea (`css') during the spring/summer (`sum'), from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the same peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent, 75 percent, and 95 percent uncertainty intervals are shown.",
+modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, first, and last likely occurance dates for southern resident killer whiles} in Puget Sound proper (`ps') during the fall/winter (`fall', from July through December) and the central Salish Sea (`css') during the spring/summer (`sum', from April through October), from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the same peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent, 75 percent, and 95 percent uncertainty intervals are shown.",
             label="tab:modsum",align=c(
               "|p{0.009\\textwidth}", 
               "|p{0.018\\textwidth}",
@@ -280,18 +307,23 @@ print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.p
 
 
 
+\newpage
+\section*{}
+
+\newpage
 .
- 
 .
 
-. 
-
- \pagebreak
-  
-\section*{ }
-  \pagebreak
-
+\newpage
 \section* {Supplemental Figures}
+
+\begin{figure}[!hp]
+\includegraphics[width=0.7\textwidth]{../analyses/figures/phenophases.pdf}
+\caption{\textbf{The phenophases quantified in this study} included day of year of first and last occurrence, as well as day of year of peak occurrence probability for southern resident killer whales and peak abundance index for salmon.}
+\label{fig:ctcalb}
+\end{figure}
+
+\vspace*{\floatsep}
 
 \begin{figure}[!hp]
 \includegraphics[width=0.7\textwidth]{../analyses/orcaphen/figures/ctcalbion.pdf}
@@ -300,12 +332,7 @@ print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.p
 \end{figure}
 
 
-\begin{figure}[!hp]
-\includegraphics[width=0.7\textwidth]{../analyses/figures/phenophases.pdf}
-\caption{\textbf{The phenophases quantified in this study} included day of year of first and last occurrence, as well as day of year of peak occurrence probability for southern resident killer whales and peak abundance index for salmon.}
-\label{fig:ctcalb}
-\end{figure}
-
+\vspace*{\floatsep}
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png} 
@@ -372,7 +399,7 @@ print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.p
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/orcaphen/figures/simeffortonly2panels.png} 
-\caption{\textbf{Expected change in phenology due to changes in effort alone, across Puget Sound and the Central Salish Sea regions}, from 1978-2017 (A) and from 2001-2017 (B).Error bars represent 50\% uncertainty intervals. }
+\caption{\textbf{Expected change in phenology due to changes in effort alone, across Puget Sound and the Central Salish Sea regions}, from 1978-2017 (A) and from 2001-2017 (B).Error bars represent 75\% uncertainty intervals. }
 \label{fig:simeffort}
 \end{figure}
 
