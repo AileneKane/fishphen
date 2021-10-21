@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  15 OCT 2021 16:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  21 OCT 2021 13:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -535,20 +535,8 @@ LaTeX Font Info:    Try loading font information for T1+aett on input line 96.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-)
-
-Package natbib Warning: Citation `Rcore2021' on page 2 undefined on input line 
-96.
-
-
-Package natbib Warning: Citation `Rcore2019' on page 2 undefined on input line 
-114.
-
-[2]
-
-LaTeX Warning: Reference `fig:limetime' on page 3 undefined on input line 130.
-
-[3] (./orcaphen_supp.bbl) [4]
+) [2] [3]
+(./orcaphen_supp.bbl [4]) [5]
 Underfull \hbox (badness 2277) in paragraph at lines 155--155
 []|\T1/aer/m/n/8 Lime Kiln Point State
  []
@@ -649,217 +637,211 @@ Overfull \hbox (2.82294pt too wide) in paragraph at lines 187--187
  []
 
 
-Overfull \hbox (2.74062pt too wide) in paragraph at lines 234--234
+Overfull \hbox (2.74062pt too wide) in paragraph at lines 228--228
 []|\T1/aer/m/n/5 pod| 
  []
 
 
-Overfull \hbox (1.79672pt too wide) in paragraph at lines 234--234
+Overfull \hbox (1.79672pt too wide) in paragraph at lines 228--228
 []|\T1/aer/m/n/5 region| 
  []
 
 
-Overfull \hbox (2.56186pt too wide) in paragraph at lines 234--234
+Overfull \hbox (2.56186pt too wide) in paragraph at lines 228--228
 []|\T1/aer/m/n/5 season| 
  []
 
 
-Overfull \hbox (1.17172pt too wide) in paragraph at lines 234--234
+Overfull \hbox (1.17172pt too wide) in paragraph at lines 228--228
 []|\T1/aer/m/n/5 12.5%| 
  []
 
 
-Overfull \hbox (1.17172pt too wide) in paragraph at lines 234--234
+Overfull \hbox (1.17172pt too wide) in paragraph at lines 228--228
 []|\T1/aer/m/n/5 87.5%| 
  []
 
 
-Overfull \hbox (1.17172pt too wide) in paragraph at lines 234--234
+Overfull \hbox (1.17172pt too wide) in paragraph at lines 228--228
 []|\T1/aer/m/n/5 97.5%| 
  []
 
 
-Overfull \hbox (1.17172pt too wide) in paragraph at lines 234--234
+Overfull \hbox (1.17172pt too wide) in paragraph at lines 228--228
 []|\T1/aer/m/n/5 12.5%| 
  []
 
 
-Overfull \hbox (1.17172pt too wide) in paragraph at lines 234--234
+Overfull \hbox (1.17172pt too wide) in paragraph at lines 228--228
 []|\T1/aer/m/n/5 87.5%| 
  []
 
 
-Overfull \hbox (1.17172pt too wide) in paragraph at lines 234--235
+Overfull \hbox (1.17172pt too wide) in paragraph at lines 228--229
 []|\T1/aer/m/n/5 97.5%| 
  []
 
 
-Overfull \hbox (36.15573pt too wide) in paragraph at lines 232--259
+Overfull \hbox (36.15573pt too wide) in paragraph at lines 226--253
 []  
  []
 
-[5] [6] [7] <../analyses/figures/phenophases.pdf, id=89, 578.16pt x 578.16pt>
+[6] [7] [8] <../analyses/figures/phenophases.pdf, id=108, 578.16pt x 578.16pt>
 File: ../analyses/figures/phenophases.pdf Graphic file (type pdf)
 
 <use ../analyses/figures/phenophases.pdf>
 Package pdftex.def Info: ../analyses/figures/phenophases.pdf used on input line
- 277.
+ 271.
 (pdftex.def)             Requested size: 330.42033pt x 330.41917pt.
 
-<../analyses/orcaphen/figures/ctcalbion.pdf, id=90, 578.16pt x 1084.05pt>
+<../analyses/orcaphen/figures/ctcalbion.pdf, id=109, 578.16pt x 1084.05pt>
 File: ../analyses/orcaphen/figures/ctcalbion.pdf Graphic file (type pdf)
 
 <use ../analyses/orcaphen/figures/ctcalbion.pdf>
 Package pdftex.def Info: ../analyses/orcaphen/figures/ctcalbion.pdf used on inp
-ut line 285.
+ut line 279.
 (pdftex.def)             Requested size: 330.42033pt x 619.53596pt.
 
 
-LaTeX Warning: Float too large for page by 81.28244pt on input line 288.
+LaTeX Warning: Float too large for page by 81.28244pt on input line 282.
 
 
-<../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png, id=91, 691.8648pt 
-x 366.8907pt>
+<../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png, id=110, 691.8648pt
+ x 366.8907pt>
 File: ../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png Graphic file (
 type png)
- <use ../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png>
+
+<use ../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png>
 Package pdftex.def Info: ../analyses/figures/OrcaPhenPlots/numsights_1976_2regs
-.png used on input line 294.
+.png used on input line 288.
 (pdftex.def)             Requested size: 377.62633pt x 200.25656pt.
 
-<../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png, id=92, 692.10
-57pt x 361.1091pt>
+<../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png, id=111, 692.1
+057pt x 361.1091pt>
 File: ../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png Graphic f
 ile (type png)
 
 <use ../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png>
 Package pdftex.def Info: ../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW
-2regs.png used on input line 301.
+2regs.png used on input line 295.
 (pdftex.def)             Requested size: 377.62633pt x 197.02922pt.
 
-<../analyses/orcaphen/figures/modwhaledays_lime.png, id=93, 963.6pt x 481.8pt>
+<../analyses/orcaphen/figures/modwhaledays_lime.png, id=112, 963.6pt x 481.8pt>
 File: ../analyses/orcaphen/figures/modwhaledays_lime.png Graphic file (type png
 )
-
 <use ../analyses/orcaphen/figures/modwhaledays_lime.png>
 Package pdftex.def Info: ../analyses/orcaphen/figures/modwhaledays_lime.png use
-d on input line 308.
+d on input line 302.
 (pdftex.def)             Requested size: 377.62633pt x 188.81284pt.
- [8 <../analyses/figures/phenophases.pdf>] [9 <../analyses/orcaphen/figures/ctc
-albion.pdf>] [10 <../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png (P
-NG copy)> <../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png (PNG
- copy)>]
-<../analyses/orcaphen/figures/orcachinphenoverlap_allpods2006.pdf, id=132, 371.
+ [9 <../analyses/figures/phenophases.pdf>] [10 <../analyses/orcaphen/figures/ct
+calbion.pdf>] [11 <../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png (
+PNG copy)> <../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png (PN
+G copy)>]
+<../analyses/orcaphen/figures/orcachinphenoverlap_allpods2006.pdf, id=151, 371.
 88937pt x 867.24pt>
 File: ../analyses/orcaphen/figures/orcachinphenoverlap_allpods2006.pdf Graphic 
 file (type pdf)
 
 <use ../analyses/orcaphen/figures/orcachinphenoverlap_allpods2006.pdf>
 Package pdftex.def Info: ../analyses/orcaphen/figures/orcachinphenoverlap_allpo
-ds2006.pdf used on input line 321.
+ds2006.pdf used on input line 315.
 (pdftex.def)             Requested size: 236.01555pt x 550.40016pt.
 
 
-LaTeX Warning: Float too large for page by 12.14664pt on input line 324.
+LaTeX Warning: Float too large for page by 12.14664pt on input line 318.
 
 
-<../analyses/orcaphen/figures/orcachinphenoverlapbrmsSRallbrkyears.pdf, id=133,
+<../analyses/orcaphen/figures/orcachinphenoverlapbrmsSRallbrkyears.pdf, id=152,
  867.24pt x 722.7pt>
 File: ../analyses/orcaphen/figures/orcachinphenoverlapbrmsSRallbrkyears.pdf Gra
 phic file (type pdf)
 
 <use ../analyses/orcaphen/figures/orcachinphenoverlapbrmsSRallbrkyears.pdf>
 Package pdftex.def Info: ../analyses/orcaphen/figures/orcachinphenoverlapbrmsSR
-allbrkyears.pdf used on input line 328.
+allbrkyears.pdf used on input line 322.
 (pdftex.def)             Requested size: 424.82512pt x 354.02684pt.
 
-<../analyses/figures/proboccJ_4panels.png, id=134, 1445.4pt x 1204.5pt>
+<../analyses/figures/proboccJ_4panels.png, id=153, 1445.4pt x 1204.5pt>
 File: ../analyses/figures/proboccJ_4panels.png Graphic file (type png)
 
 <use ../analyses/figures/proboccJ_4panels.png>
 Package pdftex.def Info: ../analyses/figures/proboccJ_4panels.png used on input
- line 335.
+ line 329.
 (pdftex.def)             Requested size: 377.62633pt x 314.68808pt.
 
-<../analyses/figures/proboccK_4panels.png, id=135, 1445.4pt x 1204.5pt>
+<../analyses/figures/proboccK_4panels.png, id=154, 1445.4pt x 1204.5pt>
 File: ../analyses/figures/proboccK_4panels.png Graphic file (type png)
 
 <use ../analyses/figures/proboccK_4panels.png>
 Package pdftex.def Info: ../analyses/figures/proboccK_4panels.png used on input
- line 342.
+ line 336.
 (pdftex.def)             Requested size: 377.62633pt x 314.68808pt.
 
-<../analyses/figures/proboccL_4panels.png, id=136, 1445.4pt x 1204.5pt>
+<../analyses/figures/proboccL_4panels.png, id=155, 1445.4pt x 1204.5pt>
 File: ../analyses/figures/proboccL_4panels.png Graphic file (type png)
 
 <use ../analyses/figures/proboccL_4panels.png>
 Package pdftex.def Info: ../analyses/figures/proboccL_4panels.png used on input
- line 350.
+ line 344.
 (pdftex.def)             Requested size: 377.62633pt x 314.68808pt.
 
-<../analyses/orcaphen/figures/simeffortonly2panels.png, id=137, 936.6192pt x 48
+<../analyses/orcaphen/figures/simeffortonly2panels.png, id=156, 936.6192pt x 48
 1.8pt>
 File: ../analyses/orcaphen/figures/simeffortonly2panels.png Graphic file (type 
 png)
  <use ../analyses/orcaphen/figures/simeffortonly2panels.png>
 Package pdftex.def Info: ../analyses/orcaphen/figures/simeffortonly2panels.png 
-used on input line 357.
+used on input line 351.
 (pdftex.def)             Requested size: 377.62633pt x 194.25308pt.
-
-
-Package natbib Warning: There were undefined citations.
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 366.
-[11 <../analyses/orcaphen/figures/modwhaledays_lime.png>] [12 <../analyses/orca
-phen/figures/orcachinphenoverlap_allpods2006.pdf>] [13 <../analyses/orcaphen/fi
-gures/orcachinphenoverlapbrmsSRallbrkyears.pdf>] [14 <../analyses/figures/probo
-ccJ_4panels.png>] [15 <../analyses/figures/proboccK_4panels.png>] [16 <../analy
-ses/figures/proboccL_4panels.png>] [17 <../analyses/orcaphen/figures/simefforto
-nly2panels.png (PNG copy)>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 366.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 360.
+ [12 <../analyses/orcaphen/figures/modwhaledays_lime.png>] [13 <../analyses/orc
+aphen/figures/orcachinphenoverlap_allpods2006.pdf>] [14 <../analyses/orcaphen/f
+igures/orcachinphenoverlapbrmsSRallbrkyears.pdf>] [15 <../analyses/figures/prob
+occJ_4panels.png>] [16 <../analyses/figures/proboccK_4panels.png>] [17 <../anal
+yses/figures/proboccL_4panels.png>] [18 <../analyses/orcaphen/figures/simeffort
+only2panels.png (PNG copy)>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 360.
  (./orcaphen_supp.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 366.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 366.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 360.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 360.
 Package rerunfilecheck Info: File `orcaphen_supp.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 366.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 360.
  ) 
 Here is how much of TeX's memory you used:
- 8621 strings out of 492995
- 130367 string characters out of 6132704
- 278752 words of memory out of 5000000
- 11947 multiletter control sequences out of 15000+600000
+ 8635 strings out of 492995
+ 130590 string characters out of 6132704
+ 276592 words of memory out of 5000000
+ 11956 multiletter control sequences out of 15000+600000
  38566 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,9n,39p,2455b,452s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,9n,39p,2459b,452s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 }</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></u
 sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
 r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/
-local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/lo
-cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/loca
-l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/t
-exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/20
-17/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/201
-7/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2017/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017/te
-xmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on orcaphen_supp.pdf (17 pages, 1092713 bytes).
+local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/lo
+cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loca
+l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/
+texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texliv
+e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2
+017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2017
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2017/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017/texm
+f-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on orcaphen_supp.pdf (18 pages, 1112992 bytes).
 PDF statistics:
- 300 PDF objects out of 1000 (max. 8388607)
- 226 compressed objects within 3 object streams
- 49 named destinations out of 1000 (max. 500000)
+ 321 PDF objects out of 1000 (max. 8388607)
+ 245 compressed objects within 3 object streams
+ 54 named destinations out of 1000 (max. 500000)
  56 words of extra memory for PDF output out of 10000 (max. 10000000)
 

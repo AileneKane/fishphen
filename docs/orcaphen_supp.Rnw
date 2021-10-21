@@ -58,7 +58,7 @@
 \renewcommand{\thefigure}{S\arabic{figure}}
 \section*{Additional details on our use of the Orca Master dataset}
 
-As a presence-only database, trends in the Orca Master dataset should be interpreted with care, since they could be due to shifts in effort (i.e., the number of total observations) as well as (or instead of) trends in SRKW presence (see Effects of changes in effort on estimated phenological change in the Supplemental Materials). For this reason, and because we know there has been a dramatic increase in reported whale sightings (Olson et al., 2018), we report all trends across two different durations: the full dataset (from 1978-2017) and recent years (2001-2017). We use 2001 as a cut-off, to avoid the sharp increase in sightings that occurred from 2000 to 2001 (Fig. S3-4), likely influenced by the onset of internet-based sightings platforms that began that year (Hauser et al., 2007; Olson et al., 2018).
+As a presence-only database, trends in the Orca Master dataset should be interpreted with care, since they could be due to shifts in effort (i.e., the number of total observations) as well as (or instead of) trends in SRKW presence (see Effects of changes in effort on estimated phenological change in the Supplemental Materials). For this reason, and because we know there has been a dramatic increase in reported whale sightings (Olson et al., 2018), we report all trends across two different durations: the full dataset (from 1978-2017) and recent years (2001-2017). We use 2001 as a cut-off, to avoid the sharp increase in sightings that occurred from 2000 to 2001 (Fig. S3-4), likely influenced by the onset of internet-based sightings platforms that began that year \citep{hauser2007,olson2018}.
 
 For our analyses, observation of any individual or group of whales within a pod counted as presence of that pod, with the exception of ``L87,'' an individual that spent little time with his natal L pod following the death of his mother, and was instead seen more frequently with J- and K-pods. Observations of this individual alone were therefore not counted as presence of L pod in our analyses.
  
@@ -97,7 +97,7 @@ The above models for killer whales ad Chinook were fitted via thin plate regress
 \par \emph{Southern resident killer whales and salmon in the Central Salish Sea and Puget Sound Proper}
 \begin{enumerate}
 \item \underline {Southern resident killer whale occupancy models}
-\par We quantified pod-specific phenology for J, K, and L pods using occupancy models, which can estimate jointly species presence and detection probability (p, the probability of detecting at least one individual present at a site) by distinguishing true presence or absence, \emph{z} (a latent, unobservable state), from observed presence. Occupancy models are composed of a state sub-model, which is the model for the ecological process of true presence or absence, and an observation sub-model, which in this case links the observations (i.e., the number of sightings of the pod per day per site) to the state model. We modeled occupancy probability ($\psi_{year,day}$) as a semi-parametric, smooth function of day of year (\emph{`day'}), using flexible thin-plate spline regression modelling, and year as a level \citep{strebel2014}. Thus, the sub-models are:
+\par We quantified pod-specific phenology for J, K, and L pods using occupancy models, which can estimate jointly species presence and detection probability (p, the probability of detecting at least one individual present at a site) by distinguishing true presence or absence, \emph{z} (a latent, unobservable state), from observed presence. Occupancy models are composed of a state sub-model, which is the model for the ecological process of true presence or absence, and an observation sub-model, which in this case links the observations (i.e., the number of sightings of the pod per day per site) to the state model. We modeled occupancy probability ($\psi_{year,day}$) as a semi-parametric, smooth function of day of year (\emph{`day'}), using flexible thin-plate spline regression modeling, and year as a level \citep{strebel2014}. Thus, the sub-models are:
 \begin{itemize}
 
 \item \textbf{State model}, in which we assumed $Z_{year,day}$ to be a Bernoulli random variable for which 0 signifies absence and 1 is presence:
@@ -111,7 +111,7 @@ Y(area,year,day) \sim Binomial (T_{year, day,area},Z_{year,day}*P_{area,year})
                                                                              \end{itemize}                                                       
 
  
-\par We fit separate occupancy models for each region (i.e., Central Salish Sea and Puget Sound proper) and season (spring/summer vs. fall/winter, since seasonal use varies by region) for each pod, and extracted estimates of annual arrival, departure, and peak occupancy dates with each model. We defined the arrival date as the earliest day within the season when occupancy probability exceeded 0.5; departure date was the latest day within the season when detection probability exceeded 0.5. Using a threshold probability between 0.2 and 0.5 did not qualitatively alter observed trends.) Pod-specific occupancy models were fit using \texttt{JAGS}, a program for analysis of Bayesian hierarchical models with Markov Chain Monte Carlo simulation (Plummer, 2019), accessed via the \texttt{R2jags} package (Su and Yajima, 2015) in R \citep{Rcore2019}, version 3.6.2. We ran four chains simultaneously, each with 12 000 sampling iterations (4 000 of which were used for burn-in). We assessed model performance through $R_{hat}$, which were close to 1, and high neff, as well as visual consideration of chain convergence and posteriors \citep{BDA}. Model code can be found in Appendix 2.
+\par We fit separate occupancy models for each region (i.e., Central Salish Sea and Puget Sound proper) and season (spring/summer vs. fall/winter, since seasonal use varies by region) for each pod, and extracted estimates of annual arrival, departure, and peak occupancy dates with each model. We defined the arrival date as the earliest day within the season when occupancy probability exceeded 0.5; departure date was the latest day within the season when detection probability exceeded 0.5. Using a threshold probability between 0.2 and 0.5 did not qualitatively alter observed trends.) Pod-specific occupancy models were fit using \texttt{JAGS}, a program for analysis of Bayesian hierarchical models with Markov Chain Monte Carlo simulation (Plummer, 2019), accessed via the \texttt{R2jags} package \citep{su2021} in R \citep{Rcore2021}, version 4.0.0. We ran four chains simultaneously, each with 12 000 sampling iterations (4 000 of which were used for burn-in). We assessed model performance through $R_{hat}$, which were close to 1, and high neff, as well as visual consideration of chain convergence and posteriors \citep{BDA}. Model code can be found in Appendix 2.
 \item \underline {Salmon abundance index models}
 \par To estimate the phenology of likely prey in the Central Salish Sea, we fit the hierarchical thin-plate regression spline models described above to the Albion Test Fishery data, from May through October (the full seasonal extent of the dataset), and from 1994 through 2017. To estimate the phenology of likely prey in Puget Sound, we fit the hierarchical thin-plate regression spline models separately to each of 13 Puget Sound runs (including three species across hatchery and wild salmon in 7 streams, Table \ref{tab:salmon}) and used daily abundance index estimates to identify the day of year of first, peak, and last migration for each group in each year. We then used hierarchical linear models to identify trends over time in phenology of salmon adult migration timing across Puget Sound proper.  We fit  separate multi-level linear models to each phenophase to estimate trends across years in the timing of adult salmon migration. The response variable, \emph{day} is the day of year of the event (i.e., first, peak, or last date of migration in a given year) and the explanatory variable was year; we included group as a random effect to account for non-independence in timing at the group-level, as follows:
 
@@ -127,12 +127,12 @@ day_i &= \alpha_{group[i]} + \beta_{year}
 See Appendices for model code.
 
 \section* {Comparing observed and modeled estimates of `whale days' at Lime Kiln Point State Park, Washington, USA}
-\par We calculated annual total whale days quantified from the data directly (i.e., a whale-day was counted as a day on which Southern Resident Killer Whales (SRKWs) were observed) and quantified from model-estimated probabilities of whale presence (i.e., each days probability of whale presence was summed across the year). Model-estimated presence probabilities were obtained from occupancy models, which estimated daily and annual probabilities of presence of SRKWs at Lime Kiln Point State Park. The two calculations were similar, and both reveal declines in SRKW presence in recent years, across all three pods (Fig. \ref{fig:mlimewdays}). This consistently collected dataset also suggests that SRKWs have shifted the timing of their activity in the area (Fig.\ref{fig:limetime}.
+\par We calculated annual total whale days quantified from the data directly (i.e., a whale-day was counted as a day on which Southern Resident Killer Whales (SRKWs) were observed) and quantified from model-estimated probabilities of whale presence (i.e., each days probability of whale presence was summed across the year). Model-estimated presence probabilities were obtained from occupancy models, which estimated daily and annual probabilities of presence of SRKWs at Lime Kiln Point State Park. The two calculations were similar, and both reveal declines in SRKW presence in recent years, across all three pods (Fig. \ref{fig:mlimewdays}). This consistently collected dataset also suggests that SRKWs have shifted the timing of their activity in the area (Fig. 3 in the main text).
 
 \section* {Effects of changes in effort on estimated phenological change}
-With increasing public awareness of SRKWs near urban areas (e.g. the Salish Sea), the number of public reports of whales and people contributing to sightings networks such as the OrcaMaster Database have increased since its inception (Fig.\ref{fig:sights}). This shift in effort complicates interpretations of trends in the number of whale days over time (Fig. \ref{fig:wdays}) because an increase in the number of whale on which SRKWs were observed could be due to increased observer effort in a region, rather than due to increased whale activity in the region. To better understand how increased effort across the time-series (i.e., increased numbers of sightings over time) may affect estimates of trends in phenology, we simulated data sets of whale presence during two seasons equivalent to those in our data set (spring/summer, which was 1 May through 31 Sept, or 153 days, and fall/winter, which was 1 October through 1 Feb, or 123 days). We used whale presence probabilities that matched the mean observed probabilities for the Central Salish Sea and Puget Sound regions, separately, from 1978-2017 (Table S1). We kept them constant over 40 simulated years, respectively. We then created an observation data set, in which effort (the number of observations) varied. During the low effort time period (years 1-20), the number of observations had a mean of 15 per year for Puget Sound and 104 per year in the Central Salish Sea (matching the means for these regions from 1978-1997 in the OrcaMaster database). During the high effort time period (years 21-40 in our simulated data set), the number of annual observations had a mean of 39 for Puget Sound and 133 for the Central Salish Sea (matching those in the OrcaMaster database from 1998-2017). We then calculated first- and last- observations dates for each simulated year. We ran these simulations 100 times and calculated the difference between the low effort and high effort time periods. We compared these to the mean differences in first- and last-observation dates across time periods in the OrcaMaster database, for each region, to understand whether observed changes may be due to changes in effort over time, rather than changes in killer whale activity. We conducted the same analysis across the recent time frame (2001-2017), as well, using region-specific estimates of presence probabilities and observer effort obtained from this time-period.
+With increasing public awareness of SRKWs near urban areas (e.g. the Salish Sea), the number of public reports of whales and people contributing to sightings networks such as the Orca Master Database have increased since its inception (Fig.\ref{fig:sights}). This shift in effort complicates interpretations of trends in the number of whale days over time (Fig. \ref{fig:wdays}) because an increase in the number of whale on which SRKWs were observed could be due to increased observer effort in a region, rather than due to increased whale activity in the region. To better understand how increased effort across the time-series (i.e., increased numbers of sightings over time) may affect estimates of trends in phenology, we simulated data sets of whale presence during two seasons equivalent to those in our data set (spring/summer, which was 1 May through 31 Sept, or 153 days, and fall/winter, which was 1 October through 1 Feb, or 123 days). We used whale presence probabilities that matched the mean observed probabilities for the Central Salish Sea and Puget Sound regions, separately, from 1978-2017 (Table S1). We kept them constant over 40 simulated years, respectively. We then created an observation data set, in which effort (the number of observations) varied. During the low effort time period (years 1-20), the number of observations had a mean of 15 per year for Puget Sound and 104 per year in the Central Salish Sea (matching the means for these regions from 1978-1997 in the Orca Master database). During the high effort time period (years 21-40 in our simulated data set), the number of annual observations had a mean of 39 for Puget Sound and 133 for the Central Salish Sea (matching those in the Orca Master database from 1998-2017). We then calculated first- and last- observations dates for each simulated year. We ran these simulations 100 times and calculated the difference between the low effort and high effort time periods. We compared these to the mean differences in first- and last-observation dates across time periods in the Orca Master database, for each region, to understand whether observed changes may be due to changes in effort over time, rather than changes in killer whale activity. We conducted the same analysis across the recent time frame (2001-2017), as well, using region-specific estimates of presence probabilities and observer effort obtained from this time-period.
 
-\par Our simulations indicate that, if SRKW activity did not change and only effort changed across the two time-periods, the first observation would be expected to shift earlier from 1978-2017, especially in Puget Sound (Fig.\ref{fig:simeffort}A), perhaps because the number of sightings was very low early in the time-series. Thus, the large increase in effort across this time period may affected trends in phenological shifts.  However, the expected change due to increased effort opposes the patterns we observed in for the Central Salish Sea (i.e., we would expect earlier arrival and later departure). Further, focusing on 2001-2017 only, effects of changes in effort are likely to be minimal (Fig.\ref{fig:simeffort}B). Due to the presence only nature of the OrcaMaster Database, it is difficult to fully separate an absence of whales from an absence of observers. We therefore focus our interpretation on the recent time-period (2001-2017).
+\par Our simulations indicate that, if SRKW activity did not change and only effort changed across the two time-periods, the first observation would be expected to shift earlier from 1978-2017, especially in Puget Sound (Fig.\ref{fig:simeffort}A), perhaps because the number of sightings was very low early in the time-series. Thus, the large increase in effort across this time period may affected trends in phenological shifts.  However, the expected change due to increased effort opposes the patterns we observed in for the Central Salish Sea (i.e., we would expect earlier arrival and later departure). Further, focusing on 2001-2017 only, effects of changes in effort are likely to be minimal (Fig.\ref{fig:simeffort}B). Due to the presence only nature of the Orca Master Database, it is difficult to fully separate an absence of whales from an absence of observers. We therefore focus our interpretation on the recent time-period (2001-2017).
 
 \bibliography{..//refs/noaalib.bib}
 
@@ -145,7 +145,7 @@ With increasing public awareness of SRKWs near urban areas (e.g. the Salish Sea)
 library(xtable)
 region<-c("Central Salish Sea","","","Puget Sound Proper","")
 species<-c("SRKW","SRKW","Chinook salmon","SRKW","Chinook,coho, chum salmon")
-data.source<-c("Lime Kiln Point State Park","Orca MAster (The Whale Museum, 2018)","Albion test fisher","Orca MAster (The Whale Museum, 2018)","WDFW count data from 7 streams")
+data.source<-c("Lime Kiln Point State Park","Orca Master (The Whale Museum, 2018)","Albion test fisher","Orca Master (The Whale Museum, 2018)","WDFW count data from 7 streams")
 data.type<-c("Standardized effort","Presence-only, crowd-sourced", "Standardized effort","Presence-only, crowd-sourced","Standardized effort")
 spatial.scale<-c("Local (single point)","Regional (multiple points)","Local (transect)","Regional (multiple points)","Local (13 points)")
 temporal.scale<-c("1994-2017, daily May-Sept","1978-2017, opportunistic observations","1992-2017, daily April-Oct","1978-2017, opportunistic observations","Variable (see Table S2)")
@@ -198,39 +198,37 @@ print(salm.table, include.rownames=FALSE, hline.after = c(-1,0,1,14),caption.pla
 \begin{adjustwidth}{-4cm}{-2cm}
 <<label=salmonphentrendstab,echo=FALSE,results=tex>>=
 pstrends<-read.csv("../analyses/output/salmonreturntrends_pslmm.csv",header=TRUE)
-pstrendstab<-t(pstrends)
-colnames(pstrendstab)<-c("mean","25%", "75%","2.5%","97.5%")
-pstrendstab<-pstrendstab[-1,]
-phenophase<-c("first","","peak","","last","")
+pstrendstab<-t(pstrends[,c(3,5,7)])
+colnames(pstrendstab)<-c("mean","25%", "75%","12.5%","87.5%","2.5%","97.5%")
+pstrendstab<-rbind(pstrendstab[2,],pstrendstab[1,],pstrendstab[3,])
+pstrendstab<-cbind(c("peak","first","last"),pstrendstab)
+colnames(pstrendstab)[1]<-"phase"
 #parameter<-c("$\\alpha_{group}$","$\\beta_{year}$","$\\alpha_{group}$","$\\beta_{year}$","$\\alpha_{group}$","$\\beta_{year}$") 
-parameter<-c("intercept","year","intercept","year","intercept","year") 
-pstrendstab<-cbind(phenophase,parameter,pstrendstab)
 
-albion<-read.csv("../analyses/output/albionreturntrends_linmodyrs.csv",header=TRUE)
-albion<-albion[,4:9]
-colnames(albion)<-c("phen","mean","25%", "75%","2.5%","97.5%")
-alb<-rbind(albion[1:2,2:6],albion[5:6,2:6],albion[3:4,2:6])
+albion<-read.csv("../analyses/output/albionreturntrends_linmodyrsbrms.csv",header=TRUE)
+albion<-albion[,4:11]
+colnames(albion)<-c("phase","mean","25%", "75%","12.5%","87.5%","2.5%","97.5%")
+alb<-rbind(albion[6,],albion[2,],albion[4,])
 
-phenophase<-c("first","","peak","","last","")
-parameter<-c("intercept","year","intercept","year","intercept","year") 
-
-alb<-cbind(phenophase,parameter,alb)
 alltab<-rbind(alb,pstrendstab)
-region<-c("Central Salish Sea","","","","","","Puget Sound Proper","","","","","")
-alltab<-cbind(region,alltab)
-salmtrends.table<-xtable(alltab,caption = "\\textbf{Salmon phenology has shifted} later in part of the Central Salish Sea (based on spring/summer Chinook in the Albion Test Fishery data, from 1995-2017) and earlier in Puget Sound Proper (based on 13 runs across coho, chum, and Chinook adult in Table S1, from 1997-2017).",
+region<-c("Central Salish Sea","","","Puget Sound Proper","","")
+season<-c("sum","sum","sum","fall","fall","fall")
+alltab<-cbind(region,season,alltab)
+salmtrends.table<-xtable(alltab,caption = "\\textbf{Salmon phenology has shifted} later in part of the Central Salish Sea (based on spring/summer Chinook in the Albion Test Fishery data, from 1995-2017) and earlier in Puget Sound Proper (based on 13 runs across coho, chum, and Chinook adult in Table S1, from 1997-2017). Estimated linear trends are shown for peak, first, and last likely occurrance dates for salmon.  `Peak' is the day of year with the maximum estimated abundance index.   To  estimate  the  start  of  the  season,  we  identified  the earliest day of year with an estimated abundance index >0.001 catch per unit effort (CPUE) for Albion test fishery data in the central Salish Sea, and fish counts greater than  0 for Puget Sound stream counts.  To estimate the end of the season, we identified the latest day of year CPUE or count greater than these values.  50 percent, 75 percent, and 95 percent uncertainty intervals are shown.",
             label="tab:salmtren",align=c(
               "|p{0.01\\textwidth}", 
-              "|p{0.18\\textwidth}",
-              "|p{0.11\\textwidth}",
-              "p{0.1\\textwidth}",
-              "p{0.08\\textwidth}",
-              "p{0.08\\textwidth}",
-              "p{0.08\\textwidth}",
-              "p{0.08\\textwidth}",
-               "p{0.08\\textwidth}|"))
+              "|p{0.16\\textwidth}",
+              "|p{0.05\\textwidth}",
+              "p{0.05\\textwidth}",
+              "p{0.05\\textwidth}",
+              "p{0.05\\textwidth}",
+              "p{0.05\\textwidth}",
+              "p{0.05\\textwidth}",
+              "p{0.05\\textwidth}",
+              "p{0.05\\textwidth}",
+               "p{0.05\\textwidth}|"))
 
-print(salmtrends.table, include.rownames=FALSE, hline.after = c(-1,0,6,12),caption.placement="top",size="\\footnotesize")#,sanitize.text.function = identity
+print(salmtrends.table, include.rownames=FALSE, hline.after = c(-1,0,3,6),caption.placement="top",size="tiny")#,sanitize.text.function = identity
 @
 
 \vspace*{\floatsep}
@@ -246,8 +244,10 @@ for (i in 1:length(modsumfiles)){
   modsumwide<-cbind(modsumold,modsumnew[,5:9])
   allsums<-rbind(allsums,modsumwide)
 }
+
 allsums$Region[allsums$region=="ps"]<-"ps"
 allsums$Region[allsums$region=="uss"]<-"css"
+allsums<-allsums[order(allsums$pod,allsums$Region),]
 allsums$Season[allsums$season=="1"]<-"fall"
 allsums$Season[allsums$season=="2"]<-"sum"
 
@@ -277,7 +277,7 @@ addtorow <- list()
 #modsumtab$region[modsumtab$region=="ps"]<-"puget"
 #modsumtab$region[modsumtab$region=="uss"]<-"central"
 
-modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak-, first, and last likely occurance dates for southern resident killer whiles} in Puget Sound proper (`ps') during the fall/winter (`fall', from July through December) and the central Salish Sea (`css') during the spring/summer (`sum', from April through October), from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the same peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent, 75 percent, and 95 percent uncertainty intervals are shown.",
+modsum.table<-xtable(modsumtab,caption = "\\textbf{Estimated linear trends in peak, first, and last likely occurance dates for southern resident killer whiles} in Puget Sound proper (`ps') during the fall/winter (`fall', from July through December) and the central Salish Sea (`css') during the spring/summer (`sum', from April through October), from occupancy model estimates of presence probabilites. `Peak' is the day of year with the maximum probability of presence (or the mean across day of year, if there are multiple days with the same peak probability of presence). To estimate the start of the season, we identified the earliest day of year with an estimated presence probility greater than 0.5. To estimate the end of the season, we identified the latest day of year with an estimated presence probility greater than 0.5. 50 percent, 75 percent, and 95 percent uncertainty intervals are shown.",
             label="tab:modsum",align=c(
               "|p{0.009\\textwidth}", 
               "|p{0.018\\textwidth}",
@@ -336,14 +336,14 @@ print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.p
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png} 
-\caption{\textbf{Sightings of SRKWs from the OrcaMaster Database}, from 1978-2017. }
+\caption{\textbf{Sightings of SRKWs from the Orca Master Database}, from 1978-2017. }
 \label{fig:sights}
 \end{figure}
 
 
 \begin{figure}[!hp]
 \includegraphics[width=0.8\textwidth]{../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png} 
-\caption{\textbf{Number of whale days from the OrcaMaster Database}, from 1978-2017. }
+\caption{\textbf{Number of whale days from the Orca Master Database}, from 1978-2017. }
 \label{fig:wdays}
 \end{figure}
 

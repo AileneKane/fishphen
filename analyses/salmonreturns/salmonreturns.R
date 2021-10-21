@@ -275,15 +275,19 @@ midmod<-lmer(midobsdateall~yearsall+(1|group), data=allphen, REML=FALSE)
 #midmod2<-lmer(midobsdateall~yearsall+(yearsall|group), data=allphen, REML=FALSE)
 #summary(peakmod2)
 #make a big table of model output
-allmodsums<-as.data.frame(cbind(c(fixef(firstmod)[1],confint(firstmod, level = 0.50)[3,1:2],confint(firstmod, level = 0.95)[3,1:2]),
-                                  c(fixef(firstmod)[2],confint(firstmod, level = 0.50)[4,1:2],confint(firstmod, level = 0.95)[4,1:2]),
-                                 c(fixef(peakmod)[1], confint(peakmod,level=0.5)[3,1:2],confint(peakmod,level=0.95)[3,1:2]),
-                                c(fixef(peakmod)[2], confint(peakmod,level=0.5)[4,1:2],confint(peakmod,level=0.95)[4,1:2]),
-                              c(fixef(lastmod)[1],confint(lastmod, level = 0.50)[3,1:2],confint(lastmod, level = 0.95)[3,1:2]),
-                                c(fixef(lastmod)[2],confint(lastmod, level = 0.50)[4,1:2],confint(lastmod, level = 0.95)[4,1:2])))
+allmodsums<-as.data.frame(cbind(c(fixef(firstmod)[1],confint(firstmod, level = 0.50)[3,1:2],confint(firstmod, level = 0.75)[3,1:2],confint(firstmod, level = 0.95)[3,1:2]),
+                                  c(fixef(firstmod)[2],confint(firstmod, level = 0.50)[4,1:2],confint(firstmod, level = 0.75)[4,1:2],confint(firstmod, level = 0.95)[4,1:2]),
+                                 c(fixef(peakmod)[1], confint(peakmod,level=0.5)[3,1:2],confint(peakmod,level=0.75)[3,1:2],confint(peakmod,level=0.95)[3,1:2]),
+                                c(fixef(peakmod)[2], confint(peakmod,level=0.5)[4,1:2],confint(peakmod,level=0.75)[4,1:2],confint(peakmod,level=0.95)[4,1:2]),
+                              c(fixef(lastmod)[1],confint(lastmod, level = 0.50)[3,1:2],confint(lastmod, level = 0.75)[3,1:2],confint(lastmod, level = 0.95)[3,1:2]),
+                                c(fixef(lastmod)[2],confint(lastmod, level = 0.50)[4,1:2],confint(lastmod, level = 0.75)[4,1:2],confint(lastmod, level = 0.95)[4,1:2])))
 
 
 colnames(allmodsums)<-c("first.int","first.yr","pk.int","pk.yr","last.int","last.yr")
-rownames(allmodsums)<-c("mean","perc25","perc75","perc05","perc975")
-allmodsums<-round(allmodsums,digits=2)
+rownames(allmodsums)<-c("mean","perc25","perc75","perc125","perc875","perc05","perc975")
+allmodsums<-round(allmodsums,digits=3)
 write.csv(allmodsums, "analyses/output/salmonreturntrends_pslmm.csv", row.names = TRUE)
+
+
+
+#Look at effect 
