@@ -21,7 +21,7 @@ setwd("/Users/aileneettinger/Documents/GitHub/fishphen")
 #load("analyses/output/albionchibrmslog.Rda")
 
 limegests.org<-read.csv("analyses/output/lime_prob.occ.75.csv", header=TRUE)
-colnames(limegests.org)[1]<-"styear"
+#colnames(limegests.org)[1]<-"styear"
 #model estimates have years =1,2,etc. Need to add in actual years
 #actualyrs<-c(1990,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2014,2015,2016)
 #yearconvert<-as.data.frame(cbind(unique(limegests.org$styear),actualyrs))
@@ -62,6 +62,7 @@ get.gests<-function(limegests,pod){
   row.names(gests)<-NULL
   return(gests)
 }
+limegests<-limegests.org
 gests<-get.gests(limegests,"SR")
 jgests<-get.gests(limegests,"J")
 kgests<-get.gests(limegests,"K")
@@ -115,28 +116,26 @@ albchiphenbrms<-read.csv("analyses/output/albionchiphenestbrms.csv", header=TRUE
 albchiphen<-read.csv("analyses/output/albionchiphen.csv", header=TRUE)
 
 #restrict SRKW and chin data to consistent years
-albchinest90<-albchiphenest[albchiphenest$year>1992,]
+albchinest90<-albchiphenest[albchiphenest$year>1990,]
 albchinest90<-albchinest90[albchinest90$year<2017,]
 
 albchiphen90<-albchiphen[albchiphen$year>1992,]
 albchiphen90<-albchiphen90[albchiphen90$year<2017,]
 
-albchiphenbrms90<-albchiphenbrms[albchiphenbrms$year>1992,]
-albchiphenbrms90<-albchiphenbrms90[albchiphenbrms90$year<2017,]
 
 albchinest90<-albchinest90[albchinest90$year!=2013,]
 albchiphen90<-albchiphen90[albchiphen90$year!=2013,]
-albchiphenbrms90<-albchiphenbrms90[albchiphenbrms90$year!=2013,]
+albchiphenbrms<-albchiphenbrms[albchiphenbrms$year!=2014,]
 
-#gests<-gests[gests$years>1990,]
-#myPalette <- colorRampPalette(brewer.pal(length(unique(albchinest90$year)), "Blues")) #### Gives us a heat map look
-#cols = rev(myPalette(length(unique(albchinest90$year))))
+gests<-gests[gests$years>1991,]
+myPalette <- colorRampPalette(brewer.pal(length(unique(albchinest90$year)), "Blues")) #### Gives us a heat map look
+cols = rev(myPalette(length(unique(albchinest90$year))))
 #png(file="analyses/orcaphen/figures/lime_albchin_gam.png",height=1500,width=4500, res = 300)
 #quartz()
 #par(mfrow=c(1,3), mar=c(5, 5, 4, 2) + 0.1)
 
-plot(albchinest90$peakobsdate,gests$peakoc.doy,type="p",pch=21,  cex.axis=1.5,cex.lab=1.6,bg = cols[factor(albchinest90$year)],xlab="Day of Peak Chinook Abundance",ylab="Day of Peak SRKW Occupancy Prob.", cex=1.8, bty="l")
-mod<-lm(gests$peakoc.doy~albchinest90$peakobsdate)
+plot(albchiphenbrms$peakobsdate,gests$peakoc.doy,type="p",pch=21,  cex.axis=1.5,cex.lab=1.6,bg = cols[factor(albchinest90$year)],xlab="Day of Peak Chinook Abundance",ylab="Day of Peak SRKW Occupancy Prob.", cex=1.8, bty="l")
+mod<-lm(gests$peakoc.doy~albchiphenbrms$peakobsdate)
 if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
 if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3,  lwd=2)}
 mtext("D)", side = 3, line = 1, adj=0)

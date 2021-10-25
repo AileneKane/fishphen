@@ -122,7 +122,7 @@ ylci<-c(albionshifts$ci12.5[2],albionshifts$ci12.[6],albionshifts$ci12.[4])
 yuci<-c(albionshifts$ci87.5[2],albionshifts$ci87.5[6],albionshifts$ci87.5[4])
 mtext("B)",side=3,line=0, adj=0)
 
-plot(x,y,pch=23,bg="salmon",ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,7),bty="l", cex=2, cex.lab=1.5, cex.axis=1.4)
+plot(x,y,pch=23,bg="salmon",ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4), ylim=c(-3,11),bty="l", cex=2, cex.lab=1.5, cex.axis=1.4)
 abline(h=0,lty=2)
 axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3),cex.lab=1.5, cex.axis=1.4)
 arrows(x,ylci,x,yuci, code=3, length=0)
@@ -136,14 +136,14 @@ legend("topleft",legend=c("Fraser River Chinook","Multiple Puget Sound Runs"),pc
 y<-c(psshifts[1,2],psshifts[1,4],psshifts[1,6])
 ylci<-c(psshifts[2,2],psshifts[2,4],psshifts[2,6])
 yuci<-c(psshifts[3,2],psshifts[3,4],psshifts[3,6])
-plot(x,y,pch=25,bg="salmon",ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,7),bty="l", cex=2, cex.lab=1.6, cex.axis=1.4)
+plot(x,y,pch=25,bg="salmon",ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4), ylim=c(-3,10),bty="l", cex=2, cex.lab=1.5, cex.axis=1.4)
 abline(h=0,lty=2)
 
 arrows(x,ylci,x,yuci, code=3, length=0)
 points(x,y,cex=2,bg="salmon",pch=25)
 mtext("D)",side=3,line=0, adj=0)
 
-axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
+axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3),cex.lab=1.5, cex.axis=1.4)
 
 dev.off()
 ##Separate salmon figure

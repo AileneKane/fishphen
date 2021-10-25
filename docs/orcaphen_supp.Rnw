@@ -154,7 +154,7 @@ dattab<-cbind(region,species,data.source,data.type,spatial.scale,temporal.scale)
 
 colnames(dattab)<-c("Region","Species","Data Source","Data Type", "Spatial Scale", "Temporal Scale")
 
-dat.table<-xtable(dattab,caption = "\\textbf{Data types and sources}",
+dat.table<-xtable(dattab,caption = "\\textbf{Data types and sources} included in our analyses",
             label="tab:salmon",align=c(
               "|p{0.01\\textwidth}", 
               "|p{0.1\\textwidth}",

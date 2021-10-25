@@ -209,7 +209,7 @@ for(i in 1:length(bryears)){
   mtext(paste(lets[i]), side=3, line=1, adj=0, cex=1.5)
   #axis(side = 4)
   
-  legend("topleft",legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="darkblue", bty="l", cex=1.3)
+  legend("topright",legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="darkblue", bty="l", cex=1.3)
 gests<-get.gests(limegests,"prob.occ")
 lci=.125
 uci=0.875
@@ -225,14 +225,11 @@ points(pkocdoy,1.05, pch = 21, bg="darkblue", cex = 2)
 pkocdoy<-mean(gests$peakoc.doy[gests$year>=brkyr])
 pkocdoy.lci<-quantile(gests$peakoc.doy[gests$year>=brkyr],lci)
 pkocdoy.uci<-quantile(gests$peakoc.doy[gests$year>=brkyr],uci)
-arrows(pkocdoy.lci,1.1,pkocdoy.uci,1.1,code = 0, col = cols[2], lty=1,lwd = 3)
-points(pkocdoy,1.1, pch = 21, bg=cols[2], cex = 2)
+arrows(pkocdoy.lci,1.0,pkocdoy.uci,1.0,code = 0, col = cols[2], lty=1,lwd = 3)
+points(pkocdoy,1.0, pch = 21, bg=cols[2], cex = 2)
 
-
-
-
-shift<--14
-  plot(cpue.old$doy[7:dim(cpue.old)[1]]+shift,running_mean(cpue.old$cpue.mean,7),xlim=c(140,268),ylim=c(0,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)),type="l", bty="u",col="salmon", lwd=2, lty=2,ylab="Chinook Abundance Index", xlab="Day of Year", bty= "l", cex.axis = 1.5, cex.lab=1.5)
+shift= -14
+  plot(cpue.old$doy[7:dim(cpue.old)[1]]+shift,running_mean(cpue.old$cpue.mean,7),xlim=c(140,268),ylim=c(0,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)+.2),type="l", bty="u",col="salmon", lwd=2, lty=2,ylab="Chinook Abundance Index", xlab="Day of Year", bty= "l", cex.axis = 1.5, cex.lab=1.5)
   polygon(c(rev(cpue.old$doy[7:dim(cpue.old)[1]]+shift),cpue.old$doy[7:dim(cpue.old)[1]]+shift),c(rev(running_mean(cpue.old$cpue.mean,7)+cpue.old$cpue.sd[7:dim(cpue.old)[1]]),running_mean(cpue.old$cpue.mean,7)-cpue.old$cpue.sd[7:dim(cpue.old)[1]]),col=alpha("salmon",0.1),lty=0)
   polygon(c(rev(cpue.rec$doy[7:dim(cpue.rec)[1]]+shift),cpue.rec$doy[7:dim(cpue.rec)[1]]+shift),c(rev(running_mean(cpue.rec$cpue.mean,7)+cpue.rec$cpue.sd[7:dim(cpue.rec)[1]]),running_mean(cpue.rec$cpue.mean,7)-cpue.rec$cpue.sd[7:dim(cpue.rec)[1]]),col=alpha("salmon",0.1),lty=0)
   
@@ -251,8 +248,8 @@ shift<--14
   pkdoy<-mean(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993])+shift
   pkdoy.lci<-quantile(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993],lci)+shift
   pkdoy.uci<-quantile(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993],uci)+shift
-  arrows(pkdoy.lci,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE),pkdoy.uci,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE),code = 0, col = "salmon", lty=2,lwd = 3)
-  points(pkdoy,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE), pch = 21, bg="salmon", cex = 2)
+  arrows(pkdoy.lci,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)+.2,pkdoy.uci,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)+.2,code = 0, col = "salmon", lty=2,lwd = 3)
+  points(pkdoy,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)+.2, pch = 21, bg="salmon", cex = 2)
   
   #recent time period
   pkdoy<-mean(gests$peakcpue.doy[gests$year>=brkyr])+shift
