@@ -168,7 +168,6 @@ print(dat.table, include.rownames=FALSE, hline.after = c(-1,0,3,5),caption.place
 @
 
 <<label=salmontab,echo=FALSE,results=tex>>=
-library(xtable)
 salmontab<-read.csv("../analyses/output/salmonlatlon.csv",header=TRUE)
 salmontab$region<-c("Puget Sound Proper",rep("",times = 12))  
 salmontab$origin<-"hatchery"
@@ -245,12 +244,6 @@ for (i in 1:length(modsumfiles)){
   allsums<-rbind(allsums,modsumwide)
 }
 
-allsums$Region[allsums$region=="ps"]<-"ps"
-allsums$Region[allsums$region=="uss"]<-"css"
-allsums<-allsums[order(allsums$pod,allsums$Region),]
-allsums$Season[allsums$season=="1"]<-"fall"
-allsums$Season[allsums$season=="2"]<-"sum"
-
 #allsums$Season[allsums$season=="3"]<-"Full Year"
 #allsums<-allsums[-which(allsums$season=="3"),]
 colnames(allsums)[10:14]<-c("slope.recent","slope.25.recent","slope.75.recent","X2.5.recent","X97.5.recent")
@@ -268,6 +261,12 @@ for (i in 1:length(modsumfiles2)){
 colnames(all75ths)[3:4]<-c("slope.lci.recent","slope.uci.recent")
 
 allsums<-cbind(allsums,all75ths)
+allsums$Region[allsums$region=="ps"]<-"ps"
+allsums$Region[allsums$region=="uss"]<-"css"
+allsums<-allsums[order(allsums$pod,allsums$Region),]
+allsums$Season[allsums$season=="1"]<-"fall"
+allsums$Season[allsums$season=="2"]<-"sum"
+
 modsumtab<-subset(allsums, select=c(pod,Region,Season,phase,slope.mn,slope.25,slope.75,slope.lci,slope.uci,X2.5.,X97.5.,slope.recent,slope.25.recent,slope.75.recent,slope.lci.recent,slope.uci.recent,X2.5.recent,X97.5.recent))
 colnames(modsumtab)<-c("pod","region","season","phase","mean","25%", "75%","12.5%","87.5%", "2.5%","97.5%","mean","25%", "75%","12.5%","87.5%","2.5%","97.5%")
 addtorow <- list()

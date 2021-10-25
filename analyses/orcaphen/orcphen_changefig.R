@@ -89,7 +89,7 @@ png(file="analyses/figures/srkw_salmon_recentshifts_lm.png",width=600,height=500
 par(mfcol=c(2,2),mai=c(.5,1,.5,0.3))
 x<-rep(1,times=3)+c(0,.1,.2)
 #Central salish sea first...
-plot(x,all2$slope.mn[all2$phase=="first.20012016"],pch=c(21,22,24),bg="darkblue", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,11), bty="l", cex=2, cex.lab=1.6, cex.axis=1.4)
+plot(x,all2$slope.mn[all2$phase=="first.20012016"],pch=c(21,22,24),bg="darkblue", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,11), bty="l", cex=2, cex.lab=1.5, cex.axis=1.4)
 abline(h=0,lty=2)
 arrows(x,all2$slope.lci[all2$phase=="first.20012016"],x,all2$slope.uci[all2$phase=="first.20012016"], code=3, length=0)
 arrows(x+1,all2$slope.lci[all2$phase=="peak.20012016"],x+1,all2$slope.uci[all2$phase=="peak.20012016"], code=3, length=0)
@@ -99,13 +99,13 @@ points(x,all2$slope.mn[all2$phase=="first.20012016"],pch=c(21,22,24),bg="darkblu
 points(x+1,all2$slope.mn[all2$phase=="peak.20012016"],pch=c(21,22,24),bg="darkblue", cex=2)
 points(x+2,all2$slope.mn[all2$phase=="last.20012016"],pch=c(21,22,24),bg="darkblue", cex=2)
 
-axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
+axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3),cex.lab=1.5, cex.axis=1.4)
 #mtext("SRKWs 2001-2016",side=3,line=0)
 legend("topleft",legend=c("J pod","K pod","L pod"),pch=c(21,22,24), bty="n",pt.bg="darkblue", cex=1.2)
 mtext("A)",side=3,line=0, adj=0)
 
 #Puget sound proper
-plot(x,all1$slope.mn[all1$phase=="first.20012016"],pch=c(21,22,24),bg="goldenrod", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,11), bty="l", cex=2, cex.lab=1.6, cex.axis=1.4)
+plot(x,all1$slope.mn[all1$phase=="first.20012016"],pch=c(21,22,24),bg="goldenrod", ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,4),ylim=c(-3,11), bty="l", cex=2, cex.lab=1.5, cex.axis=1.4)
 abline(h=0,lty=2)
 arrows(x,all1$slope.lci[all1$phase=="first.20012016"],x,all1$slope.uci[all1$phase=="first.20012016"], code=3, length=0)
 arrows(x+1,all1$slope.lci[all1$phase=="peak.20012016"],x+1,all1$slope.uci[all1$phase=="peak.20012016"], code=3, length=0)
@@ -114,7 +114,7 @@ arrows(x+2,all1$slope.lci[all1$phase=="last.20012016"],x+2,all1$slope.uci[all1$p
 points(x,all1$slope.mn[all1$phase=="first.20012016"],pch=c(21,22,24),bg="goldenrod", cex=2)
 points(x+1,all1$slope.mn[all1$phase=="peak.20012016"],pch=c(21,22,24),bg="goldenrod", cex=2)
 points(x+2,all1$slope.mn[all1$phase=="last.20012016"],pch=c(21,22,24),bg="goldenrod", cex=2)
-axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3))
+axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3),cex.lab=1.5, cex.axis=1.4)
 #dev.off()
 x<-c(1,2,3)
 y<-c(albionshifts$est[2],albionshifts$est[6],albionshifts$est[4])
@@ -122,9 +122,9 @@ ylci<-c(albionshifts$ci12.5[2],albionshifts$ci12.[6],albionshifts$ci12.[4])
 yuci<-c(albionshifts$ci87.5[2],albionshifts$ci87.5[6],albionshifts$ci87.5[4])
 mtext("B)",side=3,line=0, adj=0)
 
-plot(x,y,pch=23,bg="salmon",ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,7),bty="l", cex=2, cex.lab=1.6, cex.axis=1.4)
+plot(x,y,pch=23,bg="salmon",ylab= "Change in timing (days/year)",xaxt="n", xlab="",xlim=c(0,5), ylim=c(-3,7),bty="l", cex=2, cex.lab=1.5, cex.axis=1.4)
 abline(h=0,lty=2)
-
+axis(side=1,labels=c("First","Peak","Last"), at = c(1,2,3),cex.lab=1.5, cex.axis=1.4)
 arrows(x,ylci,x,yuci, code=3, length=0)
 points(x,y,cex=2,bg="salmon",pch=23)
 mtext("C)",side=3,line=0, adj=0)

@@ -72,6 +72,7 @@ summary(lm(lgests$meanprobs~lgests$year))#getting lower
 
 peakmod<-summary(lm(gests$peakoc.doy~gests$year))#trend is getting later
 confint(lm(gests$peakoc.doy~gests$year),level= .75)
+peakmod
 summary(lm(jgests$peakoc.doy~jgests$year))# getting later
 summary(lm(kgests$peakoc.doy~kgests$year))# getting later
 summary(lm(lgests$peakoc.doy~lgests$year))#not getting later
@@ -161,6 +162,9 @@ colnames(yearsum.lc)<-colnames(yearsum.uc)<-c("year","wdays")
   polygon(c(rev(as.numeric(yearsum.lc$year)),as.numeric(yearsum.uc$year)), c(rev(yearsum.uc$wdays), yearsum.lc$wdays), col = alpha("darkblue", 0.2), border = NA)
   
   #mod<-lm(limewhaledays.prob$whdays.prob~limewhaledays.prob$year)
+  #confint(mod,level=0.75)
+  #since2001
+  mod2<-lm(limewhaledays.prob$whdays.prob[limewhaledays.prob$year>2000]~limewhaledays.prob$year[limewhaledays.prob$year>2000])
   #if(summary(mod)$coef[2,4]<.05){abline(mod, lty=1, lwd=2)}
   
   #if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3, lwd=2)}
