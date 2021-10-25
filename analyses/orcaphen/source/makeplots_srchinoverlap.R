@@ -350,10 +350,6 @@ cpue.rec<-cbind(aggregate(chinab.rec$cpue,by=list(chinab.rec$doy),mean),aggregat
 colnames(cpue.old)<-colnames(cpue.rec)<-c("doy","cpue.mean","cpue.sd")
 
 pdf("analyses/orcaphen/figures/chinphenbrmsfig.pdf",height=6, width=12)
-#if(plotpdf==FALSE){png("analyses/orcaphen/figures/srkwphentrends_lime.png",height=600,width=1200, res=100)}
-
-#if(plotpdf==TRUE){pdf("analyses/orcaphen/figures/srkwphentrends_lime.pdf",height=6,width=12)}
-
 #png("analyses/orcaphen/figures/chinphenfig.png",height=6, width=12)
 
 # to figure out how much to shift the salmon curve earlier- because they are measured at ft. langely on the frasier river, but we are interested in when they are at lime kiln
