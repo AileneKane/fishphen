@@ -362,14 +362,14 @@ print(modsum.table, include.rownames=FALSE, hline.after = c(0,6,12,18),caption.p
 \newpage
 \begin{figure}[!hp]
 \includegraphics[width=0.5\textwidth]{../analyses/orcaphen/figures/orcachinphenoverlap_allpods2006.pdf}
-\caption{\textbf{SRKW phenology has shifted, in concert with shifts in Fraser River Chinook Salmon at one site with consistent observations in the Central Salish Sea}. Phenology (blue lines) is quantified from Lime Kiln Point State Park, SRKW phenology has shifted, with peak arrival dates delaying in recent (solid lines) compared with earlier (dashed lines) years. We show patterns for J-pod (A), K-pod (B), and L-Pod (C). Compare to Fig. 3A of the main text, which shows all pods together. }
+\caption{\textbf{SRKW phenology has shifted, in concert with shifts in Fraser River Chinook Salmon at one site with consistent observations in the Central Salish Sea}. Phenology (blue lines) is quantified from Lime Kiln Point State Park, SRKW phenology has shifted, with peak arrival dates delaying in recent (solid lines) compared with earlier (dashed lines) years. We show patterns for J-pod (A), K-pod (B), and L-Pod (C). Compare to Fig. 3A of the main text, which shows all pods together.Shading and error bars show 75\% uncertainty intervals. }
 \label{fig:KLchin}
 \end{figure}
 
 \newpage
 \begin{figure}[!hp]
 \includegraphics[width=0.9\textwidth]{../analyses/orcaphen/figures/orcachinphenoverlapbrmsSRallbrkyears.pdf}
-\caption{\textbf{Changing the break-point has little qualitative effect on patterns of shifts in SRKW and Fraser River Chinook phenology}. We show patterns for all SRKW pods together (as in Figure 3 in the main text) with different breakpoints of 2005 (A,B), 2006 (C,D, as in Fig. 3-4 in main text) and 2007 (E,F). SRKW phenology (blue lines, A,C,E) is quantified from Lime Kiln Point State Park; Fraser River Chinook phenology is quantified using the Albion test fishery dataset. An index of adult Fraser River Chinook salmon (summed daily CPUE from this dataset, from April through August, pink lines) and SRKW phenology have shifted, with peak occupancy and abundance dates delaying in recent (solid lines) compared with earlier years (dashed lines).}
+\caption{\textbf{Changing the break-point has little qualitative effect on patterns of shifts in SRKW and Fraser River Chinook phenology}. We show patterns for all SRKW pods together (as in Figure 3 in the main text) with different breakpoints of 2005 (A,B), 2006 (C,D, as in Fig. 3-4 in main text) and 2007 (E,F). SRKW phenology (blue lines, A,C,E) is quantified from Lime Kiln Point State Park; Fraser River Chinook phenology is quantified using the Albion test fishery dataset. An index of adult Fraser River Chinook salmon (summed daily CPUE from this dataset, from April through August, pink lines) and SRKW phenology have shifted, with peak occupancy and abundance dates delaying in recent (solid lines) compared with earlier years (dashed lines). Shading and error bars show 75\% uncertainty intervals.}
 \label{fig:brkpt}
 \end{figure}
 

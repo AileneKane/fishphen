@@ -52,7 +52,7 @@ pdf(paste("analyses/orcaphen/figures/orcachinphenoverlapbrms",pod,brkyr,".pdf",s
 if(pod =="SR" & brkyr==2006) {par(oma=c(1,1.5,1,3), mar=c(4,4.5,4,6),mfrow=c(1,3))
 } else {par(oma=c(1,1.5,1,3), mar=c(4,4.5,4,6),mfrow=c(1,2))}
 #observatoins made at lime kiln from may 20 (doy 140) through august 10 (doy 222/3 in leap years)
-plot(wdays.old$doy,wdays.old$meanocc, type="l",lty=2, lwd=2,col="darkblue", xlim=c(140,223), ylim=c(0,1.1),  ylab="Probability of Occurrence",xlab="Day of Year", bty="l", cex.axis = 1.5, cex.lab=1.5)
+plot(wdays.old$doy,wdays.old$meanocc, type="l",lty=2, lwd=2,col="darkblue", xlim=c(140,223), ylim=c(0,1.15),  ylab="Probability of Occurrence",xlab="Day of Year", bty="l", cex.axis = 1.5, cex.lab=1.5)
 polygon(c(rev(wdays.old$doy),wdays.old$doy),c(rev(wdays.old$meanocc+wdays.old$sdocc),wdays.old$meanocc-wdays.old$sdocc),col=alpha("darkblue",0.05),lty=0)
 polygon(c(rev(wdays.rec$doy),wdays.rec$doy),c(rev(wdays.rec$meanocc+wdays.rec$sdocc),wdays.rec$meanocc-wdays.rec$sdocc),col=alpha("darkblue",0.05),lty=0)
 
@@ -62,7 +62,7 @@ mtext("A)", side=3, line=1, adj=0, cex=1.5)
 
 #mtext(paste(podname,"presence",sep=" "),side=4, adj=.5, line=2)
 #legend(135,1.2,legend=c(paste(brkyr,"2017",sep="-"),paste("1994",(brkyr-1),sep="-")),lty=c(1,2),lwd=2,col="darkblue", bty="n", cex=1.3)
-legend("bottomright",legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="darkblue", bty="n", cex=1.3)
+legend(135,1.15,legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="darkblue", bty="n", cex=1.3)
 
 #Plot mean peak day across early vs late time periods
 gests<-get.gests(limegests,"prob.occ")
@@ -201,7 +201,7 @@ for(i in 1:length(bryears)){
   cpue.rec<-cbind(aggregate(chinab.rec$cpue,by=list(chinab.rec$doy),mean),aggregate(chinab.rec$cpue,by=list(chinab.rec$doy),sd)$x)
   colnames(cpue.old)<-colnames(cpue.rec)<-c("doy","cpue.mean","cpue.sd")
   
-  plot(wdays.old$doy,wdays.old$meanocc, type="l",lty=2, lwd=2,col="darkblue", xlim=c(140,223), ylim=c(0,1.1),  ylab="Probability of Occurrence",xlab="Day of Year", bty="l", cex.axis = 1.5, cex.lab=1.5)
+  plot(wdays.old$doy,wdays.old$meanocc, type="l",lty=2, lwd=2,col="darkblue", xlim=c(140,223), ylim=c(0,1.15),  ylab="Probability of Occurrence",xlab="Day of Year", bty="l", cex.axis = 1.5, cex.lab=1.5)
   polygon(c(rev(wdays.old$doy),wdays.old$doy),c(rev(wdays.old$meanocc+wdays.old$sdocc),wdays.old$meanocc-wdays.old$sdocc),col=alpha("darkblue",0.05),lty=0)
   polygon(c(rev(wdays.rec$doy),wdays.rec$doy),c(rev(wdays.rec$meanocc+wdays.rec$sdocc),wdays.rec$meanocc-wdays.rec$sdocc),col=alpha("darkblue",0.05),lty=0)
   
@@ -209,7 +209,7 @@ for(i in 1:length(bryears)){
   mtext(paste(lets[i]), side=3, line=1, adj=0, cex=1.5)
   #axis(side = 4)
   
-  legend("topright",legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="darkblue", bty="l", cex=1.3)
+  legend(135,1.2,legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="darkblue", bty="l", cex=1.3)
 gests<-get.gests(limegests,"prob.occ")
 lci=.125
 uci=0.875
@@ -218,8 +218,8 @@ uci=0.875
 pkocdoy<-mean(gests$peakoc.doy[gests$year<brkyr & gests$year>1993])
 pkocdoy.lci<-quantile(gests$peakoc.doy[gests$year<brkyr & gests$year>1993],lci)
 pkocdoy.uci<-quantile(gests$peakoc.doy[gests$year<brkyr & gests$year>1993],uci)
-arrows(pkocdoy.lci,1.05,pkocdoy.uci,1.05,code = 0, col = "darkblue", lty=2,lwd = 3)
-points(pkocdoy,1.05, pch = 21, bg="darkblue", cex = 2)
+arrows(pkocdoy.lci,1.1,pkocdoy.uci,1.1,code = 0, col = "darkblue", lty=2,lwd = 3)
+points(pkocdoy,1.1, pch = 21, bg="darkblue", cex = 2)
 
 #recent time period
 pkocdoy<-mean(gests$peakoc.doy[gests$year>=brkyr])
@@ -311,7 +311,7 @@ for(i in 1:length(podnames)){
   #axis(side = 4)
   
   #mtext(paste(podname,"presence",sep=" "),side=4, adj=.5, line=2)
-  legend("topleft",legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="darkblue", bty="n", cex= 1.5)
+  legend("topleft",legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="darkblue", cex= 1.5)
   gests<-get.gests(limegests,"prob.occ")
   lci=.125
   uci=0.875
@@ -356,7 +356,7 @@ pdf("analyses/orcaphen/figures/chinphenbrmsfig.pdf",height=6, width=12)
 # lime  kiln is ~160 km from lime kiln "as the fish swims" and fish swim about 70 km per day! only need to shift by 2-3 days?
 par(mfrow=c(1,3),mar=c(7, 5, 4, 2) + 0.1)
 shift<--14
-plot(cpue.old$doy[7:length(cpue.old$doy)]+shift,running_mean(cpue.old$cpue.mean,7),xlim=c(120,250),ylim=c(0,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)),type="l", bty="u",col="salmon", lwd=2, lty=2,
+plot(cpue.old$doy[7:length(cpue.old$doy)]+shift,running_mean(cpue.old$cpue.mean,7),xlim=c(120,250),ylim=c(0,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)+.2),type="l", bty="u",col="salmon", lwd=2, lty=2,
      ylab="Chinook Abundance (mean cpue)", xlab="Day of Year", cex.axis=1.5,cex.lab=1.6)
 polygon(c(rev(cpue.old$doy[7:length(cpue.old$doy)]+shift),cpue.old$doy[7:length(cpue.old$doy)]+shift),c(rev(running_mean(cpue.old$cpue.mean,7)+cpue.old$cpue.sd[7:length(cpue.old$doy)]),running_mean(cpue.old$cpue.mean,7)-cpue.old$cpue.sd[7:length(cpue.old$doy)]),col=alpha("salmon",0.1),lty=0)
 polygon(c(rev(cpue.rec$doy[7:length(cpue.rec$doy)]+shift),cpue.rec$doy[7:length(cpue.rec$doy)]+shift),c(rev(running_mean(cpue.rec$cpue.mean,7)+cpue.rec$cpue.sd[7:length(cpue.rec$doy)]),running_mean(cpue.rec$cpue.mean,7)-cpue.rec$cpue.sd[7:length(cpue.rec$doy)]),col=alpha("salmon",0.1),lty=0)
@@ -366,7 +366,7 @@ mtext("A)", side=3, line=2, adj=-.2, cex=1.5)
 
 alph=0.75
 
-legend(120,2.5,legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="salmon", cex=1.3)
+legend(120,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)+.2,legend=c(paste("1994",(brkyr-1),sep="-"),paste(brkyr,"2017",sep="-")),lty=c(2,1),lwd=2,col="salmon", cex=1.3)
 
 #Plot mean peak day across early vs late time periods
 gests<-get.gests.chin(chinab,"cpue.est")
@@ -378,15 +378,15 @@ pkdoy<-mean(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993])+shift
 #pkdoy<-which(cpue.old$cpue.mean==max(cpue.old$cpue.mean))#this changes things...talk to JAmeal about whether we should show the mean day of year of peak abundance or the day of year of mean peak abundance....
 pkdoy.lci<-quantile(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993],lci)+shift
 pkdoy.uci<-quantile(gests$peakcpue.doy[gests$year<brkyr & gests$year>1993],uci)+shift
-arrows(pkdoy.lci,2.3,pkdoy.uci,2.3,code = 0, col = "salmon", lty=2,lwd = 3)
-points(pkdoy,2.3, pch = 21, bg="salmon", cex = 2)
+arrows(pkdoy.lci,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)+.1,pkdoy.uci,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)+.1,code = 0, col = "salmon", lty=2,lwd = 3)
+points(pkdoy,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)+.1, pch = 21, bg="salmon", cex = 2)
 
 #recent time period
 pkdoy<-mean(gests$peakcpue.doy[gests$year>=brkyr])+shift
 pkdoy.lci<-quantile(gests$peakcpue.doy[gests$year>=brkyr],lci)+shift
 pkdoy.uci<-quantile(gests$peakcpue.doy[gests$year>=brkyr],uci)+shift
-arrows(pkdoy.lci,2.2,pkdoy.uci,2.2,code = 0, col = "salmon", lty=1,lwd = 3)
-points(pkdoy,2.2, pch = 21, bg="salmon", cex = 2)
+arrows(pkdoy.lci,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)-.05,pkdoy.uci,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)-.05,code = 0, col = "salmon", lty=1,lwd = 3)
+points(pkdoy,max(cpue.old$cpue.mean)+max(cpue.old$cpue.sd,na.rm=TRUE)-.05, pch = 21, bg="salmon", cex = 2)
 
 gests<-gests[gests$years>1993,]
 #Peak cpue doy over time
@@ -400,7 +400,7 @@ mtext("B)", side=3, line=2, adj=-.2, cex=1.5)
 #CPUE over time
 plot(gests$year,gests$totalcpues,type = "l", col="salmon",cex.axis=1.5,cex.lab=1.6,
      xlab="Year",ylab="Annual Abundance Index", cex=1.8, bty="l", lwd=2)
-#polygon(c(rev(as.numeric(yearsum.lc$year)),as.numeric(yearsum.uc$year)), c(rev(yearsum.uc$wdays), yearsum.lc$wdays), col = alpha("salmon", 0.2), border = NA)
+#polygon(c(rev(as.numeric(gests$year)),as.numeric(yearsum.uc$year)), c(rev(yearsum.uc$wdays), yearsum.lc$wdays), col = alpha("salmon", 0.2), border = NA)
 
 
 #if(summary(mod)$coef[2,4]<.15 & summary(mod)$coef[2,4]>.05){abline(mod, lty=3, lwd=2)}

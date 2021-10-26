@@ -50,12 +50,12 @@ get.gests.chin<-function(gests,cpue){#occprobs=cpue
     cpuecol<-yeardat[,which(colnames(yeardat)==cpue)]
     yrpeak<-max(cpuecol)
     yrpeak.doy<-yeardat$doy[which(cpuecol==yrpeak)]
-    yrfirst.doy<-yeardat$doy[min(which(cpuecol>0))]
-    yrlast.doy<-yeardat$doy[max(which(cpuecol>0))]
+    yrfirst.doy<-yeardat$doy[min(which(cpuecol>.001))]
+    yrlast.doy<-yeardat$doy[max(which(cpuecol>.001))]
     meancpue<-mean(cpuecol)
     totalcpue<-sum(cpuecol)
-    lprob<-quantile(cpuecol,0.25)
-    uprob<-quantile(cpuecol,0.75)
+    lprob<-quantile(cpuecol,0.125)
+    uprob<-quantile(cpuecol,0.875)
     peakcpue<-c(peakcpue,yrpeak)
     peakcpue.doy<-c(peakcpue.doy,yrpeak.doy)
     firstcpue<-c(firstcpue,yrfirst.doy)
