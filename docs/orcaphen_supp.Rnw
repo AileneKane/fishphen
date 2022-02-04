@@ -49,20 +49,25 @@
 
 \bibliographystyle{../refs/bibstyles/amnat.bst}
 
-\title{Supplemental materials for `Shifting phenology of an endangered apex predator tracks changes in its favored prey'}
+\title{Supplemental Text 1: Supplemental Methods for `Shifting phenology of an endangered apex predator tracks changes in its favored prey'}
 \date{ }
 \maketitle
 \author{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand{\thetable}{S\arabic{table}}
 \renewcommand{\thefigure}{S\arabic{figure}}
-\section*{Additional details on our use of the Orca Master dataset}
-
+\section*{Additional details on our use of the OrcaMaster dataset}
 As a presence-only database, trends in the Orca Master dataset should be interpreted with care, since they could be due to shifts in effort (i.e., the number of total observations) as well as (or instead of) trends in SRKW presence (see Effects of changes in effort on estimated phenological change in the Supplemental Materials). For this reason, and because we know there has been a dramatic increase in reported whale sightings (Olson et al., 2018), we report all trends across two different durations: the full dataset (from 1978-2017) and recent years (2001-2017). We use 2001 as a cut-off, to avoid the sharp increase in sightings that occurred from 2000 to 2001 (Fig. S3-4), likely influenced by the onset of internet-based sightings platforms that began that year \citep{hauser2007,olson2018}.
 
 For our analyses, observation of any individual or group of whales within a pod counted as presence of that pod, with the exception of ``L87,'' an individual that spent little time with his natal L pod following the death of his mother, and was instead seen more frequently with J- and K-pods. Observations of this individual alone were therefore not counted as presence of L pod in our analyses.
- 
-\section*{Models}
+
+Prior to fitting any models, we used raw data to quantify the number of whale days (i.e., days on which whales were observed) within a season and year for each region. We counted a whale day as a day on which one or more entries in the Orca Master database reported sighting "southern residents"' or J, K, and/or L pods specifically. Note that our approach differs from Olson et al. (2018), which included sightings of unidentified killer whale ecotypes in their analyses. Although the dataset consists of presence data only, we were able to generate pseudo-absences because whales are identified to the pod level (e.g., an observation for J-pod only generated a known absence for K- and L-pods, and observations of transient killer whales or other species of whales generated absences for all three pods).
+
+ \section*{Additional details on our use of the Albion Chinook salmon test fishery dataset}
+For purposes of comparison with the SRKW observations at Lime Kiln, we assumed a lag of 14 days for the salmon phenology dates to account for the time it takes salmon to swim from Lime Kiln to the location of the Albion test fishery (Ayres et al. 2012). For the comparison to SRKW presence at Lime Kiln, we used only the test fishery data extending through August each year; for the regional model (see 2.2.1), we utilized the full time period of the dataset (i.e., extending through October). 
+Fraser River Chinook salmon consist of multiple stocks that differ in their life-histories (e.g., age, size, and run timing, English et al. 2007, Parken et al. 2008). Changes in the realized phenology of Chinook salmon in the Lime Kiln area can therefore be due to both changes in the timing of individual stocks and/or changes in the relative abundance of stocks with different run phenologies. We made no attempt to distinguish between these two types of changes, but they may be important to SRKW because the stocks can differ in nutritional value (O'Neill et al. 2014). We did not separate out distinct Chinook stocks within the Fraser River, as our goal was to quantify timing of peak abundance of all potential prey when SRKW typically return to their summer core habitat (Fig. 1), and we know of no evidence that SRKW preferentially feed on a subset of Fraser River stocks. 
+
+\section*{Supplemental Text 2: Models}
 \emph{Southern resident killer whale presence and their prey at Lime Kiln Point State}
 \begin{enumerate}
 \item \underline{Southern resident killer whale presence model}

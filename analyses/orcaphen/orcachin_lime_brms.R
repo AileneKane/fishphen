@@ -9,7 +9,7 @@ rm(list=ls())
 options(stringsAsFactors = FALSE)
 
 # Set working directory: 
-setwd("~/Documents/GitHub/fishphen")
+setwd("~/GitHub/fishphen")
 
 # Load libraries
 library(dplyr)

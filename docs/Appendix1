@@ -46,13 +46,18 @@ save(l2, file="analyses/output/l.brms.Rda")
 #https://www.pac.dfo-mpo.gc.ca/fm-gp/fraser/docs/commercial/albionchinook-quinna-eng.html
 ###########################################################
 
-dat$year<-as.factor(dat$year)
+dat<-dat[dat$year>1993,]
+dat$effort<-as.numeric(dat$effort)
+dat$year2<-as.factor(dat$year)
 dat$calDay<-as.numeric(dat$calDay)
-dat$cpuw<-as.numeric(dat$cpue)
-m <- brm(cpue ~ s(calDay) + (calday|year),
-          data=dat,
-          family =gaussian(), cores = 4,
-          iter = 4000, warmup = 1000, thin = 10,
-          control = list(adapt_delta = 0.99))
-          
+dat$catch<-as.numeric(dat$catch)
+dat$cpue1<-dat$cpue+.001
+dat$logcpue<-log(dat$cpue1)
+
+m <- brm(logcpue~ s(calDay) + (calDay|year2),
+          data=dat, chains = 2,
+          iter = 6000, warmup = 1000, thin = 10,
+          control = list(adapt_delta = 0.99, max_treedepth=15))
+save(m, file="analyses/output/albionchibrms.Rda")
+
 ###########################################################

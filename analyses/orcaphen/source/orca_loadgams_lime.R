@@ -9,12 +9,12 @@
 # save(m2, file="analyses/output/sr.brms.Rda")
 load("analyses/output/sr.brms.Rda")
 
-# j2 <- brm(Jpres ~ s(day) + (day|year),
-#           data=limewdaysabs,
-#           family =bernoulli(), cores = 2,
-#           iter = 4000, warmup = 1000, thin = 10,
-# control = list(adapt_delta = 0.99, max_treedepth=15))
-#  save(j2, file="analyses/output/j.brms.Rda")
+j2 <- brm(Jpres ~ s(day) + (day|year),
+          data=limewdaysabs,
+          family =bernoulli(), cores = 2,
+          iter = 4000, warmup = 1000, thin = 10,
+control = list(adapt_delta = 0.99, max_treedepth=15))
+ save(j2, file="analyses/output/j.brms.Rda")
 load("analyses/output/j.brms.Rda")
  
 # k2 <- brm(Kpres ~ s(day) + (day|year),
