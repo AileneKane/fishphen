@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  25 OCT 2021 17:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  18 MAR 2022 14:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -522,221 +522,343 @@ LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <6> not available
 
 LaTeX Warning: No \author given.
 
-LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <10> not available
-(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 68.
-LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <7> not available
-(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 68.
-LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <5> not available
-(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 68.
 [1
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for T1+aett on input line 96.
+LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <10> not available
+(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 76.
+LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <7> not available
+(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 76.
+LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <5> not available
+(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 76.
+
+! Misplaced alignment tab character &.
+l.81 Pr(\psi_i = 1) &
+                     = logit^{-1} (\alpha_{year[i]} + s(day)_{year[i]})
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.85 \alpha_{year} &
+                     \sim N(\mu_{\alpha}, \sigma^{2}_{\alpha}) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.95 y_i &
+          = \alpha_{year[i]} + s(day)_{year[i]}
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.99 \alpha_{year} &
+                     \sim N(\mu_{\alpha}, \sigma^{2}_{\alpha}) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+LaTeX Font Info:    Try loading font information for T1+aett on input line 104.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-) [2] [3]
-(./orcaphen_supp.bbl [4]) [5]
-Underfull \hbox (badness 2277) in paragraph at lines 155--155
+)
+
+! LaTeX Error: Environment aequation undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.112  \begin{aequation}
+                        
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.113 Z_
+        {year,day} \sim Bernoulli (\psi_{year,day})
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: \begin{itemize} on input line 109 ended by \end{equation}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.114 \end{equation}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.114 \end{equation}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+[2]
+! Misplaced alignment tab character &.
+l.127 day_i &
+             = \alpha_{group[i]} + \beta_{year}
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.131 \alpha_{group} &
+                       \sim N(\mu_{\alpha}, \sigma^{2}_{\alpha}) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+[3] (./orcaphen_supp.bbl [4]) [5] [6]
+LaTeX Font Info:    Try loading font information for TS1+aett on input line 233
+.
+
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/ts1aett.fd
+File: ts1aett.fd 
+)
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 233
+.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/ts1cmtt.fd
+File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `TS1/aett/m/sl' in size <10> not available
+(Font)              Font shape `TS1/cmtt/m/sl' tried instead on input line 233.
+
+ [7]
+Underfull \hbox (badness 2277) in paragraph at lines 275--275
 []|\T1/aer/m/n/8 Lime Kiln Point State
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 155--156
+Underfull \hbox (badness 10000) in paragraph at lines 275--276
 []|\T1/aer/m/n/8 1994-2017, daily
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 156--156
+Underfull \hbox (badness 10000) in paragraph at lines 276--276
 []|\T1/aer/m/n/8 Presence-only,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 156--156
+Underfull \hbox (badness 10000) in paragraph at lines 276--276
 []|\T1/aer/m/n/8 Regional (mul-ti-ple
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 156--157
+Underfull \hbox (badness 10000) in paragraph at lines 276--277
 []|\T1/aer/m/n/8 1978-2017, op-por-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 157--157
+Underfull \hbox (badness 10000) in paragraph at lines 277--277
 []|\T1/aer/m/n/8 Chinook
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 157--158
+Underfull \hbox (badness 10000) in paragraph at lines 277--278
 []|\T1/aer/m/n/8 1992-2017, daily
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 159--159
+Underfull \hbox (badness 10000) in paragraph at lines 279--279
 []|\T1/aer/m/n/8 Presence-only,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 159--159
+Underfull \hbox (badness 10000) in paragraph at lines 279--279
 []|\T1/aer/m/n/8 Regional (mul-ti-ple
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 159--160
+Underfull \hbox (badness 10000) in paragraph at lines 279--280
 []|\T1/aer/m/n/8 1978-2017, op-por-
  []
 
 
-Overfull \hbox (5.6493pt too wide) in paragraph at lines 160--160
+Overfull \hbox (5.6493pt too wide) in paragraph at lines 280--280
 []|\T1/aer/m/n/8 Chinook,coho,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 160--160
+Underfull \hbox (badness 10000) in paragraph at lines 280--280
 \T1/aer/m/n/8 chum
  []
 
 
-Overfull \hbox (37.04375pt too wide) in paragraph at lines 151--164
+Overfull \hbox (37.04375pt too wide) in paragraph at lines 271--284
  [][] 
  []
 
 
-Overfull \hbox (3.41487pt too wide) in paragraph at lines 174--174
+Overfull \hbox (3.41487pt too wide) in paragraph at lines 294--294
 []|\T1/aer/m/n/8 Latitude| 
  []
 
 
-Overfull \hbox (2.82294pt too wide) in paragraph at lines 176--176
+Overfull \hbox (2.82294pt too wide) in paragraph at lines 296--296
 []|\T1/aer/m/n/8 Chinook| 
  []
 
 
-Overfull \hbox (4.72136pt too wide) in paragraph at lines 176--176
+Overfull \hbox (4.72136pt too wide) in paragraph at lines 296--296
 []|\T1/aer/m/n/8 wild/hatchery| 
  []
 
 
-Overfull \hbox (2.82294pt too wide) in paragraph at lines 178--178
+Overfull \hbox (2.82294pt too wide) in paragraph at lines 298--298
 []|\T1/aer/m/n/8 Chinook| 
  []
 
 
-Overfull \hbox (2.82294pt too wide) in paragraph at lines 182--182
+Overfull \hbox (2.82294pt too wide) in paragraph at lines 302--302
 []|\T1/aer/m/n/8 Chinook| 
  []
 
 
-Overfull \hbox (2.82294pt too wide) in paragraph at lines 184--184
+Overfull \hbox (2.82294pt too wide) in paragraph at lines 304--304
 []|\T1/aer/m/n/8 Chinook| 
  []
 
 
-Overfull \hbox (2.82294pt too wide) in paragraph at lines 187--187
+Overfull \hbox (2.82294pt too wide) in paragraph at lines 307--307
 []|\T1/aer/m/n/8 Chinook| 
  []
 
 
-Overfull \hbox (2.74062pt too wide) in paragraph at lines 228--228
+Overfull \hbox (2.74062pt too wide) in paragraph at lines 348--348
 []|\T1/aer/m/n/5 pod| 
  []
 
 
-Overfull \hbox (1.79672pt too wide) in paragraph at lines 228--228
+Overfull \hbox (1.79672pt too wide) in paragraph at lines 348--348
 []|\T1/aer/m/n/5 region| 
  []
 
 
-Overfull \hbox (2.56186pt too wide) in paragraph at lines 228--228
+Overfull \hbox (2.56186pt too wide) in paragraph at lines 348--348
 []|\T1/aer/m/n/5 season| 
  []
 
 
-Overfull \hbox (1.17172pt too wide) in paragraph at lines 228--228
+Overfull \hbox (1.17172pt too wide) in paragraph at lines 348--348
 []|\T1/aer/m/n/5 12.5%| 
  []
 
 
-Overfull \hbox (1.17172pt too wide) in paragraph at lines 228--228
+Overfull \hbox (1.17172pt too wide) in paragraph at lines 348--348
 []|\T1/aer/m/n/5 87.5%| 
  []
 
 
-Overfull \hbox (1.17172pt too wide) in paragraph at lines 228--228
+Overfull \hbox (1.17172pt too wide) in paragraph at lines 348--348
 []|\T1/aer/m/n/5 97.5%| 
  []
 
 
-Overfull \hbox (1.17172pt too wide) in paragraph at lines 228--228
+Overfull \hbox (1.17172pt too wide) in paragraph at lines 348--348
 []|\T1/aer/m/n/5 12.5%| 
  []
 
 
-Overfull \hbox (1.17172pt too wide) in paragraph at lines 228--228
+Overfull \hbox (1.17172pt too wide) in paragraph at lines 348--348
 []|\T1/aer/m/n/5 87.5%| 
  []
 
 
-Overfull \hbox (1.17172pt too wide) in paragraph at lines 228--229
+Overfull \hbox (1.17172pt too wide) in paragraph at lines 348--349
 []|\T1/aer/m/n/5 97.5%| 
  []
 
 
-Overfull \hbox (36.15573pt too wide) in paragraph at lines 226--253
+Overfull \hbox (36.15573pt too wide) in paragraph at lines 346--373
 []  
  []
 
-[6] [7] [8] <../analyses/figures/phenophases.pdf, id=108, 578.16pt x 578.16pt>
+[8] [9] <../analyses/figures/phenophases.pdf, id=123, 578.16pt x 578.16pt>
 File: ../analyses/figures/phenophases.pdf Graphic file (type pdf)
 
 <use ../analyses/figures/phenophases.pdf>
 Package pdftex.def Info: ../analyses/figures/phenophases.pdf used on input line
- 271.
+ 383.
 (pdftex.def)             Requested size: 330.42033pt x 330.41917pt.
 
-<../analyses/orcaphen/figures/ctcalbion.pdf, id=109, 578.16pt x 1084.05pt>
+<../analyses/orcaphen/figures/ctcalbion.pdf, id=124, 578.16pt x 1084.05pt>
 File: ../analyses/orcaphen/figures/ctcalbion.pdf Graphic file (type pdf)
 
 <use ../analyses/orcaphen/figures/ctcalbion.pdf>
 Package pdftex.def Info: ../analyses/orcaphen/figures/ctcalbion.pdf used on inp
-ut line 279.
+ut line 391.
 (pdftex.def)             Requested size: 330.42033pt x 619.53596pt.
 
 
-LaTeX Warning: Float too large for page by 81.28244pt on input line 282.
+LaTeX Warning: Float too large for page by 81.28244pt on input line 394.
 
 
-<../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png, id=110, 691.8648pt
+<../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png, id=125, 691.8648pt
  x 366.8907pt>
 File: ../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png Graphic file (
 type png)
 
 <use ../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png>
 Package pdftex.def Info: ../analyses/figures/OrcaPhenPlots/numsights_1976_2regs
-.png used on input line 288.
+.png used on input line 400.
 (pdftex.def)             Requested size: 377.62633pt x 200.25656pt.
 
-<../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png, id=111, 692.1
+<../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png, id=126, 692.1
 057pt x 361.1091pt>
 File: ../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png Graphic f
 ile (type png)
 
 <use ../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png>
 Package pdftex.def Info: ../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW
-2regs.png used on input line 295.
+2regs.png used on input line 407.
 (pdftex.def)             Requested size: 377.62633pt x 197.02922pt.
 
-<../analyses/orcaphen/figures/modwhaledays_lime.png, id=112, 963.6pt x 481.8pt>
+<../analyses/orcaphen/figures/modwhaledays_lime.png, id=127, 963.6pt x 481.8pt>
 File: ../analyses/orcaphen/figures/modwhaledays_lime.png Graphic file (type png
 )
 <use ../analyses/orcaphen/figures/modwhaledays_lime.png>
 Package pdftex.def Info: ../analyses/orcaphen/figures/modwhaledays_lime.png use
-d on input line 302.
+d on input line 414.
 (pdftex.def)             Requested size: 377.62633pt x 188.81284pt.
- [9 <../analyses/figures/phenophases.pdf>] [10 <../analyses/orcaphen/figures/ct
-calbion.pdf>] [11 <../analyses/figures/OrcaPhenPlots/numsights_1976_2regs.png (
-PNG copy)> <../analyses/figures/OrcaPhenPlots/whaledays_assumeSRKW2regs.png (PN
-G copy)>]
+ [10
+
+ <../analyses/figures/phenophases.pdf>]
 <../analyses/orcaphen/figures/orcachinphenoverlap_allpods2006.pdf, id=151, 371.
 88937pt x 867.24pt>
 File: ../analyses/orcaphen/figures/orcachinphenoverlap_allpods2006.pdf Graphic 
@@ -744,11 +866,11 @@ file (type pdf)
 
 <use ../analyses/orcaphen/figures/orcachinphenoverlap_allpods2006.pdf>
 Package pdftex.def Info: ../analyses/orcaphen/figures/orcachinphenoverlap_allpo
-ds2006.pdf used on input line 315.
+ds2006.pdf used on input line 427.
 (pdftex.def)             Requested size: 236.01555pt x 550.40016pt.
 
 
-LaTeX Warning: Float too large for page by 12.14664pt on input line 318.
+LaTeX Warning: Float too large for page by 12.14664pt on input line 430.
 
 
 <../analyses/orcaphen/figures/orcachinphenoverlapbrmsSRallbrkyears.pdf, id=152,
@@ -758,7 +880,7 @@ phic file (type pdf)
 
 <use ../analyses/orcaphen/figures/orcachinphenoverlapbrmsSRallbrkyears.pdf>
 Package pdftex.def Info: ../analyses/orcaphen/figures/orcachinphenoverlapbrmsSR
-allbrkyears.pdf used on input line 322.
+allbrkyears.pdf used on input line 434.
 (pdftex.def)             Requested size: 424.82512pt x 354.02684pt.
 
 <../analyses/figures/proboccJ_4panels.png, id=153, 1445.4pt x 1204.5pt>
@@ -766,7 +888,7 @@ File: ../analyses/figures/proboccJ_4panels.png Graphic file (type png)
 
 <use ../analyses/figures/proboccJ_4panels.png>
 Package pdftex.def Info: ../analyses/figures/proboccJ_4panels.png used on input
- line 329.
+ line 441.
 (pdftex.def)             Requested size: 377.62633pt x 314.68808pt.
 
 <../analyses/figures/proboccK_4panels.png, id=154, 1445.4pt x 1204.5pt>
@@ -774,7 +896,7 @@ File: ../analyses/figures/proboccK_4panels.png Graphic file (type png)
 
 <use ../analyses/figures/proboccK_4panels.png>
 Package pdftex.def Info: ../analyses/figures/proboccK_4panels.png used on input
- line 336.
+ line 448.
 (pdftex.def)             Requested size: 377.62633pt x 314.68808pt.
 
 <../analyses/figures/proboccL_4panels.png, id=155, 1445.4pt x 1204.5pt>
@@ -782,7 +904,7 @@ File: ../analyses/figures/proboccL_4panels.png Graphic file (type png)
 
 <use ../analyses/figures/proboccL_4panels.png>
 Package pdftex.def Info: ../analyses/figures/proboccL_4panels.png used on input
- line 344.
+ line 456.
 (pdftex.def)             Requested size: 377.62633pt x 314.68808pt.
 
 <../analyses/orcaphen/figures/simeffortonly2panels.png, id=156, 936.6192pt x 48
@@ -791,35 +913,38 @@ File: ../analyses/orcaphen/figures/simeffortonly2panels.png Graphic file (type
 png)
  <use ../analyses/orcaphen/figures/simeffortonly2panels.png>
 Package pdftex.def Info: ../analyses/orcaphen/figures/simeffortonly2panels.png 
-used on input line 351.
+used on input line 463.
 (pdftex.def)             Requested size: 377.62633pt x 194.25308pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 360.
- [12 <../analyses/orcaphen/figures/modwhaledays_lime.png>] [13 <../analyses/orc
-aphen/figures/orcachinphenoverlap_allpods2006.pdf>] [14 <../analyses/orcaphen/f
-igures/orcachinphenoverlapbrmsSRallbrkyears.pdf>] [15 <../analyses/figures/prob
-occJ_4panels.png>] [16 <../analyses/figures/proboccK_4panels.png>] [17 <../anal
-yses/figures/proboccL_4panels.png>] [18 <../analyses/orcaphen/figures/simeffort
-only2panels.png (PNG copy)>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 360.
- (./orcaphen_supp.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 360.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 360.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 470.
+ [11 <../analyses/orcaphen/figures/ctcalbion.pdf>] [12 <../analyses/figures/Orc
+aPhenPlots/numsights_1976_2regs.png (PNG copy)> <../analyses/figures/OrcaPhenPl
+ots/whaledays_assumeSRKW2regs.png (PNG copy)>] [13 <../analyses/orcaphen/figure
+s/modwhaledays_lime.png>] [14 <../analyses/orcaphen/figures/orcachinphenoverlap
+_allpods2006.pdf>] [15 <../analyses/orcaphen/figures/orcachinphenoverlapbrmsSRa
+llbrkyears.pdf>] [16 <../analyses/figures/proboccJ_4panels.png>] [17 <../analys
+es/figures/proboccK_4panels.png>] [18 <../analyses/figures/proboccL_4panels.png
+>] [19 <../analyses/orcaphen/figures/simeffortonly2panels.png (PNG copy)>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 470.
+
+(./orcaphen_supp.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 470.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 470.
 Package rerunfilecheck Info: File `orcaphen_supp.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 360.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 470.
  ) 
 Here is how much of TeX's memory you used:
- 8635 strings out of 492995
- 130590 string characters out of 6132704
+ 8676 strings out of 492995
+ 131517 string characters out of 6132704
  276701 words of memory out of 5000000
- 11956 multiletter control sequences out of 15000+600000
- 38566 words of font info for 82 fonts, out of 8000000 for 9000
+ 11978 multiletter control sequences out of 15000+600000
+ 39355 words of font info for 85 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,9n,39p,2459b,452s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,9n,39p,2459b,509s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 }</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
@@ -833,15 +958,17 @@ texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/tex
 live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texliv
 e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2
 017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2017
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2017/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017/texm
-f-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on orcaphen_supp.pdf (18 pages, 1112670 bytes).
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive/201
+7/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2017/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017/tex
+mf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2017/texmf
+-dist/fonts/type1/public/cm-super/sfst1000.pfb>
+Output written on orcaphen_supp.pdf (19 pages, 1145952 bytes).
 PDF statistics:
- 321 PDF objects out of 1000 (max. 8388607)
- 245 compressed objects within 3 object streams
- 54 named destinations out of 1000 (max. 500000)
+ 345 PDF objects out of 1000 (max. 8388607)
+ 266 compressed objects within 3 object streams
+ 64 named destinations out of 1000 (max. 500000)
  56 words of extra memory for PDF output out of 10000 (max. 10000000)
 
